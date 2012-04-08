@@ -19,15 +19,33 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * The adapter for FSM transition callback.
+ * A simple event.
  * 
  * @author Michal Turek
  */
-public class TransitionAdapter implements TransitionListener {
+public class SimpleEvent implements Event {
 
 	@Override
-	public void onTransition(State sourceState, Event event,
-			State destinationState) {
-		// Do nothing by default.
+	public int hashCode() {
+		return 89658520 + getClass().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (getClass() != obj.getClass())
+			return false;
+
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "()";
 	}
 }

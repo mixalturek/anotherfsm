@@ -18,6 +18,8 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.util.List;
+
 /**
  * Abstract FSM state.
  * 
@@ -26,19 +28,36 @@ package net.sourceforge.anotherfsm;
 public interface State {
 
 	/**
+	 * Get name of the state.
+	 * 
+	 * @return the name of the state
+	 */
+	public String getName();
+
+	/**
+	 * Add a transtion to the state.
+	 * 
+	 * @param transition
+	 *            the transition
+	 * @throws FsmException
+	 *             if something fails
+	 */
+	public void addTransition(Transition transition) throws FsmException;
+
+	/**
 	 * Add a transition to the state.
 	 * 
 	 * @param event
 	 *            the event that causes the transition
-	 * @param nextState
-	 *            the next state that will be active after the transition is
-	 *            processed
+	 * @param destinationState
+	 *            the destination state that will be active after the transition
+	 *            is processed
 	 * @param listener
 	 *            the listener for callback
 	 * @throws FsmException
 	 *             if something fails
 	 */
-	public void addTransition(Event event, State nextState,
+	public void addTransition(Event event, State destinationState,
 			TransitionListener listener) throws FsmException;
 
 	/**
@@ -60,13 +79,14 @@ public interface State {
 	 * 
 	 * @param event
 	 *            the event that causes the transition
-	 * @param nextState
-	 *            the next state that will be active after the transition is
-	 *            processed
+	 * @param destinationState
+	 *            the destination state that will be active after the transition
+	 *            is processed
 	 * @throws FsmException
 	 *             if something fails
 	 */
-	public void addTransition(Event event, State nextState) throws FsmException;
+	public void addTransition(Event event, State destinationState)
+			throws FsmException;
 
 	/**
 	 * Set the listener.
@@ -74,7 +94,14 @@ public interface State {
 	 * @param listener
 	 *            the listener
 	 */
-	public void setListener(StateListener listener);
+	public void addListener(StateListener listener);
+
+	/**
+	 * Get the listeners.
+	 * 
+	 * @return the listeners
+	 */
+	public List<StateListener> getListeners();
 
 	/**
 	 * Process an event.
@@ -87,6 +114,11 @@ public interface State {
 	 */
 	public State processEvent(Event event) throws FsmException;
 
+	/**
+	 * Get the hash code.
+	 * 
+	 * @return the hash code
+	 */
 	@Override
 	public int hashCode();
 

@@ -46,6 +46,16 @@ public interface StateMachine {
 	public void processEvent(Event event) throws FsmException;
 
 	/**
+	 * Start processing of the events, building of the state machine finished.
+	 */
+	public void start();
+
+	/**
+	 * Stop procession of the events, free all allocated resources.
+	 */
+	public void stop();
+
+	/**
 	 * The string representation of the object. It is expected the name of the
 	 * state machine will be returned (if defined).
 	 * 

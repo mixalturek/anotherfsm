@@ -28,12 +28,13 @@ public interface TransitionListener {
 	/**
 	 * The transition was processed.
 	 * 
-	 * @param previous
-	 *            the previous state
+	 * @param sourceState
+	 *            the source state
 	 * @param event
 	 *            the event
-	 * @param next
-	 *            the next state
+	 * @param destinationState
+	 *            the destination state
 	 */
-	public void onTransition(State previous, Event event, State next);
+	public void onTransition(State sourceState, Event event,
+			State destinationState);
 }
