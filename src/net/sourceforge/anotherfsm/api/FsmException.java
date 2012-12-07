@@ -16,14 +16,14 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.api;
 
 /**
  * Base class for all FSM exceptions.
  * 
  * @author Michal Turek
  */
-public class FsmException extends RuntimeException {
+public class FsmException extends Exception {
 
 	/** The version UID. */
 	private static final long serialVersionUID = 1L;

@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.api;
 
 /**
  * The listener for FSM transition callback.
@@ -34,7 +34,7 @@ public interface StateListener {
 	 * @param current
 	 *            the current state
 	 */
-	public void onStateEntry(State previous, Event event, State current);
+	public void onStateEnter(State previous, Event event, State current);
 
 	/**
 	 * The state was exited.
@@ -49,7 +49,7 @@ public interface StateListener {
 	public void onStateExit(State current, Event event, State next);
 
 	/**
-	 * The end state was entered.
+	 * The final state was entered.
 	 * 
 	 * @param previous
 	 *            the previous state
@@ -58,10 +58,10 @@ public interface StateListener {
 	 * @param current
 	 *            the current state
 	 */
-	public void onEndStateEntry(State previous, Event event, State current);
+	public void onFinalStateEnter(State previous, Event event, State current);
 
 	/**
-	 * The end state was exited.
+	 * The final state was exited.
 	 * 
 	 * @param current
 	 *            the current state
@@ -70,5 +70,5 @@ public interface StateListener {
 	 * @param next
 	 *            the next state
 	 */
-	public void onEndStateExit(State current, Event event, State next);
+	public void onFinalStateExit(State current, Event event, State next);
 }

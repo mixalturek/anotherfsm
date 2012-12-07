@@ -16,36 +16,33 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.api;
+
 
 /**
- * Abstract event that causes the FSM transitions.
+ * The adapter for FSM transition callback.
  * 
  * @author Michal Turek
  */
-public interface Event {
+public class StateAdapter implements StateListener {
 
 	@Override
-	public int hashCode();
+	public void onStateEnter(State previous, Event event, State current) {
+		// Do nothing by default.
+	}
 
-	/**
-	 * Compare the objects using internal fields. FSM uses this method while
-	 * determining which transition process.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return true if the objects are same, otherwise false
-	 * @see StateMachine#processEvent(Event)
-	 */
 	@Override
-	public boolean equals(Object object);
+	public void onStateExit(State current, Event event, State next) {
+		// Do nothing by default.
+	}
 
-	/**
-	 * The string representation of the object. It is expected the class name
-	 * and all fields used in equals() are listed.
-	 * 
-	 * @return the string representation
-	 */
 	@Override
-	public String toString();
+	public void onFinalStateEnter(State previous, Event event, State current) {
+		// Do nothing by default.
+	}
+
+	@Override
+	public void onFinalStateExit(State current, Event event, State next) {
+		// Do nothing by default.
+	}
 }

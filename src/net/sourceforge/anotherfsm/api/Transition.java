@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.api;
 
 /**
  * The transition in FSM.
@@ -29,7 +29,7 @@ public interface Transition {
 	 * 
 	 * @return the transition source state
 	 */
-	public State getSourceState();
+	public State getSource();
 
 	/**
 	 * Get the transition event.
@@ -43,10 +43,10 @@ public interface Transition {
 	 * 
 	 * @return the transition destination state
 	 */
-	public State getDestinationState();
+	public State getDestination();
 
 	/**
-	 * Add a listener for the transition.
+	 * Add a new listener. The method is not thread safe.
 	 * 
 	 * @param listener
 	 *            the listener
@@ -54,12 +54,25 @@ public interface Transition {
 	public void addListener(TransitionListener listener);
 
 	/**
-	 * Process event.
+	 * Remove the listener. The method is not thread safe.
 	 * 
+	 * @param listener
+	 *            the listener
+	 * @return true if the listener was defined and removed
+	 */
+	public boolean removeListener(TransitionListener listener);
+
+	/**
+	 * The transition was processed, notify listeners. Internal use only.
+	 * 
+	 * @param source
+	 *            the source state
 	 * @param event
 	 *            the event
+	 * @param destination
+	 *            the destination state
 	 */
-	public void processEvent(Event event);
+	public void notifyTransition(State source, Event event, State destination);
 
 	/**
 	 * Get the hash code.
@@ -76,7 +89,7 @@ public interface Transition {
 	 * @param object
 	 *            the object
 	 * @return true if the objects are same, otherwise false
-	 * @see StateMachine#processEvent(Event)
+	 * @see StateMachine#process(Event)
 	 */
 	@Override
 	public boolean equals(Object object);

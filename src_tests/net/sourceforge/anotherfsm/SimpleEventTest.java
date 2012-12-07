@@ -21,6 +21,8 @@ package net.sourceforge.anotherfsm;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import net.sourceforge.anotherfsm.deterministic.TypeEvent;
+
 import org.junit.Test;
 
 /**
@@ -32,33 +34,33 @@ public class SimpleEventTest {
 
 	@Test
 	public final void testHashCode() {
-		SimpleEvent e1 = new SimpleEvent();
-		SimpleEvent e2 = new SimpleEvent();
+		TypeEvent e1 = new TypeEvent();
+		TypeEvent e2 = new TypeEvent();
 		assertTrue(e1.hashCode() == e2.hashCode());
 	}
 
 	@Test
 	public final void testEqualsObject() {
-		SimpleEvent e1 = new SimpleEvent();
-		SimpleEvent e2 = new SimpleEvent();
+		TypeEvent e1 = new TypeEvent();
+		TypeEvent e2 = new TypeEvent();
 		assertTrue(e1.equals(e2));
 	}
 
 	@Test
 	public final void testToString() {
-		assertTrue("SimpleEvent()".equals(new SimpleEvent().toString()));
+		assertTrue("SimpleEvent()".equals(new TypeEvent().toString()));
 	}
 
 	@Test
 	public final void testHashCode2() {
-		SimpleEvent e1 = new SimpleEvent();
+		TypeEvent e1 = new TypeEvent();
 		TestEvent e2 = new TestEvent();
 		assertFalse(e1.hashCode() == e2.hashCode());
 	}
 
 	@Test
 	public final void testEqualsObject2() {
-		SimpleEvent e1 = new SimpleEvent();
+		TypeEvent e1 = new TypeEvent();
 		TestEvent e2 = new TestEvent();
 		assertFalse(e1.equals(e2));
 	}
@@ -68,7 +70,7 @@ public class SimpleEventTest {
 		assertTrue("TestEvent()".equals(new TestEvent().toString()));
 	}
 
-	private class TestEvent extends SimpleEvent {
+	private class TestEvent extends TypeEvent {
 		// Empty.
 	}
 }

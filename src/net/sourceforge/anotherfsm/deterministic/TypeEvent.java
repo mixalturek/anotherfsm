@@ -16,18 +16,37 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.deterministic;
+
+import net.sourceforge.anotherfsm.api.Event;
 
 /**
- * The adapter for FSM transition callback.
+ * An event, comparison using the class type.
  * 
  * @author Michal Turek
  */
-public class TransitionAdapter implements TransitionListener {
+public class TypeEvent implements Event {
+	@Override
+	public int hashCode() {
+		return 89658520 + getClass().hashCode();
+	}
 
 	@Override
-	public void onTransition(State sourceState, Event event,
-			State destinationState) {
-		// Do nothing by default.
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (getClass() != obj.getClass())
+			return false;
+
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "()";
 	}
 }

@@ -16,36 +16,37 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.api;
+
 
 /**
- * A simple event.
+ * Abstract event that causes the FSM transitions.
  * 
  * @author Michal Turek
  */
-public class SimpleEvent implements Event {
+public interface Event {
 
 	@Override
-	public int hashCode() {
-		return 89658520 + getClass().hashCode();
-	}
+	public int hashCode();
 
+	/**
+	 * Compare the objects using internal fields. FSM uses this method while
+	 * determining which transition process.
+	 * 
+	 * @param object
+	 *            the object
+	 * @return true if the objects are same, otherwise false
+	 * @see StateMachine#process(Event)
+	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
+	public boolean equals(Object object);
 
-		if (obj == null)
-			return false;
-
-		if (getClass() != obj.getClass())
-			return false;
-
-		return true;
-	}
-
+	/**
+	 * The string representation of the object. It is expected the class name
+	 * and all fields used in equals() are listed.
+	 * 
+	 * @return the string representation
+	 */
 	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "()";
-	}
+	public String toString();
 }

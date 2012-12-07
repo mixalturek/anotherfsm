@@ -16,25 +16,30 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.deterministic;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import net.sourceforge.anotherfsm.api.Event;
+import net.sourceforge.anotherfsm.api.State;
+import net.sourceforge.anotherfsm.api.Transition;
+import net.sourceforge.anotherfsm.api.TransitionListener;
 
 /**
  * The implementation of transition.
  * 
  * @author Michal Turek
  */
-public class SimpleTransition implements Transition {
+public class BasicTransition implements Transition {
 	/** The source state. */
-	private final State sourceState;
+	private final State source;
 
 	/** The event. */
 	private final Event event;
 
 	/** The destination state. */
-	private final State destinationState;
+	private final State destination;
 
 	/** The listeners. */
 	private final List<TransitionListener> listeners = new LinkedList<TransitionListener>();
@@ -42,27 +47,27 @@ public class SimpleTransition implements Transition {
 	/**
 	 * Create the object.
 	 * 
-	 * @param sourceState
+	 * @param source
 	 *            the source state
 	 * @param event
 	 *            the event
-	 * @param destinationState
+	 * @param destination
 	 *            the destination state
 	 * @param listener
 	 *            the listener
 	 */
-	public SimpleTransition(State sourceState, Event event,
-			State destinationState, TransitionListener listener) {
-		if (sourceState == null)
+	public BasicTransition(State source, Event event, State destination,
+			TransitionListener listener) {
+		if (source == null)
 			throw new NullPointerException("Source state must not be null");
 		if (event == null)
 			throw new NullPointerException("Event must not be null");
-		if (destinationState == null)
+		if (destination == null)
 			throw new NullPointerException("Destination state must not be null");
 
-		this.sourceState = sourceState;
+		this.source = source;
 		this.event = event;
-		this.destinationState = destinationState;
+		this.destination = destination;
 
 		if (listener != null)
 			listeners.add(listener);
@@ -75,32 +80,25 @@ public class SimpleTransition implements Transition {
 	 *            the source state
 	 * @param event
 	 *            the event
-	 * @param destinationState
+	 * @param destination
 	 *            the destination state
 	 */
-	public SimpleTransition(State sourceState, Event event,
-			State destinationState) {
-		if (sourceState == null)
+	public BasicTransition(State source, Event event, State destination) {
+		if (source == null)
 			throw new NullPointerException("Source state must not be null");
 		if (event == null)
 			throw new NullPointerException("Event must not be null");
-		if (destinationState == null)
+		if (destination == null)
 			throw new NullPointerException("Destination state must not be null");
 
-		this.sourceState = sourceState;
+		this.source = source;
 		this.event = event;
-		this.destinationState = destinationState;
+		this.destination = destination;
 	}
 
 	@Override
-	public void processEvent(Event event) {
-		for (TransitionListener listener : listeners)
-			listener.onTransition(sourceState, event, destinationState);
-	}
-
-	@Override
-	public State getSourceState() {
-		return sourceState;
+	public State getSource() {
+		return source;
 	}
 
 	@Override
@@ -109,8 +107,8 @@ public class SimpleTransition implements Transition {
 	}
 
 	@Override
-	public State getDestinationState() {
-		return destinationState;
+	public State getDestination() {
+		return destination;
 	}
 
 	@Override
@@ -119,12 +117,24 @@ public class SimpleTransition implements Transition {
 	}
 
 	@Override
+	public boolean removeListener(TransitionListener listener) {
+		return listeners.remove(listener);
+	}
+
+	@Override
+	public void notifyTransition(State source, Event event, State destination) {
+		for (TransitionListener listener : listeners) {
+			listener.onTransition(source, event, destination);
+		}
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + destinationState.hashCode();
+		result = prime * result + destination.hashCode();
 		result = prime * result + event.hashCode();
-		result = prime * result + sourceState.hashCode();
+		result = prime * result + source.hashCode();
 		return result;
 	}
 
@@ -133,17 +143,17 @@ public class SimpleTransition implements Transition {
 		if (this == object)
 			return true;
 
-		if (object == null || !(object instanceof SimpleTransition))
+		if (object == null || !(object instanceof BasicTransition))
 			return false;
 
-		SimpleTransition other = (SimpleTransition) object;
-		return sourceState.equals(other.getSourceState())
+		BasicTransition other = (BasicTransition) object;
+		return source.equals(other.getSource())
 				&& event.equals(other.getEvent())
-				&& destinationState.equals(other.getDestinationState());
+				&& destination.equals(other.getDestination());
 	}
 
 	@Override
 	public String toString() {
-		return sourceState + " -> " + event + " -> " + destinationState;
+		return source + " -> " + event + " -> " + destination;
 	}
 }
