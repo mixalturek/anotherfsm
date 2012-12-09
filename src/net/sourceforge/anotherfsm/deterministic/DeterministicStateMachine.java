@@ -60,7 +60,7 @@ public class DeterministicStateMachine implements StateMachine {
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
 	/** The preprocessor of the events. */
-	private final ProcessorGroup preprocessors = new TypePreprocessors();
+	private final ProcessorGroup preprocessors;
 
 	/**
 	 * Create the object.
@@ -68,8 +68,18 @@ public class DeterministicStateMachine implements StateMachine {
 	 * @param name
 	 */
 	public DeterministicStateMachine(String name) {
+		this(name, new TypePreprocessors());
+	}
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param name
+	 */
+	public DeterministicStateMachine(String name, ProcessorGroup preprocessors) {
 		this.name = name;
 		logger = Logger.getLogger(this.getClass() + "-" + name);// TODO: test
+		this.preprocessors = preprocessors;
 	}
 
 	@Override

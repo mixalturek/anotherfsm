@@ -18,10 +18,12 @@
 
 package net.sourceforge.anotherfsm;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import net.sourceforge.anotherfsm.deterministic.TypeEvent;
+import net.sourceforge.anotherfsm.api.TypeEvent;
+import net.sourceforge.anotherfsm.testimpl.TypeEventImpl;
+import net.sourceforge.anotherfsm.testimpl.TypeEventImpl2;
 
 import org.junit.Test;
 
@@ -30,47 +32,49 @@ import org.junit.Test;
  * 
  * @author Michal Turek
  */
-public class SimpleEventTest {
+public class TypeEventTest {
 
 	@Test
 	public final void testHashCode() {
-		TypeEvent e1 = new TypeEvent();
-		TypeEvent e2 = new TypeEvent();
+		TypeEvent e1 = new TypeEventImpl();
+		TypeEvent e2 = new TypeEventImpl();
 		assertTrue(e1.hashCode() == e2.hashCode());
 	}
 
 	@Test
 	public final void testEqualsObject() {
-		TypeEvent e1 = new TypeEvent();
-		TypeEvent e2 = new TypeEvent();
+		TypeEvent e1 = new TypeEventImpl();
+		TypeEvent e2 = new TypeEventImpl();
 		assertTrue(e1.equals(e2));
 	}
 
 	@Test
 	public final void testToString() {
-		assertTrue("SimpleEvent()".equals(new TypeEvent().toString()));
+		assertTrue("TypeEventImpl()".equals(new TypeEventImpl().toString()));
 	}
 
 	@Test
 	public final void testHashCode2() {
-		TypeEvent e1 = new TypeEvent();
-		TestEvent e2 = new TestEvent();
-		assertFalse(e1.hashCode() == e2.hashCode());
+		TypeEvent e1 = new TypeEventImpl();
+		TypeEvent e2 = new TypeEventImpl();
+		TypeEvent e3 = new TypeEventImpl2();
+		assertEquals(e1.hashCode(), e2.hashCode());
+		assertFalse(e1.hashCode() == e3.hashCode());
+		assertFalse(e2.hashCode() == e3.hashCode());
 	}
 
 	@Test
 	public final void testEqualsObject2() {
-		TypeEvent e1 = new TypeEvent();
-		TestEvent e2 = new TestEvent();
-		assertFalse(e1.equals(e2));
+		TypeEvent e1 = new TypeEventImpl();
+		TypeEvent e2 = new TypeEventImpl();
+		TypeEvent e3 = new TypeEventImpl2();
+		assertEquals(e1, e2);
+		assertFalse(e1.equals(e3));
+		assertFalse(e2.equals(e3));
 	}
 
 	@Test
 	public final void testToString2() {
-		assertTrue("TestEvent()".equals(new TestEvent().toString()));
-	}
-
-	private class TestEvent extends TypeEvent {
-		// Empty.
+		assertTrue("TypeEventImpl()".equals(new TypeEventImpl().toString()));
 	}
 }

@@ -47,35 +47,6 @@ public class BasicTransition implements Transition {
 	/**
 	 * Create the object.
 	 * 
-	 * @param source
-	 *            the source state
-	 * @param event
-	 *            the event
-	 * @param destination
-	 *            the destination state
-	 * @param listener
-	 *            the listener
-	 */
-	public BasicTransition(State source, Event event, State destination,
-			TransitionListener listener) {
-		if (source == null)
-			throw new NullPointerException("Source state must not be null");
-		if (event == null)
-			throw new NullPointerException("Event must not be null");
-		if (destination == null)
-			throw new NullPointerException("Destination state must not be null");
-
-		this.source = source;
-		this.event = event;
-		this.destination = destination;
-
-		if (listener != null)
-			listeners.add(listener);
-	}
-
-	/**
-	 * Create the object.
-	 * 
 	 * @param sourceState
 	 *            the source state
 	 * @param event

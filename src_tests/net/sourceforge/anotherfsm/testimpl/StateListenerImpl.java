@@ -16,37 +16,40 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.deterministic;
+package net.sourceforge.anotherfsm.testimpl;
 
 import net.sourceforge.anotherfsm.api.Event;
+import net.sourceforge.anotherfsm.api.State;
+import net.sourceforge.anotherfsm.api.StateListener;
 
 /**
- * An event, comparison using the class type.
+ * Simple implementation of StateListener for use in JUnit tests.
  * 
  * @author Michal Turek
  */
-public class TypeEvent implements Event {
+public class StateListenerImpl implements StateListener {
+	public int enteredNum = 0;
+	public int exitedNum = 0;
+	public int finalEnteredNum = 0;
+	public int finalExitedNum = 0;
+
 	@Override
-	public int hashCode() {
-		return 89658520 + getClass().hashCode();
+	public void onStateEnter(State previous, Event event, State current) {
+		++enteredNum;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-
-		if (obj == null)
-			return false;
-
-		if (getClass() != obj.getClass())
-			return false;
-
-		return true;
+	public void onStateExit(State current, Event event, State next) {
+		++exitedNum;
 	}
 
 	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "()";
+	public void onFinalStateEnter(State previous, Event event, State current) {
+		++finalEnteredNum;
+	}
+
+	@Override
+	public void onFinalStateExit(State current, Event event, State next) {
+		++finalExitedNum;
 	}
 }

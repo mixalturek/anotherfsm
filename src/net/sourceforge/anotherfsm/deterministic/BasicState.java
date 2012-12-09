@@ -114,11 +114,17 @@ public class BasicState implements State {
 		return finalState;
 	}
 
+	/**
+	 * Only name of the state is used for creating hash code.
+	 */
 	@Override
 	public int hashCode() {
 		return 3452542 + name.hashCode();
 	}
 
+	/**
+	 * Only name of the states is used during the comparison.
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if (this == object)
