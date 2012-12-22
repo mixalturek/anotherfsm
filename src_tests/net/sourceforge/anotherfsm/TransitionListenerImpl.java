@@ -1,4 +1,4 @@
-package net.sourceforge.anotherfsm.testimpl;
+package net.sourceforge.anotherfsm;
 
 import net.sourceforge.anotherfsm.Event;
 import net.sourceforge.anotherfsm.State;

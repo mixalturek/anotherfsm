@@ -16,7 +16,8 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.testimpl;
+package net.sourceforge.anotherfsm;
+
 
 
 public class TypeEventImpl2 extends TypeEventImpl {

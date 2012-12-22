@@ -3,17 +3,14 @@ package net.sourceforge.anotherfsm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.sourceforge.anotherfsm.BasicState;
-import net.sourceforge.anotherfsm.State;
-import net.sourceforge.anotherfsm.testimpl.StateListenerImpl;
 
 import org.junit.Test;
 
-public class BasicStateTest {
+public class StateTest {
 	@Test
 	public final void testAddListener() {
-		State state = new BasicState("state");
-		State stateFinal = new BasicState("state", true);
+		State state = new State("state");
+		State stateFinal = new State("state", true);
 		StateListenerImpl listener = new StateListenerImpl();
 
 		state.addListener(listener);
@@ -55,8 +52,8 @@ public class BasicStateTest {
 
 	@Test
 	public final void testRemoveListener() {
-		State state = new BasicState("state");
-		State stateFinal = new BasicState("state", true);
+		State state = new State("state");
+		State stateFinal = new State("state", true);
 		StateListenerImpl listener = new StateListenerImpl();
 
 		state.addListener(listener);
@@ -100,41 +97,41 @@ public class BasicStateTest {
 
 	@Test
 	public final void testGetName() {
-		State state = new BasicState("state");
+		State state = new State("state");
 		assertEquals("state", state.getName());
 
-		State stateNonFinal = new BasicState("state", false);
+		State stateNonFinal = new State("state", false);
 		assertEquals("state", stateNonFinal.getName());
 
-		State stateFinal = new BasicState("state", true);
+		State stateFinal = new State("state", true);
 		assertEquals("state", stateFinal.getName());
 	}
 
 	@Test
 	public final void testIsFinalState() {
-		State stateDefault = new BasicState("state");
+		State stateDefault = new State("state");
 		assertFalse(stateDefault.isFinalState());
 
-		State stateNonFinal = new BasicState("state", false);
+		State stateNonFinal = new State("state", false);
 		assertFalse(stateNonFinal.isFinalState());
 
-		State stateFinal = new BasicState("state", true);
+		State stateFinal = new State("state", true);
 		assertTrue(stateFinal.isFinalState());
 	}
 
 	@Test
 	public final void testHashCode() {
-		State state1 = new BasicState("same");
-		State state2 = new BasicState("same");
-		State state3 = new BasicState("different");
+		State state1 = new State("same");
+		State state2 = new State("same");
+		State state3 = new State("different");
 
 		assertEquals(state1.hashCode(), state2.hashCode());
 		assertTrue(state1.hashCode() != state3.hashCode());
 		assertTrue(state2.hashCode() != state3.hashCode());
 
-		State state1Final = new BasicState("same", true);
-		State state2Final = new BasicState("same", true);
-		State state3Final = new BasicState("different", true);
+		State state1Final = new State("same", true);
+		State state2Final = new State("same", true);
+		State state3Final = new State("different", true);
 
 		assertEquals(state1Final.hashCode(), state2Final.hashCode());
 		assertTrue(state1Final.hashCode() != state3Final.hashCode());
@@ -148,9 +145,9 @@ public class BasicStateTest {
 
 	@Test
 	public final void testEqualsObject() {
-		State state1 = new BasicState("same");
-		State state2 = new BasicState("same");
-		State state3 = new BasicState("different");
+		State state1 = new State("same");
+		State state2 = new State("same");
+		State state3 = new State("different");
 
 		assertEquals(state1, state2);
 		assertEquals(state2, state1);
@@ -159,9 +156,9 @@ public class BasicStateTest {
 		assertFalse(state3.equals(state1));
 		assertFalse(state3.equals(state2));
 
-		State state1Final = new BasicState("same", true);
-		State state2Final = new BasicState("same", true);
-		State state3Final = new BasicState("different", true);
+		State state1Final = new State("same", true);
+		State state2Final = new State("same", true);
+		State state3Final = new State("different", true);
 
 		assertEquals(state1, state1);
 		assertEquals(state1Final, state1Final);
@@ -177,13 +174,13 @@ public class BasicStateTest {
 
 	@Test
 	public final void testToString() {
-		State state = new BasicState("state");
+		State state = new State("state");
 		assertEquals("state", state.toString());
 
-		State stateNonFinal = new BasicState("state", false);
+		State stateNonFinal = new State("state", false);
 		assertEquals("state", stateNonFinal.toString());
 
-		State stateFinal = new BasicState("state", true);
+		State stateFinal = new State("state", true);
 		assertEquals("state", stateFinal.toString());
 	}
 }

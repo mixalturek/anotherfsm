@@ -18,32 +18,76 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
- * The transition in FSM.
+ * The transition in state machine.
  * 
  * @author Michal Turek
  */
-public interface Transition {
+class Transition {
+	/** The source state. */
+	private final State source;
+
+	/** The event. */
+	private final Event event;
+
+	/** The destination state. */
+	private final State destination;
+
+	/** The listeners. */
+	private final List<TransitionListener> listeners = new LinkedList<TransitionListener>();
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param sourceState
+	 *            the source state
+	 * @param event
+	 *            the event
+	 * @param destination
+	 *            the destination state
+	 */
+	public Transition(State source, Event event, State destination) {
+		if (source == null)
+			throw new NullPointerException("Source state must not be null");
+		if (event == null)
+			throw new NullPointerException("Event must not be null");
+		if (destination == null)
+			throw new NullPointerException("Destination state must not be null");
+
+		this.source = source;
+		this.event = event;
+		this.destination = destination;
+	}
+
 	/**
 	 * Get the source state.
 	 * 
 	 * @return the transition source state
 	 */
-	public State getSource();
+	public State getSource() {
+		return source;
+	}
 
 	/**
 	 * Get the transition event.
 	 * 
 	 * @return the transition event
 	 */
-	public Event getEvent();
+	public Event getEvent() {
+		return event;
+	}
 
 	/**
 	 * Get the transition destination state.
 	 * 
 	 * @return the transition destination state
 	 */
-	public State getDestination();
+	public State getDestination() {
+		return destination;
+	}
 
 	/**
 	 * Add a new listener. The method is not thread safe.
@@ -51,7 +95,9 @@ public interface Transition {
 	 * @param listener
 	 *            the listener
 	 */
-	public void addListener(TransitionListener listener);
+	public void addListener(TransitionListener listener) {
+		listeners.add(listener);
+	}
 
 	/**
 	 * Remove the listener. The method is not thread safe.
@@ -60,7 +106,9 @@ public interface Transition {
 	 *            the listener
 	 * @return true if the listener was defined and removed
 	 */
-	public boolean removeListener(TransitionListener listener);
+	public boolean removeListener(TransitionListener listener) {
+		return listeners.remove(listener);
+	}
 
 	/**
 	 * The transition was processed, notify listeners. Internal use only.
@@ -72,7 +120,11 @@ public interface Transition {
 	 * @param destination
 	 *            the destination state
 	 */
-	public void notifyTransition(State source, Event event, State destination);
+	void notifyTransition(State source, Event event, State destination) {
+		for (TransitionListener listener : listeners) {
+			listener.onTransition(source, event, destination);
+		}
+	}
 
 	/**
 	 * Get the hash code.
@@ -80,7 +132,14 @@ public interface Transition {
 	 * @return the hash code
 	 */
 	@Override
-	public int hashCode();
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + destination.hashCode();
+		result = prime * result + event.hashCode();
+		result = prime * result + source.hashCode();
+		return result;
+	}
 
 	/**
 	 * Compare the objects using internal fields. FSM uses this method while
@@ -92,7 +151,18 @@ public interface Transition {
 	 * @see StateMachine#process(Event)
 	 */
 	@Override
-	public boolean equals(Object object);
+	public boolean equals(Object object) {
+		if (this == object)
+			return true;
+
+		if (object == null || !(object instanceof Transition))
+			return false;
+
+		Transition other = (Transition) object;
+		return source.equals(other.getSource())
+				&& event.equals(other.getEvent())
+				&& destination.equals(other.getDestination());
+	}
 
 	/**
 	 * The string representation of the object. It is expected the name of the
@@ -101,5 +171,7 @@ public interface Transition {
 	 * @return the string representation
 	 */
 	@Override
-	public String toString();
+	public String toString() {
+		return source + " -> " + event + " -> " + destination;
+	}
 }

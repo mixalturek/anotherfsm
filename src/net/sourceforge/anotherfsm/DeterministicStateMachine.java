@@ -236,4 +236,9 @@ class DeterministicStateMachine implements StateMachine {
 
 		return preprocessedEvent;
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "(" + name + ")";
+	}
 }

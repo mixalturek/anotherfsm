@@ -20,42 +20,36 @@ package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import net.sourceforge.anotherfsm.BasicState;
-import net.sourceforge.anotherfsm.BasicTransition;
-import net.sourceforge.anotherfsm.Transition;
-import net.sourceforge.anotherfsm.testimpl.TransitionListenerImpl;
-import net.sourceforge.anotherfsm.testimpl.TypeEventImpl;
-import net.sourceforge.anotherfsm.testimpl.TypeEventImpl2;
 
 import org.junit.Test;
 
-public class BasicTransitionTest {
+public class TransitionTest {
 
 	@Test
 	public final void testAddListener() {
-		Transition transition = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
+		Transition transition = new Transition(new State("source"),
+				new TypeEventImpl(), new State("destination"));
 		TransitionListenerImpl listener = new TransitionListenerImpl();
 
 		transition.addListener(listener);
 
 		assertEquals(0, listener.transitionsNum);
 
-		transition.notifyTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
+		transition.notifyTransition(new State("source"), new TypeEventImpl(),
+				new State("destination"));
 
 		assertEquals(1, listener.transitionsNum);
 
-		transition.notifyTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
+		transition.notifyTransition(new State("source"), new TypeEventImpl(),
+				new State("destination"));
 
 		assertEquals(2, listener.transitionsNum);
 	}
 
 	@Test
 	public final void testRemoveListener() {
-		Transition transition = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
+		Transition transition = new Transition(new State("source"),
+				new TypeEventImpl(), new State("destination"));
 		TransitionListenerImpl listener = new TransitionListenerImpl();
 
 		transition.addListener(listener);
@@ -63,25 +57,25 @@ public class BasicTransitionTest {
 
 		assertEquals(0, listener.transitionsNum);
 
-		transition.notifyTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
+		transition.notifyTransition(new State("source"), new TypeEventImpl(),
+				new State("destination"));
 
 		assertEquals(0, listener.transitionsNum);
 
-		transition.notifyTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
+		transition.notifyTransition(new State("source"), new TypeEventImpl(),
+				new State("destination"));
 
 		assertEquals(0, listener.transitionsNum);
 	}
 
 	@Test
 	public final void testHashCode() {
-		Transition transition1 = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
-		Transition transition2 = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
-		Transition transition3 = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl2(), new BasicState("destination"));
+		Transition transition1 = new Transition(new State("source"),
+				new TypeEventImpl(), new State("destination"));
+		Transition transition2 = new Transition(new State("source"),
+				new TypeEventImpl(), new State("destination"));
+		Transition transition3 = new Transition(new State("source"),
+				new TypeEventImpl2(), new State("destination"));
 
 		assertEquals(transition1.hashCode(), transition2.hashCode());
 		assertFalse(transition1.hashCode() == transition3.hashCode());
@@ -90,12 +84,12 @@ public class BasicTransitionTest {
 
 	@Test
 	public final void testEqualsObject() {
-		Transition transition1 = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
-		Transition transition2 = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
-		Transition transition3 = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl2(), new BasicState("destination"));
+		Transition transition1 = new Transition(new State("source"),
+				new TypeEventImpl(), new State("destination"));
+		Transition transition2 = new Transition(new State("source"),
+				new TypeEventImpl(), new State("destination"));
+		Transition transition3 = new Transition(new State("source"),
+				new TypeEventImpl2(), new State("destination"));
 
 		assertEquals(transition1, transition1);
 		assertEquals(transition2, transition2);
@@ -110,8 +104,8 @@ public class BasicTransitionTest {
 
 	@Test
 	public final void testToString() {
-		Transition transition = new BasicTransition(new BasicState("source"),
-				new TypeEventImpl(), new BasicState("destination"));
+		Transition transition = new Transition(new State("source"),
+				new TypeEventImpl(), new State("destination"));
 
 		assertEquals("source -> TypeEventImpl() -> destination",
 				transition.toString());

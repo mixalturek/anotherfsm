@@ -18,26 +18,49 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
- * Abstract FSM state.
+ * The state in state machine.
  * 
  * @author Michal Turek
  */
-public interface State {
+class State {
+	/** The name of the state. */
+	private final String name;
+
+	/** The state is final flag. */
+	private final boolean finalState;
+
+	/** The listeners. */
+	private final List<StateListener> listeners = new LinkedList<StateListener>();
 
 	/**
-	 * Get name of the state.
+	 * Create the object.
 	 * 
-	 * @return the name of the state
+	 * @param name
+	 *            the name of the state
 	 */
-	public String getName();
+	public State(String name) {
+		this(name, false);
+	}
 
 	/**
-	 * Get the state is final flag.
+	 * Create the object.
 	 * 
-	 * @return the flag
+	 * @param name
+	 *            the name of the state
+	 * @param finalState
+	 *            the state is final flag
 	 */
-	public boolean isFinalState();
+	public State(String name, boolean finalState) {
+		if (name == null)
+			throw new NullPointerException("Name must not be null");
+
+		this.name = name;
+		this.finalState = finalState;
+	}
 
 	/**
 	 * Add a new listener. The method is not thread safe.
@@ -45,7 +68,9 @@ public interface State {
 	 * @param listener
 	 *            the listener
 	 */
-	public void addListener(StateListener listener);
+	public void addListener(StateListener listener) {
+		listeners.add(listener);
+	}
 
 	/**
 	 * Remove the listener. The method is not thread safe.
@@ -54,7 +79,9 @@ public interface State {
 	 *            the listener
 	 * @return true if the listener was defined and removed
 	 */
-	public boolean removeListener(StateListener listener);
+	public boolean removeListener(StateListener listener) {
+		return listeners.remove(listener);
+	}
 
 	/**
 	 * The state was entered, notify listeners. Internal use only.
@@ -66,7 +93,18 @@ public interface State {
 	 * @param current
 	 *            the current state
 	 */
-	public void notifyEnter(State previous, Event event, State current);
+	void notifyEnter(State previous, Event event, State current) {
+		if (finalState) {
+			for (StateListener listener : listeners) {
+				listener.onStateEnter(previous, event, current);
+				listener.onFinalStateEnter(previous, event, current);
+			}
+		} else {
+			for (StateListener listener : listeners) {
+				listener.onStateEnter(previous, event, current);
+			}
+		}
+	}
 
 	/**
 	 * The state was exited, notify listeners. Internal use only.
@@ -78,19 +116,52 @@ public interface State {
 	 * @param next
 	 *            the next state
 	 */
-	public void notifyExit(State current, Event event, State next);
+	void notifyExit(State current, Event event, State next) {
+		if (finalState) {
+			for (StateListener listener : listeners) {
+				listener.onStateExit(current, event, next);
+				listener.onFinalStateExit(current, event, next);
+			}
+		} else {
+			for (StateListener listener : listeners) {
+				listener.onStateExit(current, event, next);
+			}
+		}
+	}
 
 	/**
-	 * Get the hash code.
+	 * Get name of the state.
+	 * 
+	 * @return the name of the state
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Get the state is final flag.
+	 * 
+	 * @return the flag
+	 */
+	public boolean isFinalState() {
+		return finalState;
+	}
+
+	/**
+	 * Get the hash code. Only name of the state is used for creating hash code.
 	 * 
 	 * @return the hash code
 	 */
 	@Override
-	public int hashCode();
+	public int hashCode() {
+		return 3452542 + name.hashCode();
+	}
 
 	/**
 	 * Compare the objects using internal fields. FSM uses this method while
 	 * building the state machine to ensure all states are unique.
+	 * 
+	 * Only name of the states is used during the comparison.
 	 * 
 	 * @param object
 	 *            the object
@@ -98,7 +169,16 @@ public interface State {
 	 * @see StateMachine#process(Event)
 	 */
 	@Override
-	public boolean equals(Object object);
+	public boolean equals(Object object) {
+		if (this == object)
+			return true;
+
+		if (object == null || !(object instanceof State))
+			return false;
+
+		State other = (State) object;
+		return name.equals(other.name);
+	}
 
 	/**
 	 * The string representation of the object. It is expected the name of the
@@ -107,5 +187,7 @@ public interface State {
 	 * @return the string representation
 	 */
 	@Override
-	public String toString();
+	public String toString() {
+		return name;
+	}
 }
