@@ -18,7 +18,6 @@
 
 package net.sourceforge.anotherfsm;
 
-
 /**
  * Abstract event that causes the FSM transitions.
  * 

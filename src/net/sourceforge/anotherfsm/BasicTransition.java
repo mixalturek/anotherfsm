@@ -21,13 +21,12 @@ package net.sourceforge.anotherfsm;
 import java.util.LinkedList;
 import java.util.List;
 
-
 /**
  * The implementation of transition.
  * 
  * @author Michal Turek
  */
-public class BasicTransition implements Transition {
+class BasicTransition implements Transition {
 	/** The source state. */
 	private final State source;
 

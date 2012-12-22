@@ -21,13 +21,12 @@ package net.sourceforge.anotherfsm;
 import java.util.LinkedList;
 import java.util.List;
 
-
 /**
  * The implementation of state.
  * 
  * @author Michal Turek
  */
-public class BasicState implements State {
+class BasicState implements State {
 	/** The name of the state. */
 	private final String name;
 

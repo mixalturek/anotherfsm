@@ -21,7 +21,6 @@ package net.sourceforge.anotherfsm;
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
  * Preprocessors of the events based on their type.
  * 

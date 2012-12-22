@@ -23,7 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 import org.apache.log4j.Logger;
 
 /**
@@ -31,7 +30,7 @@ import org.apache.log4j.Logger;
  * 
  * @author Michal Turek
  */
-public class DeterministicStateMachine implements StateMachine {
+class DeterministicStateMachine implements StateMachine {
 	/** The logger. */
 	protected final Logger logger;
 
