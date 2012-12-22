@@ -1,9 +1,10 @@
-package net.sourceforge.anotherfsm.deterministic;
+package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.sourceforge.anotherfsm.api.State;
+import net.sourceforge.anotherfsm.BasicState;
+import net.sourceforge.anotherfsm.State;
 import net.sourceforge.anotherfsm.testimpl.StateListenerImpl;
 
 import org.junit.Test;

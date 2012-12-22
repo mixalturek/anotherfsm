@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.api;
+package net.sourceforge.anotherfsm;
 
 
 /**
@@ -24,11 +24,25 @@ package net.sourceforge.anotherfsm.api;
  * 
  * @author Michal Turek
  */
-public class TransitionAdapter implements TransitionListener {
+public class StateAdapter implements StateListener {
 
 	@Override
-	public void onTransition(State sourceState, Event event,
-			State destinationState) {
+	public void onStateEnter(State previous, Event event, State current) {
+		// Do nothing by default.
+	}
+
+	@Override
+	public void onStateExit(State current, Event event, State next) {
+		// Do nothing by default.
+	}
+
+	@Override
+	public void onFinalStateEnter(State previous, Event event, State current) {
+		// Do nothing by default.
+	}
+
+	@Override
+	public void onFinalStateExit(State current, Event event, State next) {
 		// Do nothing by default.
 	}
 }

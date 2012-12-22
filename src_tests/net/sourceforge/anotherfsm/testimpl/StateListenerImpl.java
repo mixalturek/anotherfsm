@@ -18,9 +18,9 @@
 
 package net.sourceforge.anotherfsm.testimpl;
 
-import net.sourceforge.anotherfsm.api.Event;
-import net.sourceforge.anotherfsm.api.State;
-import net.sourceforge.anotherfsm.api.StateListener;
+import net.sourceforge.anotherfsm.Event;
+import net.sourceforge.anotherfsm.State;
+import net.sourceforge.anotherfsm.StateListener;
 
 /**
  * Simple implementation of StateListener for use in JUnit tests.

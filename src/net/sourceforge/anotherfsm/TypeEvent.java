@@ -16,33 +16,36 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.api;
+package net.sourceforge.anotherfsm;
 
 
 /**
- * The adapter for FSM transition callback.
+ * An event, comparison using the class type.
  * 
  * @author Michal Turek
  */
-public class StateAdapter implements StateListener {
-
+public abstract class TypeEvent implements Event {
 	@Override
-	public void onStateEnter(State previous, Event event, State current) {
-		// Do nothing by default.
+	public int hashCode() {
+		return 89658520 + getClass().hashCode();
 	}
 
 	@Override
-	public void onStateExit(State current, Event event, State next) {
-		// Do nothing by default.
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (getClass() != obj.getClass())
+			return false;
+
+		return true;
 	}
 
 	@Override
-	public void onFinalStateEnter(State previous, Event event, State current) {
-		// Do nothing by default.
-	}
-
-	@Override
-	public void onFinalStateExit(State current, Event event, State next) {
-		// Do nothing by default.
+	public String toString() {
+		return getClass().getSimpleName() + "()";
 	}
 }

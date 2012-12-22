@@ -16,15 +16,11 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.deterministic;
+package net.sourceforge.anotherfsm;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.anotherfsm.api.Event;
-import net.sourceforge.anotherfsm.api.State;
-import net.sourceforge.anotherfsm.api.Transition;
-import net.sourceforge.anotherfsm.api.TransitionListener;
 
 /**
  * The implementation of transition.

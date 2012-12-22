@@ -16,11 +16,13 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.deterministic;
+package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import net.sourceforge.anotherfsm.api.Transition;
+import net.sourceforge.anotherfsm.BasicState;
+import net.sourceforge.anotherfsm.BasicTransition;
+import net.sourceforge.anotherfsm.Transition;
 import net.sourceforge.anotherfsm.testimpl.TransitionListenerImpl;
 import net.sourceforge.anotherfsm.testimpl.TypeEventImpl;
 import net.sourceforge.anotherfsm.testimpl.TypeEventImpl2;

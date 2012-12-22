@@ -16,37 +16,54 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.api;
-
+package net.sourceforge.anotherfsm;
 
 /**
- * Abstract event that causes the FSM transitions.
+ * Base class for all FSM exceptions.
  * 
  * @author Michal Turek
  */
-public interface Event {
+public class FsmException extends Exception {
 
-	@Override
-	public int hashCode();
-
-	/**
-	 * Compare the objects using internal fields. FSM uses this method while
-	 * determining which transition process.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return true if the objects are same, otherwise false
-	 * @see StateMachine#process(Event)
-	 */
-	@Override
-	public boolean equals(Object object);
+	/** The version UID. */
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The string representation of the object. It is expected the class name
-	 * and all fields used in equals() are listed.
-	 * 
-	 * @return the string representation
+	 * Create the object.
 	 */
-	@Override
-	public String toString();
+	public FsmException() {
+		// empty
+	}
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param message
+	 *            the message
+	 */
+	public FsmException(String message) {
+		super(message);
+	}
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param cause
+	 *            the cause
+	 */
+	public FsmException(Throwable cause) {
+		super(cause);
+	}
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param message
+	 *            the message
+	 * @param cause
+	 *            the cause
+	 */
+	public FsmException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

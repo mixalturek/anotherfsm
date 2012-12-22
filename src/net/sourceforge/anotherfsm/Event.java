@@ -16,36 +16,37 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.api;
+package net.sourceforge.anotherfsm;
 
 
 /**
- * An event, comparison using the class type.
+ * Abstract event that causes the FSM transitions.
  * 
  * @author Michal Turek
  */
-public abstract class TypeEvent implements Event {
-	@Override
-	public int hashCode() {
-		return 89658520 + getClass().hashCode();
-	}
+public interface Event {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
+	public int hashCode();
 
-		if (obj == null)
-			return false;
-
-		if (getClass() != obj.getClass())
-			return false;
-
-		return true;
-	}
-
+	/**
+	 * Compare the objects using internal fields. FSM uses this method while
+	 * determining which transition process.
+	 * 
+	 * @param object
+	 *            the object
+	 * @return true if the objects are same, otherwise false
+	 * @see StateMachine#process(Event)
+	 */
 	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "()";
-	}
+	public boolean equals(Object object);
+
+	/**
+	 * The string representation of the object. It is expected the class name
+	 * and all fields used in equals() are listed.
+	 * 
+	 * @return the string representation
+	 */
+	@Override
+	public String toString();
 }

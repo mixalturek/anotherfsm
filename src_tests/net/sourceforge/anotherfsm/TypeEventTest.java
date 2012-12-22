@@ -21,7 +21,7 @@ package net.sourceforge.anotherfsm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.sourceforge.anotherfsm.api.TypeEvent;
+import net.sourceforge.anotherfsm.TypeEvent;
 import net.sourceforge.anotherfsm.testimpl.TypeEventImpl;
 import net.sourceforge.anotherfsm.testimpl.TypeEventImpl2;
 

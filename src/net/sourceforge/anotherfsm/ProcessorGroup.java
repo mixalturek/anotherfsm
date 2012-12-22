@@ -16,7 +16,7 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.api;
+package net.sourceforge.anotherfsm;
 
 /**
  * Group of processors.

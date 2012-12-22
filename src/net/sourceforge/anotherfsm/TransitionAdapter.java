@@ -16,23 +16,19 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.api;
+package net.sourceforge.anotherfsm;
+
 
 /**
- * The listener for FSM transition callback.
+ * The adapter for FSM transition callback.
  * 
  * @author Michal Turek
  */
-public interface TransitionListener {
-	/**
-	 * The transition was processed.
-	 * 
-	 * @param source
-	 *            the source state
-	 * @param event
-	 *            the event
-	 * @param destination
-	 *            the destination state
-	 */
-	public void onTransition(State source, Event event, State destination);
+public class TransitionAdapter implements TransitionListener {
+
+	@Override
+	public void onTransition(State sourceState, Event event,
+			State destinationState) {
+		// Do nothing by default.
+	}
 }

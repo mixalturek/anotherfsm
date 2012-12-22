@@ -1,6 +1,6 @@
 package net.sourceforge.anotherfsm.testimpl;
 
-import net.sourceforge.anotherfsm.api.TypeEvent;
+import net.sourceforge.anotherfsm.TypeEvent;
 
 public class TypeEventImpl extends TypeEvent {
 

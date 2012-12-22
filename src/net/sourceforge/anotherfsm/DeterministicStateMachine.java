@@ -16,22 +16,13 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.deterministic;
+package net.sourceforge.anotherfsm;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.anotherfsm.api.Event;
-import net.sourceforge.anotherfsm.api.FsmException;
-import net.sourceforge.anotherfsm.api.Processor;
-import net.sourceforge.anotherfsm.api.ProcessorGroup;
-import net.sourceforge.anotherfsm.api.State;
-import net.sourceforge.anotherfsm.api.StateListener;
-import net.sourceforge.anotherfsm.api.StateMachine;
-import net.sourceforge.anotherfsm.api.Transition;
-import net.sourceforge.anotherfsm.api.TransitionListener;
 
 import org.apache.log4j.Logger;
 

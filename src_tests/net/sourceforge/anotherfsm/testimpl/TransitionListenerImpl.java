@@ -1,8 +1,8 @@
 package net.sourceforge.anotherfsm.testimpl;
 
-import net.sourceforge.anotherfsm.api.Event;
-import net.sourceforge.anotherfsm.api.State;
-import net.sourceforge.anotherfsm.api.TransitionListener;
+import net.sourceforge.anotherfsm.Event;
+import net.sourceforge.anotherfsm.State;
+import net.sourceforge.anotherfsm.TransitionListener;
 
 public class TransitionListenerImpl implements TransitionListener {
 	public int transitionsNum = 0;

@@ -16,15 +16,11 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.deterministic;
+package net.sourceforge.anotherfsm;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.anotherfsm.api.Event;
-import net.sourceforge.anotherfsm.api.FsmException;
-import net.sourceforge.anotherfsm.api.State;
-import net.sourceforge.anotherfsm.api.Transition;
 
 /**
  * State to transition mapping.
