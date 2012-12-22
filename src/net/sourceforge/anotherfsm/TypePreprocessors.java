@@ -26,7 +26,7 @@ import java.util.Map;
  * 
  * @author Michal Turek
  */
-public class TypePreprocessors implements ProcessorGroup {
+public class TypePreprocessors implements TypeProcessorsGroup {
 	/** The procesors. */
 	private final Map<Class<? extends Event>, Processor<Event>> processors = new HashMap<Class<? extends Event>, Processor<Event>>();
 

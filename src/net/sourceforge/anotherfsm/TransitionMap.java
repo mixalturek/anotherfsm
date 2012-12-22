@@ -18,9 +18,9 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * State to transition mapping.
@@ -47,9 +47,8 @@ class TransitionMap {
 	 *             if something fails
 	 */
 	public void addTransition(Transition transition) throws FsmException {
-		if (transitions.containsValue(transition))
-			throw new FsmException("Transition has been already defined: "
-					+ transition);
+		if (transitions.containsKey(transition.getEvent()))
+			throw new FsmException("Transition already defined: " + transition);
 
 		transitions.put(transition.getEvent(), transition);
 	}
@@ -62,17 +61,22 @@ class TransitionMap {
 	 * @param state
 	 *            the source state
 	 * @return the transition or null
-	 * @throws FsmException
-	 *             if transition is not defined
 	 */
-	public Transition getTransition(Event event, State state)
-			throws FsmException {
+	public Transition getTransition(Event event) {
 		Transition transition = transitions.get(event);
 
 		if (transition == null)
-			throw new FsmException("Transition is not defined: " + state + ", "
-					+ event);
+			return null;
 
 		return transition;
+	}
+
+	/**
+	 * Get all defined transitions.
+	 * 
+	 * @return the transitions
+	 */
+	public Collection<Transition> getTransitions() {
+		return transitions.values();
 	}
 }

@@ -19,11 +19,11 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Group of processors.
+ * Group of processors based on type.
  * 
  * @author Michal Turek
  */
-public interface ProcessorGroup {
+public interface TypeProcessorsGroup {
 	/**
 	 * Add a new processor. The method is not thread safe.
 	 * 
@@ -51,8 +51,6 @@ public interface ProcessorGroup {
 	 *            the input event
 	 * @return the original event a newly generated event or null to ignore the
 	 *         event
-	 * @throws FsmException
-	 *             if something fails
 	 */
-	public Event process(Event event) throws FsmException;
+	public Event process(Event event);
 }

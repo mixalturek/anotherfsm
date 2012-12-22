@@ -18,12 +18,14 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.util.Set;
+
 /**
  * Abstract state machine
  * 
  * @author Michal Turek
  */
-public interface StateMachine extends ProcessorGroup {
+public interface StateMachine extends TypeProcessorsGroup {
 	/**
 	 * Get the name of the state machine.
 	 * 
@@ -45,8 +47,10 @@ public interface StateMachine extends ProcessorGroup {
 	 * 
 	 * @param state
 	 *            the state
+	 * @throws FsmException
+	 *             if something fails
 	 */
-	public void addState(State state);
+	public void addState(State state) throws FsmException;
 
 	/**
 	 * Add a new transition. The method is not thread safe.
@@ -93,9 +97,13 @@ public interface StateMachine extends ProcessorGroup {
 	public boolean removeListener(TransitionListener listener);
 
 	/**
-	 * Start processing of the events, building of the state machine finished.
+	 * Start processing of the events, building of the state machine is
+	 * finished.
+	 * 
+	 * @throws FsmException
+	 *             if something fails
 	 */
-	public void start();
+	public void start() throws FsmException;
 
 	/**
 	 * Stop procession of the events, free all allocated resources.
@@ -103,11 +111,20 @@ public interface StateMachine extends ProcessorGroup {
 	public void stop();
 
 	/**
-	 * Get the current state.
+	 * Get the currently active state. Intended use in deterministic state
+	 * machines.
 	 * 
 	 * @return the currently active state
 	 */
-	public State getCurrentState();
+	public State getActiveState();
+
+	/**
+	 * Get the currently active states. Intended use in nondeterministic state
+	 * machines.
+	 * 
+	 * @return the currently active states
+	 */
+	public Set<State> getActiveStates();
 
 	/**
 	 * The string representation of the object. It is expected the name of the
@@ -117,4 +134,18 @@ public interface StateMachine extends ProcessorGroup {
 	 */
 	@Override
 	public String toString();
+
+	/**
+	 * Get all defined states.
+	 * 
+	 * @return the states
+	 */
+	public Set<State> getStates();
+
+	/**
+	 * Get all defined transitions.
+	 * 
+	 * @return the transitions
+	 */
+	public Set<Transition> getTransitions();
 }

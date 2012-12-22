@@ -19,9 +19,12 @@
 package net.sourceforge.anotherfsm;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -41,7 +44,7 @@ class DeterministicStateMachine implements StateMachine {
 	private final Map<State, TransitionMap> stateTransitions = new HashMap<State, TransitionMap>();
 
 	/** The current state. */
-	private State currentState;
+	private State currentState = null;
 
 	/** The listeners. */
 	private final List<StateListener> stateListeners = new LinkedList<StateListener>();
@@ -50,26 +53,17 @@ class DeterministicStateMachine implements StateMachine {
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
 	/** The preprocessor of the events. */
-	private final ProcessorGroup preprocessors;
+	private final TypeProcessorsGroup preprocessors = new TypePreprocessors();
 
 	/**
 	 * Create the object.
 	 * 
 	 * @param name
+	 *            the name of the state machine
 	 */
 	public DeterministicStateMachine(String name) {
-		this(name, new TypePreprocessors());
-	}
-
-	/**
-	 * Create the object.
-	 * 
-	 * @param name
-	 */
-	public DeterministicStateMachine(String name, ProcessorGroup preprocessors) {
 		this.name = name;
-		logger = Logger.getLogger(this.getClass() + "-" + name);// TODO: test
-		this.preprocessors = preprocessors;
+		logger = Logger.getLogger(this.getClass() + "-" + name);
 	}
 
 	@Override
@@ -80,25 +74,39 @@ class DeterministicStateMachine implements StateMachine {
 	@Override
 	public void setStartState(State state) throws FsmException {
 		if (currentState != null)
-			throw new FsmException("Start state has been already set: "
-					+ currentState);
+			throw new FsmException("Start state already set: " + currentState);
 
 		currentState = state;
-		addState(state);
+		addStateInternal(state);
 	}
 
 	@Override
-	public void start() {
-		// Do nothing in deterministic FSM
+	public void start() throws FsmException {
+		if (currentState == null)
+			throw new FsmException("Start state not defined");
 	}
 
 	@Override
 	public void stop() {
-		// Do nothing in deterministic FSM
+		// Do nothing in this class
 	}
 
 	@Override
-	public void addState(State state) {
+	public void addState(State state) throws FsmException {
+		if (stateTransitions.containsKey(state))
+			throw new FsmException("State redefined: " + state);
+
+		addStateInternal(state);
+	}
+
+	/**
+	 * Add a new state to the state machine. If the state is already defined, no
+	 * exception will be thrown.
+	 * 
+	 * @param state
+	 *            the state
+	 */
+	private void addStateInternal(State state) {
 		if (stateTransitions.containsKey(state))
 			return;
 
@@ -107,10 +115,9 @@ class DeterministicStateMachine implements StateMachine {
 
 	@Override
 	public void addTransition(Transition transition) throws FsmException {
-		addState(transition.getSource());
-		addState(transition.getDestination());
-
+		addStateInternal(transition.getSource());
 		stateTransitions.get(transition.getSource()).addTransition(transition);
+		addStateInternal(transition.getDestination());
 	}
 
 	@Override
@@ -184,14 +191,33 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	@Override
-	public synchronized State getCurrentState() {
+	public synchronized State getActiveState() {
 		return currentState;
 	}
 
 	@Override
-	public synchronized Event process(Event event) throws FsmException {
-		if (event == null)
-			throw new FsmException("Input event is null");
+	public synchronized Set<State> getActiveStates() {
+		Set<State> states = new HashSet<State>();
+		if (currentState == null)
+			return states;
+
+		states.add(currentState);
+		return states;
+	}
+
+	@Override
+	public synchronized Event process(Event event) {
+		// Don't throw exceptions during processing to be fast
+
+		if (currentState == null) {
+			logger.error("Current/start state is null");
+			return null;
+		}
+
+		if (event == null) {
+			logger.warn("Event is null");
+			return null;
+		}
 
 		Event preprocessedEvent = preprocessors.process(event);
 		if (preprocessedEvent == null) {
@@ -202,7 +228,7 @@ class DeterministicStateMachine implements StateMachine {
 		}
 
 		Transition transition = stateTransitions.get(currentState)
-				.getTransition(preprocessedEvent, currentState);
+				.getTransition(preprocessedEvent);
 
 		if (transition == null) {
 			logger.warn("No such transition: " + currentState + ", " + event);
@@ -240,5 +266,21 @@ class DeterministicStateMachine implements StateMachine {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "(" + name + ")";
+	}
+
+	@Override
+	public Set<State> getStates() {
+		return stateTransitions.keySet();
+	}
+
+	@Override
+	public Set<Transition> getTransitions() {
+		Set<Transition> transitions = new HashSet<Transition>();
+
+		for (Entry<State, TransitionMap> map : stateTransitions.entrySet()) {
+			transitions.addAll(map.getValue().getTransitions());
+		}
+
+		return transitions;
 	}
 }
