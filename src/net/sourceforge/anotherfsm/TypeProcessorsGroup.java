@@ -51,6 +51,8 @@ public interface TypeProcessorsGroup {
 	 *            the input event
 	 * @return the original event a newly generated event or null to ignore the
 	 *         event
+	 * @throws FsmException
+	 *             if something fails
 	 */
-	public Event process(Event event);
+	public Event process(Event event) throws FsmException;
 }

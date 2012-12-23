@@ -206,23 +206,23 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	@Override
-	public synchronized Event process(Event event) {
-		// Don't throw exceptions during processing to be fast
-
+	public synchronized Event process(Event event) throws FsmException {
 		if (currentState == null) {
 			logger.error("Current/start state is null");
-			return null;
+			throw new FsmException("Current/start state is null");
 		}
 
 		if (event == null) {
-			logger.warn("Event is null");
-			return null;
+			logger.error("Incoming event is null");
+			throw new FsmException("Incoming event is null");
 		}
 
 		Event preprocessedEvent = preprocessors.process(event);
 		if (preprocessedEvent == null) {
-			if (logger.isTraceEnabled())
-				logger.trace("Event won't be processed: " + event);
+			if (logger.isTraceEnabled()) {
+				logger.info("Event only preprocessed, no other action: "
+						+ event);
+			}
 
 			return null;
 		}
@@ -232,7 +232,8 @@ class DeterministicStateMachine implements StateMachine {
 
 		if (transition == null) {
 			logger.warn("No such transition: " + currentState + ", " + event);
-			return null;
+			throw new FsmException("No such transition: " + currentState + ", "
+					+ event);
 		}
 
 		State source = transition.getSource();
@@ -248,16 +249,18 @@ class DeterministicStateMachine implements StateMachine {
 						+ event + ")" + " -> " + destination;
 			}
 
-			logger.info("Transition processing started: " + transStr);
+			logger.info("Transition started:  " + transStr);
 		}
 
+		// No catching of runtime exception is here, it's responsibility of the
+		// callbacks to not throw them
 		notifyExit(source, preprocessedEvent, destination);
 		currentState = destination;
 		notifyTransition(transition, source, preprocessedEvent, destination);
 		notifyEnter(source, preprocessedEvent, destination);
 
 		if (logger.isInfoEnabled()) {
-			logger.info("Transition processing finished: " + transStr);
+			logger.info("Transition finished: " + transStr);
 		}
 
 		return preprocessedEvent;
