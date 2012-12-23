@@ -146,12 +146,7 @@ class DeterministicStateMachine implements StateMachine {
 		preprocessors.addProcessor(clazz, processor);
 	}
 
-	@Override
-	public boolean removeProcessor(Class<? extends Event> clazz) {
-		return preprocessors.removeProcessor(clazz);
-	}
-
-	public void notifyEnter(State previous, Event event, State current) {
+	void notifyEnter(State previous, Event event, State current) {
 		current.notifyEnter(previous, event, current);
 
 		if (current.isFinalState()) {
@@ -166,7 +161,7 @@ class DeterministicStateMachine implements StateMachine {
 		}
 	}
 
-	public void notifyExit(State current, Event event, State next) {
+	void notifyExit(State current, Event event, State next) {
 		current.notifyExit(current, event, next);
 
 		if (current.isFinalState()) {
@@ -181,8 +176,8 @@ class DeterministicStateMachine implements StateMachine {
 		}
 	}
 
-	public void notifyTransition(Transition transition, State source,
-			Event event, State destination) {
+	void notifyTransition(Transition transition, State source, Event event,
+			State destination) {
 		transition.notifyTransition(source, event, destination);
 
 		for (TransitionListener listener : transitionListeners) {

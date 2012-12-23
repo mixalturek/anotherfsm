@@ -47,28 +47,6 @@ public class TransitionTest {
 	}
 
 	@Test
-	public final void testRemoveListener() {
-		Transition transition = new Transition(new State("source"),
-				new TypeEventImpl(), new State("destination"));
-		TransitionListenerImpl listener = new TransitionListenerImpl();
-
-		transition.addListener(listener);
-		transition.removeListener(listener);
-
-		assertEquals(0, listener.transitionsNum);
-
-		transition.notifyTransition(new State("source"), new TypeEventImpl(),
-				new State("destination"));
-
-		assertEquals(0, listener.transitionsNum);
-
-		transition.notifyTransition(new State("source"), new TypeEventImpl(),
-				new State("destination"));
-
-		assertEquals(0, listener.transitionsNum);
-	}
-
-	@Test
 	public final void testHashCode() {
 		Transition transition1 = new Transition(new State("source"),
 				new TypeEventImpl(), new State("destination"));

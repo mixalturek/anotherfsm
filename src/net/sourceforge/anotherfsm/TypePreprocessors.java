@@ -48,11 +48,6 @@ public class TypePreprocessors implements TypeProcessorsGroup {
 	}
 
 	@Override
-	public boolean removeProcessor(Class<? extends Event> clazz) {
-		return processors.remove(clazz) != null;
-	}
-
-	@Override
 	public Event process(Event event) {
 		if (event == null)
 			return null;

@@ -100,17 +100,6 @@ class Transition {
 	}
 
 	/**
-	 * Remove the listener. The method is not thread safe.
-	 * 
-	 * @param listener
-	 *            the listener
-	 * @return true if the listener was defined and removed
-	 */
-	public boolean removeListener(TransitionListener listener) {
-		return listeners.remove(listener);
-	}
-
-	/**
 	 * The transition was processed, notify listeners. Internal use only.
 	 * 
 	 * @param source

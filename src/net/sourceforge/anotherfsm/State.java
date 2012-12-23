@@ -73,17 +73,6 @@ class State {
 	}
 
 	/**
-	 * Remove the listener. The method is not thread safe.
-	 * 
-	 * @param listener
-	 *            the listener
-	 * @return true if the listener was defined and removed
-	 */
-	public boolean removeListener(StateListener listener) {
-		return listeners.remove(listener);
-	}
-
-	/**
 	 * The state was entered, notify listeners. Internal use only.
 	 * 
 	 * @param previous

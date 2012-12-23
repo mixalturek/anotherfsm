@@ -215,27 +215,12 @@ public class DeterministicStateMachineTest {
 	}
 
 	@Test
-	public final void testRemoveListenerStateListener() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
 	public final void testAddListenerTransitionListener() {
 		fail("Not yet implemented"); // TODO
 	}
 
 	@Test
-	public final void testRemoveListenerTransitionListener() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
 	public final void testAddProcessor() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public final void testRemoveProcessor() {
 		fail("Not yet implemented"); // TODO
 	}
 

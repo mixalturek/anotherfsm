@@ -36,15 +36,6 @@ public interface TypeProcessorsGroup {
 			Processor<Event> processor) throws FsmException;
 
 	/**
-	 * Remove the processor. The method is not thread safe.
-	 * 
-	 * @param preprocessor
-	 *            the preprocessor
-	 * @return true if the preprocessor was defined and removed
-	 */
-	public boolean removeProcessor(Class<? extends Event> clazz);
-
-	/**
 	 * Process (or preprocess) the event before passing it to the state machine.
 	 * 
 	 * @param event

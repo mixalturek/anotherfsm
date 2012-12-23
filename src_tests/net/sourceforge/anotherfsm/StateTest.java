@@ -51,51 +51,6 @@ public class StateTest {
 	}
 
 	@Test
-	public final void testRemoveListener() {
-		State state = new State("state");
-		State stateFinal = new State("state", true);
-		StateListenerImpl listener = new StateListenerImpl();
-
-		state.addListener(listener);
-		stateFinal.addListener(listener);
-		state.removeListener(listener);
-		stateFinal.removeListener(listener);
-
-		assertEquals(listener.enteredNum, 0);
-		assertEquals(listener.exitedNum, 0);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
-
-		state.notifyEnter(null, null, null);
-
-		assertEquals(listener.enteredNum, 0);
-		assertEquals(listener.exitedNum, 0);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
-
-		state.notifyExit(null, null, null);
-
-		assertEquals(listener.enteredNum, 0);
-		assertEquals(listener.exitedNum, 0);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
-
-		stateFinal.notifyEnter(null, null, null);
-
-		assertEquals(listener.enteredNum, 0);
-		assertEquals(listener.exitedNum, 0);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
-
-		stateFinal.notifyExit(null, null, null);
-
-		assertEquals(listener.enteredNum, 0);
-		assertEquals(listener.exitedNum, 0);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
-	}
-
-	@Test
 	public final void testGetName() {
 		State state = new State("state");
 		assertEquals("state", state.getName());

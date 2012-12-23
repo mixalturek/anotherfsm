@@ -24,9 +24,8 @@ package net.sourceforge.anotherfsm;
  * @author Michal Turek
  */
 public class FsmException extends Exception {
-
 	/** The version UID. */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7618461541208193028L;
 
 	/**
 	 * Create the object.
