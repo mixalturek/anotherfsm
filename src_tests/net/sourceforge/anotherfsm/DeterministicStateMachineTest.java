@@ -87,7 +87,7 @@ public class DeterministicStateMachineTest {
 		}
 
 		try {
-			machine.process(new TypeEventImpl());
+			machine.process(new TypeEventA());
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			// Do nothing
@@ -150,7 +150,7 @@ public class DeterministicStateMachineTest {
 
 		try {
 			machine.addTransition(new Transition(new State("state"),
-					new TypeEventImpl(), new State("state")));
+					new TypeEventA(), new State("state")));
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
@@ -161,7 +161,7 @@ public class DeterministicStateMachineTest {
 		try {
 			// The same one
 			machine.addTransition(new Transition(new State("state"),
-					new TypeEventImpl(), new State("state")));
+					new TypeEventA(), new State("state")));
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			// Do nothing
@@ -173,7 +173,7 @@ public class DeterministicStateMachineTest {
 		try {
 			// Non deterministic
 			machine.addTransition(new Transition(new State("state"),
-					new TypeEventImpl(), new State("another state")));
+					new TypeEventA(), new State("another state")));
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			// Do nothing
@@ -185,7 +185,7 @@ public class DeterministicStateMachineTest {
 		try {
 			// Different event
 			machine.addTransition(new Transition(new State("state"),
-					new TypeEventImpl2(), new State("state")));
+					new TypeEventB(), new State("state")));
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
@@ -196,7 +196,7 @@ public class DeterministicStateMachineTest {
 		try {
 			// Different source state
 			machine.addTransition(new Transition(new State("another state"),
-					new TypeEventImpl(), new State("state")));
+					new TypeEventA(), new State("state")));
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
@@ -207,7 +207,7 @@ public class DeterministicStateMachineTest {
 		try {
 			// Different source state
 			machine.addTransition(new Transition(new State("another state"),
-					new TypeEventImpl2(), new State("state")));
+					new TypeEventB(), new State("state")));
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
@@ -231,7 +231,7 @@ public class DeterministicStateMachineTest {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		State state = new State("state");
 		State another = new State("another");
-		Transition transition = new Transition(state, new TypeEventImpl(),
+		Transition transition = new Transition(state, new TypeEventA(),
 				another);
 		// Transition back = new Transition(another, new TypeEventImpl2(),
 		// state);
@@ -243,19 +243,19 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(transition);
 			machine.setStartState(state);
 
-			machine.addProcessor(TypeEventImpl.class,
-					new Processor<TypeEventImpl>() {
+			machine.addProcessor(TypeEventA.class,
+					new Processor<TypeEventA>() {
 						@Override
-						public Event process(TypeEventImpl event) {
+						public Event process(TypeEventA event) {
 							return null;
 						}
 					});
 
-			machine.addProcessor(TypeEventImpl2.class,
-					new Processor<TypeEventImpl2>() {
+			machine.addProcessor(TypeEventB.class,
+					new Processor<TypeEventB>() {
 						@Override
-						public Event process(TypeEventImpl2 event) {
-							return new TypeEventImpl();
+						public Event process(TypeEventB event) {
+							return new TypeEventA();
 						}
 					});
 
@@ -279,19 +279,19 @@ public class DeterministicStateMachineTest {
 		assertEquals(state, machine.getActiveState());
 
 		try {
-			processedEvent = machine.process(new TypeEventImpl());
+			processedEvent = machine.process(new TypeEventA());
 
 			assertNull(processedEvent);
 			assertEquals(state, machine.getActiveState());
 
-			processedEvent = machine.process(new TypeEventImpl());
+			processedEvent = machine.process(new TypeEventA());
 
 			assertNull(processedEvent);
 			assertEquals(state, machine.getActiveState());
 
-			processedEvent = machine.process(new TypeEventImpl2());
+			processedEvent = machine.process(new TypeEventB());
 
-			assertEquals(new TypeEventImpl(), processedEvent);
+			assertEquals(new TypeEventA(), processedEvent);
 			assertEquals(another, machine.getActiveState());
 		} catch (FsmException e) {
 			fail("Should not be executed");
@@ -333,9 +333,9 @@ public class DeterministicStateMachineTest {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		State state = new State("state");
 		State another = new State("another");
-		Transition transition = new Transition(state, new TypeEventImpl(),
+		Transition transition = new Transition(state, new TypeEventA(),
 				another);
-		Transition back = new Transition(another, new TypeEventImpl2(), state);
+		Transition back = new Transition(another, new TypeEventB(), state);
 		Event processedEvent = null;
 
 		try {
@@ -362,7 +362,7 @@ public class DeterministicStateMachineTest {
 
 		try {
 			// No such transition
-			processedEvent = machine.process(new TypeEventImpl2());
+			processedEvent = machine.process(new TypeEventB());
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			// Do nothing
@@ -373,22 +373,22 @@ public class DeterministicStateMachineTest {
 
 		try {
 			// Ok
-			processedEvent = machine.process(new TypeEventImpl());
+			processedEvent = machine.process(new TypeEventA());
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
 
-		assertEquals(new TypeEventImpl(), processedEvent);
+		assertEquals(new TypeEventA(), processedEvent);
 		assertEquals(another, machine.getActiveState());
 
 		try {
 			// Ok
-			processedEvent = machine.process(new TypeEventImpl2());
+			processedEvent = machine.process(new TypeEventB());
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
 
-		assertEquals(new TypeEventImpl2(), processedEvent);
+		assertEquals(new TypeEventB(), processedEvent);
 		assertEquals(state, machine.getActiveState());
 	}
 

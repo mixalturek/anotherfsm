@@ -18,8 +18,6 @@
 
 package net.sourceforge.anotherfsm;
 
-
-
-public class TypeEventImpl2 extends TypeEventImpl {
+public class TypeEventB extends TypeEvent {
 
 }

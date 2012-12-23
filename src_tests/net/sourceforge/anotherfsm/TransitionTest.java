@@ -28,19 +28,19 @@ public class TransitionTest {
 	@Test
 	public final void testAddListener() {
 		Transition transition = new Transition(new State("source"),
-				new TypeEventImpl(), new State("destination"));
+				new TypeEventA(), new State("destination"));
 		TransitionListenerImpl listener = new TransitionListenerImpl();
 
 		transition.addListener(listener);
 
 		assertEquals(0, listener.transitionsNum);
 
-		transition.notifyTransition(new State("source"), new TypeEventImpl(),
+		transition.notifyTransition(new State("source"), new TypeEventA(),
 				new State("destination"));
 
 		assertEquals(1, listener.transitionsNum);
 
-		transition.notifyTransition(new State("source"), new TypeEventImpl(),
+		transition.notifyTransition(new State("source"), new TypeEventA(),
 				new State("destination"));
 
 		assertEquals(2, listener.transitionsNum);
@@ -49,11 +49,11 @@ public class TransitionTest {
 	@Test
 	public final void testHashCode() {
 		Transition transition1 = new Transition(new State("source"),
-				new TypeEventImpl(), new State("destination"));
+				new TypeEventA(), new State("destination"));
 		Transition transition2 = new Transition(new State("source"),
-				new TypeEventImpl(), new State("destination"));
+				new TypeEventA(), new State("destination"));
 		Transition transition3 = new Transition(new State("source"),
-				new TypeEventImpl2(), new State("destination"));
+				new TypeEventB(), new State("destination"));
 
 		assertEquals(transition1.hashCode(), transition2.hashCode());
 		assertFalse(transition1.hashCode() == transition3.hashCode());
@@ -63,11 +63,11 @@ public class TransitionTest {
 	@Test
 	public final void testEqualsObject() {
 		Transition transition1 = new Transition(new State("source"),
-				new TypeEventImpl(), new State("destination"));
+				new TypeEventA(), new State("destination"));
 		Transition transition2 = new Transition(new State("source"),
-				new TypeEventImpl(), new State("destination"));
+				new TypeEventA(), new State("destination"));
 		Transition transition3 = new Transition(new State("source"),
-				new TypeEventImpl2(), new State("destination"));
+				new TypeEventB(), new State("destination"));
 
 		assertEquals(transition1, transition1);
 		assertEquals(transition2, transition2);
@@ -83,9 +83,9 @@ public class TransitionTest {
 	@Test
 	public final void testToString() {
 		Transition transition = new Transition(new State("source"),
-				new TypeEventImpl(), new State("destination"));
+				new TypeEventA(), new State("destination"));
 
-		assertEquals("source -> TypeEventImpl() -> destination",
+		assertEquals("source -> TypeEventA -> destination",
 				transition.toString());
 	}
 }
