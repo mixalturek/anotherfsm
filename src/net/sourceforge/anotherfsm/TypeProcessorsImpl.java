@@ -26,7 +26,7 @@ import java.util.Map;
  * 
  * @author Michal Turek
  */
-public class TypeProcessorsImpl implements TypeProcessors {
+class TypeProcessorsImpl implements TypeProcessors {
 	/** The procesors. */
 	private final Map<Class<? extends Event>, Processor<? extends Event>> processors = new HashMap<Class<? extends Event>, Processor<? extends Event>>();
 
@@ -46,16 +46,15 @@ public class TypeProcessorsImpl implements TypeProcessors {
 		processors.put(clazz, processor);
 	}
 
+	// Input event can be whatever event, the processor is searched based on its
+	// type. It should always work since addProcessor() does the checks.
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Event process(Event event) {
 		if (event == null)
 			return null;
 
-		// FIXME: Don't know how to solve the compiler error without raw type
-		// It should always work, since addProcessor() does the checks
-		@SuppressWarnings("unchecked")
-		Processor<Event> processor = (Processor<Event>) processors.get(event
-				.getClass());
+		Processor processor = processors.get(event.getClass());
 		if (processor == null)
 			return event;
 
