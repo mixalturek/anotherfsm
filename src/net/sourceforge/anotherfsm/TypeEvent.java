@@ -18,7 +18,6 @@
 
 package net.sourceforge.anotherfsm;
 
-
 /**
  * An event, comparison using the class type.
  * 
@@ -46,6 +45,6 @@ public abstract class TypeEvent implements Event {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "()";
+		return getClass().getSimpleName();
 	}
 }

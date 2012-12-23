@@ -37,6 +37,9 @@ class DeterministicStateMachine implements StateMachine {
 	/** The logger. */
 	protected final Logger logger;
 
+	/** The delimiter for logging transition. */
+	protected final String TR = " -> ";
+
 	/** The name of the state machine. */
 	private final String name;
 
@@ -53,7 +56,7 @@ class DeterministicStateMachine implements StateMachine {
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
 	/** The preprocessor of the events. */
-	private final TypeProcessorsGroup preprocessors = new TypePreprocessors();
+	private final TypeProcessors preprocessors = new TypeProcessorsImpl();
 
 	/**
 	 * Create the object.
@@ -141,8 +144,8 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	@Override
-	public void addProcessor(Class<? extends Event> clazz,
-			Processor<Event> processor) throws FsmException {
+	public <T extends Event> void addProcessor(Class<T> clazz,
+			Processor<T> processor) throws FsmException {
 		preprocessors.addProcessor(clazz, processor);
 	}
 
@@ -203,22 +206,29 @@ class DeterministicStateMachine implements StateMachine {
 	@Override
 	public synchronized Event process(Event event) throws FsmException {
 		if (currentState == null) {
-			logger.error("Current/start state is null");
-			throw new FsmException("Current/start state is null");
+			String msg = "Current/start state is null: " + currentState + TR
+					+ event;
+
+			logger.error(msg);
+			throw new FsmException(msg);
 		}
 
 		if (event == null) {
-			logger.error("Incoming event is null");
-			throw new FsmException("Incoming event is null");
+			String msg = "Incoming event is null: " + currentState + TR + event;
+			logger.error(msg);
+			throw new FsmException(msg);
 		}
 
+		// No catching of runtime exception is here, it's responsibility of the
+		// preprocessor to not throw them
 		Event preprocessedEvent = preprocessors.process(event);
 		if (preprocessedEvent == null) {
-			if (logger.isTraceEnabled()) {
-				logger.info("Event only preprocessed, no other action: "
+			if (logger.isInfoEnabled()) {
+				logger.info("Event only preprocessed: " + currentState + TR
 						+ event);
 			}
 
+			// Null is correct, this is not error state
 			return null;
 		}
 
@@ -226,9 +236,9 @@ class DeterministicStateMachine implements StateMachine {
 				.getTransition(preprocessedEvent);
 
 		if (transition == null) {
-			logger.warn("No such transition: " + currentState + ", " + event);
-			throw new FsmException("No such transition: " + currentState + ", "
-					+ event);
+			String msg = "No such transition: " + currentState + TR + event;
+			logger.warn(msg);
+			throw new FsmException(msg);
 		}
 
 		State source = transition.getSource();
@@ -236,12 +246,12 @@ class DeterministicStateMachine implements StateMachine {
 
 		String transStr = "";
 		if (logger.isInfoEnabled()) {
+			// == is correct, equals may not consider an updated parameter
 			if (preprocessedEvent == event) {
-				transStr = source + " -> " + preprocessedEvent + " -> "
-						+ destination;
+				transStr = source + TR + preprocessedEvent + TR + destination;
 			} else {
-				transStr = source + " -> " + preprocessedEvent + " (original "
-						+ event + ")" + " -> " + destination;
+				transStr = source + TR + event + "/" + preprocessedEvent + TR
+						+ destination;
 			}
 
 			logger.info("Transition started:  " + transStr);

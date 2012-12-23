@@ -23,17 +23,19 @@ package net.sourceforge.anotherfsm;
  * 
  * @author Michal Turek
  */
-public interface TypeProcessorsGroup {
+public interface TypeProcessors {
 	/**
 	 * Add a new processor. The method is not thread safe.
 	 * 
+	 * @param clazz
+	 *            the type of event
 	 * @param processor
 	 *            the preprocessor
 	 * @throws FsmException
 	 *             if the preprocessor is already defined
 	 */
-	public void addProcessor(Class<? extends Event> clazz,
-			Processor<Event> processor) throws FsmException;
+	public <T extends Event> void addProcessor(Class<T> clazz,
+			Processor<T> processor) throws FsmException;
 
 	/**
 	 * Process (or preprocess) the event before passing it to the state machine.

@@ -22,27 +22,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Preprocessors of the events based on their type.
+ * Processors of the events based on their type.
  * 
  * @author Michal Turek
  */
-public class TypePreprocessors implements TypeProcessorsGroup {
+public class TypeProcessorsImpl implements TypeProcessors {
 	/** The procesors. */
-	private final Map<Class<? extends Event>, Processor<Event>> processors = new HashMap<Class<? extends Event>, Processor<Event>>();
+	private final Map<Class<? extends Event>, Processor<? extends Event>> processors = new HashMap<Class<? extends Event>, Processor<? extends Event>>();
 
 	/**
 	 * Create the object.
 	 */
-	public TypePreprocessors() {
+	public TypeProcessorsImpl() {
 		// Empty
 	}
 
 	@Override
-	public void addProcessor(Class<? extends Event> clazz,
-			Processor<Event> processor) throws FsmException {
+	public <T extends Event> void addProcessor(Class<T> clazz,
+			Processor<T> processor) throws FsmException {
 		if (processors.containsKey(clazz))
-			throw new FsmException("Preprocessor has been already defined: "
-					+ clazz);
+			throw new FsmException("Preprocessor already defined: " + clazz);
 
 		processors.put(clazz, processor);
 	}
@@ -52,7 +51,11 @@ public class TypePreprocessors implements TypeProcessorsGroup {
 		if (event == null)
 			return null;
 
-		Processor<Event> processor = processors.get(event.getClass());
+		// FIXME: Don't know how to solve the compiler error without raw type
+		// It should always work, since addProcessor() does the checks
+		@SuppressWarnings("unchecked")
+		Processor<Event> processor = (Processor<Event>) processors.get(event
+				.getClass());
 		if (processor == null)
 			return event;
 

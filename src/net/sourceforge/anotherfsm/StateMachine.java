@@ -25,7 +25,7 @@ import java.util.Set;
  * 
  * @author Michal Turek
  */
-public interface StateMachine extends TypeProcessorsGroup {
+public interface StateMachine extends TypeProcessors {
 	/**
 	 * Get the name of the state machine.
 	 * 

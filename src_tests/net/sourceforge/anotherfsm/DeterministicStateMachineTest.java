@@ -87,6 +87,13 @@ public class DeterministicStateMachineTest {
 		}
 
 		try {
+			machine.process(new TypeEventImpl());
+			fail("Should not be executed");
+		} catch (FsmException e) {
+			// Do nothing
+		}
+
+		try {
 			machine.setStartState(new State("state"));
 		} catch (FsmException e) {
 			fail("Should not be executed");
@@ -221,22 +228,74 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testAddProcessor() {
-		fail("Not yet implemented"); // TODO
-	}
+		StateMachine machine = new DeterministicStateMachine("fsm");
+		State state = new State("state");
+		State another = new State("another");
+		Transition transition = new Transition(state, new TypeEventImpl(),
+				another);
+		// Transition back = new Transition(another, new TypeEventImpl2(),
+		// state);
+		Event processedEvent = null;
 
-	@Test
-	public final void testNotifyEnter() {
-		fail("Not yet implemented"); // TODO
-	}
+		try {
+			machine.addState(state);
+			machine.addState(another);
+			machine.addTransition(transition);
+			machine.setStartState(state);
 
-	@Test
-	public final void testNotifyExit() {
-		fail("Not yet implemented"); // TODO
-	}
+			machine.addProcessor(TypeEventImpl.class,
+					new Processor<TypeEventImpl>() {
+						@Override
+						public Event process(TypeEventImpl event) {
+							return null;
+						}
+					});
 
-	@Test
-	public final void testNotifyTransition() {
-		fail("Not yet implemented"); // TODO
+			machine.addProcessor(TypeEventImpl2.class,
+					new Processor<TypeEventImpl2>() {
+						@Override
+						public Event process(TypeEventImpl2 event) {
+							return new TypeEventImpl();
+						}
+					});
+
+			machine.start();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		assertNull(processedEvent);
+		assertEquals(state, machine.getActiveState());
+
+		try {
+			// Null event
+			processedEvent = machine.process(null);
+			fail("Should not be executed");
+		} catch (FsmException e) {
+			// Do nothing
+		}
+
+		assertNull(processedEvent);
+		assertEquals(state, machine.getActiveState());
+
+		try {
+			processedEvent = machine.process(new TypeEventImpl());
+
+			assertNull(processedEvent);
+			assertEquals(state, machine.getActiveState());
+
+			processedEvent = machine.process(new TypeEventImpl());
+
+			assertNull(processedEvent);
+			assertEquals(state, machine.getActiveState());
+
+			processedEvent = machine.process(new TypeEventImpl2());
+
+			assertEquals(new TypeEventImpl(), processedEvent);
+			assertEquals(another, machine.getActiveState());
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
 	}
 
 	@Test
