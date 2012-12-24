@@ -40,6 +40,12 @@ class TypeProcessorsImpl implements TypeProcessors {
 	@Override
 	public <T extends Event> void addProcessor(Class<T> clazz,
 			Processor<T> processor) throws FsmException {
+		if (clazz == null)
+			throw new NullPointerException("Processor class must not be null");
+
+		if (processor == null)
+			throw new NullPointerException("Processor must not be null");
+
 		if (processors.containsKey(clazz))
 			throw new FsmException("Preprocessor already defined: " + clazz);
 
@@ -52,7 +58,7 @@ class TypeProcessorsImpl implements TypeProcessors {
 	@Override
 	public Event process(Event event) {
 		if (event == null)
-			return null;
+			throw new NullPointerException("Event must not be null");
 
 		Processor processor = processors.get(event.getClass());
 		if (processor == null)

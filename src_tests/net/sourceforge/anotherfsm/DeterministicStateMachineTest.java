@@ -579,6 +579,8 @@ public class DeterministicStateMachineTest {
 			processedEvent = machine.process(null);
 			fail("Should not be executed");
 		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (NullPointerException e) {
 			// Do nothing
 		}
 
@@ -664,6 +666,8 @@ public class DeterministicStateMachineTest {
 			processedEvent = machine.process(null);
 			fail("Should not be executed");
 		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (NullPointerException e) {
 			// Do nothing
 		}
 

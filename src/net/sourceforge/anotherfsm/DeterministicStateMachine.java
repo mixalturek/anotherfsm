@@ -223,9 +223,9 @@ class DeterministicStateMachine implements StateMachine {
 	@Override
 	public synchronized Event process(Event event) throws FsmException {
 		if (event == null) {
-			String msg = "Incoming event is null: " + currentState + TR + event;
+			String msg = "Event must not be null: " + currentState + TR + event;
 			logger.error(msg);
-			throw new FsmException(msg);
+			throw new NullPointerException(msg);
 		}
 
 		if (currentState == null) {

@@ -46,6 +46,8 @@ public interface TypeProcessors {
 	 *         event
 	 * @throws FsmException
 	 *             if something fails
+	 * @throws NullPointerException
+	 *             if input event is null
 	 */
 	public Event process(Event event) throws FsmException;
 }
