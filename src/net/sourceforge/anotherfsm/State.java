@@ -30,8 +30,8 @@ class State {
 	/** The name of the state. */
 	private final String name;
 
-	/** The state is final flag. */
-	private final boolean finalState;
+	/** The type of the state. */
+	private final State.Type type;
 
 	/** The listeners. */
 	private final List<StateListener> listeners = new LinkedList<StateListener>();
@@ -43,7 +43,7 @@ class State {
 	 *            the name of the state
 	 */
 	public State(String name) {
-		this(name, false);
+		this(name, State.Type.DEFAULT);
 	}
 
 	/**
@@ -51,15 +51,15 @@ class State {
 	 * 
 	 * @param name
 	 *            the name of the state
-	 * @param finalState
-	 *            the state is final flag
+	 * @param type
+	 *            the type of the state
 	 */
-	public State(String name, boolean finalState) {
+	public State(String name, State.Type type) {
 		if (name == null)
 			throw new NullPointerException("Name must not be null");
 
 		this.name = name;
-		this.finalState = finalState;
+		this.type = type;
 	}
 
 	/**
@@ -86,7 +86,7 @@ class State {
 	 *            the current state
 	 */
 	void notifyEnter(State previous, Event event, State current) {
-		if (finalState) {
+		if (type == State.Type.FINAL) {
 			for (StateListener listener : listeners) {
 				listener.onStateEnter(previous, event, current);
 				listener.onFinalStateEnter(previous, event, current);
@@ -109,7 +109,7 @@ class State {
 	 *            the next state
 	 */
 	void notifyExit(State current, Event event, State next) {
-		if (finalState) {
+		if (type == State.Type.FINAL) {
 			for (StateListener listener : listeners) {
 				listener.onStateExit(current, event, next);
 				listener.onFinalStateExit(current, event, next);
@@ -124,19 +124,28 @@ class State {
 	/**
 	 * Get name of the state.
 	 * 
-	 * @return the name of the state
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Get the state is final flag.
+	 * Get type of the state.
+	 * 
+	 * @return the type
+	 */
+	public State.Type getType() {
+		return type;
+	}
+
+	/**
+	 * Chect the state is final.
 	 * 
 	 * @return the flag
 	 */
 	public boolean isFinalState() {
-		return finalState;
+		return type == State.Type.FINAL;
 	}
 
 	/**
@@ -153,7 +162,7 @@ class State {
 	 * Compare the objects using internal fields. FSM uses this method while
 	 * building the state machine to ensure all states are unique.
 	 * 
-	 * Only name of the states is used during the comparison.
+	 * Only the name of the states is used during the comparison.
 	 * 
 	 * @param object
 	 *            the object
@@ -181,5 +190,22 @@ class State {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	/**
+	 * The types of the states.
+	 * 
+	 * Note start state has meaning only for FSM, it's the default state during
+	 * the processing. Both default and final state can be the start state.
+	 * 
+	 * @see StateMachine#setStartState(State)
+	 * @author Michal Turek
+	 */
+	public static enum Type {
+		/** The default state (non-final). */
+		DEFAULT,
+
+		/** The final state. */
+		FINAL
 	}
 }

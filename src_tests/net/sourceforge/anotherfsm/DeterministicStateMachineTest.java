@@ -69,7 +69,7 @@ public class DeterministicStateMachineTest {
 	@Test
 	public final void testStart() {
 		StateMachine machine = new DeterministicStateMachine("fsm");
-		State state = new State("state", true);
+		State state = new State("state", State.Type.FINAL);
 		StateListenerImpl listener = new StateListenerImpl();
 		StateListenerImpl listenerFsm = new StateListenerImpl();
 
@@ -242,7 +242,7 @@ public class DeterministicStateMachineTest {
 	public final void testAddListenerStateTransitionListener() {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		final State startState = new State("state");
-		final State finalState = new State("another", true);
+		final State finalState = new State("another", State.Type.FINAL);
 		Transition transition = new Transition(startState, new TypeEventA(),
 				finalState);
 		Transition back = new Transition(finalState, new TypeEventB(),

@@ -10,7 +10,7 @@ public class StateTest {
 	@Test
 	public final void testAddListener() {
 		State state = new State("state");
-		State stateFinal = new State("state", true);
+		State stateFinal = new State("state", State.Type.FINAL);
 		StateListenerImpl listener = new StateListenerImpl();
 
 		state.addListener(listener);
@@ -55,10 +55,10 @@ public class StateTest {
 		State state = new State("state");
 		assertEquals("state", state.getName());
 
-		State stateNonFinal = new State("state", false);
+		State stateNonFinal = new State("state", State.Type.DEFAULT);
 		assertEquals("state", stateNonFinal.getName());
 
-		State stateFinal = new State("state", true);
+		State stateFinal = new State("state", State.Type.FINAL);
 		assertEquals("state", stateFinal.getName());
 	}
 
@@ -67,10 +67,10 @@ public class StateTest {
 		State stateDefault = new State("state");
 		assertFalse(stateDefault.isFinalState());
 
-		State stateNonFinal = new State("state", false);
+		State stateNonFinal = new State("state", State.Type.DEFAULT);
 		assertFalse(stateNonFinal.isFinalState());
 
-		State stateFinal = new State("state", true);
+		State stateFinal = new State("state", State.Type.FINAL);
 		assertTrue(stateFinal.isFinalState());
 	}
 
@@ -84,9 +84,9 @@ public class StateTest {
 		assertTrue(state1.hashCode() != state3.hashCode());
 		assertTrue(state2.hashCode() != state3.hashCode());
 
-		State state1Final = new State("same", true);
-		State state2Final = new State("same", true);
-		State state3Final = new State("different", true);
+		State state1Final = new State("same", State.Type.FINAL);
+		State state2Final = new State("same", State.Type.FINAL);
+		State state3Final = new State("different", State.Type.FINAL);
 
 		assertEquals(state1Final.hashCode(), state2Final.hashCode());
 		assertTrue(state1Final.hashCode() != state3Final.hashCode());
@@ -111,9 +111,9 @@ public class StateTest {
 		assertFalse(state3.equals(state1));
 		assertFalse(state3.equals(state2));
 
-		State state1Final = new State("same", true);
-		State state2Final = new State("same", true);
-		State state3Final = new State("different", true);
+		State state1Final = new State("same", State.Type.FINAL);
+		State state2Final = new State("same", State.Type.FINAL);
+		State state3Final = new State("different", State.Type.FINAL);
 
 		assertEquals(state1, state1);
 		assertEquals(state1Final, state1Final);
@@ -132,10 +132,10 @@ public class StateTest {
 		State state = new State("state");
 		assertEquals("state", state.toString());
 
-		State stateNonFinal = new State("state", false);
+		State stateNonFinal = new State("state", State.Type.DEFAULT);
 		assertEquals("state", stateNonFinal.toString());
 
-		State stateFinal = new State("state", true);
+		State stateFinal = new State("state", State.Type.FINAL);
 		assertEquals("state", stateFinal.toString());
 	}
 }
