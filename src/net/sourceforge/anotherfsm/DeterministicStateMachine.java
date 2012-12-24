@@ -66,6 +66,9 @@ class DeterministicStateMachine implements StateMachine {
 	 *            the name of the state machine
 	 */
 	public DeterministicStateMachine(String name) {
+		if (name == null)
+			throw new NullPointerException("Name must not be null");
+
 		this.name = name;
 		logger = Logger.getLogger(this.getClass() + "-" + name);
 	}
@@ -77,6 +80,9 @@ class DeterministicStateMachine implements StateMachine {
 
 	@Override
 	public void setStartState(State state) throws FsmException {
+		if (state == null)
+			throw new NullPointerException("State must not be null");
+
 		if (currentState != null)
 			throw new FsmException("Start state already set: " + currentState);
 
@@ -99,6 +105,9 @@ class DeterministicStateMachine implements StateMachine {
 
 	@Override
 	public void addState(State state) throws FsmException {
+		if (state == null)
+			throw new NullPointerException("State must not be null");
+
 		if (stateTransitions.containsKey(state))
 			throw new FsmException("State redefined: " + state);
 
@@ -121,6 +130,9 @@ class DeterministicStateMachine implements StateMachine {
 
 	@Override
 	public void addTransition(Transition transition) throws FsmException {
+		if (transition == null)
+			throw new NullPointerException("Transition must not be null");
+
 		addStateInternal(transition.getSource());
 		stateTransitions.get(transition.getSource()).addTransition(transition);
 		addStateInternal(transition.getDestination());
@@ -128,27 +140,29 @@ class DeterministicStateMachine implements StateMachine {
 
 	@Override
 	public void addListener(StateListener listener) {
+		if (listener == null)
+			throw new NullPointerException("Listener must not be null");
+
 		stateListeners.add(listener);
 	}
 
 	@Override
-	public boolean removeListener(StateListener listener) {
-		return stateListeners.remove(listener);
-	}
-
-	@Override
 	public void addListener(TransitionListener listener) {
-		transitionListeners.add(listener);
-	}
+		if (listener == null)
+			throw new NullPointerException("Listener must not be null");
 
-	@Override
-	public boolean removeListener(TransitionListener listener) {
-		return transitionListeners.remove(listener);
+		transitionListeners.add(listener);
 	}
 
 	@Override
 	public <T extends Event> void addProcessor(Class<T> clazz,
 			Processor<T> processor) throws FsmException {
+		if (clazz == null)
+			throw new NullPointerException("Event class must not be null");
+
+		if (processor == null)
+			throw new NullPointerException("Processor must not be null");
+
 		preprocessors.addProcessor(clazz, processor);
 	}
 
@@ -208,16 +222,16 @@ class DeterministicStateMachine implements StateMachine {
 
 	@Override
 	public synchronized Event process(Event event) throws FsmException {
-		if (currentState == null) {
-			String msg = "Current/start state is null: " + currentState + TR
-					+ event;
-
+		if (event == null) {
+			String msg = "Incoming event is null: " + currentState + TR + event;
 			logger.error(msg);
 			throw new FsmException(msg);
 		}
 
-		if (event == null) {
-			String msg = "Incoming event is null: " + currentState + TR + event;
+		if (currentState == null) {
+			String msg = "Current/start state is null: " + currentState + TR
+					+ event;
+
 			logger.error(msg);
 			throw new FsmException(msg);
 		}

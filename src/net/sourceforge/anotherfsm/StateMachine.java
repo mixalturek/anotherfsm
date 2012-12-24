@@ -72,15 +72,6 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	public void addListener(StateListener listener);
 
 	/**
-	 * Remove the listener. The method is not thread safe.
-	 * 
-	 * @param listener
-	 *            the listener
-	 * @return true if the listener was defined and removed
-	 */
-	public boolean removeListener(StateListener listener);
-
-	/**
 	 * Add a new listener. The method is not thread safe.
 	 * 
 	 * @param listener
@@ -89,20 +80,12 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	public void addListener(TransitionListener listener);
 
 	/**
-	 * Remove the listener. The method is not thread safe.
-	 * 
-	 * @param listener
-	 *            the listener
-	 * @return true if the listener was defined and removed
-	 */
-	public boolean removeListener(TransitionListener listener);
-
-	/**
 	 * Start processing of the events, building of the state machine is
 	 * finished.
 	 * 
 	 * @throws FsmException
 	 *             if something fails
+	 * @see StartEvent
 	 */
 	public void start() throws FsmException;
 

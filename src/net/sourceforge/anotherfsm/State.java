@@ -69,6 +69,9 @@ class State {
 	 *            the listener
 	 */
 	public void addListener(StateListener listener) {
+		if (listener == null)
+			throw new NullPointerException("Listener must not be null");
+
 		listeners.add(listener);
 	}
 

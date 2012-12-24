@@ -96,6 +96,9 @@ class Transition {
 	 *            the listener
 	 */
 	public void addListener(TransitionListener listener) {
+		if (listener == null)
+			throw new NullPointerException("Listener must not be null");
+
 		listeners.add(listener);
 	}
 

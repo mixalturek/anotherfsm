@@ -19,7 +19,7 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * An event, comparison using the class type.
+ * Event with comparison based on the class type.
  * 
  * @author Michal Turek
  */
