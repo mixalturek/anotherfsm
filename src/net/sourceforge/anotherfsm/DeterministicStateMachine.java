@@ -18,6 +18,7 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -87,10 +88,12 @@ class DeterministicStateMachine implements StateMachine {
 	public void start() throws FsmException {
 		if (currentState == null)
 			throw new FsmException("Start state not defined");
+
+		notifyEnter(currentState, new StartEvent(), currentState);
 	}
 
 	@Override
-	public void stop() {
+	public void close() throws IOException {
 		// Do nothing in this class
 	}
 

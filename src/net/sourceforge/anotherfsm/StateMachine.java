@@ -18,6 +18,7 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.io.Closeable;
 import java.util.Set;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Set;
  * 
  * @author Michal Turek
  */
-public interface StateMachine extends TypeProcessors {
+public interface StateMachine extends TypeProcessors, Closeable {
 	/**
 	 * Get the name of the state machine.
 	 * 
@@ -104,11 +105,6 @@ public interface StateMachine extends TypeProcessors {
 	 *             if something fails
 	 */
 	public void start() throws FsmException;
-
-	/**
-	 * Stop procession of the events, free all allocated resources.
-	 */
-	public void stop();
 
 	/**
 	 * Get the currently active state. Intended use in deterministic state

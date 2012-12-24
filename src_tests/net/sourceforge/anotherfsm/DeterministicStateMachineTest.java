@@ -4,7 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.BasicConfigurator;
@@ -66,6 +69,10 @@ public class DeterministicStateMachineTest {
 	@Test
 	public final void testStart() {
 		StateMachine machine = new DeterministicStateMachine("fsm");
+		State state = new State("state", true);
+		StateListenerImpl listener = new StateListenerImpl();
+		StateListenerImpl listenerFsm = new StateListenerImpl();
+
 		try {
 			machine.start();
 			fail("Should not be executed");
@@ -74,7 +81,9 @@ public class DeterministicStateMachineTest {
 		}
 
 		try {
-			machine.addState(new State("state"));
+			machine.addState(state);
+			state.addListener(listener);
+			machine.addListener(listenerFsm);
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
@@ -94,16 +103,29 @@ public class DeterministicStateMachineTest {
 		}
 
 		try {
-			machine.setStartState(new State("state"));
+			machine.setStartState(state);
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
 
 		try {
 			machine.start();
+			machine.close();
 		} catch (FsmException e) {
 			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
 		}
+
+		assertEquals(1, listener.enteredNum);
+		assertEquals(1, listener.finalEnteredNum);
+		assertEquals(0, listener.exitedNum);
+		assertEquals(0, listener.finalExitedNum);
+
+		assertEquals(1, listenerFsm.enteredNum);
+		assertEquals(1, listenerFsm.finalEnteredNum);
+		assertEquals(0, listenerFsm.exitedNum);
+		assertEquals(0, listenerFsm.finalExitedNum);
 	}
 
 	@Test
@@ -217,13 +239,303 @@ public class DeterministicStateMachineTest {
 	}
 
 	@Test
-	public final void testAddListenerStateListener() {
-		fail("Not yet implemented"); // TODO
-	}
+	public final void testAddListenerStateTransitionListener() {
+		StateMachine machine = new DeterministicStateMachine("fsm");
+		final State startState = new State("state");
+		final State finalState = new State("another", true);
+		Transition transition = new Transition(startState, new TypeEventA(),
+				finalState);
+		Transition back = new Transition(finalState, new TypeEventB(),
+				startState);
+		Event processedEvent = null;
 
-	@Test
-	public final void testAddListenerTransitionListener() {
-		fail("Not yet implemented"); // TODO
+		final List<String> real = new LinkedList<String>();
+		List<String> expected = new LinkedList<String>();
+
+		try {
+			machine.addState(startState);
+			machine.addState(finalState);
+			machine.addTransition(transition);
+			machine.addTransition(back);
+			machine.setStartState(startState);
+
+			startState.addListener(new StateListenerImpl() {
+				@Override
+				public void onStateEnter(State previous, Event event,
+						State current) {
+					switch (enteredNum) {
+					case 0:
+						assertEquals(startState, previous);
+						assertEquals(new StartEvent(), event);
+						assertEquals(startState, current);
+						real.add("startState.onStateEnter");
+						break;
+
+					case 1:
+						assertEquals(finalState, previous);
+						assertEquals(new TypeEventB(), event);
+						assertEquals(startState, current);
+						real.add("startState.onStateEnter");
+						break;
+
+					default:
+						fail("Should not be executed");
+						break;
+					}
+
+					super.onStateEnter(previous, event, current);
+				}
+
+				@Override
+				public void onStateExit(State current, Event event, State next) {
+					assertEquals(startState, current);
+					assertEquals(new TypeEventA(), event);
+					assertEquals(finalState, next);
+					real.add("startState.onStateExit");
+
+					super.onStateExit(current, event, next);
+				}
+
+				@Override
+				public void onFinalStateEnter(State previous, Event event,
+						State current) {
+					fail("Should not be executed");
+				}
+
+				@Override
+				public void onFinalStateExit(State current, Event event,
+						State next) {
+					fail("Should not be executed");
+				}
+			});
+
+			finalState.addListener(new StateListenerImpl() {
+				@Override
+				public void onStateEnter(State previous, Event event,
+						State current) {
+					assertEquals(startState, previous);
+					assertEquals(new TypeEventA(), event);
+					assertEquals(finalState, current);
+					real.add("finalState.onStateEnter");
+
+					super.onStateEnter(previous, event, current);
+				}
+
+				@Override
+				public void onStateExit(State current, Event event, State next) {
+					assertEquals(finalState, current);
+					assertEquals(new TypeEventB(), event);
+					assertEquals(startState, next);
+					real.add("finalState.onStateExit");
+
+					super.onStateExit(current, event, next);
+				}
+
+				@Override
+				public void onFinalStateEnter(State previous, Event event,
+						State current) {
+					assertEquals(startState, previous);
+					assertEquals(new TypeEventA(), event);
+					assertEquals(finalState, current);
+					real.add("finalState.onFinalStateEnter");
+
+					super.onFinalStateEnter(previous, event, current);
+				}
+
+				@Override
+				public void onFinalStateExit(State current, Event event,
+						State next) {
+					assertEquals(finalState, current);
+					assertEquals(new TypeEventB(), event);
+					assertEquals(startState, next);
+					real.add("finalState.onFinalStateExit");
+
+					super.onFinalStateExit(current, event, next);
+				}
+			});
+
+			machine.addListener(new StateListenerImpl() {
+				@Override
+				public void onStateEnter(State previous, Event event,
+						State current) {
+					switch (enteredNum) {
+					case 0:
+						assertEquals(startState, previous);
+						assertEquals(new StartEvent(), event);
+						assertEquals(startState, current);
+						real.add("fsm.onStateEnter");
+						break;
+
+					case 1:
+						assertEquals(startState, previous);
+						assertEquals(new TypeEventA(), event);
+						assertEquals(finalState, current);
+						real.add("fsm.onStateEnter");
+						break;
+
+					case 2:
+						assertEquals(finalState, previous);
+						assertEquals(new TypeEventB(), event);
+						assertEquals(startState, current);
+						real.add("fsm.onStateEnter");
+						break;
+
+					default:
+						fail("Should not be executed");
+						break;
+					}
+
+					super.onStateEnter(previous, event, current);
+				}
+
+				@Override
+				public void onStateExit(State current, Event event, State next) {
+					switch (exitedNum) {
+					case 0:
+						assertEquals(startState, current);
+						assertEquals(new TypeEventA(), event);
+						assertEquals(finalState, next);
+						real.add("fsm.onStateExit");
+						break;
+
+					case 1:
+						assertEquals(finalState, current);
+						assertEquals(new TypeEventB(), event);
+						assertEquals(startState, next);
+						real.add("fsm.onStateExit");
+						break;
+
+					default:
+						fail("Should not be executed");
+						break;
+					}
+
+					super.onStateExit(current, event, next);
+				}
+
+				@Override
+				public void onFinalStateEnter(State previous, Event event,
+						State current) {
+					assertEquals(startState, previous);
+					assertEquals(new TypeEventA(), event);
+					assertEquals(finalState, current);
+					real.add("fsm.onFinalStateEnter");
+
+					super.onFinalStateEnter(previous, event, current);
+				}
+
+				@Override
+				public void onFinalStateExit(State current, Event event,
+						State next) {
+					assertEquals(finalState, current);
+					assertEquals(new TypeEventB(), event);
+					assertEquals(startState, next);
+					real.add("fsm.onFinalStateExit");
+
+					super.onFinalStateExit(current, event, next);
+				}
+			});
+
+			machine.addListener(new TransitionListenerImpl() {
+				@Override
+				public void onTransition(State source, Event event,
+						State destination) {
+					switch (transitionsNum) {
+					case 0:
+						assertEquals(startState, source);
+						assertEquals(new TypeEventA(), event);
+						assertEquals(finalState, destination);
+						real.add("fsm.onTransition");
+						break;
+
+					case 1:
+						assertEquals(finalState, source);
+						assertEquals(new TypeEventB(), event);
+						assertEquals(startState, destination);
+						real.add("fsm.onTransition");
+						break;
+
+					default:
+						fail("Should not be executed");
+						break;
+					}
+
+					super.onTransition(source, event, destination);
+				}
+			});
+
+			transition.addListener(new TransitionListenerImpl() {
+				@Override
+				public void onTransition(State source, Event event,
+						State destination) {
+					assertEquals(startState, source);
+					assertEquals(new TypeEventA(), event);
+					assertEquals(finalState, destination);
+					real.add("transition.onTransition");
+
+					super.onTransition(source, event, destination);
+				}
+			});
+
+			back.addListener(new TransitionListenerImpl() {
+				@Override
+				public void onTransition(State source, Event event,
+						State destination) {
+					assertEquals(finalState, source);
+					assertEquals(new TypeEventB(), event);
+					assertEquals(startState, destination);
+					real.add("back.onTransition");
+
+					super.onTransition(source, event, destination);
+				}
+			});
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		try {
+			machine.start();
+			expected.add("startState.onStateEnter");
+			expected.add("fsm.onStateEnter");
+			assertEquals(expected, real);
+			expected.clear();
+			real.clear();
+
+			processedEvent = machine.process(new TypeEventA());
+			assertEquals(new TypeEventA(), processedEvent);
+			expected.add("startState.onStateExit");
+			expected.add("fsm.onStateExit");
+			expected.add("transition.onTransition");
+			expected.add("fsm.onTransition");
+			expected.add("finalState.onStateEnter");
+			expected.add("finalState.onFinalStateEnter");
+			expected.add("fsm.onStateEnter");
+			expected.add("fsm.onFinalStateEnter");
+			assertEquals(expected, real);
+			expected.clear();
+			real.clear();
+
+			processedEvent = machine.process(new TypeEventB());
+			assertEquals(new TypeEventB(), processedEvent);
+			expected.add("finalState.onStateExit");
+			expected.add("finalState.onFinalStateExit");
+			expected.add("fsm.onStateExit");
+			expected.add("fsm.onFinalStateExit");
+			expected.add("back.onTransition");
+			expected.add("fsm.onTransition");
+			expected.add("startState.onStateEnter");
+			expected.add("fsm.onStateEnter");
+			assertEquals(expected, real);
+			expected.clear();
+			real.clear();
+
+			machine.close();
+			assertEquals(expected, real);
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
+		}
 	}
 
 	@Test
@@ -231,10 +543,7 @@ public class DeterministicStateMachineTest {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		State state = new State("state");
 		State another = new State("another");
-		Transition transition = new Transition(state, new TypeEventA(),
-				another);
-		// Transition back = new Transition(another, new TypeEventImpl2(),
-		// state);
+		Transition transition = new Transition(state, new TypeEventA(), another);
 		Event processedEvent = null;
 
 		try {
@@ -243,21 +552,19 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(transition);
 			machine.setStartState(state);
 
-			machine.addProcessor(TypeEventA.class,
-					new Processor<TypeEventA>() {
-						@Override
-						public Event process(TypeEventA event) {
-							return null;
-						}
-					});
+			machine.addProcessor(TypeEventA.class, new Processor<TypeEventA>() {
+				@Override
+				public Event process(TypeEventA event) {
+					return null;
+				}
+			});
 
-			machine.addProcessor(TypeEventB.class,
-					new Processor<TypeEventB>() {
-						@Override
-						public Event process(TypeEventB event) {
-							return new TypeEventA();
-						}
-					});
+			machine.addProcessor(TypeEventB.class, new Processor<TypeEventB>() {
+				@Override
+				public Event process(TypeEventB event) {
+					return new TypeEventA();
+				}
+			});
 
 			machine.start();
 		} catch (FsmException e) {
@@ -293,7 +600,11 @@ public class DeterministicStateMachineTest {
 
 			assertEquals(new TypeEventA(), processedEvent);
 			assertEquals(another, machine.getActiveState());
+
+			machine.close();
 		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
 			fail("Should not be executed");
 		}
 	}
@@ -333,8 +644,7 @@ public class DeterministicStateMachineTest {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		State state = new State("state");
 		State another = new State("another");
-		Transition transition = new Transition(state, new TypeEventA(),
-				another);
+		Transition transition = new Transition(state, new TypeEventA(), another);
 		Transition back = new Transition(another, new TypeEventB(), state);
 		Event processedEvent = null;
 
@@ -384,7 +694,10 @@ public class DeterministicStateMachineTest {
 		try {
 			// Ok
 			processedEvent = machine.process(new TypeEventB());
+			machine.close();
 		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
 			fail("Should not be executed");
 		}
 

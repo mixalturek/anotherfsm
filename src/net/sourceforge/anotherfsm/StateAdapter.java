@@ -18,14 +18,12 @@
 
 package net.sourceforge.anotherfsm;
 
-
 /**
  * The adapter for FSM transition callback.
  * 
  * @author Michal Turek
  */
 public class StateAdapter implements StateListener {
-
 	@Override
 	public void onStateEnter(State previous, Event event, State current) {
 		// Do nothing by default.

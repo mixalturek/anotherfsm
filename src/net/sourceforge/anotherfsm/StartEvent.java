@@ -19,13 +19,11 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * The adapter for FSM transition callback.
+ * Start event.
  * 
  * @author Michal Turek
+ * @see StateMachine#start()
  */
-public class TransitionAdapter implements TransitionListener {
-	@Override
-	public void onTransition(State source, Event event, State destination) {
-		// Do nothing by default.
-	}
+public class StartEvent extends TypeEvent {
+
 }
