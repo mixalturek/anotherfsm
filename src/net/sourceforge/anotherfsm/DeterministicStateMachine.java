@@ -30,9 +30,10 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
- * The deterministic state machine.
+ * The deterministic state machine. This class is NOT thread safe.
  * 
  * @author Michal Turek
+ * @see SynchronizedStateMachine
  */
 class DeterministicStateMachine implements StateMachine {
 	/** The logger. */
@@ -206,12 +207,12 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	@Override
-	public synchronized State getActiveState() {
+	public State getActiveState() {
 		return currentState;
 	}
 
 	@Override
-	public synchronized Set<State> getActiveStates() {
+	public Set<State> getActiveStates() {
 		Set<State> states = new HashSet<State>();
 		if (currentState == null)
 			return states;
@@ -221,7 +222,7 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	@Override
-	public synchronized Event process(Event event) throws FsmException {
+	public Event process(Event event) throws FsmException {
 		processCheck(event);
 
 		// No catching of runtime exception is here, it's responsibility of the

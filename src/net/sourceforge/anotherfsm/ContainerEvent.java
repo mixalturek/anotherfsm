@@ -24,7 +24,6 @@ package net.sourceforge.anotherfsm;
  * 
  * @author Michal Turek
  */
-// TODO: should be abstract or not?
 public class ContainerEvent<T> implements Event {
 	/** The stored object. */
 	private final T storedObject;

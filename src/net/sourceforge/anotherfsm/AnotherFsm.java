@@ -32,7 +32,7 @@ public abstract class AnotherFsm {
 	}
 
 	/**
-	 * Create an object of event processors based on the type.
+	 * Create an instance of event processor based on the type.
 	 * 
 	 * @return the event processors
 	 */
@@ -41,12 +41,32 @@ public abstract class AnotherFsm {
 	}
 
 	/**
-	 * Create an object of deterministic state machine.
+	 * Create an instance of deterministic state machine.
 	 * 
 	 * @param name
 	 *            the name of the state machine
+	 * @return the created state machine
 	 */
 	public static StateMachine genDeterministicStateMachine(String name) {
 		return new DeterministicStateMachine(name);
+	}
+
+	/**
+	 * Create an instance of deterministic state machine for use in
+	 * multithreaded environment.
+	 * 
+	 * Building of the state machine is NOT synchronized and should be done just
+	 * in one thread. Only the processing of the events is synchronized.
+	 * 
+	 * @param name
+	 *            the name of the state machine
+	 * @return the created state machine
+	 * 
+	 * @see StateMachine#process(Event)
+	 * @see StateMachine#getActiveState()
+	 * @see StateMachine#getActiveStates()
+	 */
+	public static StateMachine genSynchronizedStateMachine(String name) {
+		return new SynchronizedStateMachine(name);
 	}
 }

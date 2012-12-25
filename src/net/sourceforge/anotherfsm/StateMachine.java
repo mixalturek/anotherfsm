@@ -35,16 +35,17 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	public String getName();
 
 	/**
-	 * Set the start state. The method is not thread safe.
+	 * Set the start state.
 	 * 
 	 * @param state
 	 *            the state
+	 * @see #start()
 	 * @see #process(Event)
 	 */
 	public void setStartState(State state) throws FsmException;
 
 	/**
-	 * Add a new state. The method is not thread safe.
+	 * Add a new state.
 	 * 
 	 * @param state
 	 *            the state
@@ -54,7 +55,7 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	public void addState(State state) throws FsmException;
 
 	/**
-	 * Add a new transition. The method is not thread safe.
+	 * Add a new transition.
 	 * 
 	 * @param transition
 	 *            the transition
@@ -64,7 +65,7 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	public void addTransition(Transition transition) throws FsmException;
 
 	/**
-	 * Add a new listener. The method is not thread safe.
+	 * Add a new listener.
 	 * 
 	 * @param listener
 	 *            the listener
@@ -72,7 +73,7 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	public void addListener(StateListener listener);
 
 	/**
-	 * Add a new listener. The method is not thread safe.
+	 * Add a new listener.
 	 * 
 	 * @param listener
 	 *            the listener
@@ -86,28 +87,32 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	 * @throws FsmException
 	 *             if something fails
 	 * @see StartEvent
+	 * @see #close()
 	 */
 	public void start() throws FsmException;
 
 	/**
-	 * Get the currently active state. Intended use in deterministic state
-	 * machines.
+	 * Get the currently active state. Intended use is in deterministic state
+	 * machines, for nondeterministic state machines only one of the active
+	 * states is returned.
 	 * 
 	 * @return the currently active state
+	 * @see #getActiveStates()
 	 */
 	public State getActiveState();
 
 	/**
-	 * Get the currently active states. Intended use in nondeterministic state
-	 * machines.
+	 * Get the currently active states. Intended use is in nondeterministic
+	 * state machines.
 	 * 
 	 * @return the currently active states
+	 * @see #getActiveState()
 	 */
 	public Set<State> getActiveStates();
 
 	/**
 	 * The string representation of the object. It is expected the name of the
-	 * state machine will be returned (if defined).
+	 * state machine will be returned.
 	 * 
 	 * @return the string representation
 	 */
