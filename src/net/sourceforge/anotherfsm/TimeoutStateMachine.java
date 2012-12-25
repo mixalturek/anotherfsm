@@ -18,6 +18,8 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.io.IOException;
+
 /**
  * Deterministic state machine with timeouts for states. The object is thread
  * safe and can be used in multithreaded environment.
@@ -48,10 +50,36 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	}
 
 	@Override
-	public synchronized void notifyEnter(State previous, Event event, State current) {
-		super.notifyEnter(previous, event, current);
+	public void start() throws FsmException {
+		// TODO: implementation
 
+		super.start();
 	}
 
-	// TODO: implementation
+	@Override
+	public void close() throws IOException {
+		super.close();
+
+		// TODO: implementation
+	}
+
+	@Override
+	public synchronized void notifyEnter(State previous, Event event,
+			State current) {
+		super.notifyEnter(previous, event, current);
+
+		Transition transition = getTransition(getActiveState(),
+				TimeoutEventImpl.INSTANCE);
+
+		if (transition == null)
+			return;
+
+		TimeoutEvent timeoutEvent = (TimeoutEvent) transition.getEvent();
+
+		if (previous.equals(current)
+				&& timeoutEvent.getType() == TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP)
+			return;
+
+		// TODO: schedule the timeout event
+	}
 }
