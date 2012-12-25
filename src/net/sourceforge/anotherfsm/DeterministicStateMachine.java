@@ -222,19 +222,7 @@ class DeterministicStateMachine implements StateMachine {
 
 	@Override
 	public synchronized Event process(Event event) throws FsmException {
-		if (event == null) {
-			String msg = "Event must not be null: " + currentState + TR + event;
-			logger.error(msg);
-			throw new NullPointerException(msg);
-		}
-
-		if (currentState == null) {
-			String msg = "Current/start state is null: " + currentState + TR
-					+ event;
-
-			logger.error(msg);
-			throw new FsmException(msg);
-		}
+		processCheck(event);
 
 		// No catching of runtime exception is here, it's responsibility of the
 		// preprocessor to not throw them
@@ -248,27 +236,76 @@ class DeterministicStateMachine implements StateMachine {
 			// Null is correct, this is not error state
 			return null;
 		}
+		// Possible change of event to preprocessedEvent logged later in
+		// processInternal()
 
 		Transition transition = stateTransitions.get(currentState)
 				.getTransition(preprocessedEvent);
 
 		if (transition == null) {
-			String msg = "No such transition: " + currentState + TR + event;
-			logger.warn(msg);
-			throw new FsmException(msg);
+			preprocessedEvent = new OtherEvent(preprocessedEvent);
+			transition = stateTransitions.get(currentState).getTransition(
+					preprocessedEvent);
+
+			if (transition == null) {
+				String msg = "No such transition: " + currentState + TR
+						+ preprocessedEvent;
+				logger.warn(msg);
+				throw new FsmException(msg);
+			}
 		}
 
+		return processInternal(transition, preprocessedEvent, event);
+	}
+
+	/**
+	 * Check the input event and the internal state before processing the event.
+	 * 
+	 * @param event
+	 *            the input event
+	 * @throws FsmException
+	 *             if the event can't be processed for any reason
+	 */
+	private void processCheck(Event event) throws FsmException {
+		if (event == null) {
+			String msg = "Event must not be null: " + currentState + TR + event;
+			logger.error(msg);
+			throw new NullPointerException(msg);
+		}
+
+		if (currentState == null) {
+			String msg = "Current/start state is null: " + currentState + TR
+					+ event;
+
+			logger.error(msg);
+			throw new FsmException(msg);
+		}
+	}
+
+	/**
+	 * Real processing of the event.
+	 * 
+	 * @param transition
+	 *            the transition that should be processed
+	 * @param eventToProcess
+	 *            the event that should be processed
+	 * @param matchedEvent
+	 *            the event that matched for logging purposes
+	 * @return the final processed event
+	 */
+	private Event processInternal(Transition transition, Event eventToProcess,
+			Event matchedEvent) {
 		State source = transition.getSource();
 		State destination = transition.getDestination();
 
 		String transStr = "";
 		if (logger.isInfoEnabled()) {
 			// == is correct, equals may not consider an updated parameter
-			if (preprocessedEvent == event) {
-				transStr = source + TR + preprocessedEvent + TR + destination;
+			if (eventToProcess == matchedEvent) {
+				transStr = source + TR + eventToProcess + TR + destination;
 			} else {
-				transStr = source + TR + event + "/" + preprocessedEvent + TR
-						+ destination;
+				transStr = source + TR + matchedEvent + "/" + eventToProcess
+						+ TR + destination;
 			}
 
 			logger.info("Transition started:  " + transStr);
@@ -276,16 +313,16 @@ class DeterministicStateMachine implements StateMachine {
 
 		// No catching of runtime exception is here, it's responsibility of the
 		// callbacks to not throw them
-		notifyExit(source, preprocessedEvent, destination);
+		notifyExit(source, eventToProcess, destination);
 		currentState = destination;
-		notifyTransition(transition, source, preprocessedEvent, destination);
-		notifyEnter(source, preprocessedEvent, destination);
+		notifyTransition(transition, source, eventToProcess, destination);
+		notifyEnter(source, eventToProcess, destination);
 
 		if (logger.isInfoEnabled()) {
 			logger.info("Transition finished: " + transStr);
 		}
 
-		return preprocessedEvent;
+		return eventToProcess;
 	}
 
 	@Override
