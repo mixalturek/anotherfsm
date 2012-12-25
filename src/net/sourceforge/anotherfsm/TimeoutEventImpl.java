@@ -45,6 +45,14 @@ class TimeoutEventImpl extends TypeEvent implements TimeoutEvent {
 	 *            the type of the event
 	 */
 	public TimeoutEventImpl(long timeout, TimeoutEvent.Type type) {
+		if (timeout < 0)
+			throw new IllegalArgumentException("Timeout must not be negative");
+		// TODO: What is the behavior if zero?
+
+		if (type == null)
+			throw new NullPointerException(
+					"Timeout event type must not be null");
+
 		this.timeout = timeout;
 		this.type = type;
 	}
