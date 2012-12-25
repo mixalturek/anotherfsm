@@ -16,6 +16,30 @@ public class OtherEventImplTest {
 	}
 
 	@Test
+	public final void hashCodeTest() {
+		assertEquals(OtherEvent.HASH_CODE,
+				new OtherEventImpl(new TypeEventA()).hashCode());
+
+		assertEquals(OtherEvent.HASH_CODE,
+				new NonstandardOtherEvent().hashCode());
+	}
+
+	@Test
+	public final void equalsTest() {
+		assertEquals(new OtherEventImpl(new TypeEventA()), new OtherEventImpl(
+				new TypeEventB()));
+
+		assertEquals(new OtherEventImpl(new TypeEventB()), new OtherEventImpl(
+				new TypeEventA()));
+
+		assertEquals(new NonstandardOtherEvent(), new OtherEventImpl(
+				new TypeEventA()));
+
+		assertEquals(new OtherEventImpl(new TypeEventA()),
+				new NonstandardOtherEvent());
+	}
+
+	@Test
 	public final void testToString() {
 		assertEquals("OtherEventImpl(TypeEventA)", new OtherEventImpl(
 				new TypeEventA()).toString());

@@ -1,7 +1,9 @@
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -714,5 +716,52 @@ public class DeterministicStateMachineTest {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		assertEquals(machine.getClass().getSimpleName() + "(fsm)",
 				machine.toString());
+	}
+
+	@Test
+	public final void testGetTransition() {
+		DeterministicStateMachine machine = new DeterministicStateMachine("fsm");
+		Transition transition = null;
+
+		try {
+			machine.getTransition(new State("state"), NullEvent.INSTANCE);
+			fail("Should not be executed");
+		} catch (NullPointerException e) {
+			// Do nothing
+		}
+
+		try {
+			machine.addTransition(new Transition(new State("state"),
+					new TypeEventA(), new State("state")));
+
+			machine.addTransition(new Transition(new State("state"),
+					OtherEventImpl.INSTANCE, new State("state")));
+
+			machine.addTransition(new Transition(new State("state"),
+					new TimeoutEventImpl(42,
+							TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP),
+					new State("state")));
+
+			transition = machine.getTransition(new State("state"),
+					new TypeEventB());
+			assertNull(transition);
+
+			transition = machine.getTransition(new State("state"),
+					new TypeEventA());
+			assertNotNull(transition);
+			assertTrue(transition.getEvent() instanceof TypeEventA);
+
+			transition = machine.getTransition(new State("state"),
+					new OtherEventImpl(new TypeEventA()));
+			assertNotNull(transition);
+			assertTrue(transition.getEvent() instanceof OtherEvent);
+
+			transition = machine.getTransition(new State("state"),
+					TimeoutEventImpl.INSTANCE);
+			assertNotNull(transition);
+			assertTrue(transition.getEvent() instanceof TimeoutEvent);
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
 	}
 }

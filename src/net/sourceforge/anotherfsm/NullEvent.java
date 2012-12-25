@@ -19,28 +19,23 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * The other event is processed if no other event match and this transition is
- * defined for the source state.
+ * Null event is event equivalent of null.
  * 
  * @author Michal Turek
- * @see AnotherFsm#genOtherEvent()
  */
-public interface OtherEvent extends Event {
-	/**
-	 * Use this hash code in your implementation of this interface in
-	 * hashCode(). Also ensure all instances of OtherEvent are equal.
-	 * 
-	 * @see #hashCode()
-	 * @see #equals(Object)
-	 * @see OtherEventImpl#hashCode()
-	 * @see OtherEventImpl#equals(Object)
-	 */
-	public static final int HASH_CODE = 4376376;
+public class NullEvent implements Event {
+	/** The instance of the class. */
+	public static final NullEvent INSTANCE = new NullEvent();
 
 	/**
-	 * Get the source event that caused this transition.
-	 * 
-	 * @return the sourceEvent the source event
+	 * Create the object.
 	 */
-	public Event getSourceEvent();
+	private NullEvent() {
+		// Empty
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 }

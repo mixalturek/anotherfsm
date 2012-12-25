@@ -24,9 +24,10 @@ package net.sourceforge.anotherfsm;
  * 
  * @author Michal Turek
  */
-class OtherEventImpl extends TypeEvent implements OtherEvent {
+class OtherEventImpl implements OtherEvent {
 	/** The instance of the object for building of the state machine. */
-	public static final OtherEvent INSTANCE = new OtherEventImpl(null);
+	public static final OtherEvent INSTANCE = new OtherEventImpl(
+			NullEvent.INSTANCE);
 
 	/** The source event that caused this transition. */
 	private final Event sourceEvent;
@@ -39,6 +40,9 @@ class OtherEventImpl extends TypeEvent implements OtherEvent {
 	 *            the source event that caused this transition
 	 */
 	OtherEventImpl(Event sourceEvent) {
+		if (sourceEvent == null)
+			throw new NullPointerException("Source event must not be null");
+
 		this.sourceEvent = sourceEvent;
 	}
 
@@ -47,8 +51,20 @@ class OtherEventImpl extends TypeEvent implements OtherEvent {
 		return sourceEvent;
 	}
 
-	// Don't define hashCode() and equals(), this is only a container for source
-	// event.
+	@Override
+	public int hashCode() {
+		return HASH_CODE;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+
+		return obj instanceof OtherEvent;
+	}
 
 	@Override
 	public String toString() {

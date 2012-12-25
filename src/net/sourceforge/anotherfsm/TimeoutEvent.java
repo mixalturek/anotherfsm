@@ -31,6 +31,17 @@ package net.sourceforge.anotherfsm;
  */
 public interface TimeoutEvent extends Event {
 	/**
+	 * Use this hash code in your implementation of this interface in
+	 * hashCode(). Also ensure all instances of TimeoutEvent are equal.
+	 * 
+	 * @see #hashCode()
+	 * @see #equals(Object)
+	 * @see TimeoutEventImpl#hashCode()
+	 * @see TimeoutEventImpl#equals(Object)
+	 */
+	public static final int HASH_CODE = 35345225;
+
+	/**
 	 * Get the timeout.
 	 * 
 	 * @return the timeout
@@ -65,12 +76,12 @@ public interface TimeoutEvent extends Event {
 	 */
 	public static enum Type {
 		/** Restart the timeout on loop transition. */
-		RESTART_ON_LOOP,
+		RESTART_TIMEOUT_ON_LOOP,
 
 		/**
 		 * Don't restart the timeout on loop transition and let the previous to
 		 * remain active.
 		 */
-		DONT_RESTART_ON_LOOP
+		DONT_RESTART_TIMEOUT_ON_LOOP
 	}
 }

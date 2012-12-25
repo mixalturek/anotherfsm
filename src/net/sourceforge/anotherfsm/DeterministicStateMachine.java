@@ -345,4 +345,17 @@ class DeterministicStateMachine implements StateMachine {
 
 		return transitions;
 	}
+
+	/**
+	 * Get transition of a specified event type defined for a state.
+	 * 
+	 * @param state
+	 *            the state, it must be defined in the state machine
+	 * @param event
+	 *            the event
+	 * @return the transition or null if not defined
+	 */
+	protected Transition getTransition(State state, Event event) {
+		return stateTransitions.get(state).getTransition(event);
+	}
 }

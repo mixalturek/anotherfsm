@@ -24,11 +24,26 @@ import org.junit.Test;
 
 public class TimeoutEventImplTest {
 	@Test
-	public final void testTimeoutEvent() {
-		// Don't define hashCode() and equals(), the comparison using the type
-		// is enough.
-		assertEquals(
-				new TimeoutEventImpl(1, TimeoutEvent.Type.DONT_RESTART_ON_LOOP),
-				new TimeoutEventImpl(2, TimeoutEvent.Type.RESTART_ON_LOOP));
+	public final void hashCodeTest() {
+		assertEquals(TimeoutEvent.HASH_CODE, new TimeoutEventImpl(1,
+				TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP).hashCode());
+
+		assertEquals(TimeoutEvent.HASH_CODE,
+				new NonstandardTimeoutEvent().hashCode());
+	}
+
+	@Test
+	public final void equalsTest() {
+		assertEquals(new TimeoutEventImpl(1,
+				TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP),
+				new TimeoutEventImpl(2,
+						TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP));
+
+		assertEquals(new NonstandardTimeoutEvent(), new TimeoutEventImpl(2,
+				TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP));
+
+		assertEquals(new TimeoutEventImpl(2,
+				TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP),
+				new NonstandardTimeoutEvent());
 	}
 }

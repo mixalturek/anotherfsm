@@ -47,5 +47,11 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 		super(name);
 	}
 
+	@Override
+	public synchronized void notifyEnter(State previous, Event event, State current) {
+		super.notifyEnter(previous, event, current);
+
+	}
+
 	// TODO: implementation
 }

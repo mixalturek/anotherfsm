@@ -29,7 +29,11 @@ package net.sourceforge.anotherfsm;
  * 
  * @see TimeoutStateMachine
  */
-class TimeoutEventImpl extends TypeEvent implements TimeoutEvent {
+class TimeoutEventImpl implements TimeoutEvent {
+	/** The instance of the object for use in timeout state machine. */
+	static TimeoutEvent INSTANCE = new TimeoutEventImpl(1,
+			TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP);
+
 	/** The timeout in milliseconds. */
 	private final long timeout;
 
@@ -67,8 +71,20 @@ class TimeoutEventImpl extends TypeEvent implements TimeoutEvent {
 		return type;
 	}
 
-	// Don't define hashCode() and equals(), the comparison using the type is
-	// enough.
+	@Override
+	public int hashCode() {
+		return HASH_CODE;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+
+		return obj instanceof TimeoutEvent;
+	}
 
 	@Override
 	public String toString() {
