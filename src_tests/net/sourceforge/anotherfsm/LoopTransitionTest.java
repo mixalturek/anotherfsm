@@ -18,18 +18,25 @@
 
 package net.sourceforge.anotherfsm;
 
-/**
- * The other event is processed if no other event match and this transition is
- * defined for the source state.
- * 
- * @author Michal Turek
- * @see AnotherFsm#genOtherEvent()
- */
-public interface OtherEvent extends Event {
-	/**
-	 * Get the source event that caused this transition.
-	 * 
-	 * @return the sourceEvent the source event
-	 */
-	public Event getSourceEvent();
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+public class LoopTransitionTest {
+	@Test
+	public final void testGetState() {
+		LoopTransition transition = new LoopTransition(new State("state"),
+				new TypeEventA());
+
+		assertEquals(new State("state"), transition.getState());
+		assertEquals(new State("state"), transition.getSource());
+		assertEquals(new State("state"), transition.getDestination());
+		assertEquals(transition.getSource(), transition.getDestination());
+	}
+
+	@Test
+	public final void testToString() {
+		assertEquals("state <-> TypeEventA", new LoopTransition(new State(
+				"state"), new TypeEventA()).toString());
+	}
 }

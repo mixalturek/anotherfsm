@@ -22,6 +22,8 @@ package net.sourceforge.anotherfsm;
  * Group of processors based on type.
  * 
  * @author Michal Turek
+ * 
+ * @see AnotherFsm#genTypeProcessors()
  */
 public interface TypeProcessors {
 	/**

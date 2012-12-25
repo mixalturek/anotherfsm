@@ -25,6 +25,10 @@ import java.util.Set;
  * Abstract state machine
  * 
  * @author Michal Turek
+ * 
+ * @see AnotherFsm#genDeterministicStateMachine(String)
+ * @see AnotherFsm#genSynchronizedStateMachine(String)
+ * @see AnotherFsm#genTimeoutStateMachine(String)
  */
 public interface StateMachine extends TypeProcessors, Closeable {
 	/**

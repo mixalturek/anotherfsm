@@ -9,7 +9,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class OtherEventTest {
+public class OtherEventImplTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		BasicConfigurator.configure();
@@ -17,8 +17,8 @@ public class OtherEventTest {
 
 	@Test
 	public final void testToString() {
-		assertEquals("OtherEvent(TypeEventA)",
-				new OtherEvent(new TypeEventA()).toString());
+		assertEquals("OtherEventImpl(TypeEventA)", new OtherEventImpl(
+				new TypeEventA()).toString());
 	}
 
 	@Test
@@ -27,7 +27,7 @@ public class OtherEventTest {
 		final State state = new State("state");
 		final State another = new State("another");
 		Transition loop = new Transition(state, new TypeEventA(), state);
-		Transition transition = new Transition(state, OtherEvent.INSTANCE,
+		Transition transition = new Transition(state, OtherEventImpl.INSTANCE,
 				another);
 		Transition back = new Transition(another, new TypeEventA(), state);
 
@@ -36,9 +36,9 @@ public class OtherEventTest {
 			public void onTransition(State source, Event event,
 					State destination) {
 				assertEquals(state, source);
-				assertEquals(OtherEvent.INSTANCE, event);
+				assertEquals(OtherEventImpl.INSTANCE, event);
 				assertEquals(new TypeEventB(),
-						((OtherEvent) event).getSourceEvent());
+						((OtherEventImpl) event).getSourceEvent());
 				assertEquals(another, destination);
 
 				super.onTransition(source, event, destination);
@@ -63,9 +63,9 @@ public class OtherEventTest {
 
 			processedEvent = machine.process(new TypeEventB());
 			assertEquals(1, listener.transitionsNum);
-			assertEquals(OtherEvent.INSTANCE, processedEvent);
+			assertEquals(OtherEventImpl.INSTANCE, processedEvent);
 			assertEquals(new TypeEventB(),
-					((OtherEvent) processedEvent).getSourceEvent());
+					((OtherEventImpl) processedEvent).getSourceEvent());
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}

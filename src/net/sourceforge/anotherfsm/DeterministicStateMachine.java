@@ -39,9 +39,6 @@ class DeterministicStateMachine implements StateMachine {
 	/** The logger. */
 	protected final Logger logger;
 
-	/** The delimiter for logging transition. */
-	protected final String TR = " -> ";
-
 	/** The name of the state machine. */
 	private final String name;
 
@@ -230,8 +227,8 @@ class DeterministicStateMachine implements StateMachine {
 		Event preprocessedEvent = preprocessors.process(event);
 		if (preprocessedEvent == null) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Event only preprocessed: " + currentState + TR
-						+ event);
+				logger.info("Event only preprocessed: " + currentState
+						+ Transition.TR + event);
 			}
 
 			// Null is correct, this is not error state
@@ -244,13 +241,13 @@ class DeterministicStateMachine implements StateMachine {
 				.getTransition(preprocessedEvent);
 
 		if (transition == null) {
-			preprocessedEvent = new OtherEvent(preprocessedEvent);
+			preprocessedEvent = new OtherEventImpl(preprocessedEvent);
 			transition = stateTransitions.get(currentState).getTransition(
 					preprocessedEvent);
 
 			if (transition == null) {
-				String msg = "No such transition: " + currentState + TR
-						+ preprocessedEvent;
+				String msg = "No such transition: " + currentState
+						+ Transition.TR + preprocessedEvent;
 				logger.warn(msg);
 				throw new FsmException(msg);
 			}
@@ -269,14 +266,15 @@ class DeterministicStateMachine implements StateMachine {
 	 */
 	private void processCheck(Event event) throws FsmException {
 		if (event == null) {
-			String msg = "Event must not be null: " + currentState + TR + event;
+			String msg = "Event must not be null: " + currentState
+					+ Transition.TR + event;
 			logger.error(msg);
 			throw new NullPointerException(msg);
 		}
 
 		if (currentState == null) {
-			String msg = "Current/start state is null: " + currentState + TR
-					+ event;
+			String msg = "Current/start state is null: " + currentState
+					+ Transition.TR + event;
 
 			logger.error(msg);
 			throw new FsmException(msg);
@@ -303,10 +301,11 @@ class DeterministicStateMachine implements StateMachine {
 		if (logger.isInfoEnabled()) {
 			// == is correct, equals may not consider an updated parameter
 			if (eventToProcess == matchedEvent) {
-				transStr = source + TR + eventToProcess + TR + destination;
+				transStr = source + Transition.TR + eventToProcess
+						+ Transition.TR + destination;
 			} else {
-				transStr = source + TR + matchedEvent + "/" + eventToProcess
-						+ TR + destination;
+				transStr = source + Transition.TR + matchedEvent + "/"
+						+ eventToProcess + Transition.TR + destination;
 			}
 
 			logger.info("Transition started:  " + transStr);

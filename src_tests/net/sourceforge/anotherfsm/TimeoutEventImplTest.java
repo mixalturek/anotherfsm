@@ -18,18 +18,17 @@
 
 package net.sourceforge.anotherfsm;
 
-/**
- * The other event is processed if no other event match and this transition is
- * defined for the source state.
- * 
- * @author Michal Turek
- * @see AnotherFsm#genOtherEvent()
- */
-public interface OtherEvent extends Event {
-	/**
-	 * Get the source event that caused this transition.
-	 * 
-	 * @return the sourceEvent the source event
-	 */
-	public Event getSourceEvent();
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+public class TimeoutEventImplTest {
+	@Test
+	public final void testTimeoutEvent() {
+		// Don't define hashCode() and equals(), the comparison using the type
+		// is enough.
+		assertEquals(
+				new TimeoutEventImpl(1, TimeoutEvent.Type.DONT_RESTART_ON_LOOP),
+				new TimeoutEventImpl(2, TimeoutEvent.Type.RESTART_ON_LOOP));
+	}
 }

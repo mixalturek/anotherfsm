@@ -23,13 +23,35 @@ package net.sourceforge.anotherfsm;
  * defined for the source state.
  * 
  * @author Michal Turek
- * @see AnotherFsm#genOtherEvent()
  */
-public interface OtherEvent extends Event {
+class OtherEventImpl extends TypeEvent implements OtherEvent {
+	/** The instance of the object for building of the state machine. */
+	public static final OtherEvent INSTANCE = new OtherEventImpl(null);
+
+	/** The source event that caused this transition. */
+	private final Event sourceEvent;
+
 	/**
-	 * Get the source event that caused this transition.
+	 * Create the object. Internal use only. For internal use while processing
+	 * the transitions.
 	 * 
-	 * @return the sourceEvent the source event
+	 * @param sourceEvent
+	 *            the source event that caused this transition
 	 */
-	public Event getSourceEvent();
+	OtherEventImpl(Event sourceEvent) {
+		this.sourceEvent = sourceEvent;
+	}
+
+	@Override
+	public Event getSourceEvent() {
+		return sourceEvent;
+	}
+
+	// Don't define hashCode() and equals(), this is only a container for source
+	// event.
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "(" + sourceEvent + ")";
+	}
 }

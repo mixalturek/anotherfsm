@@ -27,6 +27,9 @@ import java.util.List;
  * @author Michal Turek
  */
 class Transition {
+	/** The delimiter for string representation. */
+	public static final String TR = " -> ";
+
 	/** The source state. */
 	private final State source;
 
@@ -164,6 +167,6 @@ class Transition {
 	 */
 	@Override
 	public String toString() {
-		return source + " -> " + event + " -> " + destination;
+		return source + TR + event + TR + destination;
 	}
 }
