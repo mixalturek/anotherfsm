@@ -23,8 +23,8 @@ import java.util.Set;
 /**
  * The deterministic state machine for use in multithreaded environment.
  * 
- * Building of the state machine is NOT synchronized and should be done just in
- * one thread. Only the processing of the events is synchronized.
+ * Building of the object is NOT synchronized and should be done just in one
+ * thread. Only the processing of the events is synchronized.
  * 
  * @author Michal Turek
  */

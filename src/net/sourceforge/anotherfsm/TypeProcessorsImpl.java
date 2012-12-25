@@ -22,7 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Processors of the events based on their type.
+ * Processors of the events based on their type. The object can be used in
+ * multithreaded environment.
+ * 
+ * Building of the object is NOT synchronized and should be done just in one
+ * thread. Only the processing of the events is synchronized.
  * 
  * @author Michal Turek
  */
