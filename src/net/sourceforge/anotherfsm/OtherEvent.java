@@ -25,15 +25,11 @@ package net.sourceforge.anotherfsm;
  * @author Michal Turek
  */
 public class OtherEvent extends TypeEvent {
+	/** The instance of the object for building of the state machine. */
+	public static final OtherEvent INSTANCE = new OtherEvent(null);
+
 	/** The source event that caused this transition. */
 	private final Event sourceEvent;
-
-	/**
-	 * Create the object. For use while building the state machine.
-	 */
-	public OtherEvent() {
-		sourceEvent = null;
-	}
 
 	/**
 	 * Create the object. Internal use only. For internal use while processing
