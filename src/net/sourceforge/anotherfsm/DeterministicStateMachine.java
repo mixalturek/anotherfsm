@@ -164,7 +164,20 @@ class DeterministicStateMachine implements StateMachine {
 		preprocessors.addProcessor(clazz, processor);
 	}
 
-	void notifyEnter(State previous, Event event, State current) {
+	/**
+	 * Process all state enter callbacks.
+	 * 
+	 * @param previous
+	 *            the previous state
+	 * @param event
+	 *            the event
+	 * @param current
+	 *            the current state
+	 * @throws FsmException
+	 *             if something fails
+	 */
+	void notifyEnter(State previous, Event event, State current)
+			throws FsmException {
 		current.notifyEnter(previous, event, current);
 
 		if (current.isFinalState()) {
@@ -179,7 +192,19 @@ class DeterministicStateMachine implements StateMachine {
 		}
 	}
 
-	void notifyExit(State current, Event event, State next) {
+	/**
+	 * Process all state exit callbacks.
+	 * 
+	 * @param current
+	 *            the current state
+	 * @param event
+	 *            the event
+	 * @param next
+	 *            the next state
+	 * @throws FsmException
+	 *             if something fails
+	 */
+	void notifyExit(State current, Event event, State next) throws FsmException {
 		current.notifyExit(current, event, next);
 
 		if (current.isFinalState()) {
@@ -194,8 +219,22 @@ class DeterministicStateMachine implements StateMachine {
 		}
 	}
 
+	/**
+	 * Process all transition callbacks.
+	 * 
+	 * @param transition
+	 *            the transition
+	 * @param source
+	 *            the source state
+	 * @param event
+	 *            the event
+	 * @param destination
+	 *            the destination state
+	 * @throws FsmException
+	 *             if something fails
+	 */
 	void notifyTransition(Transition transition, State source, Event event,
-			State destination) {
+			State destination) throws FsmException {
 		transition.notifyTransition(source, event, destination);
 
 		for (TransitionListener listener : transitionListeners) {
@@ -291,9 +330,11 @@ class DeterministicStateMachine implements StateMachine {
 	 * @param matchedEvent
 	 *            the event that matched for logging purposes
 	 * @return the final processed event
+	 * @throws FsmException
+	 *             if something fails
 	 */
 	private Event processInternal(Transition transition, Event eventToProcess,
-			Event matchedEvent) {
+			Event matchedEvent) throws FsmException {
 		State source = transition.getSource();
 		State destination = transition.getDestination();
 

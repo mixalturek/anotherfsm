@@ -2,18 +2,24 @@ TODO
 ====
 
 - First release.
-- TimeoutStateMachine, TimeoutEvent.
+- TimeoutStateMachine, TimeoutEvent, TimeoutStateMachineTest.
+
 - Preprocessor based on equals() of events.
 - Generalization of preprocessors, list and registration, variable number.
+
 - Generalization of logger.
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.
 - Examples.
 - Ant build.xml.
-- Generate javadoc.
+- Generate javadoc - API, full.
 - Web.
 - Verify "Do nothing" exceptions in unit tests.
 - FsmEditor or QFsm patch.
 - Analyzer and visualization of FSM transitions logs.
+- Track and check internal FSM state - creating, running, stopped
+
+- StateListener.getType(), process on loop transition flag like in TimeoutEvent.
+- Remove LoopTransition, create a new constructor in Transition instead.
 
 - AsciiSchemaEditor.

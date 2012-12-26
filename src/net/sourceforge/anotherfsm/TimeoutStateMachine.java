@@ -19,6 +19,8 @@
 package net.sourceforge.anotherfsm;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Deterministic state machine with timeouts for states. The object is thread
@@ -36,8 +38,16 @@ import java.io.IOException;
  * @see AnotherFsm#genTimeoutEvent(long, TimeoutEvent.Type)
  * @see AnotherFsm#genTimeoutStateMachine(String)
  */
-// TODO: check the behavior with zero timeout
 class TimeoutStateMachine extends SynchronizedStateMachine {
+	/** The timer for scheduling timeout transitions. */
+	private Timer timer = null;
+
+	/**
+	 * The unique ID of the last state enter to forbid timeout in incorrect
+	 * state. Instance of any object is enough since every two objects are
+	 * different.
+	 */
+	private Object lastStateEnterID = new Object();
 
 	/**
 	 * Create the state machine.
@@ -50,36 +60,130 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	}
 
 	@Override
-	public void start() throws FsmException {
-		// TODO: implementation
+	public synchronized void start() throws FsmException {
+		// The timer must be created first, super.start() generates start event
+		if (timer != null)
+			throw new FsmException(
+					"Timer already running, state machine probably started twice");
 
-		super.start();
+		timer = new Timer(getClass().getSimpleName() + "-" + getName(), false);
+
+		try {
+			super.start();
+		} catch (FsmException e) {
+			if (timer != null) {
+				timer.cancel();
+				timer = null;
+			}
+			throw e;
+		}
 	}
 
 	@Override
-	public void close() throws IOException {
-		super.close();
-
-		// TODO: implementation
+	public synchronized void close() throws IOException {
+		try {
+			super.close();
+		} finally {
+			if (timer != null) {
+				timer.cancel();
+				timer = null;
+			} else {
+				logger.warn("Timer is not running while closing, state machine probably not started yet");
+				// Don't throw exceptions while destroying
+			}
+		}
 	}
 
 	@Override
 	public synchronized void notifyEnter(State previous, Event event,
-			State current) {
+			State current) throws FsmException {
 		super.notifyEnter(previous, event, current);
 
-		Transition transition = getTransition(getActiveState(),
+		if (timer == null) {
+			String msg = "Timer is not running while processing, state machine probably not started yet";
+			logger.error(msg);
+			throw new FsmException(msg);
+		}
+
+		lastStateEnterID = new Object();
+
+		// Existing timeout can be cancelled here.
+
+		scheduleTimeoutTransition(previous.equals(current));
+	}
+
+	/**
+	 * Schedule a new timeout transition, a state was entered.
+	 * 
+	 * @param loopTransition
+	 *            the transition was loop transition
+	 */
+	private synchronized void scheduleTimeoutTransition(boolean loopTransition) {
+		Transition timeoutTransition = getTransition(getActiveState(),
 				TimeoutEventImpl.INSTANCE);
 
-		if (transition == null)
-			return;
+		if (timeoutTransition == null)
+			return; // Correct state
 
-		TimeoutEvent timeoutEvent = (TimeoutEvent) transition.getEvent();
+		TimeoutEvent timeoutEvent = (TimeoutEvent) timeoutTransition.getEvent();
 
-		if (previous.equals(current)
+		if (loopTransition
 				&& timeoutEvent.getType() == TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP)
-			return;
+			return; // Correct state
 
-		// TODO: schedule the timeout event
+		timer.schedule(new TimeoutTask(timeoutTransition, lastStateEnterID),
+				timeoutEvent.getTimeout());
+	}
+
+	/**
+	 * Process the timeout transition.
+	 * 
+	 * @param timeoutTransition
+	 *            the transition with TimeoutEvent that should be processed
+	 * @param stateEnterID
+	 *            the unique ID of the state enter for this task
+	 */
+	private synchronized void proccessTimeoutTransition(
+			Transition timeoutTransition, Object stateEnterID) {
+		if (stateEnterID != lastStateEnterID)
+			return; // Correct state
+
+		try {
+			process(timeoutTransition.getEvent());
+		} catch (FsmException e) {
+			logger.error("Processing of timeout failed: " + timeoutTransition);
+			// No other possibility to signal error inside the timer thread
+		}
+	}
+
+	/**
+	 * The timeout task for scheduling the timeout transitions.
+	 * 
+	 * @author Michal Turek
+	 */
+	private class TimeoutTask extends TimerTask {
+		/** The transition with TimeoutEvent that should be processed. */
+		private final Transition timeoutTransition;
+
+		/** The unique ID of the state enter for this task. */
+		private final Object stateEnterID;
+
+		/**
+		 * Create the object.
+		 * 
+		 * @param timeoutTransition
+		 *            the transition with TimeoutEvent that should be processed
+		 * @param stateEnterID
+		 *            the unique ID of the state enter for this task
+		 */
+		public TimeoutTask(Transition timeoutTransition, Object stateEnterID) {
+			this.timeoutTransition = timeoutTransition;
+			this.stateEnterID = stateEnterID;
+		}
+
+		@Override
+		public void run() {
+			proccessTimeoutTransition(timeoutTransition, stateEnterID);
+		}
 	}
 }
