@@ -1,0 +1,19 @@
+TODO
+====
+
+- First release.
+- TimeoutStateMachine, TimeoutEvent.
+- Preprocessor based on equals() of events.
+- Generalization of preprocessors, list and registration, variable number.
+- Generalization of logger.
+- NonDeterministicStateMachine.
+- ThreadQueueStateMachine.
+- Examples.
+- Ant build.xml.
+- Generate javadoc.
+- Web.
+- Verify "Do nothing" exceptions in unit tests.
+- FsmEditor or QFsm patch.
+- Analyzer and visualization of FSM transitions logs.
+
+- AsciiSchemaEditor.
