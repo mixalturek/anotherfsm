@@ -72,8 +72,10 @@ public class DeterministicStateMachineTest {
 	public final void testStart() {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		State state = new State("state", State.Type.FINAL);
-		StateListenerImpl listener = new StateListenerImpl();
-		StateListenerImpl listenerFsm = new StateListenerImpl();
+		StateListenerImpl listener = new StateListenerImpl(
+				StateListener.Type.LOOP_PROCESS);
+		StateListenerImpl listenerFsm = new StateListenerImpl(
+				StateListener.Type.LOOP_PROCESS);
 
 		try {
 			machine.start();
@@ -261,7 +263,8 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(back);
 			machine.setStartState(startState);
 
-			startState.addListener(new StateListenerImpl() {
+			startState.addListener(new StateListenerImpl(
+					StateListener.Type.LOOP_PROCESS) {
 				@Override
 				public void onStateEnter(State previous, Event event,
 						State current) {
@@ -311,7 +314,8 @@ public class DeterministicStateMachineTest {
 				}
 			});
 
-			finalState.addListener(new StateListenerImpl() {
+			finalState.addListener(new StateListenerImpl(
+					StateListener.Type.LOOP_PROCESS) {
 				@Override
 				public void onStateEnter(State previous, Event event,
 						State current) {
@@ -356,7 +360,8 @@ public class DeterministicStateMachineTest {
 				}
 			});
 
-			machine.addListener(new StateListenerImpl() {
+			machine.addListener(new StateListenerImpl(
+					StateListener.Type.LOOP_PROCESS) {
 				@Override
 				public void onStateEnter(State previous, Event event,
 						State current) {
@@ -737,9 +742,9 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(new Transition(new State("state"),
 					OtherEventImpl.INSTANCE, new State("state")));
 
-			machine.addTransition(new Transition(new State("state"),
-					new TimeoutEventImpl(42,
-							TimeoutEvent.Type.LOOP_NO_RESTART),
+			machine.addTransition(new Transition(
+					new State("state"),
+					new TimeoutEventImpl(42, TimeoutEvent.Type.LOOP_NO_RESTART),
 					new State("state")));
 
 			transition = machine.getTransition(new State("state"),

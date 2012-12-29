@@ -78,6 +78,8 @@ class State {
 	/**
 	 * The state was entered, notify listeners. Internal use only.
 	 * 
+	 * @param loopTransition
+	 *            this transition is a loop transition
 	 * @param previous
 	 *            the previous state
 	 * @param event
@@ -85,22 +87,26 @@ class State {
 	 * @param current
 	 *            the current state
 	 */
-	void notifyEnter(State previous, Event event, State current) {
-		if (type == State.Type.FINAL) {
-			for (StateListener listener : listeners) {
-				listener.onStateEnter(previous, event, current);
+	void notifyEnter(boolean loopTransition, State previous, Event event,
+			State current) {
+		for (StateListener listener : listeners) {
+			if (loopTransition
+					&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
+				continue;
+			}
+
+			listener.onStateEnter(previous, event, current);
+
+			if (type == State.Type.FINAL)
 				listener.onFinalStateEnter(previous, event, current);
-			}
-		} else {
-			for (StateListener listener : listeners) {
-				listener.onStateEnter(previous, event, current);
-			}
 		}
 	}
 
 	/**
 	 * The state was exited, notify listeners. Internal use only.
 	 * 
+	 * @param loopTransition
+	 *            this transition is a loop transition
 	 * @param current
 	 *            the current state
 	 * @param event
@@ -108,16 +114,18 @@ class State {
 	 * @param next
 	 *            the next state
 	 */
-	void notifyExit(State current, Event event, State next) {
-		if (type == State.Type.FINAL) {
-			for (StateListener listener : listeners) {
-				listener.onStateExit(current, event, next);
+	void notifyExit(boolean loopTransition, State current, Event event,
+			State next) {
+		for (StateListener listener : listeners) {
+			if (loopTransition
+					&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
+				continue;
+			}
+
+			listener.onStateExit(current, event, next);
+
+			if (isFinalState())
 				listener.onFinalStateExit(current, event, next);
-			}
-		} else {
-			for (StateListener listener : listeners) {
-				listener.onStateExit(current, event, next);
-			}
 		}
 	}
 

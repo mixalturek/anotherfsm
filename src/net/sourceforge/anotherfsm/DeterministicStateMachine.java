@@ -178,17 +178,20 @@ class DeterministicStateMachine implements StateMachine {
 	 */
 	void notifyEnter(State previous, Event event, State current)
 			throws FsmException {
-		current.notifyEnter(previous, event, current);
+		boolean loopTransition = previous.equals(current);
 
-		if (current.isFinalState()) {
-			for (StateListener listener : stateListeners) {
-				listener.onStateEnter(previous, event, current);
+		current.notifyEnter(loopTransition, previous, event, current);
+
+		for (StateListener listener : stateListeners) {
+			if (loopTransition
+					&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
+				continue;
+			}
+
+			listener.onStateEnter(previous, event, current);
+
+			if (current.isFinalState())
 				listener.onFinalStateEnter(previous, event, current);
-			}
-		} else {
-			for (StateListener listener : stateListeners) {
-				listener.onStateEnter(previous, event, current);
-			}
 		}
 	}
 
@@ -205,17 +208,20 @@ class DeterministicStateMachine implements StateMachine {
 	 *             if something fails
 	 */
 	void notifyExit(State current, Event event, State next) throws FsmException {
-		current.notifyExit(current, event, next);
+		boolean loopTransition = current.equals(next);
 
-		if (current.isFinalState()) {
-			for (StateListener listener : stateListeners) {
-				listener.onStateExit(current, event, next);
+		current.notifyExit(loopTransition, current, event, next);
+
+		for (StateListener listener : stateListeners) {
+			if (loopTransition
+					&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
+				continue;
+			}
+
+			listener.onStateExit(current, event, next);
+
+			if (current.isFinalState())
 				listener.onFinalStateExit(current, event, next);
-			}
-		} else {
-			for (StateListener listener : stateListeners) {
-				listener.onStateExit(current, event, next);
-			}
 		}
 	}
 

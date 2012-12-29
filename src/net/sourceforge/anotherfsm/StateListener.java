@@ -31,10 +31,14 @@ package net.sourceforge.anotherfsm;
  */
 public interface StateListener {
 	/**
-	 * The state was entered.
+	 * Get the listener type.
 	 * 
-	 * Always compare the previous and current state if the state contains a
-	 * loop transition to check this is real state enter from a different state.
+	 * @return the type
+	 */
+	public StateListener.Type getType();
+
+	/**
+	 * The state was entered.
 	 * 
 	 * @param previous
 	 *            the previous state
@@ -42,33 +46,23 @@ public interface StateListener {
 	 *            the event
 	 * @param current
 	 *            the current state
-	 * 
-	 * @see LoopTransition
 	 */
 	public void onStateEnter(State previous, Event event, State current);
 
 	/**
 	 * The state was exited.
 	 * 
-	 * Always compare the current and next state if the state contains a loop
-	 * transition to check this is real state exit to a different state.
-	 * 
 	 * @param current
 	 *            the current state
 	 * @param event
 	 *            the event
 	 * @param next
 	 *            the next state
-	 * 
-	 * @see LoopTransition
 	 */
 	public void onStateExit(State current, Event event, State next);
 
 	/**
 	 * The final state was entered.
-	 * 
-	 * Always compare the previous and current state if the state contains a
-	 * loop transition to check this is real state enter from a different state.
 	 * 
 	 * @param previous
 	 *            the previous state
@@ -76,16 +70,11 @@ public interface StateListener {
 	 *            the event
 	 * @param current
 	 *            the current state
-	 * 
-	 * @see LoopTransition
 	 */
 	public void onFinalStateEnter(State previous, Event event, State current);
 
 	/**
 	 * The final state was exited.
-	 * 
-	 * Always compare the current and next state if the state contains a loop
-	 * transition to check this is real state exit to a different state.
 	 * 
 	 * @param current
 	 *            the current state
@@ -93,8 +82,22 @@ public interface StateListener {
 	 *            the event
 	 * @param next
 	 *            the next state
-	 * 
-	 * @see LoopTransition
 	 */
 	public void onFinalStateExit(State current, Event event, State next);
+
+	/**
+	 * The type of state listener to specify the behavior on loop transition.
+	 * The state is not changed during such transition.
+	 * 
+	 * @author Michal Turek
+	 * 
+	 * @see Transition#Transition(State, Event)
+	 */
+	public static enum Type {
+		/** Process the listener on loop transition. */
+		LOOP_PROCESS,
+
+		/** Don't process the listener on loop transition. */
+		LOOP_NO_PROCESS
+	}
 }

@@ -18,19 +18,34 @@
 
 package net.sourceforge.anotherfsm;
 
-import net.sourceforge.anotherfsm.Event;
-import net.sourceforge.anotherfsm.StateListener;
-
 /**
  * Simple implementation of StateListener for use in JUnit tests.
  * 
  * @author Michal Turek
  */
 public class StateListenerImpl implements StateListener {
+	/** The type of the listener. */
+	private final StateListener.Type type;
+
 	public int enteredNum = 0;
 	public int exitedNum = 0;
 	public int finalEnteredNum = 0;
 	public int finalExitedNum = 0;
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param type
+	 *            the type of the listener
+	 */
+	public StateListenerImpl(StateListener.Type type) {
+		this.type = type;
+	}
+
+	@Override
+	public StateListener.Type getType() {
+		return type;
+	}
 
 	@Override
 	public void onStateEnter(State previous, Event event, State current) {

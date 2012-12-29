@@ -7,6 +7,8 @@ TODO
 - Generalization of preprocessors, list and registration, variable number.
 
 - Generalization of logger.
+- Logger is initialized several times in tests, fix that.
+
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.
 - Examples.
@@ -18,7 +20,5 @@ TODO
 - Analyzer and visualization of FSM transitions logs.
 - Track and check internal FSM state - creating, running, stopped
 - StateMachine.isInFinalState()
-
-- StateListener.getType(), process on loop transition flag like in TimeoutEvent.
 
 - AsciiSchemaEditor.

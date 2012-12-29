@@ -72,7 +72,7 @@ public interface TimeoutEvent extends Event {
 	 * 
 	 * @author Michal Turek
 	 * 
-	 * @see LoopTransition
+	 * @see Transition#Transition(State, Event)
 	 */
 	public static enum Type {
 		/** Restart the timeout on loop transition. */

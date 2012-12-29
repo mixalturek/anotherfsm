@@ -24,6 +24,24 @@ package net.sourceforge.anotherfsm;
  * @author Michal Turek
  */
 public class StateAdapter implements StateListener {
+	/** The type of the listener. */
+	private final StateListener.Type type;
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param type
+	 *            the type of the listener
+	 */
+	public StateAdapter(StateListener.Type type) {
+		this.type = type;
+	}
+
+	@Override
+	public StateListener.Type getType() {
+		return type;
+	}
+
 	@Override
 	public void onStateEnter(State previous, Event event, State current) {
 		// Do nothing by default.

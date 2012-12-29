@@ -11,7 +11,8 @@ public class StateTest {
 	public final void testAddListener() {
 		State state = new State("state");
 		State stateFinal = new State("state", State.Type.FINAL);
-		StateListenerImpl listener = new StateListenerImpl();
+		StateListenerImpl listener = new StateListenerImpl(
+				StateListener.Type.LOOP_PROCESS);
 
 		state.addListener(listener);
 		stateFinal.addListener(listener);
@@ -21,28 +22,28 @@ public class StateTest {
 		assertEquals(listener.finalEnteredNum, 0);
 		assertEquals(listener.finalExitedNum, 0);
 
-		state.notifyEnter(null, null, null);
+		state.notifyEnter(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 1);
 		assertEquals(listener.exitedNum, 0);
 		assertEquals(listener.finalEnteredNum, 0);
 		assertEquals(listener.finalExitedNum, 0);
 
-		state.notifyExit(null, null, null);
+		state.notifyExit(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 1);
 		assertEquals(listener.exitedNum, 1);
 		assertEquals(listener.finalEnteredNum, 0);
 		assertEquals(listener.finalExitedNum, 0);
 
-		stateFinal.notifyEnter(null, null, null);
+		stateFinal.notifyEnter(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 2);
 		assertEquals(listener.exitedNum, 1);
 		assertEquals(listener.finalEnteredNum, 1);
 		assertEquals(listener.finalExitedNum, 0);
 
-		stateFinal.notifyExit(null, null, null);
+		stateFinal.notifyExit(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 2);
 		assertEquals(listener.exitedNum, 2);
