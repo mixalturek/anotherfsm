@@ -8,7 +8,7 @@ public class NonstandardTimeoutEvent implements TimeoutEvent {
 
 	@Override
 	public TimeoutEvent.Type getType() {
-		return TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP;
+		return TimeoutEvent.Type.LOOP_RESTART;
 	}
 
 	@Override

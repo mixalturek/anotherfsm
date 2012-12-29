@@ -32,7 +32,7 @@ package net.sourceforge.anotherfsm;
 class TimeoutEventImpl implements TimeoutEvent {
 	/** The instance of the object for use in timeout state machine. */
 	static TimeoutEvent INSTANCE = new TimeoutEventImpl(1,
-			TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP);
+			TimeoutEvent.Type.LOOP_RESTART);
 
 	/** The timeout in milliseconds. */
 	private final long timeout;

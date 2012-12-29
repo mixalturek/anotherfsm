@@ -739,7 +739,7 @@ public class DeterministicStateMachineTest {
 
 			machine.addTransition(new Transition(new State("state"),
 					new TimeoutEventImpl(42,
-							TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP),
+							TimeoutEvent.Type.LOOP_NO_RESTART),
 					new State("state")));
 
 			transition = machine.getTransition(new State("state"),

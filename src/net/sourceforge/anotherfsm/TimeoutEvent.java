@@ -76,12 +76,12 @@ public interface TimeoutEvent extends Event {
 	 */
 	public static enum Type {
 		/** Restart the timeout on loop transition. */
-		RESTART_TIMEOUT_ON_LOOP,
+		LOOP_RESTART,
 
 		/**
 		 * Don't restart the timeout on loop transition and let the previous to
 		 * remain active.
 		 */
-		DONT_RESTART_TIMEOUT_ON_LOOP
+		LOOP_NO_RESTART
 	}
 }

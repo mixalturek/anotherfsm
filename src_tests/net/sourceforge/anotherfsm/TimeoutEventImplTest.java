@@ -26,7 +26,7 @@ public class TimeoutEventImplTest {
 	@Test
 	public final void hashCodeTest() {
 		assertEquals(TimeoutEvent.HASH_CODE, new TimeoutEventImpl(1,
-				TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP).hashCode());
+				TimeoutEvent.Type.LOOP_NO_RESTART).hashCode());
 
 		assertEquals(TimeoutEvent.HASH_CODE,
 				new NonstandardTimeoutEvent().hashCode());
@@ -35,15 +35,15 @@ public class TimeoutEventImplTest {
 	@Test
 	public final void equalsTest() {
 		assertEquals(new TimeoutEventImpl(1,
-				TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP),
+				TimeoutEvent.Type.LOOP_NO_RESTART),
 				new TimeoutEventImpl(2,
-						TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP));
+						TimeoutEvent.Type.LOOP_RESTART));
 
 		assertEquals(new NonstandardTimeoutEvent(), new TimeoutEventImpl(2,
-				TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP));
+				TimeoutEvent.Type.LOOP_RESTART));
 
 		assertEquals(new TimeoutEventImpl(2,
-				TimeoutEvent.Type.RESTART_TIMEOUT_ON_LOOP),
+				TimeoutEvent.Type.LOOP_RESTART),
 				new NonstandardTimeoutEvent());
 	}
 }

@@ -128,7 +128,7 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 		TimeoutEvent timeoutEvent = (TimeoutEvent) timeoutTransition.getEvent();
 
 		if (loopTransition
-				&& timeoutEvent.getType() == TimeoutEvent.Type.DONT_RESTART_TIMEOUT_ON_LOOP)
+				&& timeoutEvent.getType() == TimeoutEvent.Type.LOOP_NO_RESTART)
 			return; // Correct state
 
 		timer.schedule(new TimeoutTask(timeoutTransition, lastStateEnterID),
