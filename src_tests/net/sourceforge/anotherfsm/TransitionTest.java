@@ -81,6 +81,16 @@ public class TransitionTest {
 	}
 
 	@Test
+	public final void testGetState() {
+		Transition transition = new Transition(new State("state"),
+				new TypeEventA());
+
+		assertEquals(new State("state"), transition.getSource());
+		assertEquals(new State("state"), transition.getDestination());
+		assertEquals(transition.getSource(), transition.getDestination());
+	}
+
+	@Test
 	public final void testToString() {
 		Transition transition = new Transition(new State("source"),
 				new TypeEventA(), new State("destination"));

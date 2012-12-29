@@ -66,6 +66,28 @@ class Transition {
 	}
 
 	/**
+	 * Create the object. The loop transition, the source and destination states
+	 * are the same.
+	 * 
+	 * <pre>
+	 * +---+
+	 * | S |------+
+	 * +---+      |
+	 *   ^        | A loop transition, 'S' is both source and destination state.
+	 *   |        |
+	 *   +--------+
+	 * </pre>
+	 * 
+	 * @param state
+	 *            the source and destination state
+	 * @param event
+	 *            the event
+	 */
+	public Transition(State state, Event event) {
+		this(state, event, state);
+	}
+
+	/**
 	 * Get the source state.
 	 * 
 	 * @return the transition source state

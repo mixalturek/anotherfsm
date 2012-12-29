@@ -397,18 +397,18 @@ public class TimeoutStateMachineTest {
 
 			int i;
 			for (i = 0; i < 20; ++i) {
+				if (machine.getActiveState().equals(timeoutState))
+					break;
+
 				Thread.sleep(TIMEOUT / 4);
 
 				processedEvent = machine.process(new TypeEventB());
 				assertEquals(new TypeEventB(), processedEvent);
-
-				if (machine.getActiveState().equals(timeoutState))
-					break;
 			}
 
 			// System.err.println(i);
 			// 4 during development
-			assertTrue(i >= 3 && i <= 5);
+			assertTrue(i >= 2 && i <= 6);
 			// 12 during development
 			assertTrue(System.currentTimeMillis() - startTime < TIMEOUT * 3);
 			assertEquals(timeoutState, machine.getActiveState());

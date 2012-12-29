@@ -20,6 +20,5 @@ TODO
 - StateMachine.isInFinalState()
 
 - StateListener.getType(), process on loop transition flag like in TimeoutEvent.
-- Remove LoopTransition, create a new constructor in Transition instead.
 
 - AsciiSchemaEditor.
