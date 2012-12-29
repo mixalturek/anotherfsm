@@ -95,6 +95,27 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	}
 
 	@Override
+	public Event process(Event event) throws FsmException {
+		try {
+			return super.process(event);
+		} catch (RuntimeException e) {
+			// Log everything what is possible and re-throw the exception, timer
+			// thread may stop which is bad but it is better than hide a more
+			// serious error, it can be whatever
+
+			logger.fatal(
+					"Unexpected exception occurred probably in client callback code: event "
+							+ event + ", thread "
+							+ Thread.currentThread().getName()
+							+ ", exception class " + e.getClass()
+							+ ", exception message " + e.getMessage()
+							+ ", exception " + e, e);
+
+			throw e;
+		}
+	}
+
+	@Override
 	public synchronized void notifyEnter(State previous, Event event,
 			State current) throws FsmException {
 		super.notifyEnter(previous, event, current);

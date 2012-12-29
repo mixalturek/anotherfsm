@@ -2,7 +2,6 @@ TODO
 ====
 
 - First release.
-- TimeoutStateMachine, TimeoutEvent, TimeoutStateMachineTest.
 
 - Preprocessor based on equals() of events.
 - Generalization of preprocessors, list and registration, variable number.

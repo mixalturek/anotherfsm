@@ -320,8 +320,8 @@ public class TimeoutStateMachineTest {
 			}
 
 			assertEquals(5, i);
-			assertTrue("27 during development", System.currentTimeMillis()
-					- startTime > TIMEOUT * 2);
+			// 27 during development
+			assertTrue(System.currentTimeMillis() - startTime > TIMEOUT * 2);
 
 			assertEquals(0, listener.transitionsNum);
 
@@ -407,9 +407,10 @@ public class TimeoutStateMachineTest {
 			}
 
 			// System.err.println(i);
-			assertTrue("4 during development", i >= 3 && i <= 5);
-			assertTrue("12 during development", System.currentTimeMillis()
-					- startTime < TIMEOUT * 2);
+			// 4 during development
+			assertTrue(i >= 3 && i <= 5);
+			// 12 during development
+			assertTrue(System.currentTimeMillis() - startTime < TIMEOUT * 3);
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
 
@@ -424,17 +425,95 @@ public class TimeoutStateMachineTest {
 	}
 
 	@Test
-	public final void testProcessNullPointerExcpetionInTimeoutCallback() {
-		fail("Not implemented yet"); // TODO:
-	}
+	public final void testRuntimeExcpetionInTimeoutCallback() {
+		StateMachine machine = new TimeoutStateMachine("fsm");
+		final State startState = new State("startState");
+		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+				TIMEOUT, TimeoutEvent.Type.LOOP_RESTART), startState);
 
-	@Test
-	public final void testProcessZeroTimeout() {
-		fail("Not implemented yet"); // TODO:
+		TransitionListenerImpl listener = new TransitionListenerImpl() {
+			@Override
+			public void onTransition(State source, Event event,
+					State destination) {
+				super.onTransition(source, event, destination);
+
+				// Serious error in the client code
+				throw new NullPointerException();
+			}
+		};
+
+		toTimeout.addListener(listener);
+
+		try {
+			machine.addState(startState);
+			machine.addTransition(toTimeout);
+			machine.setStartState(startState);
+			machine.start();
+
+			Thread.sleep(TIMEOUT * 3);
+
+			// Only the first timeout callback was processed. The timer thread
+			// then finished on unhandled runtime exception and no other timeout
+			// will be ever processed. Such situation is bad but it is better to
+			// be deterministic in such case than hide more serious error.
+
+			assertEquals(1, listener.transitionsNum);
+
+			machine.close();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
+		}
 	}
 
 	@Test
 	public final void testProcessLoopTimeoutTransition() {
-		fail("Not implemented yet"); // TODO:
+		StateMachine machine = new TimeoutStateMachine("fsm");
+		final State startState = new State("startState");
+		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+				TIMEOUT, TimeoutEvent.Type.LOOP_RESTART), startState);
+
+		TransitionListenerImpl listener = new TransitionListenerImpl() {
+			@Override
+			public void onTransition(State source, Event event,
+					State destination) {
+				super.onTransition(source, event, destination);
+
+				assertEquals(startState, source);
+				assertEquals(startState, destination);
+
+				assertTrue(event instanceof TimeoutEvent);
+				assertEquals(TIMEOUT, ((TimeoutEvent) event).getTimeout());
+				assertEquals(TimeoutEvent.Type.LOOP_RESTART,
+						((TimeoutEvent) event).getType());
+			}
+		};
+
+		toTimeout.addListener(listener);
+
+		try {
+			machine.addState(startState);
+			machine.addTransition(toTimeout);
+			machine.setStartState(startState);
+			machine.start();
+
+			Thread.sleep(TIMEOUT * 4);
+
+			assertEquals(startState, machine.getActiveState());
+			// 3 during development
+			assertTrue(listener.transitionsNum >= 3
+					&& listener.transitionsNum <= 5);
+
+			machine.close();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
+		}
 	}
 }

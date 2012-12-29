@@ -21,6 +21,12 @@ package net.sourceforge.anotherfsm;
 /**
  * The processor of events.
  * 
+ * It is a responsibility of the client code to throw no runtime exceptions in
+ * callbacks. Any unhandled exception can stop an internal thread and break
+ * whole processing of events. It is generally bad to handle all possible
+ * exceptions to prevent and hide errors so it is not implemented in the library
+ * at all.
+ * 
  * @author Michal Turek
  */
 public interface Processor<T extends Event> {

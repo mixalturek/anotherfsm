@@ -19,7 +19,13 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * The listener for FSM transition callback.
+ * The listener for transitions.
+ * 
+ * It is a responsibility of the client code to throw no runtime exceptions in
+ * callbacks. Any unhandled exception can stop an internal thread and break
+ * whole processing of events. It is generally bad to handle all possible
+ * exceptions to prevent and hide errors so it is not implemented in the library
+ * at all.
  * 
  * @author Michal Turek
  */

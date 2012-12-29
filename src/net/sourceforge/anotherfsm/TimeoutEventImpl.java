@@ -49,9 +49,9 @@ class TimeoutEventImpl implements TimeoutEvent {
 	 *            the type of the event
 	 */
 	public TimeoutEventImpl(long timeout, TimeoutEvent.Type type) {
-		if (timeout < 0)
-			throw new IllegalArgumentException("Timeout must not be negative");
-		// TODO: What is the behavior if zero?
+		// Zero passed to Java timer works too, but let's forbid it
+		if (timeout <= 0)
+			throw new IllegalArgumentException("Timeout value must be positive");
 
 		if (type == null)
 			throw new NullPointerException(
