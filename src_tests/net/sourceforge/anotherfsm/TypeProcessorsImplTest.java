@@ -103,4 +103,20 @@ public class TypeProcessorsImplTest {
 			fail("Should not be executed");
 		}
 	}
+
+	@Test
+	public final void testProcessNoProcessor() {
+		TypeProcessors processor = new TypeProcessorsImpl();
+		Event processedEvent = null;
+
+		try {
+			processedEvent = processor.process(new TypeEventA());
+			assertEquals(new TypeEventA(), processedEvent);
+
+			processedEvent = processor.process(new TypeEventB());
+			assertEquals(new TypeEventB(), processedEvent);
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+	}
 }
