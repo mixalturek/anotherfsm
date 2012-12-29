@@ -105,10 +105,6 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 			throw new FsmException(msg);
 		}
 
-		lastStateEnterID = new Object();
-
-		// Existing timeout can be cancelled here.
-
 		scheduleTimeoutTransition(previous.equals(current));
 	}
 
@@ -122,17 +118,31 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 		Transition timeoutTransition = getTransition(getActiveState(),
 				TimeoutEventImpl.INSTANCE);
 
-		if (timeoutTransition == null)
-			return; // Correct state
+		if (timeoutTransition == null) {
+			cancelExistingTimeoutTask();
+			return; // Correct
+		}
 
 		TimeoutEvent timeoutEvent = (TimeoutEvent) timeoutTransition.getEvent();
 
 		if (loopTransition
-				&& timeoutEvent.getType() == TimeoutEvent.Type.LOOP_NO_RESTART)
-			return; // Correct state
+				&& timeoutEvent.getType() == TimeoutEvent.Type.LOOP_NO_RESTART) {
+			return; // Correct
+		}
+
+		cancelExistingTimeoutTask();
 
 		timer.schedule(new TimeoutTask(timeoutTransition, lastStateEnterID),
 				timeoutEvent.getTimeout());
+	}
+
+	/**
+	 * Cancel the existing timeout task, it must be never processed.
+	 */
+	private synchronized void cancelExistingTimeoutTask() {
+		lastStateEnterID = new Object();
+
+		// Existing timeout task can be cancelled here
 	}
 
 	/**
@@ -146,7 +156,7 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	private synchronized void proccessTimeoutTransition(
 			Transition timeoutTransition, Object stateEnterID) {
 		if (stateEnterID != lastStateEnterID)
-			return; // Correct state
+			return; // Correct
 
 		try {
 			process(timeoutTransition.getEvent());

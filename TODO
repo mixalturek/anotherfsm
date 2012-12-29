@@ -18,6 +18,7 @@ TODO
 - FsmEditor or QFsm patch.
 - Analyzer and visualization of FSM transitions logs.
 - Track and check internal FSM state - creating, running, stopped
+- StateMachine.isInFinalState()
 
 - StateListener.getType(), process on loop transition flag like in TimeoutEvent.
 - Remove LoopTransition, create a new constructor in Transition instead.

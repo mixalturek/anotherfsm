@@ -11,6 +11,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TimeoutStateMachineTest {
+	/** The default timeout for the tests. */
+	private static final long TIMEOUT = 10;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		BasicConfigurator.configure();
@@ -81,8 +84,61 @@ public class TimeoutStateMachineTest {
 	}
 
 	@Test
-	public final void testStartTimeoutScheduled() {
-		fail("Not implemented yet"); // TODO:
+	public final void testTimeoutInStartStateLoopRestart() {
+		StateMachine machine = new TimeoutStateMachine("fsm");
+		State startState = new State("startState");
+		State timeoutState = new State("timeoutState");
+		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+				TIMEOUT, TimeoutEvent.Type.LOOP_RESTART), timeoutState);
+
+		try {
+			machine.addState(startState);
+			machine.addState(timeoutState);
+			machine.addTransition(toTimeout);
+			machine.setStartState(startState);
+			machine.start();
+
+			Thread.sleep(TIMEOUT * 2);
+
+			assertEquals(timeoutState, machine.getActiveState());
+
+			machine.close();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
+		}
+	}
+
+	@Test
+	public final void testTimeoutInStartStateLoopNoRestart() {
+		StateMachine machine = new TimeoutStateMachine("fsm");
+		State startState = new State("startState");
+		State timeoutState = new State("timeoutState");
+		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+				TIMEOUT, TimeoutEvent.Type.LOOP_NO_RESTART), timeoutState);
+
+		try {
+			machine.addState(startState);
+			machine.addState(timeoutState);
+			machine.addTransition(toTimeout);
+			machine.setStartState(startState);
+			machine.start();
+
+			Thread.sleep(TIMEOUT * 2);
+
+			assertEquals(startState, machine.getActiveState());
+
+			machine.close();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
+		}
 	}
 
 	@Test
@@ -144,7 +200,6 @@ public class TimeoutStateMachineTest {
 
 	@Test
 	public final void testProcessTimeout() {
-		final long TIMEOUT = 10;
 		final TimeoutEvent.Type TYPE = TimeoutEvent.Type.LOOP_RESTART;
 
 		StateMachine machine = new TimeoutStateMachine("fsm");
@@ -189,11 +244,7 @@ public class TimeoutStateMachineTest {
 			assertEquals(new TypeEventA(), processedEvent);
 			assertEquals(finalState, machine.getActiveState());
 
-			try {
-				Thread.sleep(TIMEOUT * 2);
-			} catch (InterruptedException e) {
-				fail("Should not be executed");
-			}
+			Thread.sleep(TIMEOUT * 2);
 
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
@@ -203,17 +254,173 @@ public class TimeoutStateMachineTest {
 			fail("Should not be executed");
 		} catch (IOException e) {
 			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
 		}
 	}
 
 	@Test
-	public final void testProcessRestartTimeoutOnLoop() {
-		fail("Not implemented yet"); // TODO:
+	public final void testProcessLoopRestart() {
+		final TimeoutEvent.Type TYPE = TimeoutEvent.Type.LOOP_RESTART;
+
+		StateMachine machine = new TimeoutStateMachine("fsm");
+		State startState = new State("startState");
+		final State finalState = new State("finalState", State.Type.FINAL);
+		final State timeoutState = new State("timeoutState");
+		Transition toFinal = new Transition(startState, new TypeEventA(),
+				finalState);
+
+		Transition toFinalLoop = new Transition(finalState, new TypeEventB(),
+				finalState);
+
+		Transition toTimeout = new Transition(finalState, new TimeoutEventImpl(
+				TIMEOUT, TYPE), timeoutState);
+
+		TransitionListenerImpl listener = new TransitionListenerImpl() {
+			@Override
+			public void onTransition(State source, Event event,
+					State destination) {
+				super.onTransition(source, event, destination);
+
+				assertEquals(finalState, source);
+				assertEquals(timeoutState, destination);
+
+				assertTrue(event instanceof TimeoutEvent);
+				assertEquals(TIMEOUT, ((TimeoutEvent) event).getTimeout());
+				assertEquals(TYPE, ((TimeoutEvent) event).getType());
+			}
+		};
+
+		toTimeout.addListener(listener);
+
+		Event processedEvent = null;
+
+		try {
+			machine.addState(startState);
+			machine.addState(finalState);
+			machine.addTransition(toFinal);
+			machine.addTransition(toTimeout);
+			machine.addTransition(toFinalLoop);
+			machine.setStartState(startState);
+			machine.start();
+			assertEquals(startState, machine.getActiveState());
+
+			processedEvent = machine.process(new TypeEventA());
+			assertEquals(new TypeEventA(), processedEvent);
+			assertEquals(finalState, machine.getActiveState());
+
+			long startTime = System.currentTimeMillis();
+
+			int i;
+			for (i = 0; i < 5; ++i) {
+				Thread.sleep(TIMEOUT / 2);
+				processedEvent = machine.process(new TypeEventB());
+				assertEquals(new TypeEventB(), processedEvent);
+				assertEquals(finalState, machine.getActiveState());
+			}
+
+			assertEquals(5, i);
+			assertTrue("27 during development", System.currentTimeMillis()
+					- startTime > TIMEOUT * 2);
+
+			assertEquals(0, listener.transitionsNum);
+
+			Thread.sleep(TIMEOUT * 2);
+
+			assertEquals(timeoutState, machine.getActiveState());
+			assertEquals(1, listener.transitionsNum);
+
+			machine.close();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
+		}
 	}
 
 	@Test
-	public final void testProcessDontRestartTimeoutOnLoop() {
-		fail("Not implemented yet"); // TODO:
+	public final void testProcessLoopNoRestart() {
+		StateMachine machine = new TimeoutStateMachine("fsm");
+		State startState = new State("startState");
+		final State finalState = new State("finalState", State.Type.FINAL);
+		final State timeoutState = new State("timeoutState");
+		Transition toFinal = new Transition(startState, new TypeEventA(),
+				finalState);
+
+		Transition toFinalLoop = new Transition(finalState, new TypeEventB(),
+				finalState);
+
+		Transition toTimeout = new Transition(finalState, new TimeoutEventImpl(
+				TIMEOUT, TimeoutEvent.Type.LOOP_NO_RESTART), timeoutState);
+
+		Transition toTimeoutLoop = new Transition(timeoutState,
+				new TypeEventB(), timeoutState);
+
+		TransitionListenerImpl listener = new TransitionListenerImpl() {
+			@Override
+			public void onTransition(State source, Event event,
+					State destination) {
+				super.onTransition(source, event, destination);
+
+				assertEquals(finalState, source);
+				assertEquals(timeoutState, destination);
+
+				assertTrue(event instanceof TimeoutEvent);
+				assertEquals(TIMEOUT, ((TimeoutEvent) event).getTimeout());
+				assertEquals(TimeoutEvent.Type.LOOP_NO_RESTART,
+						((TimeoutEvent) event).getType());
+			}
+		};
+
+		toTimeout.addListener(listener);
+
+		Event processedEvent = null;
+
+		try {
+			machine.addState(startState);
+			machine.addState(finalState);
+			machine.addTransition(toFinal);
+			machine.addTransition(toTimeout);
+			machine.addTransition(toFinalLoop);
+			machine.addTransition(toTimeoutLoop);
+			machine.setStartState(startState);
+			machine.start();
+			assertEquals(startState, machine.getActiveState());
+
+			processedEvent = machine.process(new TypeEventA());
+			assertEquals(new TypeEventA(), processedEvent);
+			assertEquals(finalState, machine.getActiveState());
+
+			long startTime = System.currentTimeMillis();
+
+			int i;
+			for (i = 0; i < 20; ++i) {
+				Thread.sleep(TIMEOUT / 4);
+
+				processedEvent = machine.process(new TypeEventB());
+				assertEquals(new TypeEventB(), processedEvent);
+
+				if (machine.getActiveState().equals(timeoutState))
+					break;
+			}
+
+			// System.err.println(i);
+			assertTrue("4 during development", i >= 3 && i <= 5);
+			assertTrue("12 during development", System.currentTimeMillis()
+					- startTime < TIMEOUT * 2);
+			assertEquals(timeoutState, machine.getActiveState());
+			assertEquals(1, listener.transitionsNum);
+
+			machine.close();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (IOException e) {
+			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
+		}
 	}
 
 	@Test
@@ -223,6 +430,11 @@ public class TimeoutStateMachineTest {
 
 	@Test
 	public final void testProcessZeroTimeout() {
+		fail("Not implemented yet"); // TODO:
+	}
+
+	@Test
+	public final void testProcessLoopTimeoutTransition() {
 		fail("Not implemented yet"); // TODO:
 	}
 }
