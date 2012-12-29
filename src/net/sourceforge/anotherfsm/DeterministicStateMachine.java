@@ -405,4 +405,9 @@ class DeterministicStateMachine implements StateMachine {
 	protected Transition getTransition(State state, Event event) {
 		return stateTransitions.get(state).getTransition(event);
 	}
+
+	@Override
+	public boolean isInFinalState() {
+		return currentState.isFinalState();
+	}
 }

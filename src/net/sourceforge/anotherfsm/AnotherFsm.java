@@ -79,6 +79,7 @@ public abstract class AnotherFsm {
 	 * @see StateMachine#process(Event)
 	 * @see StateMachine#getActiveState()
 	 * @see StateMachine#getActiveStates()
+	 * @see StateMachine#isInFinalState()
 	 */
 	public static StateMachine genSynchronizedStateMachine(String name) {
 		return new SynchronizedStateMachine(name);

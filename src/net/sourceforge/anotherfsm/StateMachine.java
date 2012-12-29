@@ -136,4 +136,12 @@ public interface StateMachine extends TypeProcessors, Closeable {
 	 * @return the transitions
 	 */
 	public Set<Transition> getTransitions();
+
+	/**
+	 * Is the active state a final state?
+	 * 
+	 * @return true if at least one of the active states is final otherwise
+	 *         false
+	 */
+	public boolean isInFinalState();
 }

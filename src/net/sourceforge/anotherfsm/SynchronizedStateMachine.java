@@ -53,4 +53,9 @@ class SynchronizedStateMachine extends DeterministicStateMachine {
 	public synchronized Set<State> getActiveStates() {
 		return super.getActiveStates();
 	}
+
+	@Override
+	public synchronized boolean isInFinalState() {
+		return isInFinalState();
+	}
 }
