@@ -27,6 +27,13 @@ package net.sourceforge.anotherfsm;
  */
 public interface TypeProcessors {
 	/**
+	 * Get the name of the events processor.
+	 * 
+	 * @return the name
+	 */
+	public String getName();
+
+	/**
 	 * Add a new processor. The method is not thread safe.
 	 * 
 	 * @param clazz

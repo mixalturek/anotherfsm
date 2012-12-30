@@ -55,7 +55,7 @@ class DeterministicStateMachine implements StateMachine {
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
 	/** The preprocessor of the events. */
-	private final TypeProcessors preprocessors = new TypeProcessorsImpl();
+	private final TypeProcessors preprocessors;
 
 	/**
 	 * Create the object.
@@ -69,6 +69,8 @@ class DeterministicStateMachine implements StateMachine {
 
 		this.name = name;
 		logger = Logger.getLogger(this.getClass() + "-" + name);
+
+		preprocessors = new TypeProcessorsImpl(name);
 	}
 
 	@Override
@@ -334,7 +336,7 @@ class DeterministicStateMachine implements StateMachine {
 	 * @param eventToProcess
 	 *            the event that should be processed
 	 * @param matchedEvent
-	 *            the event that matched for logging purposes
+	 *            the event that matched, for logging purposes
 	 * @return the final processed event
 	 * @throws FsmException
 	 *             if something fails
@@ -358,12 +360,26 @@ class DeterministicStateMachine implements StateMachine {
 			logger.info("Transition started:  " + transStr);
 		}
 
-		// No catching of runtime exception is here, it's responsibility of the
-		// callbacks to not throw them
-		notifyExit(source, eventToProcess, destination);
-		currentState = destination;
-		notifyTransition(transition, source, eventToProcess, destination);
-		notifyEnter(source, eventToProcess, destination);
+		try {
+			notifyExit(source, eventToProcess, destination);
+			currentState = destination;
+			notifyTransition(transition, source, eventToProcess, destination);
+			notifyEnter(source, eventToProcess, destination);
+		} catch (RuntimeException e) {
+			// Log everything what is possible and re-throw the exception,
+			// current thread may stop but it is better than hide a more
+			// serious error
+
+			logger.fatal(
+					"Unexpected exception occurred probably in client callback code: event "
+							+ matchedEvent + ", thread "
+							+ Thread.currentThread().getName()
+							+ ", exception class " + e.getClass()
+							+ ", exception message " + e.getMessage()
+							+ ", exception " + e, e);
+
+			throw e;
+		}
 
 		if (logger.isInfoEnabled()) {
 			logger.info("Transition finished: " + transStr);

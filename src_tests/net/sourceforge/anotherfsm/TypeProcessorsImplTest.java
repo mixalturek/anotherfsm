@@ -9,7 +9,7 @@ import org.junit.Test;
 public class TypeProcessorsImplTest {
 	@Test
 	public final void testAddProcessor() {
-		TypeProcessors processor = new TypeProcessorsImpl();
+		TypeProcessors processor = new TypeProcessorsImpl("processor");
 		try {
 			processor.addProcessor(TypeEventA.class,
 					new Processor<TypeEventA>() {
@@ -61,7 +61,7 @@ public class TypeProcessorsImplTest {
 
 	@Test
 	public final void testProcess() {
-		TypeProcessors processor = new TypeProcessorsImpl();
+		TypeProcessors processor = new TypeProcessorsImpl("processor");
 		Event processedEvent = null;
 
 		try {
@@ -106,7 +106,7 @@ public class TypeProcessorsImplTest {
 
 	@Test
 	public final void testProcessNoProcessor() {
-		TypeProcessors processor = new TypeProcessorsImpl();
+		TypeProcessors processor = new TypeProcessorsImpl("processor");
 		Event processedEvent = null;
 
 		try {

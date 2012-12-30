@@ -38,10 +38,12 @@ public abstract class AnotherFsm {
 	 * Building of the object is NOT synchronized and should be done just in one
 	 * thread. Only the processing of the events is synchronized.
 	 * 
+	 * @param name
+	 *            the name of the event processor
 	 * @return the event processors
 	 */
-	public static TypeProcessors genTypeProcessors() {
-		return new TypeProcessorsImpl();
+	public static TypeProcessors genTypeProcessors(String name) {
+		return new TypeProcessorsImpl(name);
 	}
 
 	/**

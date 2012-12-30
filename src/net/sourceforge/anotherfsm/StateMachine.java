@@ -32,13 +32,6 @@ import java.util.Set;
  */
 public interface StateMachine extends TypeProcessors, Closeable {
 	/**
-	 * Get the name of the state machine.
-	 * 
-	 * @return the name
-	 */
-	public String getName();
-
-	/**
 	 * Set the start state.
 	 * 
 	 * @param state
