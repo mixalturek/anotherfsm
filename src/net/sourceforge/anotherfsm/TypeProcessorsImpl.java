@@ -89,7 +89,14 @@ class TypeProcessorsImpl implements TypeProcessors {
 			return event;
 
 		try {
-			return processor.process(event);
+			Event resultEvent = processor.process(event);
+
+			if (!event.equals(resultEvent) && logger.isInfoEnabled()) {
+				logger.info("Event processed: " + event + Transition.TR
+						+ resultEvent);
+			}
+
+			return resultEvent;
 		} catch (RuntimeException e) {
 			// Log everything what is possible and re-throw the exception,
 			// current thread may stop but it is better than hide a more

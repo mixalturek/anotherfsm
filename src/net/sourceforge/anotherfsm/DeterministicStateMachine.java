@@ -54,8 +54,11 @@ class DeterministicStateMachine implements StateMachine {
 	/** The listeners. */
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
-	/** The preprocessor of the events. */
-	private final TypeProcessors preprocessors;
+	/** The preprocessors of events. */
+	private final List<EventProcessor> preprocessors = new LinkedList<EventProcessor>();
+
+	/** The preprocessor of events based on type. */
+	private final TypeProcessors typePreprocessor;
 
 	/**
 	 * Create the object.
@@ -70,7 +73,9 @@ class DeterministicStateMachine implements StateMachine {
 		this.name = name;
 		logger = Logger.getLogger(this.getClass() + "-" + name);
 
-		preprocessors = new TypeProcessorsImpl(name);
+		typePreprocessor = new TypeProcessorsImpl(name);
+		preprocessors.add(typePreprocessor);
+		// TODO: preprocessors based on equals()
 	}
 
 	@Override
@@ -163,7 +168,7 @@ class DeterministicStateMachine implements StateMachine {
 		if (processor == null)
 			throw new NullPointerException("Processor must not be null");
 
-		preprocessors.addProcessor(clazz, processor);
+		typePreprocessor.addProcessor(clazz, processor);
 	}
 
 	/**
@@ -269,20 +274,11 @@ class DeterministicStateMachine implements StateMachine {
 	public Event process(Event event) throws FsmException {
 		processCheck(event);
 
-		// No catching of runtime exception is here, it's responsibility of the
-		// preprocessor to not throw them
-		Event preprocessedEvent = preprocessors.process(event);
+		Event preprocessedEvent = preprocessEvent(event);
 		if (preprocessedEvent == null) {
-			if (logger.isInfoEnabled()) {
-				logger.info("Event only preprocessed: " + currentState
-						+ Transition.TR + event);
-			}
-
 			// Null is correct, this is not error state
 			return null;
 		}
-		// Possible change of event to preprocessedEvent logged later in
-		// processInternal()
 
 		Transition transition = stateTransitions.get(currentState)
 				.getTransition(preprocessedEvent);
@@ -301,6 +297,29 @@ class DeterministicStateMachine implements StateMachine {
 		}
 
 		return processInternal(transition, preprocessedEvent, event);
+	}
+
+	/**
+	 * Preprocess event using all registered preprocessors (recursive).
+	 * 
+	 * @param event
+	 *            the event
+	 * @return the original event a newly generated event or null to ignore the
+	 *         event
+	 * @throws FsmException
+	 *             if something fails
+	 */
+	private Event preprocessEvent(Event event) throws FsmException {
+		Event preprocessedEvent = event;
+
+		for (EventProcessor preprocessor : preprocessors) {
+			preprocessedEvent = preprocessor.process(event);
+
+			if (preprocessedEvent == null)
+				return null;
+		}
+
+		return preprocessedEvent;
 	}
 
 	/**

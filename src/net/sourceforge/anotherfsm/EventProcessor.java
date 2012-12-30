@@ -19,23 +19,26 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Group of processors based on type.
+ * Processor of events.
  * 
  * @author Michal Turek
- * 
- * @see AnotherFsm#genTypeProcessors()
  */
-public interface TypeProcessors extends EventProcessor {
+public interface EventProcessor {
 	/**
-	 * Add a new processor. The method is not thread safe.
+	 * Get the name of the processor.
 	 * 
-	 * @param clazz
-	 *            the type of event
-	 * @param processor
-	 *            the preprocessor
-	 * @throws FsmException
-	 *             if the preprocessor is already defined
+	 * @return the name
 	 */
-	public <T extends Event> void addProcessor(Class<T> clazz,
-			Processor<T> processor) throws FsmException;
+	public String getName();
+
+	/**
+	 * Process the event.
+	 * 
+	 * @param event
+	 *            the input event
+	 * @return the processed event
+	 * @throws FsmException
+	 *             if something fails
+	 */
+	public Event process(Event event) throws FsmException;
 }

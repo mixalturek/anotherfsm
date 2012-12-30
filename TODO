@@ -2,9 +2,12 @@ TODO
 ====
 
 - First release.
+- AnotherFsm.getVersion()
 
 - Preprocessor based on equals() of events.
-- Generalization of preprocessors, list and registration, variable number.
+- Clean names of interfaces and classed.
+- Verify logged messages during the processing and preprocessing.
+- StateMachine.addPreprocessor() instead of implementing of the interface.
 
 - Generalization of logger.
 - Logger is initialized several times in tests, fix that.
