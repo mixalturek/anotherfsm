@@ -59,6 +59,13 @@ public class TimeoutStateMachineTest {
 		} catch (FsmException e) {
 			assertTrue(e.getMessage().contains("Transition already defined"));
 		}
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test

@@ -31,13 +31,27 @@ public class DeterministicStateMachineTest {
 			}
 		}
 
-		new DeterministicStateMachineTmp("fsm");
+		StateMachine machine = new DeterministicStateMachineTmp("fsm");
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test
 	public final void testGetName() {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		assertEquals("fsm", machine.getName());
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test
@@ -65,6 +79,13 @@ public class DeterministicStateMachineTest {
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			assertEquals(new State("state"), machine.getActiveState());
+		}
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
 		}
 	}
 
@@ -166,6 +187,13 @@ public class DeterministicStateMachineTest {
 		}
 
 		assertEquals(2, machine.getStates().size());
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test
@@ -240,6 +268,13 @@ public class DeterministicStateMachineTest {
 
 		assertEquals(2, machine.getStates().size());
 		assertEquals(4, machine.getTransitions().size()); // New transition
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test
@@ -630,6 +665,13 @@ public class DeterministicStateMachineTest {
 		}
 
 		assertEquals(new State("state"), machine.getActiveState());
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test
@@ -646,6 +688,13 @@ public class DeterministicStateMachineTest {
 		Set<State> states = new HashSet<State>();
 		states.add(new State("state"));
 		assertEquals(states, machine.getActiveStates());
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test
@@ -721,6 +770,13 @@ public class DeterministicStateMachineTest {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		assertEquals(machine.getClass().getSimpleName() + "(fsm)",
 				machine.toString());
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
+		}
 	}
 
 	@Test
@@ -767,6 +823,13 @@ public class DeterministicStateMachineTest {
 			assertTrue(transition.getEvent() instanceof TimeoutEvent);
 		} catch (FsmException e) {
 			fail("Should not be executed");
+		}
+
+		// Remove warning
+		try {
+			machine.close();
+		} catch (IOException e) {
+			// Do nothing
 		}
 	}
 }
