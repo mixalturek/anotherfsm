@@ -6,14 +6,15 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
-import org.apache.log4j.BasicConfigurator;
+import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ContainerEventTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		BasicConfigurator.configure();
+		AnotherFsm.init(new StdStreamLoggerFactory());
 	}
 
 	@Test
@@ -45,8 +46,8 @@ public class ContainerEventTest {
 				new ContainerEvent<Character>('A'), another);
 		Transition transitionB = new Transition(state,
 				new ContainerEvent<Character>('B'), another);
-		Transition transitionOther = new Transition(state, OtherEventImpl.INSTANCE,
-				state);
+		Transition transitionOther = new Transition(state,
+				OtherEventImpl.INSTANCE, state);
 
 		Event processedEvent = null;
 

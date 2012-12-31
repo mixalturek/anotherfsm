@@ -9,8 +9,10 @@ TODO
 - Verify logged messages during the processing and preprocessing.
 - StateMachine.addPreprocessor() instead of implementing of the interface.
 
-- Generalization of logger.
-- Logger is initialized several times in tests, fix that.
+- Check visibility of logger classes.
+- StdStreamLogger configuration.
+- Java logger.
+- Example for log4j and slf4j logger.
 
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.

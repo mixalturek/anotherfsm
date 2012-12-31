@@ -6,7 +6,8 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
-import org.apache.log4j.BasicConfigurator;
+import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class TimeoutStateMachineTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		BasicConfigurator.configure();
+		AnotherFsm.init(new StdStreamLoggerFactory());
 	}
 
 	@Test

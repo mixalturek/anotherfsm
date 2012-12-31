@@ -12,14 +12,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.BasicConfigurator;
+import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DeterministicStateMachineTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		BasicConfigurator.configure();
+		AnotherFsm.init(new StdStreamLoggerFactory());
 	}
 
 	@Test

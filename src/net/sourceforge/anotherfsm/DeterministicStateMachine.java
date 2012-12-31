@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
 
 /**
  * The deterministic state machine. This class is NOT thread safe.
@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
  */
 class DeterministicStateMachine implements StateMachine {
 	/** The logger. */
-	protected final Logger logger;
+	protected final AnotherFsmLogger logger;
 
 	/** The name of the state machine. */
 	private final String name;
@@ -71,7 +71,7 @@ class DeterministicStateMachine implements StateMachine {
 			throw new NullPointerException("Name must not be null");
 
 		this.name = name;
-		logger = Logger.getLogger(this.getClass() + "-" + name);
+		logger = AnotherFsm.getInstance().getLogger(getClass() + "-" + name);
 
 		typePreprocessor = new TypeProcessorsImpl(name);
 		preprocessors.add(typePreprocessor);

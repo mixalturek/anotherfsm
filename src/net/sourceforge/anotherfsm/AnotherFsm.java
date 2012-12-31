@@ -18,17 +18,77 @@
 
 package net.sourceforge.anotherfsm;
 
+import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
+import net.sourceforge.anotherfsm.logger.AnotherFsmLoggerFactory;
+
 /**
- * Factory of classes in this package.
+ * Factory of classes, the main class in this library.
  * 
  * @author Michal Turek
  */
-public abstract class AnotherFsm {
+public class AnotherFsm {
+	/** The singleton instance. */
+	private static AnotherFsm instance;
+
+	/** The factory of loggers. */
+	private final AnotherFsmLoggerFactory loggerFactory;
+
 	/**
-	 * Forbid creating of objects of this class.
+	 * Initialize the library. This method must be called before all other
+	 * methods and just once.
+	 * 
+	 * @param loggerFactory
+	 *            the logger factory that will be used for creating loggers
 	 */
-	private AnotherFsm() {
-		// Do nothing
+	public static void init(AnotherFsmLoggerFactory loggerFactory) {
+		instance = new AnotherFsm(loggerFactory);
+	}
+
+	/**
+	 * Get the singleton instance. The class must be initialized before the
+	 * first call.
+	 * 
+	 * @return the singleton instance.
+	 * @see #init(AnotherFsmLoggerFactory)
+	 */
+	public static AnotherFsm getInstance() {
+		// Don't check the value, it's documented.
+		return instance;
+	}
+
+	/**
+	 * Create the object.
+	 * 
+	 * @param loggerFactory
+	 *            the logger factory that will be used for creating loggers
+	 */
+	private AnotherFsm(AnotherFsmLoggerFactory loggerFactory) {
+		if (loggerFactory == null)
+			throw new NullPointerException("Logger factory must not be null");
+
+		this.loggerFactory = loggerFactory;
+	}
+
+	/**
+	 * Get logger for a specific class.
+	 * 
+	 * @param clazz
+	 *            the class
+	 * @return the logger
+	 */
+	public AnotherFsmLogger getLogger(Class<Object> clazz) {
+		return loggerFactory.getLogger(clazz);
+	}
+
+	/**
+	 * Get logger for a specific logger with name.
+	 * 
+	 * @param name
+	 *            the logger name
+	 * @return the logger
+	 */
+	public AnotherFsmLogger getLogger(String loggerName) {
+		return loggerFactory.getLogger(loggerName);
 	}
 
 	/**
@@ -42,7 +102,7 @@ public abstract class AnotherFsm {
 	 *            the name of the event processor
 	 * @return the event processors
 	 */
-	public static TypeProcessors genTypeProcessors(String name) {
+	public TypeProcessors genTypeProcessors(String name) {
 		return new TypeProcessorsImpl(name);
 	}
 
@@ -51,7 +111,7 @@ public abstract class AnotherFsm {
 	 * 
 	 * @return the event
 	 */
-	public static OtherEvent genOtherEvent() {
+	public OtherEvent genOtherEvent() {
 		return OtherEventImpl.INSTANCE;
 	}
 
@@ -63,7 +123,7 @@ public abstract class AnotherFsm {
 	 *            the name of the state machine
 	 * @return the created state machine
 	 */
-	public static StateMachine genDeterministicStateMachine(String name) {
+	public StateMachine genDeterministicStateMachine(String name) {
 		return new DeterministicStateMachine(name);
 	}
 
@@ -83,7 +143,7 @@ public abstract class AnotherFsm {
 	 * @see StateMachine#getActiveStates()
 	 * @see StateMachine#isInFinalState()
 	 */
-	public static StateMachine genSynchronizedStateMachine(String name) {
+	public StateMachine genSynchronizedStateMachine(String name) {
 		return new SynchronizedStateMachine(name);
 	}
 
@@ -91,16 +151,14 @@ public abstract class AnotherFsm {
 	 * Create an instance of timeout event.
 	 * 
 	 * @param timeout
-	 *            the timeout in milliseconds, must be positive. TODO: check the
-	 *            behavior on zero timeout
+	 *            the timeout in milliseconds, must be positive
 	 * @param type
 	 *            the type of the event
 	 * @return the event
 	 * 
 	 * @see #genTimeoutStateMachine(String)
 	 */
-	public static TimeoutEvent genTimeoutEvent(long timeout,
-			TimeoutEvent.Type type) {
+	public TimeoutEvent genTimeoutEvent(long timeout, TimeoutEvent.Type type) {
 		return new TimeoutEventImpl(timeout, type);
 	}
 
@@ -122,7 +180,7 @@ public abstract class AnotherFsm {
 	 * 
 	 * @see #genTimeoutEvent(long, TimeoutEvent.Type)
 	 */
-	public static StateMachine genTimeoutStateMachine(String name) {
+	public StateMachine genTimeoutStateMachine(String name) {
 		return new TimeoutStateMachine(name);
 	}
 }

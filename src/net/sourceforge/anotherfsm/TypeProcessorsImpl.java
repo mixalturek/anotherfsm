@@ -21,7 +21,7 @@ package net.sourceforge.anotherfsm;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
 
 /**
  * Processors of the events based on their type. The object can be used in
@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
  */
 class TypeProcessorsImpl implements TypeProcessors {
 	/** The logger. */
-	protected final Logger logger;
+	protected final AnotherFsmLogger logger;
 
 	/** The name of the state machine. */
 	private final String name;
@@ -53,7 +53,7 @@ class TypeProcessorsImpl implements TypeProcessors {
 			throw new NullPointerException("Name must not be null");
 
 		this.name = name;
-		logger = Logger.getLogger(this.getClass() + "-" + name);
+		logger = AnotherFsm.getInstance().getLogger(getClass() + "-" + name);
 	}
 
 	@Override
