@@ -23,7 +23,7 @@ package net.sourceforge.anotherfsm.logger;
  * 
  * @author Michal Turek
  */
-public interface AnotherFsmLoggerFactory {
+public interface FsmLoggerFactory {
 	/**
 	 * Get logger for a specific class.
 	 * 
@@ -31,7 +31,7 @@ public interface AnotherFsmLoggerFactory {
 	 *            the class
 	 * @return the logger
 	 */
-	public AnotherFsmLogger getLogger(Class<Object> clazz);
+	public FsmLogger getLogger(Class<Object> clazz);
 
 	/**
 	 * Get logger for a specific logger with name.
@@ -40,5 +40,5 @@ public interface AnotherFsmLoggerFactory {
 	 *            the logger name
 	 * @return the logger
 	 */
-	public AnotherFsmLogger getLogger(String name);
+	public FsmLogger getLogger(String name);
 }

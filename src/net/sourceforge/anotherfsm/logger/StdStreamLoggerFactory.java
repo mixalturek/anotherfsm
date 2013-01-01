@@ -23,7 +23,7 @@ package net.sourceforge.anotherfsm.logger;
  * 
  * @author Michal Turek
  */
-public class StdStreamLoggerFactory implements AnotherFsmLoggerFactory {
+public class StdStreamLoggerFactory implements FsmLoggerFactory {
 	/**
 	 * Create the object.
 	 */
@@ -32,12 +32,12 @@ public class StdStreamLoggerFactory implements AnotherFsmLoggerFactory {
 	}
 
 	@Override
-	public AnotherFsmLogger getLogger(Class<Object> clazz) {
+	public FsmLogger getLogger(Class<Object> clazz) {
 		return getLogger(clazz.getSimpleName());
 	}
 
 	@Override
-	public AnotherFsmLogger getLogger(String name) {
+	public FsmLogger getLogger(String name) {
 		return new StdStreamLogger(name);
 	}
 

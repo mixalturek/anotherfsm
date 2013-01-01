@@ -18,8 +18,8 @@
 
 package net.sourceforge.anotherfsm;
 
-import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
-import net.sourceforge.anotherfsm.logger.AnotherFsmLoggerFactory;
+import net.sourceforge.anotherfsm.logger.FsmLogger;
+import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
 
 /**
  * Factory of classes, the main class in this library.
@@ -31,7 +31,7 @@ public class AnotherFsm {
 	private static AnotherFsm instance;
 
 	/** The factory of loggers. */
-	private final AnotherFsmLoggerFactory loggerFactory;
+	private final FsmLoggerFactory loggerFactory;
 
 	/**
 	 * Initialize the library. This method must be called before all other
@@ -40,7 +40,7 @@ public class AnotherFsm {
 	 * @param loggerFactory
 	 *            the logger factory that will be used for creating loggers
 	 */
-	public static void init(AnotherFsmLoggerFactory loggerFactory) {
+	public static void init(FsmLoggerFactory loggerFactory) {
 		instance = new AnotherFsm(loggerFactory);
 	}
 
@@ -49,7 +49,7 @@ public class AnotherFsm {
 	 * first call.
 	 * 
 	 * @return the singleton instance.
-	 * @see #init(AnotherFsmLoggerFactory)
+	 * @see #init(FsmLoggerFactory)
 	 */
 	public static AnotherFsm getInstance() {
 		// Don't check the value, it's documented.
@@ -62,7 +62,7 @@ public class AnotherFsm {
 	 * @param loggerFactory
 	 *            the logger factory that will be used for creating loggers
 	 */
-	private AnotherFsm(AnotherFsmLoggerFactory loggerFactory) {
+	private AnotherFsm(FsmLoggerFactory loggerFactory) {
 		if (loggerFactory == null)
 			throw new NullPointerException("Logger factory must not be null");
 
@@ -76,7 +76,7 @@ public class AnotherFsm {
 	 *            the class
 	 * @return the logger
 	 */
-	public AnotherFsmLogger getLogger(Class<Object> clazz) {
+	public FsmLogger getLogger(Class<Object> clazz) {
 		return loggerFactory.getLogger(clazz);
 	}
 
@@ -87,7 +87,7 @@ public class AnotherFsm {
 	 *            the logger name
 	 * @return the logger
 	 */
-	public AnotherFsmLogger getLogger(String loggerName) {
+	public FsmLogger getLogger(String loggerName) {
 		return loggerFactory.getLogger(loggerName);
 	}
 

@@ -23,7 +23,7 @@ package net.sourceforge.anotherfsm.logger;
  * 
  * @author Michal Turek
  */
-public interface AnotherFsmLogger {
+public interface FsmLogger {
 	/**
 	 * Get name of the logger.
 	 * 

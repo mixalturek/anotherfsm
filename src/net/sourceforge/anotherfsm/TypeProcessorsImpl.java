@@ -21,7 +21,7 @@ package net.sourceforge.anotherfsm;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
+import net.sourceforge.anotherfsm.logger.FsmLogger;
 
 /**
  * Processors of the events based on their type. The object can be used in
@@ -34,7 +34,7 @@ import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
  */
 class TypeProcessorsImpl implements TypeProcessors {
 	/** The logger. */
-	protected final AnotherFsmLogger logger;
+	protected final FsmLogger logger;
 
 	/** The name of the state machine. */
 	private final String name;

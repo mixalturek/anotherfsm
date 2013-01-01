@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
+import net.sourceforge.anotherfsm.logger.FsmLogger;
 
 /**
  * The deterministic state machine. This class is NOT thread safe.
@@ -37,7 +37,7 @@ import net.sourceforge.anotherfsm.logger.AnotherFsmLogger;
  */
 class DeterministicStateMachine implements StateMachine {
 	/** The logger. */
-	protected final AnotherFsmLogger logger;
+	protected final FsmLogger logger;
 
 	/** The name of the state machine. */
 	private final String name;

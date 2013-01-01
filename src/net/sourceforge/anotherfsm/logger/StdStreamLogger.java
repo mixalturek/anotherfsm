@@ -27,7 +27,7 @@ import java.util.Date;
  * 
  * @author Michal Turek
  */
-public class StdStreamLogger implements AnotherFsmLogger {
+public class StdStreamLogger implements FsmLogger {
 	/** The logger name. */
 	private final String name;
 
