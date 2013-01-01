@@ -55,10 +55,7 @@ class DeterministicStateMachine implements StateMachine {
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
 	/** The preprocessors of events. */
-	private final List<EventProcessor> preprocessors = new LinkedList<EventProcessor>();
-
-	/** The preprocessor of events based on type. */
-	private final TypeProcessors typePreprocessor;
+	private final List<EventPreprocessor> preprocessors = new LinkedList<EventPreprocessor>();
 
 	/**
 	 * Create the object.
@@ -72,10 +69,6 @@ class DeterministicStateMachine implements StateMachine {
 
 		this.name = name;
 		logger = AnotherFsm.getInstance().getLogger(getClass(), name);
-
-		typePreprocessor = new TypeProcessorsImpl(name);
-		preprocessors.add(typePreprocessor);
-		// TODO: preprocessors based on equals()
 	}
 
 	@Override
@@ -144,6 +137,11 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	@Override
+	public void addPreprocessor(EventPreprocessor preprocessor) {
+		preprocessors.add(preprocessor);
+	}
+
+	@Override
 	public void addListener(StateListener listener) {
 		if (listener == null)
 			throw new NullPointerException("Listener must not be null");
@@ -157,18 +155,6 @@ class DeterministicStateMachine implements StateMachine {
 			throw new NullPointerException("Listener must not be null");
 
 		transitionListeners.add(listener);
-	}
-
-	@Override
-	public <T extends Event> void addProcessor(Class<T> clazz,
-			Processor<T> processor) throws FsmException {
-		if (clazz == null)
-			throw new NullPointerException("Event class must not be null");
-
-		if (processor == null)
-			throw new NullPointerException("Processor must not be null");
-
-		typePreprocessor.addProcessor(clazz, processor);
 	}
 
 	/**

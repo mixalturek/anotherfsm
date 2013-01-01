@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, Another FSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -19,23 +19,21 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Group of processors based on type.
+ * Preprocessor of events.
  * 
  * @author Michal Turek
- * 
- * @see AnotherFsm#genTypeProcessors()
  */
-public interface TypeProcessors extends EventProcessor {
+public interface EventPreprocessor extends EventProcessor {
 	/**
-	 * Add a new processor. The method is not thread safe.
+	 * Process or preprocess the event.
 	 * 
-	 * @param clazz
-	 *            the type of event
-	 * @param processor
-	 *            the preprocessor
+	 * @param event
+	 *            the input event
+	 * @return the original event, a newly generated event or null to stop the
+	 *         processing
 	 * @throws FsmException
-	 *             if the preprocessor is already defined
+	 *             if something fails
 	 */
-	public <T extends Event> void addProcessor(Class<T> clazz,
-			Processor<T> processor) throws FsmException;
+	@Override
+	public Event process(Event event) throws FsmException;
 }

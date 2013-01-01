@@ -9,10 +9,10 @@ import org.junit.Test;
 public class TypeProcessorsImplTest {
 	@Test
 	public final void testAddProcessor() {
-		TypeProcessors processor = new TypeProcessorsImpl("processor");
+		TypeProcessorsImpl processor = new TypeProcessorsImpl("processor");
 		try {
 			processor.addProcessor(TypeEventA.class,
-					new Processor<TypeEventA>() {
+					new TypeProcessorsImpl.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return new TypeEventB();
@@ -24,7 +24,7 @@ public class TypeProcessorsImplTest {
 
 		try {
 			processor.addProcessor(TypeEventA.class,
-					new Processor<TypeEventA>() {
+					new TypeProcessorsImpl.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return new TypeEventB();
@@ -45,12 +45,13 @@ public class TypeProcessorsImplTest {
 		}
 
 		try {
-			processor.addProcessor(null, new Processor<TypeEventA>() {
-				@Override
-				public Event process(TypeEventA event) {
-					return new TypeEventB();
-				}
-			});
+			processor.addProcessor(null,
+					new TypeProcessorsImpl.Processor<TypeEventA>() {
+						@Override
+						public Event process(TypeEventA event) {
+							return new TypeEventB();
+						}
+					});
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			fail("Should not be executed");
@@ -61,12 +62,12 @@ public class TypeProcessorsImplTest {
 
 	@Test
 	public final void testProcess() {
-		TypeProcessors processor = new TypeProcessorsImpl("processor");
+		TypeProcessorsImpl processor = new TypeProcessorsImpl("processor");
 		Event processedEvent = null;
 
 		try {
 			processor.addProcessor(TypeEventA.class,
-					new Processor<TypeEventA>() {
+					new TypeProcessorsImpl.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return new TypeEventB();
@@ -74,7 +75,7 @@ public class TypeProcessorsImplTest {
 					});
 
 			processor.addProcessor(TypeEventB.class,
-					new Processor<TypeEventB>() {
+					new TypeProcessorsImpl.Processor<TypeEventB>() {
 						@Override
 						public Event process(TypeEventB event) {
 							return null;
@@ -106,7 +107,7 @@ public class TypeProcessorsImplTest {
 
 	@Test
 	public final void testProcessNoProcessor() {
-		TypeProcessors processor = new TypeProcessorsImpl("processor");
+		TypeProcessorsImpl processor = new TypeProcessorsImpl("processor");
 		Event processedEvent = null;
 
 		try {

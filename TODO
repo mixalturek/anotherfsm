@@ -1,12 +1,23 @@
 TODO
 ====
 
+- Solve TODO: and FIXME: in code.
+
 - First release.
 
 - Preprocessor based on equals() of events.
 - Clean names of interfaces and classed.
 - Verify logged messages during the processing and preprocessing.
-- StateMachine.addPreprocessor() instead of implementing of the interface.
+- Unit test for order of called preprocessors.
+- TypeProcessorsImpl.addPreprocessor()
+
+- Add the following to AnotherFsm class.
+			logger.fatal(
+					"Unexpected exception occurred probably in client callback code: event "
+							+ event + ", thread "
+							+ Thread.currentThread().getName() + ", exception "
+							+ e.getClass() + ", exception message "
+							+ e.getMessage() + ", exception " + e, e);
 
 
 

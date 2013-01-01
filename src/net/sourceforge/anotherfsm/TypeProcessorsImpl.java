@@ -32,7 +32,7 @@ import net.sourceforge.anotherfsm.logger.FsmLogger;
  * 
  * @author Michal Turek
  */
-class TypeProcessorsImpl implements TypeProcessors {
+class TypeProcessorsImpl implements EventPreprocessor {
 	/** The logger. */
 	protected final FsmLogger logger;
 
@@ -62,6 +62,21 @@ class TypeProcessorsImpl implements TypeProcessors {
 	}
 
 	@Override
+	public void addPreprocessor(EventPreprocessor preprocessor) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Add a new processor. The method is not thread safe.
+	 * 
+	 * @param clazz
+	 *            the type of event
+	 * @param processor
+	 *            the processor
+	 * @throws FsmException
+	 *             if the processor is already defined
+	 */
 	public <T extends Event> void addProcessor(Class<T> clazz,
 			Processor<T> processor) throws FsmException {
 		if (clazz == null)
@@ -80,7 +95,7 @@ class TypeProcessorsImpl implements TypeProcessors {
 	// type. It should always work since addProcessor() does the checks.
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public Event process(Event event) {
+	public Event process(Event event) throws FsmException {
 		if (event == null)
 			throw new NullPointerException("Event must not be null");
 
@@ -111,5 +126,28 @@ class TypeProcessorsImpl implements TypeProcessors {
 
 			throw e;
 		}
+	}
+
+	/**
+	 * The real preprocessor of events.
+	 * 
+	 * It is a responsibility of the client code to throw no runtime exceptions
+	 * in callbacks. Any unhandled exception can stop an internal thread and
+	 * break whole processing of events. It is generally bad to handle all
+	 * possible exceptions to prevent and hide errors so it is not implemented
+	 * in the library at all.
+	 * 
+	 * @author Michal Turek
+	 */
+	public static interface Processor<T extends Event> {
+		/**
+		 * Preprocess the event before passing it to the state machine.
+		 * 
+		 * @param event
+		 *            the input event
+		 * @return the input event a newly generated event or null to ignore the
+		 *         event
+		 */
+		public Event process(T event);
 	}
 }

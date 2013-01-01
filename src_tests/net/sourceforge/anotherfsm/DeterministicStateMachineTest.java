@@ -570,25 +570,30 @@ public class DeterministicStateMachineTest {
 		Transition transition = new Transition(state, new TypeEventA(), another);
 		Event processedEvent = null;
 
+		TypeProcessorsImpl preprocessor = new TypeProcessorsImpl("preprocessor");
+
 		try {
+			machine.addPreprocessor(preprocessor);
 			machine.addState(state);
 			machine.addState(another);
 			machine.addTransition(transition);
 			machine.setStartState(state);
 
-			machine.addProcessor(TypeEventA.class, new Processor<TypeEventA>() {
-				@Override
-				public Event process(TypeEventA event) {
-					return null;
-				}
-			});
+			preprocessor.addProcessor(TypeEventA.class,
+					new TypeProcessorsImpl.Processor<TypeEventA>() {
+						@Override
+						public Event process(TypeEventA event) {
+							return null;
+						}
+					});
 
-			machine.addProcessor(TypeEventB.class, new Processor<TypeEventB>() {
-				@Override
-				public Event process(TypeEventB event) {
-					return new TypeEventA();
-				}
-			});
+			preprocessor.addProcessor(TypeEventB.class,
+					new TypeProcessorsImpl.Processor<TypeEventB>() {
+						@Override
+						public Event process(TypeEventB event) {
+							return new TypeEventA();
+						}
+					});
 
 			machine.start();
 		} catch (FsmException e) {

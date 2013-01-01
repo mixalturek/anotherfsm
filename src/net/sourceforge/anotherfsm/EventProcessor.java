@@ -32,6 +32,17 @@ public interface EventProcessor {
 	public String getName();
 
 	/**
+	 * Add a new preprocessor. The preprocessors will be called in the
+	 * registration order during preprocessing of the events.
+	 * 
+	 * @param preprocessor
+	 *            the preprocessor
+	 * 
+	 * @see #process(Event)
+	 */
+	public void addPreprocessor(EventPreprocessor preprocessor);
+
+	/**
 	 * Process the event.
 	 * 
 	 * @param event
