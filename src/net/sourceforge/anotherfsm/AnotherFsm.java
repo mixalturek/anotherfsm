@@ -28,7 +28,7 @@ import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
  */
 public class AnotherFsm {
 	/** The delimiter of class names and instances. */
-	public static final String CLASS_INSTANCE_DELIMITER = ":";
+	public static final String CLASS_INSTANCE_DELIMITER = ".";
 
 	/** The singleton instance. */
 	private static AnotherFsm instance;

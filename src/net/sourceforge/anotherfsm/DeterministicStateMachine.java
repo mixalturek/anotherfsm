@@ -392,10 +392,9 @@ class DeterministicStateMachine implements StateMachine {
 			logger.fatal(
 					"Unexpected exception occurred probably in client callback code: event "
 							+ matchedEvent + ", thread "
-							+ Thread.currentThread().getName()
-							+ ", exception class " + e.getClass()
-							+ ", exception message " + e.getMessage()
-							+ ", exception " + e, e);
+							+ Thread.currentThread().getName() + ", exception "
+							+ e.getClass() + ", exception message "
+							+ e.getMessage() + ", exception " + e, e);
 
 			throw e;
 		}

@@ -23,7 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Logger that logs to the standard output and standard error streams.
+ * Logger that logs to the standard output and standard error streams. All
+ * received messages are logged independently to the severity.
  * 
  * @author Michal Turek
  */
