@@ -371,17 +371,10 @@ class DeterministicStateMachine implements StateMachine {
 			notifyTransition(transition, source, eventToProcess, destination);
 			notifyEnter(source, eventToProcess, destination);
 		} catch (RuntimeException e) {
-			// Log everything what is possible and re-throw the exception,
-			// current thread may stop but it is better than hide a more
-			// serious error
+			AnotherFsm.getInstance().onExceptionInClientCallback(logger, e,
+					matchedEvent);
 
-			logger.fatal(
-					"Unexpected exception occurred probably in client callback code: event "
-							+ matchedEvent + ", thread "
-							+ Thread.currentThread().getName() + ", exception "
-							+ e.getClass() + ", exception message "
-							+ e.getMessage() + ", exception " + e, e);
-
+			// To be sure, should be never executed
 			throw e;
 		}
 

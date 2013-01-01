@@ -99,6 +99,8 @@ public class TypePreprocessor implements Preprocessor {
 		if (event == null)
 			throw new NullPointerException("Event must not be null");
 
+		// TODO: preprocess the event in sub-preprocessors
+
 		Processor processor = processors.get(event.getClass());
 		if (processor == null)
 			return event;
@@ -113,17 +115,10 @@ public class TypePreprocessor implements Preprocessor {
 
 			return resultEvent;
 		} catch (RuntimeException e) {
-			// Log everything what is possible and re-throw the exception,
-			// current thread may stop but it is better than hide a more
-			// serious error
+			AnotherFsm.getInstance().onExceptionInClientCallback(logger, e,
+					event);
 
-			logger.fatal(
-					"Unexpected exception occurred probably in client callback code: event "
-							+ event + ", thread "
-							+ Thread.currentThread().getName() + ", exception "
-							+ e.getClass() + ", exception message "
-							+ e.getMessage() + ", exception " + e, e);
-
+			// To resolve compiler error, should be never executed
 			throw e;
 		}
 	}

@@ -193,4 +193,33 @@ public class AnotherFsm {
 	public StateMachine genTimeoutStateMachine(String name) {
 		return new TimeoutStateMachine(name);
 	}
+
+	/**
+	 * Process runtime exception that occurred in client callback.
+	 * 
+	 * Log everything what is possible for future analysis and re-throw the
+	 * exception. Current thread may stop but it is better than hide a more
+	 * serious error.
+	 * 
+	 * @param logger
+	 *            the logger
+	 * @param exception
+	 *            the exception that occurred
+	 * @param event
+	 *            the event that was processed
+	 * 
+	 * @see TimeoutStateMachine
+	 */
+	void onExceptionInClientCallback(FsmLogger logger,
+			RuntimeException exception, Event event) {
+		logger.fatal(
+				"Unexpected exception occurred probably in client callback code: event "
+						+ event + ", thread "
+						+ Thread.currentThread().getName() + ", exception "
+						+ exception.getClass() + ", exception message "
+						+ exception.getMessage() + ", exception " + exception,
+				exception);
+
+		throw exception;
+	}
 }
