@@ -53,7 +53,7 @@ class TypeProcessorsImpl implements TypeProcessors {
 			throw new NullPointerException("Name must not be null");
 
 		this.name = name;
-		logger = AnotherFsm.getInstance().getLogger(getClass() + "-" + name);
+		logger = AnotherFsm.getInstance().getLogger(getClass(), name);
 	}
 
 	@Override

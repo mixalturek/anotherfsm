@@ -24,7 +24,7 @@ package net.sourceforge.anotherfsm.logger;
  * 
  * @author Michal Turek
  */
-public class NoLogger implements FsmLogger {
+class NoLogger implements FsmLogger {
 	/** The class instance. */
 	public static final FsmLogger INSTANCE = new NoLogger();
 

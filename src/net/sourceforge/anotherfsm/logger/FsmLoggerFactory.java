@@ -31,7 +31,18 @@ public interface FsmLoggerFactory {
 	 *            the class
 	 * @return the logger
 	 */
-	public FsmLogger getLogger(Class<Object> clazz);
+	public FsmLogger getLogger(Class<?> clazz);
+
+	/**
+	 * Get logger for a specific class and instance.
+	 * 
+	 * @param clazz
+	 *            the class
+	 * @param instance
+	 *            the class instance
+	 * @return the logger
+	 */
+	public FsmLogger getLogger(Class<?> clazz, String instance);
 
 	/**
 	 * Get logger for a specific logger with name.

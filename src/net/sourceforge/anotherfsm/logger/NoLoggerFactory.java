@@ -26,7 +26,12 @@ package net.sourceforge.anotherfsm.logger;
  */
 public class NoLoggerFactory implements FsmLoggerFactory {
 	@Override
-	public FsmLogger getLogger(Class<Object> clazz) {
+	public FsmLogger getLogger(Class<?> clazz) {
+		return NoLogger.INSTANCE;
+	}
+
+	@Override
+	public FsmLogger getLogger(Class<?> clazz, String instance) {
 		return NoLogger.INSTANCE;
 	}
 

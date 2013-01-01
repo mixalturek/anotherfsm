@@ -24,25 +24,6 @@ public class DeterministicStateMachineTest {
 	}
 
 	@Test
-	public final void testDeterministicStateMachineString() {
-		class DeterministicStateMachineTmp extends DeterministicStateMachine {
-			public DeterministicStateMachineTmp(String name) {
-				super(name);
-				assertEquals(this.getClass() + "-" + name, logger.getName());
-			}
-		}
-
-		StateMachine machine = new DeterministicStateMachineTmp("fsm");
-
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
-	}
-
-	@Test
 	public final void testGetName() {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		assertEquals("fsm", machine.getName());

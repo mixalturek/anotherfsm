@@ -23,14 +23,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Logger that logs to the standard output and error streams.
+ * Logger that logs to the standard output and standard error streams.
  * 
  * @author Michal Turek
  */
-public class StdStreamLogger implements FsmLogger {
+class StdStreamLogger implements FsmLogger {
 	/** The logger name. */
 	private final String name;
 
+	/** Formatter of date. */
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss,SSS");
 
@@ -129,6 +130,8 @@ public class StdStreamLogger implements FsmLogger {
 	 * 
 	 * @param stream
 	 *            the output stream
+	 * @param severity
+	 *            the severity of the message
 	 * @param message
 	 *            the message
 	 * @param throwable
@@ -136,12 +139,6 @@ public class StdStreamLogger implements FsmLogger {
 	 */
 	private void log(PrintStream stream, String severity, Object message,
 			Throwable throwable) {
-		// Log4j default is
-		// date [thread] severity class message
-		// 395 [main] INFO class
-		// net.sourceforge.anotherfsm.DeterministicStateMachine-fsm - Transition
-		// started: state -> TypeEventA -> another
-
 		String date = dateFormat.format(new Date());
 		String thread = Thread.currentThread().getName();
 

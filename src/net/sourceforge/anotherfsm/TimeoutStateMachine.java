@@ -66,7 +66,8 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 			throw new FsmException(
 					"Timer already running, state machine probably started twice");
 
-		timer = new Timer(getClass().getSimpleName() + "-" + getName(), false);
+		timer = new Timer(getClass().getSimpleName()
+				+ AnotherFsm.CLASS_INSTANCE_DELIMITER + getName(), false);
 
 		try {
 			super.start();

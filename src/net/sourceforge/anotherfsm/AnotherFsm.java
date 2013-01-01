@@ -27,6 +27,9 @@ import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
  * @author Michal Turek
  */
 public class AnotherFsm {
+	/** The delimiter of class names and instances. */
+	public static final String CLASS_INSTANCE_DELIMITER = ":";
+
 	/** The singleton instance. */
 	private static AnotherFsm instance;
 
@@ -78,6 +81,19 @@ public class AnotherFsm {
 	 */
 	public FsmLogger getLogger(Class<Object> clazz) {
 		return loggerFactory.getLogger(clazz);
+	}
+
+	/**
+	 * Get logger for a specific class and instance.
+	 * 
+	 * @param clazz
+	 *            the class
+	 * @param instance
+	 *            the class instance
+	 * @return the logger
+	 */
+	public FsmLogger getLogger(Class<?> clazz, String instance) {
+		return loggerFactory.getLogger(clazz, instance);
 	}
 
 	/**

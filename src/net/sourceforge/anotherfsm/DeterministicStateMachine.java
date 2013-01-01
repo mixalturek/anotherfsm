@@ -71,7 +71,7 @@ class DeterministicStateMachine implements StateMachine {
 			throw new NullPointerException("Name must not be null");
 
 		this.name = name;
-		logger = AnotherFsm.getInstance().getLogger(getClass() + "-" + name);
+		logger = AnotherFsm.getInstance().getLogger(getClass(), name);
 
 		typePreprocessor = new TypeProcessorsImpl(name);
 		preprocessors.add(typePreprocessor);
