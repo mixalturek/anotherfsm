@@ -32,7 +32,7 @@ import net.sourceforge.anotherfsm.logger.FsmLogger;
  * 
  * @author Michal Turek
  */
-class TypeProcessorsImpl implements EventPreprocessor {
+public class TypePreprocessor implements Preprocessor {
 	/** The logger. */
 	protected final FsmLogger logger;
 
@@ -48,7 +48,7 @@ class TypeProcessorsImpl implements EventPreprocessor {
 	 * @param name
 	 *            the name of the event processor
 	 */
-	public TypeProcessorsImpl(String name) {
+	public TypePreprocessor(String name) {
 		if (name == null)
 			throw new NullPointerException("Name must not be null");
 
@@ -62,7 +62,7 @@ class TypeProcessorsImpl implements EventPreprocessor {
 	}
 
 	@Override
-	public void addPreprocessor(EventPreprocessor preprocessor) {
+	public void addPreprocessor(Preprocessor preprocessor) {
 		// TODO Auto-generated method stub
 
 	}

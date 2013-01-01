@@ -30,7 +30,7 @@ import java.util.Set;
  * @see AnotherFsm#genSynchronizedStateMachine(String)
  * @see AnotherFsm#genTimeoutStateMachine(String)
  */
-public interface StateMachine extends EventProcessor, Closeable {
+public interface StateMachine extends Processor, Closeable {
 	/**
 	 * Set the start state.
 	 * 

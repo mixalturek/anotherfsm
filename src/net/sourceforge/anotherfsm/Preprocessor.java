@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, Another FSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -19,37 +19,21 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Processor of events.
+ * Preprocessor of events.
  * 
  * @author Michal Turek
  */
-public interface EventProcessor {
+public interface Preprocessor extends Processor {
 	/**
-	 * Get the name of the processor.
-	 * 
-	 * @return the name
-	 */
-	public String getName();
-
-	/**
-	 * Add a new preprocessor. The preprocessors will be called in the
-	 * registration order during preprocessing of the events.
-	 * 
-	 * @param preprocessor
-	 *            the preprocessor
-	 * 
-	 * @see #process(Event)
-	 */
-	public void addPreprocessor(EventPreprocessor preprocessor);
-
-	/**
-	 * Process the event.
+	 * Process or preprocess the event.
 	 * 
 	 * @param event
 	 *            the input event
-	 * @return the processed event
+	 * @return the original event, a newly generated event or null to stop the
+	 *         processing
 	 * @throws FsmException
 	 *             if something fails
 	 */
+	@Override
 	public Event process(Event event) throws FsmException;
 }

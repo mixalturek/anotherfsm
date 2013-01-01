@@ -55,7 +55,7 @@ class DeterministicStateMachine implements StateMachine {
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
 	/** The preprocessors of events. */
-	private final List<EventPreprocessor> preprocessors = new LinkedList<EventPreprocessor>();
+	private final List<Preprocessor> preprocessors = new LinkedList<Preprocessor>();
 
 	/**
 	 * Create the object.
@@ -137,7 +137,7 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	@Override
-	public void addPreprocessor(EventPreprocessor preprocessor) {
+	public void addPreprocessor(Preprocessor preprocessor) {
 		preprocessors.add(preprocessor);
 	}
 
@@ -298,7 +298,7 @@ class DeterministicStateMachine implements StateMachine {
 	private Event preprocessEvent(Event event) throws FsmException {
 		Event preprocessedEvent = event;
 
-		for (EventProcessor preprocessor : preprocessors) {
+		for (Processor preprocessor : preprocessors) {
 			preprocessedEvent = preprocessor.process(event);
 
 			if (preprocessedEvent == null)

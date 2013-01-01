@@ -9,10 +9,10 @@ import org.junit.Test;
 public class TypeProcessorsImplTest {
 	@Test
 	public final void testAddProcessor() {
-		TypeProcessorsImpl processor = new TypeProcessorsImpl("processor");
+		TypePreprocessor processor = new TypePreprocessor("processor");
 		try {
 			processor.addProcessor(TypeEventA.class,
-					new TypeProcessorsImpl.Processor<TypeEventA>() {
+					new TypePreprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return new TypeEventB();
@@ -24,7 +24,7 @@ public class TypeProcessorsImplTest {
 
 		try {
 			processor.addProcessor(TypeEventA.class,
-					new TypeProcessorsImpl.Processor<TypeEventA>() {
+					new TypePreprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return new TypeEventB();
@@ -46,7 +46,7 @@ public class TypeProcessorsImplTest {
 
 		try {
 			processor.addProcessor(null,
-					new TypeProcessorsImpl.Processor<TypeEventA>() {
+					new TypePreprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return new TypeEventB();
@@ -62,12 +62,12 @@ public class TypeProcessorsImplTest {
 
 	@Test
 	public final void testProcess() {
-		TypeProcessorsImpl processor = new TypeProcessorsImpl("processor");
+		TypePreprocessor processor = new TypePreprocessor("processor");
 		Event processedEvent = null;
 
 		try {
 			processor.addProcessor(TypeEventA.class,
-					new TypeProcessorsImpl.Processor<TypeEventA>() {
+					new TypePreprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return new TypeEventB();
@@ -75,7 +75,7 @@ public class TypeProcessorsImplTest {
 					});
 
 			processor.addProcessor(TypeEventB.class,
-					new TypeProcessorsImpl.Processor<TypeEventB>() {
+					new TypePreprocessor.Processor<TypeEventB>() {
 						@Override
 						public Event process(TypeEventB event) {
 							return null;
@@ -107,7 +107,7 @@ public class TypeProcessorsImplTest {
 
 	@Test
 	public final void testProcessNoProcessor() {
-		TypeProcessorsImpl processor = new TypeProcessorsImpl("processor");
+		TypePreprocessor processor = new TypePreprocessor("processor");
 		Event processedEvent = null;
 
 		try {

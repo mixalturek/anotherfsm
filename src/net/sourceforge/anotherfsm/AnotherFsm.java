@@ -117,21 +117,6 @@ public class AnotherFsm {
 	}
 
 	/**
-	 * Create an instance of event preprocessor based on the type. The object
-	 * can be used in multithreaded environment.
-	 * 
-	 * Building of the object is NOT synchronized and should be done just in one
-	 * thread. Only the processing of the events is thread safe.
-	 * 
-	 * @param name
-	 *            the name of the preprocessor
-	 * @return the preprocessor
-	 */
-	public EventPreprocessor genTypePreprocessor(String name) {
-		return new TypeProcessorsImpl(name);
-	}
-
-	/**
 	 * Create an instance of "all other events" event.
 	 * 
 	 * @return the event

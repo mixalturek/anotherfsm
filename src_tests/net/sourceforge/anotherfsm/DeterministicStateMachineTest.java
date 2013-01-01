@@ -570,7 +570,7 @@ public class DeterministicStateMachineTest {
 		Transition transition = new Transition(state, new TypeEventA(), another);
 		Event processedEvent = null;
 
-		TypeProcessorsImpl preprocessor = new TypeProcessorsImpl("preprocessor");
+		TypePreprocessor preprocessor = new TypePreprocessor("preprocessor");
 
 		try {
 			machine.addPreprocessor(preprocessor);
@@ -580,7 +580,7 @@ public class DeterministicStateMachineTest {
 			machine.setStartState(state);
 
 			preprocessor.addProcessor(TypeEventA.class,
-					new TypeProcessorsImpl.Processor<TypeEventA>() {
+					new TypePreprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return null;
@@ -588,7 +588,7 @@ public class DeterministicStateMachineTest {
 					});
 
 			preprocessor.addProcessor(TypeEventB.class,
-					new TypeProcessorsImpl.Processor<TypeEventB>() {
+					new TypePreprocessor.Processor<TypeEventB>() {
 						@Override
 						public Event process(TypeEventB event) {
 							return new TypeEventA();

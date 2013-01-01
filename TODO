@@ -19,7 +19,7 @@ TODO
 							+ e.getClass() + ", exception message "
 							+ e.getMessage() + ", exception " + e, e);
 
-
+- Make classes part of the API, remove factory methods from AnotherFsm.
 
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.

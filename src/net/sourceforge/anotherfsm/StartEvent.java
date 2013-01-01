@@ -19,7 +19,7 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Start event.
+ * Start event, state machines send it on start of processing of events.
  * 
  * @author Michal Turek
  * @see StateMachine#start()
