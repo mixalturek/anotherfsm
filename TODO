@@ -2,21 +2,24 @@ TODO
 ====
 
 - First release.
-- AnotherFsm.getVersion()
 
 - Preprocessor based on equals() of events.
 - Clean names of interfaces and classed.
 - Verify logged messages during the processing and preprocessing.
 - StateMachine.addPreprocessor() instead of implementing of the interface.
 
-- Example for log4j and slf4j logger.
+
 
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.
-- Examples.
+
 - Ant build.xml.
-- Generate javadoc - API, full.
+
 - Web.
+	- Examples.
+	- Generate javadoc - API, full.
+	- Example for log4j and slf4j logger.
+
 - Verify "Do nothing" exceptions in unit tests.
 - FsmEditor or QFsm patch.
 - Analyzer and visualization of FSM transitions logs.

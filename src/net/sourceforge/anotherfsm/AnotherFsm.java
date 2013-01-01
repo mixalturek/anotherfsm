@@ -22,11 +22,20 @@ import net.sourceforge.anotherfsm.logger.FsmLogger;
 import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
 
 /**
- * Factory of classes, the main class in this library.
+ * Factory of classes, the main class in this library. Method init() must be
+ * called before use.
  * 
  * @author Michal Turek
+ * 
+ * @see #init(FsmLoggerFactory)
  */
 public class AnotherFsm {
+	/**
+	 * The version of the library. The string has format
+	 * "major.minor.release-note".
+	 */
+	public static final String VERSION = "0.1.0-dev";
+
 	/** The delimiter of class names and instances. */
 	public static final String CLASS_INSTANCE_DELIMITER = ".";
 
