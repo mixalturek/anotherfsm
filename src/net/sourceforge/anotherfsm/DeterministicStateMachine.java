@@ -182,9 +182,6 @@ class DeterministicStateMachine implements StateMachine {
 			}
 
 			listener.onStateEnter(previous, event, current);
-
-			if (current.isFinalState())
-				listener.onFinalStateEnter(previous, event, current);
 		}
 	}
 
@@ -212,9 +209,6 @@ class DeterministicStateMachine implements StateMachine {
 			}
 
 			listener.onStateExit(current, event, next);
-
-			if (current.isFinalState())
-				listener.onFinalStateExit(current, event, next);
 		}
 	}
 

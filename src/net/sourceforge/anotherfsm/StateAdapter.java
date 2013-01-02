@@ -51,14 +51,4 @@ public class StateAdapter implements StateListener {
 	public void onStateExit(State current, Event event, State next) {
 		// Do nothing by default.
 	}
-
-	@Override
-	public void onFinalStateEnter(State previous, Event event, State current) {
-		// Do nothing by default.
-	}
-
-	@Override
-	public void onFinalStateExit(State current, Event event, State next) {
-		// Do nothing by default.
-	}
 }

@@ -96,9 +96,6 @@ class State {
 			}
 
 			listener.onStateEnter(previous, event, current);
-
-			if (type == State.Type.FINAL)
-				listener.onFinalStateEnter(previous, event, current);
 		}
 	}
 
@@ -123,9 +120,6 @@ class State {
 			}
 
 			listener.onStateExit(current, event, next);
-
-			if (isFinalState())
-				listener.onFinalStateExit(current, event, next);
 		}
 	}
 

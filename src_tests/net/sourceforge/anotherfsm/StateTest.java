@@ -19,36 +19,26 @@ public class StateTest {
 
 		assertEquals(listener.enteredNum, 0);
 		assertEquals(listener.exitedNum, 0);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
 
 		state.notifyEnter(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 1);
 		assertEquals(listener.exitedNum, 0);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
 
 		state.notifyExit(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 1);
 		assertEquals(listener.exitedNum, 1);
-		assertEquals(listener.finalEnteredNum, 0);
-		assertEquals(listener.finalExitedNum, 0);
 
 		stateFinal.notifyEnter(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 2);
 		assertEquals(listener.exitedNum, 1);
-		assertEquals(listener.finalEnteredNum, 1);
-		assertEquals(listener.finalExitedNum, 0);
 
 		stateFinal.notifyExit(true, null, null, null);
 
 		assertEquals(listener.enteredNum, 2);
 		assertEquals(listener.exitedNum, 2);
-		assertEquals(listener.finalEnteredNum, 1);
-		assertEquals(listener.finalExitedNum, 1);
 	}
 
 	@Test

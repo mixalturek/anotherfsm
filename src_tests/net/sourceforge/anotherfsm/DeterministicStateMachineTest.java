@@ -125,14 +125,10 @@ public class DeterministicStateMachineTest {
 		}
 
 		assertEquals(1, listener.enteredNum);
-		assertEquals(1, listener.finalEnteredNum);
 		assertEquals(0, listener.exitedNum);
-		assertEquals(0, listener.finalExitedNum);
 
 		assertEquals(1, listenerFsm.enteredNum);
-		assertEquals(1, listenerFsm.finalEnteredNum);
 		assertEquals(0, listenerFsm.exitedNum);
-		assertEquals(0, listenerFsm.finalExitedNum);
 	}
 
 	@Test
@@ -317,18 +313,6 @@ public class DeterministicStateMachineTest {
 
 					super.onStateExit(current, event, next);
 				}
-
-				@Override
-				public void onFinalStateEnter(State previous, Event event,
-						State current) {
-					fail("Should not be executed");
-				}
-
-				@Override
-				public void onFinalStateExit(State current, Event event,
-						State next) {
-					fail("Should not be executed");
-				}
 			});
 
 			finalState.addListener(new StateListenerImpl(
@@ -352,28 +336,6 @@ public class DeterministicStateMachineTest {
 					real.add("finalState.onStateExit");
 
 					super.onStateExit(current, event, next);
-				}
-
-				@Override
-				public void onFinalStateEnter(State previous, Event event,
-						State current) {
-					assertEquals(startState, previous);
-					assertEquals(new TypeEventA(), event);
-					assertEquals(finalState, current);
-					real.add("finalState.onFinalStateEnter");
-
-					super.onFinalStateEnter(previous, event, current);
-				}
-
-				@Override
-				public void onFinalStateExit(State current, Event event,
-						State next) {
-					assertEquals(finalState, current);
-					assertEquals(new TypeEventB(), event);
-					assertEquals(startState, next);
-					real.add("finalState.onFinalStateExit");
-
-					super.onFinalStateExit(current, event, next);
 				}
 			});
 
@@ -435,28 +397,6 @@ public class DeterministicStateMachineTest {
 					}
 
 					super.onStateExit(current, event, next);
-				}
-
-				@Override
-				public void onFinalStateEnter(State previous, Event event,
-						State current) {
-					assertEquals(startState, previous);
-					assertEquals(new TypeEventA(), event);
-					assertEquals(finalState, current);
-					real.add("fsm.onFinalStateEnter");
-
-					super.onFinalStateEnter(previous, event, current);
-				}
-
-				@Override
-				public void onFinalStateExit(State current, Event event,
-						State next) {
-					assertEquals(finalState, current);
-					assertEquals(new TypeEventB(), event);
-					assertEquals(startState, next);
-					real.add("fsm.onFinalStateExit");
-
-					super.onFinalStateExit(current, event, next);
 				}
 			});
 
@@ -532,9 +472,7 @@ public class DeterministicStateMachineTest {
 			expected.add("transition.onTransition");
 			expected.add("fsm.onTransition");
 			expected.add("finalState.onStateEnter");
-			expected.add("finalState.onFinalStateEnter");
 			expected.add("fsm.onStateEnter");
-			expected.add("fsm.onFinalStateEnter");
 			assertEquals(expected, real);
 			expected.clear();
 			real.clear();
@@ -542,9 +480,7 @@ public class DeterministicStateMachineTest {
 			processedEvent = machine.process(new TypeEventB());
 			assertEquals(new TypeEventB(), processedEvent);
 			expected.add("finalState.onStateExit");
-			expected.add("finalState.onFinalStateExit");
 			expected.add("fsm.onStateExit");
-			expected.add("fsm.onFinalStateExit");
 			expected.add("back.onTransition");
 			expected.add("fsm.onTransition");
 			expected.add("startState.onStateEnter");

@@ -29,8 +29,6 @@ public class StateListenerImpl implements StateListener {
 
 	public int enteredNum = 0;
 	public int exitedNum = 0;
-	public int finalEnteredNum = 0;
-	public int finalExitedNum = 0;
 
 	/**
 	 * Create the object.
@@ -55,15 +53,5 @@ public class StateListenerImpl implements StateListener {
 	@Override
 	public void onStateExit(State current, Event event, State next) {
 		++exitedNum;
-	}
-
-	@Override
-	public void onFinalStateEnter(State previous, Event event, State current) {
-		++finalEnteredNum;
-	}
-
-	@Override
-	public void onFinalStateExit(State current, Event event, State next) {
-		++finalExitedNum;
 	}
 }
