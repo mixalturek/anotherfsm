@@ -48,5 +48,4 @@ public class StdStreamLoggerFactory implements FsmLoggerFactory {
 	public FsmLogger getLogger(String name) {
 		return new StdStreamLogger(name);
 	}
-
 }

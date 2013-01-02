@@ -5,7 +5,6 @@ TODO
 
 - First release.
 
-- Preprocessor based on equals() of events.
 - Verify logged messages during the processing and preprocessing.
 - Unit test for order of called preprocessors.
 

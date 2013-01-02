@@ -24,7 +24,7 @@ import java.util.List;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
 
 /**
- * Adapter of preprocessors, helper class.
+ * Adapter of processor, helper class.
  * 
  * @author Michal Turek
  */

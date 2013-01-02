@@ -26,6 +26,10 @@ import java.util.Date;
  * Logger that logs to the standard output and standard error streams. All
  * received messages are logged independently to the severity.
  * 
+ * The instances of the class is NOT thread safe. The output could be messed by
+ * external System.out.*() and System.err.*() calls and the logger should be as
+ * fast as possible.
+ * 
  * @author Michal Turek
  */
 class StdStreamLogger implements FsmLogger {

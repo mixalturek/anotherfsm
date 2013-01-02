@@ -1,3 +1,21 @@
+/*
+ *  Copyright 2013 Michal Turek, Another FSM
+ *
+ *      http://anotherfsm.sourceforge.net/
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
@@ -7,7 +25,7 @@ import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TypeProcessorTest {
+public class EqualsPreprocessorTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		AnotherFsm.init(new StdStreamLoggerFactory());
@@ -15,9 +33,9 @@ public class TypeProcessorTest {
 
 	@Test
 	public final void testAddProcessor() {
-		TypePreprocessor processor = new TypePreprocessor("processor");
+		EqualsPreprocessor processor = new EqualsPreprocessor("processor");
 		try {
-			processor.addProcessor(TypeEventA.class,
+			processor.addProcessor(new TypeEventA(),
 					new Preprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
@@ -29,7 +47,7 @@ public class TypeProcessorTest {
 		}
 
 		try {
-			processor.addProcessor(TypeEventA.class,
+			processor.addProcessor(new TypeEventA(),
 					new Preprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
@@ -42,7 +60,7 @@ public class TypeProcessorTest {
 		}
 
 		try {
-			processor.addProcessor(TypeEventA.class, null);
+			processor.addProcessor(new TypeEventA(), null);
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			fail("Should not be executed");
@@ -68,11 +86,11 @@ public class TypeProcessorTest {
 
 	@Test
 	public final void testProcess() {
-		TypePreprocessor processor = new TypePreprocessor("processor");
+		EqualsPreprocessor processor = new EqualsPreprocessor("processor");
 		Event processedEvent = null;
 
 		try {
-			processor.addProcessor(TypeEventA.class,
+			processor.addProcessor(new TypeEventA(),
 					new Preprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
@@ -80,7 +98,7 @@ public class TypeProcessorTest {
 						}
 					});
 
-			processor.addProcessor(TypeEventB.class,
+			processor.addProcessor(new TypeEventB(),
 					new Preprocessor.Processor<TypeEventB>() {
 						@Override
 						public Event process(TypeEventB event) {
@@ -113,7 +131,7 @@ public class TypeProcessorTest {
 
 	@Test
 	public final void testProcessNoProcessor() {
-		TypePreprocessor processor = new TypePreprocessor("processor");
+		EqualsPreprocessor processor = new EqualsPreprocessor("processor");
 		Event processedEvent = null;
 
 		try {

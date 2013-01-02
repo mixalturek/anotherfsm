@@ -18,6 +18,9 @@
 
 package net.sourceforge.anotherfsm;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Processors of the events based on equals method. The object can be used in
  * multithreaded environment.
@@ -27,8 +30,9 @@ package net.sourceforge.anotherfsm;
  * 
  * @author Michal Turek
  */
-public class EqualsPreprocessor extends ProcessorAdapter implements
-		Preprocessor {
+public class EqualsPreprocessor extends PreprocessorAdapter {
+	/** The procesors. */
+	private final Map<Event, Processor<? extends Event>> processors = new HashMap<Event, Processor<? extends Event>>();
 
 	/**
 	 * Create the object.
@@ -40,9 +44,34 @@ public class EqualsPreprocessor extends ProcessorAdapter implements
 		super(name);
 	}
 
+	/**
+	 * Add a new processor. The method is not thread safe.
+	 * 
+	 * @param event
+	 *            the event
+	 * @param processor
+	 *            the processor
+	 * @throws FsmException
+	 *             if the processor is already defined
+	 */
+	public <T extends Event> void addProcessor(T event, Processor<T> processor)
+			throws FsmException {
+		if (event == null)
+			throw new NullPointerException("Event must not be null");
+
+		if (processor == null)
+			throw new NullPointerException("Processor must not be null");
+
+		if (processors.containsKey(event))
+			throw new FsmException("Preprocessor already defined: " + event);
+
+		processors.put(event, processor);
+	}
+
+	// The input event can have whatever type
+	@SuppressWarnings("rawtypes")
 	@Override
-	public Event process(Event event) throws FsmException {
-		// TODO Auto-generated method stub
-		return null;
+	protected Preprocessor.Processor findProcessor(Event event) {
+		return processors.get(event);
 	}
 }

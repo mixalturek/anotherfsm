@@ -30,7 +30,7 @@ import java.util.Map;
  * 
  * @author Michal Turek
  */
-public class TypePreprocessor extends ProcessorAdapter implements Preprocessor {
+public class TypePreprocessor extends PreprocessorAdapter {
 	/** The procesors. */
 	private final Map<Class<? extends Event>, Processor<? extends Event>> processors = new HashMap<Class<? extends Event>, Processor<? extends Event>>();
 
@@ -57,7 +57,7 @@ public class TypePreprocessor extends ProcessorAdapter implements Preprocessor {
 	public <T extends Event> void addProcessor(Class<T> clazz,
 			Processor<T> processor) throws FsmException {
 		if (clazz == null)
-			throw new NullPointerException("Processor class must not be null");
+			throw new NullPointerException("Event class must not be null");
 
 		if (processor == null)
 			throw new NullPointerException("Processor must not be null");
@@ -68,61 +68,10 @@ public class TypePreprocessor extends ProcessorAdapter implements Preprocessor {
 		processors.put(clazz, processor);
 	}
 
-	// Input event can be whatever event, the processor is searched based on its
-	// type. It should always work since addProcessor() does the checks.
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	// The input event can have whatever type
+	@SuppressWarnings("rawtypes")
 	@Override
-	public Event process(Event event) throws FsmException {
-		if (event == null)
-			throw new NullPointerException("Event must not be null");
-
-		Event preprocessedEvent = preprocessEvent(event);
-		if (NullEvent.INSTANCE.equals(preprocessedEvent))
-			return preprocessedEvent;
-
-		Processor processor = processors.get(event.getClass());
-		if (processor == null)
-			return event;
-
-		Event resultEvent = null;
-
-		try {
-			resultEvent = processor.process(event);
-		} catch (RuntimeException e) {
-			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
-					event);
-			throw e;
-		}
-
-		if (!event.equals(resultEvent) && logger.isInfoEnabled()) {
-			logger.info("Event processed: " + event + Transition.TR
-					+ resultEvent);
-		}
-
-		return resultEvent;
-	}
-
-	/**
-	 * The real preprocessor of events.
-	 * 
-	 * It is a responsibility of the client code to throw no runtime exceptions
-	 * in callbacks. Any unhandled exception can stop an internal thread and
-	 * break whole processing of events. It is generally bad to handle all
-	 * possible exceptions to prevent and hide errors so it is not implemented
-	 * in the library at all.
-	 * 
-	 * @author Michal Turek
-	 */
-	public static interface Processor<T extends Event> {
-		/**
-		 * Preprocess the event before passing it to the state machine.
-		 * 
-		 * @param event
-		 *            the input event
-		 * @return the input event, a newly generated event or NullEvent to
-		 *         ignore the event
-		 * @see NullEvent
-		 */
-		public Event process(T event);
+	protected Preprocessor.Processor findProcessor(Event event) {
+		return processors.get(event.getClass());
 	}
 }
