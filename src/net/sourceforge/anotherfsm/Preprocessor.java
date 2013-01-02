@@ -54,8 +54,8 @@ public interface Preprocessor extends Processor {
 		 * 
 		 * @param event
 		 *            the input event
-		 * @return the input event, a newly generated event or NullEvent to
-		 *         ignore the event
+		 * @return the input event, a newly generated event or null to ignore
+		 *         the event
 		 * @see NullEvent
 		 */
 		public Event process(T event);

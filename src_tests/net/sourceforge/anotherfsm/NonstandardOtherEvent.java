@@ -3,7 +3,7 @@ package net.sourceforge.anotherfsm;
 public class NonstandardOtherEvent implements OtherEvent {
 	@Override
 	public Event getSourceEvent() {
-		return NullEvent.INSTANCE;
+		return NullEvent.instance;
 	}
 
 	@Override

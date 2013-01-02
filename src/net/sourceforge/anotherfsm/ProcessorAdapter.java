@@ -71,8 +71,8 @@ abstract class ProcessorAdapter implements Processor {
 	 * 
 	 * @param event
 	 *            the event
-	 * @return the original event a newly generated event or NullEvent to ignore
-	 *         the event
+	 * @return the original event, a newly generated event or null to ignore the
+	 *         event
 	 * @throws FsmException
 	 *             if something fails
 	 */
@@ -82,8 +82,8 @@ abstract class ProcessorAdapter implements Processor {
 		for (Preprocessor preprocessor : preprocessors) {
 			preprocessedEvent = preprocessor.process(event);
 
-			if (NullEvent.INSTANCE.equals(preprocessedEvent))
-				return preprocessedEvent;
+			if (preprocessedEvent == null)
+				return null;
 		}
 
 		return preprocessedEvent;

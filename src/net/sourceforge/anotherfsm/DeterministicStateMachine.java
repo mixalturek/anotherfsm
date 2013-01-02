@@ -250,8 +250,8 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 		processCheck(event);
 
 		Event preprocessedEvent = preprocessEvent(event);
-		if (NullEvent.INSTANCE.equals(preprocessedEvent))
-			return preprocessedEvent;
+		if (preprocessedEvent == null)
+			return null;
 
 		Transition transition = stateTransitions.get(currentState)
 				.getTransition(preprocessedEvent);

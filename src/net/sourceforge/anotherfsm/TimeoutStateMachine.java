@@ -117,7 +117,7 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	 */
 	private synchronized void scheduleTimeoutTransition(boolean loopTransition) {
 		Transition timeoutTransition = getTransition(getActiveState(),
-				TimeoutEventImpl.INSTANCE);
+				TimeoutEventImpl.instance);
 
 		if (timeoutTransition == null) {
 			cancelExistingTimeoutTask();

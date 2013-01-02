@@ -52,7 +52,7 @@ public class OtherEventImplTest {
 		final State state = new State("state");
 		final State another = new State("another");
 		Transition loop = new Transition(state, new TypeEventA(), state);
-		Transition transition = new Transition(state, OtherEventImpl.INSTANCE,
+		Transition transition = new Transition(state, OtherEventImpl.instance,
 				another);
 		Transition back = new Transition(another, new TypeEventA(), state);
 
@@ -61,7 +61,7 @@ public class OtherEventImplTest {
 			public void onTransition(State source, Event event,
 					State destination) {
 				assertEquals(state, source);
-				assertEquals(OtherEventImpl.INSTANCE, event);
+				assertEquals(OtherEventImpl.instance, event);
 				assertEquals(new TypeEventB(),
 						((OtherEventImpl) event).getSourceEvent());
 				assertEquals(another, destination);
@@ -88,7 +88,7 @@ public class OtherEventImplTest {
 
 			processedEvent = machine.process(new TypeEventB());
 			assertEquals(1, listener.transitionsNum);
-			assertEquals(OtherEventImpl.INSTANCE, processedEvent);
+			assertEquals(OtherEventImpl.instance, processedEvent);
 			assertEquals(new TypeEventB(),
 					((OtherEventImpl) processedEvent).getSourceEvent());
 		} catch (FsmException e) {

@@ -45,8 +45,8 @@ abstract class PreprocessorAdapter extends ProcessorAdapter implements
 			throw new NullPointerException("Event must not be null");
 
 		Event preprocessedEvent = preprocessEvent(event);
-		if (NullEvent.INSTANCE.equals(preprocessedEvent))
-			return preprocessedEvent;
+		if (preprocessedEvent == null)
+			return null;
 
 		Processor processor = findProcessor(event);
 		if (processor == null)

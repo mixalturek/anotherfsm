@@ -122,7 +122,7 @@ public class AnotherFsm {
 	 * @return the event
 	 */
 	public OtherEvent genOtherEvent() {
-		return OtherEventImpl.INSTANCE;
+		return OtherEventImpl.instance;
 	}
 
 	/**

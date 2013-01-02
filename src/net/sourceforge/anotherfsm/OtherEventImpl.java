@@ -26,8 +26,8 @@ package net.sourceforge.anotherfsm;
  */
 class OtherEventImpl implements OtherEvent {
 	/** The instance of the object for building of the state machine. */
-	public static final OtherEvent INSTANCE = new OtherEventImpl(
-			NullEvent.INSTANCE);
+	public static final OtherEvent instance = new OtherEventImpl(
+			NullEvent.instance);
 
 	/** The source event that caused this transition. */
 	private final Event sourceEvent;

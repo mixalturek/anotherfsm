@@ -519,7 +519,7 @@ public class DeterministicStateMachineTest {
 					new TypePreprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
-							return NullEvent.INSTANCE;
+							return null;
 						}
 					});
 
@@ -555,12 +555,12 @@ public class DeterministicStateMachineTest {
 		try {
 			processedEvent = machine.process(new TypeEventA());
 
-			assertEquals(NullEvent.INSTANCE, processedEvent);
+			assertNull(processedEvent);
 			assertEquals(state, machine.getActiveState());
 
 			processedEvent = machine.process(new TypeEventA());
 
-			assertEquals(NullEvent.INSTANCE, processedEvent);
+			assertNull(processedEvent);
 			assertEquals(state, machine.getActiveState());
 
 			processedEvent = machine.process(new TypeEventB());
@@ -694,7 +694,7 @@ public class DeterministicStateMachineTest {
 		Transition transition = null;
 
 		try {
-			machine.getTransition(new State("state"), NullEvent.INSTANCE);
+			machine.getTransition(new State("state"), NullEvent.instance);
 			fail("Should not be executed");
 		} catch (NullPointerException e) {
 			// Do nothing
@@ -705,7 +705,7 @@ public class DeterministicStateMachineTest {
 					new TypeEventA(), new State("state")));
 
 			machine.addTransition(new Transition(new State("state"),
-					OtherEventImpl.INSTANCE, new State("state")));
+					OtherEventImpl.instance, new State("state")));
 
 			machine.addTransition(new Transition(
 					new State("state"),
@@ -727,7 +727,7 @@ public class DeterministicStateMachineTest {
 			assertTrue(transition.getEvent() instanceof OtherEvent);
 
 			transition = machine.getTransition(new State("state"),
-					TimeoutEventImpl.INSTANCE);
+					TimeoutEventImpl.instance);
 			assertNotNull(transition);
 			assertTrue(transition.getEvent() instanceof TimeoutEvent);
 		} catch (FsmException e) {

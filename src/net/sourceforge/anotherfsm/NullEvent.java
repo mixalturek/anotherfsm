@@ -25,7 +25,7 @@ package net.sourceforge.anotherfsm;
  */
 public class NullEvent implements Event {
 	/** The instance of the class. */
-	public static final NullEvent INSTANCE = new NullEvent();
+	public static final NullEvent instance = new NullEvent();
 
 	/**
 	 * Create the object.

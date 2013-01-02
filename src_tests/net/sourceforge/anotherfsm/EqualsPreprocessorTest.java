@@ -19,6 +19,7 @@
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
@@ -102,7 +103,7 @@ public class EqualsPreprocessorTest {
 					new Preprocessor.Processor<TypeEventB>() {
 						@Override
 						public Event process(TypeEventB event) {
-							return NullEvent.INSTANCE;
+							return null;
 						}
 					});
 		} catch (FsmException e) {
@@ -123,7 +124,7 @@ public class EqualsPreprocessorTest {
 			assertEquals(new TypeEventB(), processedEvent);
 
 			processedEvent = processor.process(new TypeEventB());
-			assertEquals(NullEvent.INSTANCE, processedEvent);
+			assertNull(processedEvent);
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
