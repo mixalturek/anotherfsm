@@ -19,33 +19,20 @@
 package net.sourceforge.anotherfsm;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-
-import net.sourceforge.anotherfsm.logger.FsmLogger;
 
 /**
  * Processors of the events based on their type. The object can be used in
  * multithreaded environment.
  * 
  * Building of the object is NOT synchronized and should be done just in one
- * thread. Only the processing of the events is synchronized.
+ * thread. Only the processing of the events is thread safe.
  * 
  * @author Michal Turek
  */
-public class TypePreprocessor implements Preprocessor {
-	/** The logger. */
-	protected final FsmLogger logger;
-
-	/** The name of the state machine. */
-	private final String name;
-
+public class TypePreprocessor extends ProcessorAdapter implements Preprocessor {
 	/** The procesors. */
 	private final Map<Class<? extends Event>, Processor<? extends Event>> processors = new HashMap<Class<? extends Event>, Processor<? extends Event>>();
-
-	/** The preprocessors of events. */
-	private final List<Preprocessor> preprocessors = new LinkedList<Preprocessor>();
 
 	/**
 	 * Create the object.
@@ -54,21 +41,7 @@ public class TypePreprocessor implements Preprocessor {
 	 *            the name of the event processor
 	 */
 	public TypePreprocessor(String name) {
-		if (name == null)
-			throw new NullPointerException("Name must not be null");
-
-		this.name = name;
-		logger = AnotherFsm.getInstance().getLogger(getClass(), name);
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void addPreprocessor(Preprocessor preprocessor) {
-		preprocessors.add(preprocessor);
+		super(name);
 	}
 
 	/**
@@ -127,29 +100,6 @@ public class TypePreprocessor implements Preprocessor {
 		}
 
 		return resultEvent;
-	}
-
-	/**
-	 * Preprocess event using all registered preprocessors (recursive).
-	 * 
-	 * @param event
-	 *            the event
-	 * @return the original event a newly generated event or NullEvent to ignore
-	 *         the event
-	 * @throws FsmException
-	 *             if something fails
-	 */
-	private Event preprocessEvent(Event event) throws FsmException {
-		Event preprocessedEvent = event;
-
-		for (Preprocessor preprocessor : preprocessors) {
-			preprocessedEvent = preprocessor.process(event);
-
-			if (NullEvent.INSTANCE.equals(preprocessedEvent))
-				return preprocessedEvent;
-		}
-
-		return preprocessedEvent;
 	}
 
 	/**

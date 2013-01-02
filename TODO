@@ -11,6 +11,8 @@ TODO
 
 - Make classes part of the API, remove factory methods from AnotherFsm.
 
+- verifyNotNull(Object object, String parameterName) helper method.
+
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.
 

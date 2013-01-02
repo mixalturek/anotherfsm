@@ -689,20 +689,6 @@ public class DeterministicStateMachineTest {
 	}
 
 	@Test
-	public final void testToString() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
-		assertEquals(machine.getClass().getSimpleName() + "(fsm)",
-				machine.toString());
-
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
-	}
-
-	@Test
 	public final void testGetTransition() {
 		DeterministicStateMachine machine = new DeterministicStateMachine("fsm");
 		Transition transition = null;

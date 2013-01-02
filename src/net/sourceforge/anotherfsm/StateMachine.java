@@ -108,15 +108,6 @@ public interface StateMachine extends Processor, Closeable {
 	public Set<State> getActiveStates();
 
 	/**
-	 * The string representation of the object. It is expected the name of the
-	 * state machine will be returned.
-	 * 
-	 * @return the string representation
-	 */
-	@Override
-	public String toString();
-
-	/**
 	 * Get all defined states.
 	 * 
 	 * @return the states

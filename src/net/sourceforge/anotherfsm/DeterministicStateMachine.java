@@ -27,21 +27,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import net.sourceforge.anotherfsm.logger.FsmLogger;
-
 /**
  * The deterministic state machine. This class is NOT thread safe.
  * 
  * @author Michal Turek
  * @see SynchronizedStateMachine
  */
-class DeterministicStateMachine implements StateMachine {
-	/** The logger. */
-	protected final FsmLogger logger;
-
-	/** The name of the state machine. */
-	private final String name;
-
+class DeterministicStateMachine extends ProcessorAdapter implements
+		StateMachine {
 	/** The transitions. */
 	private final Map<State, TransitionMap> stateTransitions = new HashMap<State, TransitionMap>();
 
@@ -54,9 +47,6 @@ class DeterministicStateMachine implements StateMachine {
 	/** The listeners. */
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
-	/** The preprocessors of events. */
-	private final List<Preprocessor> preprocessors = new LinkedList<Preprocessor>();
-
 	/**
 	 * Create the object.
 	 * 
@@ -64,16 +54,7 @@ class DeterministicStateMachine implements StateMachine {
 	 *            the name of the state machine
 	 */
 	public DeterministicStateMachine(String name) {
-		if (name == null)
-			throw new NullPointerException("Name must not be null");
-
-		this.name = name;
-		logger = AnotherFsm.getInstance().getLogger(getClass(), name);
-	}
-
-	@Override
-	public String getName() {
-		return name;
+		super(name);
 	}
 
 	@Override
@@ -134,11 +115,6 @@ class DeterministicStateMachine implements StateMachine {
 		addStateInternal(transition.getSource());
 		stateTransitions.get(transition.getSource()).addTransition(transition);
 		addStateInternal(transition.getDestination());
-	}
-
-	@Override
-	public void addPreprocessor(Preprocessor preprocessor) {
-		preprocessors.add(preprocessor);
 	}
 
 	@Override
@@ -297,30 +273,6 @@ class DeterministicStateMachine implements StateMachine {
 	}
 
 	/**
-	 * Preprocess event using all registered preprocessors (recursive).
-	 * 
-	 * @param event
-	 *            the event
-	 * @return the original event, a newly generated event or NullEvent to
-	 *         ignore the event
-	 * @throws FsmException
-	 *             if something fails
-	 * @see NullEvent
-	 */
-	private Event preprocessEvent(Event event) throws FsmException {
-		Event preprocessedEvent = event;
-
-		for (Preprocessor preprocessor : preprocessors) {
-			preprocessedEvent = preprocessor.process(event);
-
-			if (NullEvent.INSTANCE.equals(preprocessedEvent))
-				return preprocessedEvent;
-		}
-
-		return preprocessedEvent;
-	}
-
-	/**
 	 * Check the input event and the internal state before processing the event.
 	 * 
 	 * @param event
@@ -387,11 +339,6 @@ class DeterministicStateMachine implements StateMachine {
 		}
 
 		return eventToProcess;
-	}
-
-	@Override
-	public String toString() {
-		return getClass().getSimpleName() + "(" + name + ")";
 	}
 
 	@Override
