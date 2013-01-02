@@ -195,7 +195,7 @@ public class AnotherFsm {
 	}
 
 	/**
-	 * Process runtime exception that occurred in client callback.
+	 * Log runtime exception that occurred in client callback.
 	 * 
 	 * Log everything what is possible for future analysis and re-throw the
 	 * exception. Current thread may stop but it is better than hide a more
@@ -210,7 +210,7 @@ public class AnotherFsm {
 	 * 
 	 * @see TimeoutStateMachine
 	 */
-	void onExceptionInClientCallback(FsmLogger logger,
+	void logExceptionInClientCallback(FsmLogger logger,
 			RuntimeException exception, Event event) {
 		logger.fatal(
 				"Unexpected exception occurred probably in client callback code: event "
@@ -219,7 +219,5 @@ public class AnotherFsm {
 						+ exception.getClass() + ", exception message "
 						+ exception.getMessage() + ", exception " + exception,
 				exception);
-
-		throw exception;
 	}
 }

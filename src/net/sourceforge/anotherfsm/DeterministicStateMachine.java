@@ -173,15 +173,21 @@ class DeterministicStateMachine implements StateMachine {
 			throws FsmException {
 		boolean loopTransition = previous.equals(current);
 
-		current.notifyEnter(loopTransition, previous, event, current);
+		try {
+			current.notifyEnter(loopTransition, previous, event, current);
 
-		for (StateListener listener : stateListeners) {
-			if (loopTransition
-					&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
-				continue;
+			for (StateListener listener : stateListeners) {
+				if (loopTransition
+						&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
+					continue;
+				}
+
+				listener.onStateEnter(previous, event, current);
 			}
-
-			listener.onStateEnter(previous, event, current);
+		} catch (RuntimeException e) {
+			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
+					event);
+			throw e;
 		}
 	}
 
@@ -200,15 +206,21 @@ class DeterministicStateMachine implements StateMachine {
 	void notifyExit(State current, Event event, State next) throws FsmException {
 		boolean loopTransition = current.equals(next);
 
-		current.notifyExit(loopTransition, current, event, next);
+		try {
+			current.notifyExit(loopTransition, current, event, next);
 
-		for (StateListener listener : stateListeners) {
-			if (loopTransition
-					&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
-				continue;
+			for (StateListener listener : stateListeners) {
+				if (loopTransition
+						&& listener.getType() == StateListener.Type.LOOP_NO_PROCESS) {
+					continue;
+				}
+
+				listener.onStateExit(current, event, next);
 			}
-
-			listener.onStateExit(current, event, next);
+		} catch (RuntimeException e) {
+			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
+					event);
+			throw e;
 		}
 	}
 
@@ -228,10 +240,17 @@ class DeterministicStateMachine implements StateMachine {
 	 */
 	void notifyTransition(Transition transition, State source, Event event,
 			State destination) throws FsmException {
-		transition.notifyTransition(source, event, destination);
+		try {
+			transition.notifyTransition(source, event, destination);
 
-		for (TransitionListener listener : transitionListeners) {
-			listener.onTransition(source, event, destination);
+			for (TransitionListener listener : transitionListeners) {
+				listener.onTransition(source, event, destination);
+
+			}
+		} catch (RuntimeException e) {
+			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
+					event);
+			throw e;
 		}
 	}
 
@@ -255,10 +274,8 @@ class DeterministicStateMachine implements StateMachine {
 		processCheck(event);
 
 		Event preprocessedEvent = preprocessEvent(event);
-		if (preprocessedEvent == null) {
-			// Null is correct, this is not error state
-			return null;
-		}
+		if (NullEvent.INSTANCE.equals(preprocessedEvent))
+			return preprocessedEvent;
 
 		Transition transition = stateTransitions.get(currentState)
 				.getTransition(preprocessedEvent);
@@ -284,19 +301,20 @@ class DeterministicStateMachine implements StateMachine {
 	 * 
 	 * @param event
 	 *            the event
-	 * @return the original event a newly generated event or null to ignore the
-	 *         event
+	 * @return the original event, a newly generated event or NullEvent to
+	 *         ignore the event
 	 * @throws FsmException
 	 *             if something fails
+	 * @see NullEvent
 	 */
 	private Event preprocessEvent(Event event) throws FsmException {
 		Event preprocessedEvent = event;
 
-		for (Processor preprocessor : preprocessors) {
+		for (Preprocessor preprocessor : preprocessors) {
 			preprocessedEvent = preprocessor.process(event);
 
-			if (preprocessedEvent == null)
-				return null;
+			if (NullEvent.INSTANCE.equals(preprocessedEvent))
+				return preprocessedEvent;
 		}
 
 		return preprocessedEvent;
@@ -359,18 +377,10 @@ class DeterministicStateMachine implements StateMachine {
 			logger.info("Transition started:  " + transStr);
 		}
 
-		try {
-			notifyExit(source, eventToProcess, destination);
-			currentState = destination;
-			notifyTransition(transition, source, eventToProcess, destination);
-			notifyEnter(source, eventToProcess, destination);
-		} catch (RuntimeException e) {
-			AnotherFsm.getInstance().onExceptionInClientCallback(logger, e,
-					matchedEvent);
-
-			// To be sure, should be never executed
-			throw e;
-		}
+		notifyExit(source, eventToProcess, destination);
+		currentState = destination;
+		notifyTransition(transition, source, eventToProcess, destination);
+		notifyEnter(source, eventToProcess, destination);
 
 		if (logger.isInfoEnabled()) {
 			logger.info("Transition finished: " + transStr);

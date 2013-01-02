@@ -19,6 +19,8 @@
 package net.sourceforge.anotherfsm;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.anotherfsm.logger.FsmLogger;
@@ -42,6 +44,9 @@ public class TypePreprocessor implements Preprocessor {
 	/** The procesors. */
 	private final Map<Class<? extends Event>, Processor<? extends Event>> processors = new HashMap<Class<? extends Event>, Processor<? extends Event>>();
 
+	/** The preprocessors of events. */
+	private final List<Preprocessor> preprocessors = new LinkedList<Preprocessor>();
+
 	/**
 	 * Create the object.
 	 * 
@@ -63,8 +68,7 @@ public class TypePreprocessor implements Preprocessor {
 
 	@Override
 	public void addPreprocessor(Preprocessor preprocessor) {
-		// TODO Auto-generated method stub
-
+		preprocessors.add(preprocessor);
 	}
 
 	/**
@@ -99,28 +103,53 @@ public class TypePreprocessor implements Preprocessor {
 		if (event == null)
 			throw new NullPointerException("Event must not be null");
 
-		// TODO: preprocess the event in sub-preprocessors
+		Event preprocessedEvent = preprocessEvent(event);
+		if (NullEvent.INSTANCE.equals(preprocessedEvent))
+			return preprocessedEvent;
 
 		Processor processor = processors.get(event.getClass());
 		if (processor == null)
 			return event;
 
+		Event resultEvent = null;
+
 		try {
-			Event resultEvent = processor.process(event);
-
-			if (!event.equals(resultEvent) && logger.isInfoEnabled()) {
-				logger.info("Event processed: " + event + Transition.TR
-						+ resultEvent);
-			}
-
-			return resultEvent;
+			resultEvent = processor.process(event);
 		} catch (RuntimeException e) {
-			AnotherFsm.getInstance().onExceptionInClientCallback(logger, e,
+			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
 					event);
-
-			// To resolve compiler error, should be never executed
 			throw e;
 		}
+
+		if (!event.equals(resultEvent) && logger.isInfoEnabled()) {
+			logger.info("Event processed: " + event + Transition.TR
+					+ resultEvent);
+		}
+
+		return resultEvent;
+	}
+
+	/**
+	 * Preprocess event using all registered preprocessors (recursive).
+	 * 
+	 * @param event
+	 *            the event
+	 * @return the original event a newly generated event or NullEvent to ignore
+	 *         the event
+	 * @throws FsmException
+	 *             if something fails
+	 */
+	private Event preprocessEvent(Event event) throws FsmException {
+		Event preprocessedEvent = event;
+
+		for (Preprocessor preprocessor : preprocessors) {
+			preprocessedEvent = preprocessor.process(event);
+
+			if (NullEvent.INSTANCE.equals(preprocessedEvent))
+				return preprocessedEvent;
+		}
+
+		return preprocessedEvent;
 	}
 
 	/**
@@ -140,8 +169,9 @@ public class TypePreprocessor implements Preprocessor {
 		 * 
 		 * @param event
 		 *            the input event
-		 * @return the input event a newly generated event or null to ignore the
-		 *         event
+		 * @return the input event, a newly generated event or NullEvent to
+		 *         ignore the event
+		 * @see NullEvent
 		 */
 		public Event process(T event);
 	}

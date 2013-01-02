@@ -28,11 +28,11 @@ public interface Preprocessor extends Processor {
 	 * Process or preprocess the event.
 	 * 
 	 * @param event
-	 *            the input event
-	 * @return the original event, a newly generated event or null to stop the
-	 *         processing
+	 *            the input event, a newly generated event or NullEvent to
+	 *            ignore the event
 	 * @throws FsmException
 	 *             if something fails
+	 * @see NullEvent
 	 */
 	@Override
 	public Event process(Event event) throws FsmException;

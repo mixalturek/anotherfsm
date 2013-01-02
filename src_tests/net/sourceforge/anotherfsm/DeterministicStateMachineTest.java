@@ -519,7 +519,7 @@ public class DeterministicStateMachineTest {
 					new TypePreprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
-							return null;
+							return NullEvent.INSTANCE;
 						}
 					});
 
@@ -555,12 +555,12 @@ public class DeterministicStateMachineTest {
 		try {
 			processedEvent = machine.process(new TypeEventA());
 
-			assertNull(processedEvent);
+			assertEquals(NullEvent.INSTANCE, processedEvent);
 			assertEquals(state, machine.getActiveState());
 
 			processedEvent = machine.process(new TypeEventA());
 
-			assertNull(processedEvent);
+			assertEquals(NullEvent.INSTANCE, processedEvent);
 			assertEquals(state, machine.getActiveState());
 
 			processedEvent = machine.process(new TypeEventB());
