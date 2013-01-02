@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class TypeProcessorsImplTest {
+public class TypeProcessorTest {
 	@Test
 	public final void testAddProcessor() {
 		TypePreprocessor processor = new TypePreprocessor("processor");

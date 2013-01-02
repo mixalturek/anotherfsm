@@ -8,7 +8,6 @@ TODO
 - Preprocessor based on equals() of events.
 - Verify logged messages during the processing and preprocessing.
 - Unit test for order of called preprocessors.
-- TypeProcessorsImpl.addPreprocessor()
 
 - Make classes part of the API, remove factory methods from AnotherFsm.
 
