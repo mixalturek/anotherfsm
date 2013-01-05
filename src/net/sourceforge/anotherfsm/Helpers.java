@@ -26,6 +26,9 @@ import net.sourceforge.anotherfsm.logger.FsmLogger;
  * @author Michal Turek
  */
 public class Helpers {
+	/** The delimiter of class names and instances. */
+	public static final String CLASS_INSTANCE_DELIMITER = ".";
+
 	/**
 	 * Forbid creating of the objects.
 	 */

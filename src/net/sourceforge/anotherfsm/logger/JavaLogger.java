@@ -21,7 +21,6 @@ package net.sourceforge.anotherfsm.logger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.Helpers;
 
 /**
@@ -64,7 +63,7 @@ class JavaLogger implements FsmLogger {
 		Helpers.ensureNotNull(instance, "instance");
 
 		logger = Logger.getLogger(clazz.getName()
-				+ AnotherFsm.CLASS_INSTANCE_DELIMITER + instance);
+				+ Helpers.CLASS_INSTANCE_DELIMITER + instance);
 	}
 
 	/**

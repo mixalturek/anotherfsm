@@ -8,8 +8,6 @@ TODO
 - Verify logged messages during the processing and preprocessing.
 - Unit test for order of called preprocessors.
 
-- Make classes part of the API, remove factory methods from AnotherFsm.
-
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.
 

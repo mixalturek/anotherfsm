@@ -32,7 +32,7 @@ import java.util.Set;
  * @author Michal Turek
  * @see SynchronizedStateMachine
  */
-class DeterministicStateMachine extends ProcessorAdapter implements
+public class DeterministicStateMachine extends ProcessorAdapter implements
 		StateMachine {
 	/** The transitions. */
 	private final Map<State, TransitionMap> stateTransitions = new HashMap<State, TransitionMap>();

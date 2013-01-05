@@ -18,7 +18,6 @@
 
 package net.sourceforge.anotherfsm.logger;
 
-import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.Helpers;
 
 /**
@@ -40,7 +39,7 @@ public class StdStreamLoggerFactory implements FsmLoggerFactory {
 		Helpers.ensureNotNull(instance, "instance");
 
 		return getLogger(clazz.getSimpleName()
-				+ AnotherFsm.CLASS_INSTANCE_DELIMITER + instance);
+				+ Helpers.CLASS_INSTANCE_DELIMITER + instance);
 	}
 
 	@Override

@@ -34,10 +34,9 @@ import java.util.TimerTask;
  * 
  * @author Michal Turek
  * 
- * @see AnotherFsm#genTimeoutEvent(long, TimeoutEvent.Type)
- * @see AnotherFsm#genTimeoutStateMachine(String)
+ * @see TimeoutEvent
  */
-class TimeoutStateMachine extends SynchronizedStateMachine {
+public class TimeoutStateMachine extends SynchronizedStateMachine {
 	/** The timer for scheduling timeout transitions. */
 	private Timer timer = null;
 
@@ -67,7 +66,7 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 		}
 
 		timer = new Timer(getClass().getSimpleName()
-				+ AnotherFsm.CLASS_INSTANCE_DELIMITER + getName(), false);
+				+ Helpers.CLASS_INSTANCE_DELIMITER + getName(), false);
 
 		try {
 			super.start();

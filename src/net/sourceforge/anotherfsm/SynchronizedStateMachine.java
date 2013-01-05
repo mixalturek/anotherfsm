@@ -27,8 +27,13 @@ import java.util.Set;
  * thread. Only the processing of the events is synchronized.
  * 
  * @author Michal Turek
+ * 
+ * @see StateMachine#process(Event)
+ * @see StateMachine#getActiveState()
+ * @see StateMachine#getActiveStates()
+ * @see StateMachine#isInFinalState()
  */
-class SynchronizedStateMachine extends DeterministicStateMachine {
+public class SynchronizedStateMachine extends DeterministicStateMachine {
 	/**
 	 * Create the object.
 	 * 
