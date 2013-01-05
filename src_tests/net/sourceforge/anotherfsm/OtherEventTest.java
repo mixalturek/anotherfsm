@@ -7,40 +7,25 @@ import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class OtherEventImplTest {
+public class OtherEventTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		AnotherFsm.init(new StdStreamLoggerFactory());
 	}
 
 	@Test
-	public final void hashCodeTest() {
-		assertEquals(OtherEvent.HASH_CODE,
-				new OtherEventImpl(new TypeEventA()).hashCode());
-
-		assertEquals(OtherEvent.HASH_CODE,
-				new NonstandardOtherEvent().hashCode());
-	}
-
-	@Test
 	public final void equalsTest() {
-		assertEquals(new OtherEventImpl(new TypeEventA()), new OtherEventImpl(
+		assertEquals(new OtherEvent(new TypeEventA()), new OtherEvent(
 				new TypeEventB()));
 
-		assertEquals(new OtherEventImpl(new TypeEventB()), new OtherEventImpl(
+		assertEquals(new OtherEvent(new TypeEventB()), new OtherEvent(
 				new TypeEventA()));
-
-		assertEquals(new NonstandardOtherEvent(), new OtherEventImpl(
-				new TypeEventA()));
-
-		assertEquals(new OtherEventImpl(new TypeEventA()),
-				new NonstandardOtherEvent());
 	}
 
 	@Test
 	public final void testToString() {
-		assertEquals("OtherEventImpl(TypeEventA)", new OtherEventImpl(
-				new TypeEventA()).toString());
+		assertEquals("OtherEvent(TypeEventA)",
+				new OtherEvent(new TypeEventA()).toString());
 	}
 
 	@Test
@@ -49,7 +34,7 @@ public class OtherEventImplTest {
 		final State state = new State("state");
 		final State another = new State("another");
 		Transition loop = new Transition(state, new TypeEventA(), state);
-		Transition transition = new Transition(state, OtherEventImpl.instance,
+		Transition transition = new Transition(state, OtherEvent.instance,
 				another);
 		Transition back = new Transition(another, new TypeEventA(), state);
 
@@ -58,9 +43,9 @@ public class OtherEventImplTest {
 			public void onTransition(State source, Event event,
 					State destination) {
 				assertEquals(state, source);
-				assertEquals(OtherEventImpl.instance, event);
+				assertEquals(OtherEvent.instance, event);
 				assertEquals(new TypeEventB(),
-						((OtherEventImpl) event).getSourceEvent());
+						((OtherEvent) event).getSourceEvent());
 				assertEquals(another, destination);
 
 				super.onTransition(source, event, destination);
@@ -85,9 +70,9 @@ public class OtherEventImplTest {
 
 			processedEvent = machine.process(new TypeEventB());
 			assertEquals(1, listener.transitionsNum);
-			assertEquals(OtherEventImpl.instance, processedEvent);
+			assertEquals(OtherEvent.instance, processedEvent);
 			assertEquals(new TypeEventB(),
-					((OtherEventImpl) processedEvent).getSourceEvent());
+					((OtherEvent) processedEvent).getSourceEvent());
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}

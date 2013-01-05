@@ -248,7 +248,7 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 				.getTransition(preprocessedEvent);
 
 		if (transition == null) {
-			preprocessedEvent = new OtherEventImpl(preprocessedEvent);
+			preprocessedEvent = new OtherEvent(preprocessedEvent);
 			transition = stateTransitions.get(currentState).getTransition(
 					preprocessedEvent);
 

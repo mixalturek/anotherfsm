@@ -667,7 +667,7 @@ public class DeterministicStateMachineTest {
 					new TypeEventA(), new State("state")));
 
 			machine.addTransition(new Transition(new State("state"),
-					OtherEventImpl.instance, new State("state")));
+					OtherEvent.instance, new State("state")));
 
 			machine.addTransition(new Transition(
 					new State("state"),
@@ -684,7 +684,7 @@ public class DeterministicStateMachineTest {
 			assertTrue(transition.getEvent() instanceof TypeEventA);
 
 			transition = machine.getTransition(new State("state"),
-					new OtherEventImpl(new TypeEventA()));
+					new OtherEvent(new TypeEventA()));
 			assertNotNull(transition);
 			assertTrue(transition.getEvent() instanceof OtherEvent);
 

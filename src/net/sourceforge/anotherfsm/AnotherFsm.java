@@ -120,15 +120,6 @@ public class AnotherFsm {
 	}
 
 	/**
-	 * Create an instance of "all other events" event.
-	 * 
-	 * @return the event
-	 */
-	public OtherEvent genOtherEvent() {
-		return OtherEventImpl.instance;
-	}
-
-	/**
 	 * Create an instance of timeout event.
 	 * 
 	 * @param timeout

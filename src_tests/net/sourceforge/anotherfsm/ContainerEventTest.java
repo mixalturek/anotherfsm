@@ -43,8 +43,8 @@ public class ContainerEventTest {
 				new ContainerEvent<Character>('A'), another);
 		Transition transitionB = new Transition(state,
 				new ContainerEvent<Character>('B'), another);
-		Transition transitionOther = new Transition(state,
-				OtherEventImpl.instance, state);
+		Transition transitionOther = new Transition(state, OtherEvent.instance,
+				state);
 
 		Event processedEvent = null;
 
@@ -63,7 +63,7 @@ public class ContainerEventTest {
 		try {
 			processedEvent = machine
 					.process(new ContainerEvent<Character>('W'));
-			assertEquals(OtherEventImpl.instance, processedEvent);
+			assertEquals(OtherEvent.instance, processedEvent);
 			assertEquals(new ContainerEvent<Character>('W'),
 					((OtherEvent) processedEvent).getSourceEvent());
 			assertEquals(state, machine.getActiveState());
