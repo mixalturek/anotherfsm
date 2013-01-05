@@ -19,6 +19,7 @@
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -27,7 +28,13 @@ public class TimeoutEventTest {
 	@Test
 	public final void equalsTest() {
 		assertEquals(new TimeoutEvent(1, TimeoutEvent.Type.LOOP_NO_RESTART),
+				new TimeoutEvent(2, TimeoutEvent.Type.LOOP_NO_RESTART));
+
+		assertEquals(new TimeoutEvent(1, TimeoutEvent.Type.LOOP_RESTART),
 				new TimeoutEvent(2, TimeoutEvent.Type.LOOP_RESTART));
+
+		assertFalse(new TimeoutEvent(1, TimeoutEvent.Type.LOOP_RESTART)
+				.equals(new TimeoutEvent(1, TimeoutEvent.Type.LOOP_NO_RESTART)));
 	}
 
 	@Test

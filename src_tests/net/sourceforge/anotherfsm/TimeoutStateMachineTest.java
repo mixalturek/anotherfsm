@@ -23,7 +23,6 @@ public class TimeoutStateMachineTest {
 		State state = new State("state");
 
 		try {
-			// OK
 			machine.addState(state);
 			machine.addTransition(new Transition(state, new TimeoutEvent(42,
 					TimeoutEvent.Type.LOOP_RESTART), state));
@@ -32,7 +31,6 @@ public class TimeoutStateMachineTest {
 		}
 
 		try {
-			// The same timeout
 			machine.addTransition(new Transition(state, new TimeoutEvent(42,
 					TimeoutEvent.Type.LOOP_RESTART), state));
 			fail("Should not be executed");
@@ -41,7 +39,13 @@ public class TimeoutStateMachineTest {
 		}
 
 		try {
-			// Different timeout
+			machine.addTransition(new Transition(state, new TimeoutEvent(42,
+					TimeoutEvent.Type.LOOP_NO_RESTART), state));
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		try {
 			machine.addTransition(new Transition(state, new TimeoutEvent(10,
 					TimeoutEvent.Type.LOOP_NO_RESTART), state));
 			fail("Should not be executed");

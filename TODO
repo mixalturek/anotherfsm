@@ -2,7 +2,9 @@ TODO
 ====
 
 - Solve TODO: and FIXME: in code.
-- Two timeouts can occur in timeout event.
+
+- TimeoutEvent, use all parameters during comparison.
+- Schedule all timeouts in a state to have general code.
 
 - First release.
 

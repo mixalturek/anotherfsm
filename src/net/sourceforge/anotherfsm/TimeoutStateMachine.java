@@ -21,6 +21,8 @@ package net.sourceforge.anotherfsm;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.sourceforge.anotherfsm.TimeoutEvent.Type;
+
 /**
  * Deterministic state machine with timeouts for states. The object is thread
  * safe and can be used in multithreaded environment.
@@ -43,9 +45,16 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 	/**
 	 * The unique ID of the last state enter to forbid timeout in incorrect
 	 * state. Instance of any object is enough since every two objects are
-	 * different.
+	 * different. Updated during all state enters.
 	 */
-	private Object lastStateEnterID = new Object();
+	private Object lastStateEnterId = new Object();
+
+	/**
+	 * The unique ID of the last state enter to forbid timeout in incorrect
+	 * state. Instance of any object is enough since every two objects are
+	 * different. Updated only during non-loop state enters.
+	 */
+	private Object lastStateEnterIdNonLoop = new Object();
 
 	/**
 	 * Create the state machine.
@@ -102,7 +111,18 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 			throw new FsmException(msg);
 		}
 
-		scheduleTimeoutTransition(previous.equals(current));
+		boolean loopTransition = previous.equals(current);
+
+		lastStateEnterId = new Object();
+
+		if (!loopTransition)
+			lastStateEnterIdNonLoop = new Object();
+
+		// FIXME: schedule all timeouts in a state
+		scheduleTimeoutTransition(loopTransition,
+				TimeoutEvent.instance_LOOP_RESTART);
+		scheduleTimeoutTransition(loopTransition,
+				TimeoutEvent.instance_LOOP_NO_RESTART);
 	}
 
 	/**
@@ -110,13 +130,14 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 	 * 
 	 * @param loopTransition
 	 *            the transition was loop transition
+	 * @param event
+	 *            the timeout event
 	 */
-	private synchronized void scheduleTimeoutTransition(boolean loopTransition) {
-		Transition timeoutTransition = getTransition(getActiveState(),
-				TimeoutEvent.instance);
+	private synchronized void scheduleTimeoutTransition(boolean loopTransition,
+			TimeoutEvent event) {
+		Transition timeoutTransition = getTransition(getActiveState(), event);
 
 		if (timeoutTransition == null) {
-			cancelExistingTimeoutTask();
 			return; // Correct
 		}
 
@@ -127,19 +148,8 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 			return; // Correct
 		}
 
-		cancelExistingTimeoutTask();
-
-		timer.schedule(new TimeoutTask(timeoutTransition, lastStateEnterID),
-				timeoutEvent.getTimeout());
-	}
-
-	/**
-	 * Cancel the existing timeout task, it must be never processed.
-	 */
-	private synchronized void cancelExistingTimeoutTask() {
-		lastStateEnterID = new Object();
-
-		// Existing timeout task can be cancelled here
+		timer.schedule(new TimeoutTask(timeoutTransition, lastStateEnterId,
+				lastStateEnterIdNonLoop), timeoutEvent.getTimeout());
 	}
 
 	/**
@@ -147,13 +157,25 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 	 * 
 	 * @param timeoutTransition
 	 *            the transition with TimeoutEvent that should be processed
-	 * @param stateEnterID
-	 *            the unique ID of the state enter for this task
+	 * @param stateEnterId
+	 *            the unique ID of the state enter
+	 * @param stateEnterIdNonLoop
+	 *            the unique ID of the non-loop state enter
 	 */
 	private synchronized void proccessTimeoutTransition(
-			Transition timeoutTransition, Object stateEnterID) {
-		if (stateEnterID != lastStateEnterID)
-			return; // Correct
+			Transition timeoutTransition, Object stateEnterId,
+			Object stateEnterIdNonLoop) {
+		// Different state before timeout occurred -> ignore the timeout
+		if (stateEnterIdNonLoop != lastStateEnterIdNonLoop) {
+			return;
+		}
+
+		// Still in the same state, loop transitions occurred, but loop restarts
+		// the timeout -> ignore the timeout
+		if (stateEnterId != lastStateEnterId
+				&& ((TimeoutEvent) timeoutTransition.getEvent()).getType() == Type.LOOP_RESTART) {
+			return;
+		}
 
 		try {
 			process(timeoutTransition.getEvent());
@@ -172,28 +194,36 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 		/** The transition with TimeoutEvent that should be processed. */
 		private final Transition timeoutTransition;
 
-		/** The unique ID of the state enter for this task. */
-		private final Object stateEnterID;
+		/** The unique ID of the state enter. */
+		private final Object stateEnterId;
+
+		/** The unique ID of the non-loop state enter. */
+		private final Object stateEnterIdNonLoop;
 
 		/**
 		 * Create the object.
 		 * 
 		 * @param timeoutTransition
 		 *            the transition with TimeoutEvent that should be processed
-		 * @param stateEnterID
-		 *            the unique ID of the state enter for this task
+		 * @param stateEnterId
+		 *            the unique ID of the state enter
+		 * @param stateEnterIdNonLoop
+		 *            the unique ID of the non-loop state enter
 		 */
-		public TimeoutTask(Transition timeoutTransition, Object stateEnterID) {
+		public TimeoutTask(Transition timeoutTransition, Object stateEnterId,
+				Object stateEnterIdNonLoop) {
 			Helpers.ensureNotNull(timeoutTransition, "timeoutTransition");
-			Helpers.ensureNotNull(stateEnterID, "stateEnterID");
+			Helpers.ensureNotNull(stateEnterId, "stateEnterId");
 
 			this.timeoutTransition = timeoutTransition;
-			this.stateEnterID = stateEnterID;
+			this.stateEnterId = stateEnterId;
+			this.stateEnterIdNonLoop = stateEnterIdNonLoop;
 		}
 
 		@Override
 		public void run() {
-			proccessTimeoutTransition(timeoutTransition, stateEnterID);
+			proccessTimeoutTransition(timeoutTransition, stateEnterId,
+					stateEnterIdNonLoop);
 		}
 	}
 }

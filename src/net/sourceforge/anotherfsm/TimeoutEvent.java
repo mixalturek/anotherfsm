@@ -21,18 +21,20 @@ package net.sourceforge.anotherfsm;
 /**
  * The timeout event.
  * 
- * State machine allows only one transition of timeout event for each state
- * independently to the timeouts and parameters. If a state had two timeouts the
- * first one would be always processed and the second never.
- * 
  * @author Michal Turek
  * 
  * @see TimeoutStateMachine
  */
 public class TimeoutEvent extends TypeEvent {
+	// FIXME: remove
 	/** The instance of the object for use in timeout state machine. */
-	static TimeoutEvent instance = new TimeoutEvent(1,
+	static TimeoutEvent instance_LOOP_RESTART = new TimeoutEvent(1,
 			TimeoutEvent.Type.LOOP_RESTART);
+
+	// FIXME: remove
+	/** The instance of the object for use in timeout state machine. */
+	static TimeoutEvent instance_LOOP_NO_RESTART = new TimeoutEvent(1,
+			TimeoutEvent.Type.LOOP_NO_RESTART);
 
 	/** The timeout in milliseconds. */
 	private final long timeout;
@@ -67,22 +69,17 @@ public class TimeoutEvent extends TypeEvent {
 		return type;
 	}
 
-	/*
+	// FIXME: use timeout too
 	@Override
 	public int hashCode() {
-		return HASH_CODE;
+		return super.hashCode() + type.hashCode();
 	}
 
+	// FIXME: use timeout too
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-
-		return obj instanceof TimeoutEvent;
+		return super.equals(obj) && type.equals(((TimeoutEvent) obj).getType());
 	}
-	*/
 
 	@Override
 	public String toString() {
