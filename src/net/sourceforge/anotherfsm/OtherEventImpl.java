@@ -40,8 +40,7 @@ class OtherEventImpl implements OtherEvent {
 	 *            the source event that caused this transition
 	 */
 	OtherEventImpl(Event sourceEvent) {
-		if (sourceEvent == null)
-			throw new NullPointerException("Source event must not be null");
+		Helpers.ensureNotNull(sourceEvent, "source event");
 
 		this.sourceEvent = sourceEvent;
 	}

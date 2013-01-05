@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
+import net.sourceforge.anotherfsm.Helpers;
 
 /**
  * Logger that uses Java logging API.
@@ -45,6 +46,8 @@ class JavaLogger implements FsmLogger {
 	 *            the class
 	 */
 	public JavaLogger(Class<?> clazz) {
+		Helpers.ensureNotNull(clazz, "class");
+
 		logger = Logger.getLogger(clazz.getName());
 	}
 
@@ -57,6 +60,9 @@ class JavaLogger implements FsmLogger {
 	 *            the class instance
 	 */
 	public JavaLogger(Class<?> clazz, String instance) {
+		Helpers.ensureNotNull(clazz, "class");
+		Helpers.ensureNotNull(instance, "instance");
+
 		logger = Logger.getLogger(clazz.getName()
 				+ AnotherFsm.CLASS_INSTANCE_DELIMITER + instance);
 	}
@@ -68,6 +74,8 @@ class JavaLogger implements FsmLogger {
 	 *            the logger name
 	 */
 	public JavaLogger(String name) {
+		Helpers.ensureNotNull(name, "name");
+
 		logger = Logger.getLogger(name);
 	}
 
@@ -77,63 +85,63 @@ class JavaLogger implements FsmLogger {
 	}
 
 	@Override
-	public void fatal(Object message) {
-		logger.log(Level.SEVERE, message.toString());
+	public void fatal(String message) {
+		logger.log(Level.SEVERE, message);
 	}
 
 	@Override
-	public void fatal(Object message, Throwable throwable) {
-		logger.log(Level.SEVERE, message.toString(), throwable);
+	public void fatal(String message, Throwable throwable) {
+		logger.log(Level.SEVERE, message, throwable);
 	}
 
 	@Override
-	public void error(Object message) {
-		logger.log(Level.SEVERE, message.toString());
+	public void error(String message) {
+		logger.log(Level.SEVERE, message);
 	}
 
 	@Override
-	public void error(Object message, Throwable throwable) {
-		logger.log(Level.SEVERE, message.toString(), throwable);
+	public void error(String message, Throwable throwable) {
+		logger.log(Level.SEVERE, message, throwable);
 	}
 
 	@Override
-	public void warn(Object message) {
-		logger.log(Level.WARNING, message.toString());
+	public void warn(String message) {
+		logger.log(Level.WARNING, message);
 	}
 
 	@Override
-	public void warn(Object message, Throwable throwable) {
-		logger.log(Level.WARNING, message.toString(), throwable);
+	public void warn(String message, Throwable throwable) {
+		logger.log(Level.WARNING, message, throwable);
 	}
 
 	@Override
-	public void info(Object message) {
-		logger.log(Level.INFO, message.toString());
+	public void info(String message) {
+		logger.log(Level.INFO, message);
 	}
 
 	@Override
-	public void info(Object message, Throwable throwable) {
-		logger.log(Level.INFO, message.toString(), throwable);
+	public void info(String message, Throwable throwable) {
+		logger.log(Level.INFO, message, throwable);
 	}
 
 	@Override
-	public void debug(Object message) {
-		logger.log(Level.FINE, message.toString());
+	public void debug(String message) {
+		logger.log(Level.FINE, message);
 	}
 
 	@Override
-	public void debug(Object message, Throwable throwable) {
-		logger.log(Level.FINE, message.toString(), throwable);
+	public void debug(String message, Throwable throwable) {
+		logger.log(Level.FINE, message, throwable);
 	}
 
 	@Override
-	public void trace(Object message) {
-		logger.log(Level.FINER, message.toString());
+	public void trace(String message) {
+		logger.log(Level.FINER, message);
 	}
 
 	@Override
-	public void trace(Object message, Throwable throwable) {
-		logger.log(Level.FINER, message.toString(), throwable);
+	public void trace(String message, Throwable throwable) {
+		logger.log(Level.FINER, message, throwable);
 	}
 
 	@Override

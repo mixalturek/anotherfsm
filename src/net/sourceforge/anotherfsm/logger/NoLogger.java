@@ -41,62 +41,62 @@ class NoLogger implements FsmLogger {
 	}
 
 	@Override
-	public void fatal(Object message) {
+	public void fatal(String message) {
 		// Do nothing
 	}
 
 	@Override
-	public void fatal(Object message, Throwable throwable) {
+	public void fatal(String message, Throwable throwable) {
 		// Do nothing
 	}
 
 	@Override
-	public void error(Object message) {
+	public void error(String message) {
 		// Do nothing
 	}
 
 	@Override
-	public void error(Object message, Throwable throwable) {
+	public void error(String message, Throwable throwable) {
 		// Do nothing
 	}
 
 	@Override
-	public void warn(Object message) {
+	public void warn(String message) {
 		// Do nothing
 	}
 
 	@Override
-	public void warn(Object message, Throwable throwable) {
+	public void warn(String message, Throwable throwable) {
 		// Do nothing
 	}
 
 	@Override
-	public void info(Object message) {
+	public void info(String message) {
 		// Do nothing
 	}
 
 	@Override
-	public void info(Object message, Throwable throwable) {
+	public void info(String message, Throwable throwable) {
 		// Do nothing
 	}
 
 	@Override
-	public void debug(Object message) {
+	public void debug(String message) {
 		// Do nothing
 	}
 
 	@Override
-	public void debug(Object message, Throwable throwable) {
+	public void debug(String message, Throwable throwable) {
 		// Do nothing
 	}
 
 	@Override
-	public void trace(Object message) {
+	public void trace(String message) {
 		// Do nothing
 	}
 
 	@Override
-	public void trace(Object message, Throwable throwable) {
+	public void trace(String message, Throwable throwable) {
 		// Do nothing
 	}
 

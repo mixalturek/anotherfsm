@@ -45,8 +45,7 @@ abstract class ProcessorAdapter implements Processor {
 	 *            the name of the event processor
 	 */
 	public ProcessorAdapter(String name) {
-		if (name == null)
-			throw new NullPointerException("Name must not be null");
+		Helpers.ensureNotNull(name, "name");
 
 		this.name = name;
 		logger = AnotherFsm.getInstance().getLogger(getClass(), name);
@@ -59,8 +58,7 @@ abstract class ProcessorAdapter implements Processor {
 
 	@Override
 	public void addPreprocessor(Preprocessor preprocessor) {
-		if (preprocessor == null)
-			throw new NullPointerException("Preprocessor must not be null");
+		Helpers.ensureNotNull(preprocessor, "preprocessor");
 
 		preprocessors.add(preprocessor);
 	}
@@ -77,6 +75,8 @@ abstract class ProcessorAdapter implements Processor {
 	 *             if something fails
 	 */
 	protected Event preprocessEvent(Event event) throws FsmException {
+		Helpers.ensureNotNull(event, "event");
+
 		Event preprocessedEvent = event;
 
 		for (Preprocessor preprocessor : preprocessors) {

@@ -53,9 +53,7 @@ class TimeoutEventImpl implements TimeoutEvent {
 		if (timeout <= 0)
 			throw new IllegalArgumentException("Timeout value must be positive");
 
-		if (type == null)
-			throw new NullPointerException(
-					"Timeout event type must not be null");
+		Helpers.ensureNotNull(type, "type");
 
 		this.timeout = timeout;
 		this.type = type;

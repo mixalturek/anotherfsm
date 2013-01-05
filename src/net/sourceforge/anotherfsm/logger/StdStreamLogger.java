@@ -22,6 +22,8 @@ import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import net.sourceforge.anotherfsm.Helpers;
+
 /**
  * Logger that logs to the standard output and standard error streams. All
  * received messages are logged independently to the severity.
@@ -47,6 +49,8 @@ class StdStreamLogger implements FsmLogger {
 	 *            the logger name
 	 */
 	public StdStreamLogger(String name) {
+		Helpers.ensureNotNull(name, "name");
+
 		this.name = name;
 	}
 
@@ -56,62 +60,62 @@ class StdStreamLogger implements FsmLogger {
 	}
 
 	@Override
-	public void fatal(Object message) {
+	public void fatal(String message) {
 		log(System.err, "FATAL", message, null);
 	}
 
 	@Override
-	public void fatal(Object message, Throwable throwable) {
+	public void fatal(String message, Throwable throwable) {
 		log(System.err, "FATAL", message, throwable);
 	}
 
 	@Override
-	public void error(Object message) {
+	public void error(String message) {
 		log(System.err, "ERROR", message, null);
 	}
 
 	@Override
-	public void error(Object message, Throwable throwable) {
+	public void error(String message, Throwable throwable) {
 		log(System.err, "ERROR", message, throwable);
 	}
 
 	@Override
-	public void warn(Object message) {
+	public void warn(String message) {
 		log(System.err, " WARN", message, null);
 	}
 
 	@Override
-	public void warn(Object message, Throwable throwable) {
+	public void warn(String message, Throwable throwable) {
 		log(System.err, " WARN", message, throwable);
 	}
 
 	@Override
-	public void info(Object message) {
+	public void info(String message) {
 		log(System.out, " INFO", message, null);
 	}
 
 	@Override
-	public void info(Object message, Throwable throwable) {
+	public void info(String message, Throwable throwable) {
 		log(System.out, " INFO", message, throwable);
 	}
 
 	@Override
-	public void debug(Object message) {
+	public void debug(String message) {
 		log(System.out, "DEBUG", message, null);
 	}
 
 	@Override
-	public void debug(Object message, Throwable throwable) {
+	public void debug(String message, Throwable throwable) {
 		log(System.out, "DEBUG", message, throwable);
 	}
 
 	@Override
-	public void trace(Object message) {
+	public void trace(String message) {
 		log(System.out, "TRACE", message, null);
 	}
 
 	@Override
-	public void trace(Object message, Throwable throwable) {
+	public void trace(String message, Throwable throwable) {
 		log(System.out, "TRACE", message, throwable);
 	}
 
@@ -142,7 +146,7 @@ class StdStreamLogger implements FsmLogger {
 	 * @param throwable
 	 *            the exception or null
 	 */
-	private void log(PrintStream stream, String severity, Object message,
+	private void log(PrintStream stream, String severity, String message,
 			Throwable throwable) {
 		String date = dateFormat.format(new Date());
 		String thread = Thread.currentThread().getName();

@@ -55,8 +55,7 @@ class State {
 	 *            the type of the state
 	 */
 	public State(String name, State.Type type) {
-		if (name == null)
-			throw new NullPointerException("Name must not be null");
+		Helpers.ensureNotNull(name, "name");
 
 		this.name = name;
 		this.type = type;
@@ -69,8 +68,7 @@ class State {
 	 *            the listener
 	 */
 	public void addListener(StateListener listener) {
-		if (listener == null)
-			throw new NullPointerException("Listener must not be null");
+		Helpers.ensureNotNull(listener, "listener");
 
 		listeners.add(listener);
 	}

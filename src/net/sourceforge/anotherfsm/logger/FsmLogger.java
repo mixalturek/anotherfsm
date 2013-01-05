@@ -37,7 +37,7 @@ public interface FsmLogger {
 	 * @param message
 	 *            the message
 	 */
-	public void fatal(Object message);
+	public void fatal(String message);
 
 	/**
 	 * Log a fatal message.
@@ -47,7 +47,7 @@ public interface FsmLogger {
 	 * @param throwable
 	 *            a throwable object
 	 */
-	public void fatal(Object message, Throwable throwable);
+	public void fatal(String message, Throwable throwable);
 
 	/**
 	 * Log an error message.
@@ -55,7 +55,7 @@ public interface FsmLogger {
 	 * @param message
 	 *            the message
 	 */
-	public void error(Object message);
+	public void error(String message);
 
 	/**
 	 * Log an error message.
@@ -65,7 +65,7 @@ public interface FsmLogger {
 	 * @param throwable
 	 *            a throwable object
 	 */
-	public void error(Object message, Throwable throwable);
+	public void error(String message, Throwable throwable);
 
 	/**
 	 * Log a warning message.
@@ -73,7 +73,7 @@ public interface FsmLogger {
 	 * @param message
 	 *            the message
 	 */
-	public void warn(Object message);
+	public void warn(String message);
 
 	/**
 	 * Log a warning message.
@@ -83,7 +83,7 @@ public interface FsmLogger {
 	 * @param throwable
 	 *            a throwable object
 	 */
-	public void warn(Object message, Throwable throwable);
+	public void warn(String message, Throwable throwable);
 
 	/**
 	 * Log an info message.
@@ -91,7 +91,7 @@ public interface FsmLogger {
 	 * @param message
 	 *            the message
 	 */
-	public void info(Object message);
+	public void info(String message);
 
 	/**
 	 * Log an info message.
@@ -101,7 +101,7 @@ public interface FsmLogger {
 	 * @param throwable
 	 *            a throwable object
 	 */
-	public void info(Object message, Throwable throwable);
+	public void info(String message, Throwable throwable);
 
 	/**
 	 * Log a debug message.
@@ -109,7 +109,7 @@ public interface FsmLogger {
 	 * @param message
 	 *            the message
 	 */
-	public void debug(Object message);
+	public void debug(String message);
 
 	/**
 	 * Log a debug message.
@@ -119,7 +119,7 @@ public interface FsmLogger {
 	 * @param throwable
 	 *            a throwable object
 	 */
-	public void debug(Object message, Throwable throwable);
+	public void debug(String message, Throwable throwable);
 
 	/**
 	 * Log a trace message.
@@ -127,7 +127,7 @@ public interface FsmLogger {
 	 * @param message
 	 *            the message
 	 */
-	public void trace(Object message);
+	public void trace(String message);
 
 	/**
 	 * Log a trace message.
@@ -137,7 +137,7 @@ public interface FsmLogger {
 	 * @param throwable
 	 *            a throwable object
 	 */
-	public void trace(Object message, Throwable throwable);
+	public void trace(String message, Throwable throwable);
 
 	/**
 	 * Get status of info messages logging in this logger.

@@ -74,11 +74,10 @@ public class AnotherFsm {
 	 * @param loggerFactory
 	 *            the logger factory that will be used for creating loggers
 	 */
-	private AnotherFsm(FsmLoggerFactory loggerFactory) {
-		if (loggerFactory == null)
-			throw new NullPointerException("Logger factory must not be null");
+	private AnotherFsm(FsmLoggerFactory factory) {
+		Helpers.ensureNotNull(factory, "factory");
 
-		this.loggerFactory = loggerFactory;
+		loggerFactory = factory;
 	}
 
 	/**
@@ -89,6 +88,8 @@ public class AnotherFsm {
 	 * @return the logger
 	 */
 	public FsmLogger getLogger(Class<Object> clazz) {
+		Helpers.ensureNotNull(clazz, "class");
+
 		return loggerFactory.getLogger(clazz);
 	}
 
@@ -102,6 +103,9 @@ public class AnotherFsm {
 	 * @return the logger
 	 */
 	public FsmLogger getLogger(Class<?> clazz, String instance) {
+		Helpers.ensureNotNull(clazz, "class");
+		Helpers.ensureNotNull(instance, "instance");
+
 		return loggerFactory.getLogger(clazz, instance);
 	}
 
@@ -112,8 +116,10 @@ public class AnotherFsm {
 	 *            the logger name
 	 * @return the logger
 	 */
-	public FsmLogger getLogger(String loggerName) {
-		return loggerFactory.getLogger(loggerName);
+	public FsmLogger getLogger(String name) {
+		Helpers.ensureNotNull(name, "name");
+
+		return loggerFactory.getLogger(name);
 	}
 
 	/**
@@ -192,32 +198,5 @@ public class AnotherFsm {
 	 */
 	public StateMachine genTimeoutStateMachine(String name) {
 		return new TimeoutStateMachine(name);
-	}
-
-	/**
-	 * Log runtime exception that occurred in client callback.
-	 * 
-	 * Log everything what is possible for future analysis and re-throw the
-	 * exception. Current thread may stop but it is better than hide a more
-	 * serious error.
-	 * 
-	 * @param logger
-	 *            the logger
-	 * @param exception
-	 *            the exception that occurred
-	 * @param event
-	 *            the event that was processed
-	 * 
-	 * @see TimeoutStateMachine
-	 */
-	void logExceptionInClientCallback(FsmLogger logger,
-			RuntimeException exception, Event event) {
-		logger.fatal(
-				"Unexpected exception occurred probably in client callback code: event "
-						+ event + ", thread "
-						+ Thread.currentThread().getName() + ", exception "
-						+ exception.getClass() + ", exception message "
-						+ exception.getMessage() + ", exception " + exception,
-				exception);
 	}
 }

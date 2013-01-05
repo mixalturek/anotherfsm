@@ -41,8 +41,7 @@ abstract class PreprocessorAdapter extends ProcessorAdapter implements
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public Event process(Event event) throws FsmException {
-		if (event == null)
-			throw new NullPointerException("Event must not be null");
+		Helpers.ensureNotNull(event, "event");
 
 		Event preprocessedEvent = preprocessEvent(event);
 		if (preprocessedEvent == null)
@@ -57,8 +56,7 @@ abstract class PreprocessorAdapter extends ProcessorAdapter implements
 		try {
 			resultEvent = processor.process(event);
 		} catch (RuntimeException e) {
-			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
-					event);
+			Helpers.logExceptionInClientCallback(logger, e, event);
 			throw e;
 		}
 

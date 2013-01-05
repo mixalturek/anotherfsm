@@ -19,6 +19,7 @@
 package net.sourceforge.anotherfsm.logger;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
+import net.sourceforge.anotherfsm.Helpers;
 
 /**
  * Factory of loggers that logs to standard output and standard error streams.
@@ -26,26 +27,26 @@ import net.sourceforge.anotherfsm.AnotherFsm;
  * @author Michal Turek
  */
 public class StdStreamLoggerFactory implements FsmLoggerFactory {
-	/**
-	 * Create the object.
-	 */
-	public StdStreamLoggerFactory() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public FsmLogger getLogger(Class<?> clazz) {
+		Helpers.ensureNotNull(clazz, "class");
+
 		return getLogger(clazz.getSimpleName());
 	}
 
 	@Override
 	public FsmLogger getLogger(Class<?> clazz, String instance) {
+		Helpers.ensureNotNull(clazz, "class");
+		Helpers.ensureNotNull(instance, "instance");
+
 		return getLogger(clazz.getSimpleName()
 				+ AnotherFsm.CLASS_INSTANCE_DELIMITER + instance);
 	}
 
 	@Override
 	public FsmLogger getLogger(String name) {
+		Helpers.ensureNotNull(name, "name");
+
 		return new StdStreamLogger(name);
 	}
 }

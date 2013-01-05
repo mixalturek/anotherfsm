@@ -47,6 +47,8 @@ class TransitionMap {
 	 *             if something fails
 	 */
 	public void addTransition(Transition transition) throws FsmException {
+		Helpers.ensureNotNull(transition, "transition");
+
 		if (transitions.containsKey(transition.getEvent()))
 			throw new FsmException("Transition already defined: " + transition);
 
@@ -63,6 +65,8 @@ class TransitionMap {
 	 * @return the transition or null
 	 */
 	public Transition getTransition(Event event) {
+		Helpers.ensureNotNull(event, "event");
+
 		Transition transition = transitions.get(event);
 
 		if (transition == null)

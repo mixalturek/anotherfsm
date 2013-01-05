@@ -58,8 +58,7 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 
 	@Override
 	public void setStartState(State state) throws FsmException {
-		if (state == null)
-			throw new NullPointerException("State must not be null");
+		Helpers.ensureNotNull(state, "start state");
 
 		if (currentState != null)
 			throw new FsmException("Start state already set: " + currentState);
@@ -83,8 +82,7 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 
 	@Override
 	public void addState(State state) throws FsmException {
-		if (state == null)
-			throw new NullPointerException("State must not be null");
+		Helpers.ensureNotNull(state, "state");
 
 		if (stateTransitions.containsKey(state))
 			throw new FsmException("State redefined: " + state);
@@ -108,8 +106,7 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 
 	@Override
 	public void addTransition(Transition transition) throws FsmException {
-		if (transition == null)
-			throw new NullPointerException("Transition must not be null");
+		Helpers.ensureNotNull(transition, "transition");
 
 		addStateInternal(transition.getSource());
 		stateTransitions.get(transition.getSource()).addTransition(transition);
@@ -118,16 +115,14 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 
 	@Override
 	public void addListener(StateListener listener) {
-		if (listener == null)
-			throw new NullPointerException("Listener must not be null");
+		Helpers.ensureNotNull(listener, "listener");
 
 		stateListeners.add(listener);
 	}
 
 	@Override
 	public void addListener(TransitionListener listener) {
-		if (listener == null)
-			throw new NullPointerException("Listener must not be null");
+		Helpers.ensureNotNull(listener, "listener");
 
 		transitionListeners.add(listener);
 	}
@@ -160,8 +155,7 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 				listener.onStateEnter(previous, event, current);
 			}
 		} catch (RuntimeException e) {
-			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
-					event);
+			Helpers.logExceptionInClientCallback(logger, e, event);
 			throw e;
 		}
 	}
@@ -193,8 +187,7 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 				listener.onStateExit(current, event, next);
 			}
 		} catch (RuntimeException e) {
-			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
-					event);
+			Helpers.logExceptionInClientCallback(logger, e, event);
 			throw e;
 		}
 	}
@@ -223,8 +216,7 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 
 			}
 		} catch (RuntimeException e) {
-			AnotherFsm.getInstance().logExceptionInClientCallback(logger, e,
-					event);
+			Helpers.logExceptionInClientCallback(logger, e, event);
 			throw e;
 		}
 	}
@@ -366,6 +358,9 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 	 * @return the transition or null if not defined
 	 */
 	protected Transition getTransition(State state, Event event) {
+		Helpers.ensureNotNull(state, "state");
+		Helpers.ensureNotNull(event, "event");
+
 		return stateTransitions.get(state).getTransition(event);
 	}
 

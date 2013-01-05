@@ -56,11 +56,8 @@ public class TypePreprocessor extends PreprocessorAdapter {
 	 */
 	public <T extends Event> void addProcessor(Class<T> clazz,
 			Processor<T> processor) throws FsmException {
-		if (clazz == null)
-			throw new NullPointerException("Event class must not be null");
-
-		if (processor == null)
-			throw new NullPointerException("Processor must not be null");
+		Helpers.ensureNotNull(clazz, "class");
+		Helpers.ensureNotNull(processor, "processor");
 
 		if (processors.containsKey(clazz))
 			throw new FsmException("Preprocessor already defined: " + clazz);
@@ -72,6 +69,8 @@ public class TypePreprocessor extends PreprocessorAdapter {
 	@SuppressWarnings("rawtypes")
 	@Override
 	protected Preprocessor.Processor findProcessor(Event event) {
+		Helpers.ensureNotNull(event, "event");
+
 		return processors.get(event.getClass());
 	}
 }

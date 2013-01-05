@@ -34,6 +34,8 @@ public class StateAdapter implements StateListener {
 	 *            the type of the listener
 	 */
 	public StateAdapter(StateListener.Type type) {
+		Helpers.ensureNotNull(type, "type");
+
 		this.type = type;
 	}
 

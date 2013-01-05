@@ -41,8 +41,7 @@ public class ContainerEvent<T> implements Event {
 	 *            the object to store
 	 */
 	public ContainerEvent(T storedObject) {
-		if (storedObject == null)
-			throw new NullPointerException("Stored object must not be null");
+		Helpers.ensureNotNull(storedObject, "stored object");
 
 		this.storedObject = storedObject;
 	}

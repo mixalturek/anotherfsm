@@ -28,7 +28,7 @@ import java.util.List;
  */
 class Transition {
 	/** The delimiter for string representation. */
-	public static final String TR = " -> ";
+	static final String TR = " -> ";
 
 	/** The source state. */
 	private final State source;
@@ -53,12 +53,9 @@ class Transition {
 	 *            the destination state
 	 */
 	public Transition(State source, Event event, State destination) {
-		if (source == null)
-			throw new NullPointerException("Source state must not be null");
-		if (event == null)
-			throw new NullPointerException("Event must not be null");
-		if (destination == null)
-			throw new NullPointerException("Destination state must not be null");
+		Helpers.ensureNotNull(source, "source state");
+		Helpers.ensureNotNull(event, "event");
+		Helpers.ensureNotNull(destination, "destination state");
 
 		this.source = source;
 		this.event = event;
@@ -121,8 +118,7 @@ class Transition {
 	 *            the listener
 	 */
 	public void addListener(TransitionListener listener) {
-		if (listener == null)
-			throw new NullPointerException("Listener must not be null");
+		Helpers.ensureNotNull(listener, "listener");
 
 		listeners.add(listener);
 	}

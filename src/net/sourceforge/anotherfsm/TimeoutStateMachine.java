@@ -61,9 +61,10 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	@Override
 	public synchronized void start() throws FsmException {
 		// The timer must be created first, super.start() generates start event
-		if (timer != null)
+		if (timer != null) {
 			throw new FsmException(
 					"Timer already running, state machine probably started twice");
+		}
 
 		timer = new Timer(getClass().getSimpleName()
 				+ AnotherFsm.CLASS_INSTANCE_DELIMITER + getName(), false);
@@ -92,8 +93,8 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	}
 
 	@Override
-	public synchronized void notifyEnter(State previous, Event event,
-			State current) throws FsmException {
+	synchronized void notifyEnter(State previous, Event event, State current)
+			throws FsmException {
 		super.notifyEnter(previous, event, current);
 
 		if (timer == null) {
@@ -184,6 +185,9 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 		 *            the unique ID of the state enter for this task
 		 */
 		public TimeoutTask(Transition timeoutTransition, Object stateEnterID) {
+			Helpers.ensureNotNull(timeoutTransition, "timeoutTransition");
+			Helpers.ensureNotNull(stateEnterID, "stateEnterID");
+
 			this.timeoutTransition = timeoutTransition;
 			this.stateEnterID = stateEnterID;
 		}

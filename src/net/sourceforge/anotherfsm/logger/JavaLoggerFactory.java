@@ -18,6 +18,8 @@
 
 package net.sourceforge.anotherfsm.logger;
 
+import net.sourceforge.anotherfsm.Helpers;
+
 /**
  * Factory of logger that uses Java logging API.
  * 
@@ -28,16 +30,23 @@ package net.sourceforge.anotherfsm.logger;
 public class JavaLoggerFactory implements FsmLoggerFactory {
 	@Override
 	public FsmLogger getLogger(Class<?> clazz) {
+		Helpers.ensureNotNull(clazz, "class");
+
 		return new JavaLogger(clazz);
 	}
 
 	@Override
 	public FsmLogger getLogger(Class<?> clazz, String instance) {
+		Helpers.ensureNotNull(clazz, "class");
+		Helpers.ensureNotNull(instance, "instance");
+
 		return new JavaLogger(clazz, instance);
 	}
 
 	@Override
 	public FsmLogger getLogger(String name) {
+		Helpers.ensureNotNull(name, "name");
+
 		return new JavaLogger(name);
 	}
 }
