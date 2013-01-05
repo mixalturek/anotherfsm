@@ -669,9 +669,8 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(new Transition(new State("state"),
 					OtherEvent.instance, new State("state")));
 
-			machine.addTransition(new Transition(
-					new State("state"),
-					new TimeoutEventImpl(42, TimeoutEvent.Type.LOOP_NO_RESTART),
+			machine.addTransition(new Transition(new State("state"),
+					new TimeoutEvent(42, TimeoutEvent.Type.LOOP_NO_RESTART),
 					new State("state")));
 
 			transition = machine.getTransition(new State("state"),
@@ -689,7 +688,7 @@ public class DeterministicStateMachineTest {
 			assertTrue(transition.getEvent() instanceof OtherEvent);
 
 			transition = machine.getTransition(new State("state"),
-					TimeoutEventImpl.instance);
+					TimeoutEvent.instance);
 			assertNotNull(transition);
 			assertTrue(transition.getEvent() instanceof TimeoutEvent);
 		} catch (FsmException e) {

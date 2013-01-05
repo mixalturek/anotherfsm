@@ -29,31 +29,65 @@ package net.sourceforge.anotherfsm;
  * 
  * @see TimeoutStateMachine
  */
-public interface TimeoutEvent extends Event {
-	/**
-	 * Use this hash code in your implementation of this interface in
-	 * hashCode(). Also ensure all instances of TimeoutEvent are equal.
-	 * 
-	 * @see #hashCode()
-	 * @see #equals(Object)
-	 * @see TimeoutEventImpl#hashCode()
-	 * @see TimeoutEventImpl#equals(Object)
-	 */
-	public static final int HASH_CODE = 35345225;
+public class TimeoutEvent extends TypeEvent {
+	/** The instance of the object for use in timeout state machine. */
+	static TimeoutEvent instance = new TimeoutEvent(1,
+			TimeoutEvent.Type.LOOP_RESTART);
+
+	/** The timeout in milliseconds. */
+	private final long timeout;
+
+	/** The type of the event. */
+	private final TimeoutEvent.Type type;
 
 	/**
-	 * Get the timeout.
+	 * Create the object.
 	 * 
-	 * @return the timeout
+	 * @param timeout
+	 *            the timeout in milliseconds, must be positive.
+	 * @param type
+	 *            the type of the event
 	 */
-	public long getTimeout();
+	public TimeoutEvent(long timeout, TimeoutEvent.Type type) {
+		// Zero passed to Java timer works too, but let's forbid it
+		if (timeout <= 0)
+			throw new IllegalArgumentException("Timeout value must be positive");
 
-	/**
-	 * Get the type.
-	 * 
-	 * @return the type
-	 */
-	public TimeoutEvent.Type getType();
+		Helpers.ensureNotNull(type, "type");
+
+		this.timeout = timeout;
+		this.type = type;
+	}
+
+	public long getTimeout() {
+		return timeout;
+	}
+
+	public TimeoutEvent.Type getType() {
+		return type;
+	}
+
+	/*
+	@Override
+	public int hashCode() {
+		return HASH_CODE;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+
+		return obj instanceof TimeoutEvent;
+	}
+	*/
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "(" + timeout + ", " + type + ")";
+	}
 
 	/**
 	 * The type of timeout event to specify the behavior on loop transition. The

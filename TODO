@@ -2,6 +2,7 @@ TODO
 ====
 
 - Solve TODO: and FIXME: in code.
+- Two timeouts can occur in timeout event.
 
 - First release.
 

@@ -25,16 +25,16 @@ public class TimeoutStateMachineTest {
 		try {
 			// OK
 			machine.addState(state);
-			machine.addTransition(new Transition(state, new TimeoutEventImpl(
-					42, TimeoutEvent.Type.LOOP_RESTART), state));
+			machine.addTransition(new Transition(state, new TimeoutEvent(42,
+					TimeoutEvent.Type.LOOP_RESTART), state));
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
 
 		try {
 			// The same timeout
-			machine.addTransition(new Transition(state, new TimeoutEventImpl(
-					42, TimeoutEvent.Type.LOOP_RESTART), state));
+			machine.addTransition(new Transition(state, new TimeoutEvent(42,
+					TimeoutEvent.Type.LOOP_RESTART), state));
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			assertTrue(e.getMessage().contains("Transition already defined"));
@@ -42,17 +42,8 @@ public class TimeoutStateMachineTest {
 
 		try {
 			// Different timeout
-			machine.addTransition(new Transition(state, new TimeoutEventImpl(
-					10, TimeoutEvent.Type.LOOP_NO_RESTART), state));
-			fail("Should not be executed");
-		} catch (FsmException e) {
-			assertTrue(e.getMessage().contains("Transition already defined"));
-		}
-
-		try {
-			// Different timeout class
-			machine.addTransition(new Transition(state,
-					new NonstandardTimeoutEvent(), state));
+			machine.addTransition(new Transition(state, new TimeoutEvent(10,
+					TimeoutEvent.Type.LOOP_NO_RESTART), state));
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			assertTrue(e.getMessage().contains("Transition already defined"));
@@ -87,7 +78,7 @@ public class TimeoutStateMachineTest {
 		StateMachine machine = new TimeoutStateMachine("fsm");
 		State startState = new State("startState");
 		State timeoutState = new State("timeoutState");
-		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+		Transition toTimeout = new Transition(startState, new TimeoutEvent(
 				TIMEOUT, TimeoutEvent.Type.LOOP_RESTART), timeoutState);
 
 		try {
@@ -114,7 +105,7 @@ public class TimeoutStateMachineTest {
 		StateMachine machine = new TimeoutStateMachine("fsm");
 		State startState = new State("startState");
 		State timeoutState = new State("timeoutState");
-		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+		Transition toTimeout = new Transition(startState, new TimeoutEvent(
 				TIMEOUT, TimeoutEvent.Type.LOOP_NO_RESTART), timeoutState);
 
 		try {
@@ -198,7 +189,7 @@ public class TimeoutStateMachineTest {
 		Transition toFinal = new Transition(startState, new TypeEventA(),
 				finalState);
 
-		Transition toTimeout = new Transition(finalState, new TimeoutEventImpl(
+		Transition toTimeout = new Transition(finalState, new TimeoutEvent(
 				TIMEOUT, TYPE), timeoutState);
 
 		TransitionListenerImpl listener = new TransitionListenerImpl() {
@@ -260,7 +251,7 @@ public class TimeoutStateMachineTest {
 		Transition toFinalLoop = new Transition(finalState, new TypeEventB(),
 				finalState);
 
-		Transition toTimeout = new Transition(finalState, new TimeoutEventImpl(
+		Transition toTimeout = new Transition(finalState, new TimeoutEvent(
 				TIMEOUT, TYPE), timeoutState);
 
 		TransitionListenerImpl listener = new TransitionListenerImpl() {
@@ -337,7 +328,7 @@ public class TimeoutStateMachineTest {
 		Transition toFinalLoop = new Transition(finalState, new TypeEventB(),
 				finalState);
 
-		Transition toTimeout = new Transition(finalState, new TimeoutEventImpl(
+		Transition toTimeout = new Transition(finalState, new TimeoutEvent(
 				TIMEOUT, TimeoutEvent.Type.LOOP_NO_RESTART), timeoutState);
 
 		Transition toTimeoutLoop = new Transition(timeoutState,
@@ -411,7 +402,7 @@ public class TimeoutStateMachineTest {
 	public final void testRuntimeExcpetionInTimeoutCallback() {
 		StateMachine machine = new TimeoutStateMachine("fsm");
 		final State startState = new State("startState");
-		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+		Transition toTimeout = new Transition(startState, new TimeoutEvent(
 				TIMEOUT, TimeoutEvent.Type.LOOP_RESTART), startState);
 
 		TransitionListenerImpl listener = new TransitionListenerImpl() {
@@ -454,7 +445,7 @@ public class TimeoutStateMachineTest {
 	public final void testProcessLoopTimeoutTransition() {
 		StateMachine machine = new TimeoutStateMachine("fsm");
 		final State startState = new State("startState");
-		Transition toTimeout = new Transition(startState, new TimeoutEventImpl(
+		Transition toTimeout = new Transition(startState, new TimeoutEvent(
 				TIMEOUT, TimeoutEvent.Type.LOOP_RESTART), startState);
 
 		TransitionListenerImpl listener = new TransitionListenerImpl() {

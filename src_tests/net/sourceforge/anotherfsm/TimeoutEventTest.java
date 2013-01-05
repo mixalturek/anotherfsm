@@ -23,47 +23,31 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class TimeoutEventImplTest {
-	@Test
-	public final void hashCodeTest() {
-		assertEquals(TimeoutEvent.HASH_CODE, new TimeoutEventImpl(1,
-				TimeoutEvent.Type.LOOP_NO_RESTART).hashCode());
-
-		assertEquals(TimeoutEvent.HASH_CODE,
-				new NonstandardTimeoutEvent().hashCode());
-	}
-
+public class TimeoutEventTest {
 	@Test
 	public final void equalsTest() {
-		assertEquals(
-				new TimeoutEventImpl(1, TimeoutEvent.Type.LOOP_NO_RESTART),
-				new TimeoutEventImpl(2, TimeoutEvent.Type.LOOP_RESTART));
-
-		assertEquals(new NonstandardTimeoutEvent(), new TimeoutEventImpl(2,
-				TimeoutEvent.Type.LOOP_RESTART));
-
-		assertEquals(new TimeoutEventImpl(2, TimeoutEvent.Type.LOOP_RESTART),
-				new NonstandardTimeoutEvent());
+		assertEquals(new TimeoutEvent(1, TimeoutEvent.Type.LOOP_NO_RESTART),
+				new TimeoutEvent(2, TimeoutEvent.Type.LOOP_RESTART));
 	}
 
 	@Test
 	public final void invalidTimeout() {
 		try {
-			new TimeoutEventImpl(0, TimeoutEvent.Type.LOOP_NO_RESTART);
+			new TimeoutEvent(0, TimeoutEvent.Type.LOOP_NO_RESTART);
 		} catch (IllegalArgumentException e) {
 			assertTrue(e.getMessage()
 					.contains("Timeout value must be positive"));
 		}
 
 		try {
-			new TimeoutEventImpl(-1, TimeoutEvent.Type.LOOP_NO_RESTART);
+			new TimeoutEvent(-1, TimeoutEvent.Type.LOOP_NO_RESTART);
 		} catch (IllegalArgumentException e) {
 			assertTrue(e.getMessage()
 					.contains("Timeout value must be positive"));
 		}
 
 		try {
-			new TimeoutEventImpl(-42, TimeoutEvent.Type.LOOP_NO_RESTART);
+			new TimeoutEvent(-42, TimeoutEvent.Type.LOOP_NO_RESTART);
 		} catch (IllegalArgumentException e) {
 			assertTrue(e.getMessage()
 					.contains("Timeout value must be positive"));

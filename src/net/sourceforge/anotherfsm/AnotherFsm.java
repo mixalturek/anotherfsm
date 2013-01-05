@@ -118,19 +118,4 @@ public class AnotherFsm {
 
 		return loggerFactory.getLogger(name);
 	}
-
-	/**
-	 * Create an instance of timeout event.
-	 * 
-	 * @param timeout
-	 *            the timeout in milliseconds, must be positive
-	 * @param type
-	 *            the type of the event
-	 * @return the event
-	 * 
-	 * @see #genTimeoutStateMachine(String)
-	 */
-	public TimeoutEvent genTimeoutEvent(long timeout, TimeoutEvent.Type type) {
-		return new TimeoutEventImpl(timeout, type);
-	}
 }
