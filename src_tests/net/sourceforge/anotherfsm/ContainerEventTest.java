@@ -3,9 +3,6 @@ package net.sourceforge.anotherfsm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 import org.junit.BeforeClass;
@@ -75,12 +72,10 @@ public class ContainerEventTest {
 					.process(new ContainerEvent<Character>('A'));
 			assertEquals(new ContainerEvent<Character>('A'), processedEvent);
 			assertEquals(another, machine.getActiveState());
-
-			machine.close();
 		} catch (FsmException e) {
 			fail("Should not be executed");
-		} catch (IOException e) {
-			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 }

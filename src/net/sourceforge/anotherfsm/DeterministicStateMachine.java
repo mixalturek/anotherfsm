@@ -18,7 +18,6 @@
 
 package net.sourceforge.anotherfsm;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -78,7 +77,7 @@ class DeterministicStateMachine extends ProcessorAdapter implements
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 		// Do nothing in this class
 	}
 

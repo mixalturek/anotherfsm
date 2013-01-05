@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,12 +27,7 @@ public class DeterministicStateMachineTest {
 		StateMachine machine = new DeterministicStateMachine("fsm");
 		assertEquals("fsm", machine.getName());
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 
 	@Test
@@ -63,12 +57,7 @@ public class DeterministicStateMachineTest {
 			assertEquals(new State("state"), machine.getActiveState());
 		}
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 
 	@Test
@@ -117,10 +106,7 @@ public class DeterministicStateMachineTest {
 
 		try {
 			machine.start();
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		}
 
@@ -129,6 +115,8 @@ public class DeterministicStateMachineTest {
 
 		assertEquals(1, listenerFsm.enteredNum);
 		assertEquals(0, listenerFsm.exitedNum);
+
+		machine.close();
 	}
 
 	@Test
@@ -166,12 +154,7 @@ public class DeterministicStateMachineTest {
 
 		assertEquals(2, machine.getStates().size());
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 
 	@Test
@@ -247,12 +230,7 @@ public class DeterministicStateMachineTest {
 		assertEquals(2, machine.getStates().size());
 		assertEquals(4, machine.getTransitions().size()); // New transition
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 
 	@Test
@@ -488,14 +466,11 @@ public class DeterministicStateMachineTest {
 			assertEquals(expected, real);
 			expected.clear();
 			real.clear();
-
-			machine.close();
-			assertEquals(expected, real);
 		} catch (FsmException e) {
 			fail("Should not be executed");
-		} catch (IOException e) {
-			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -567,13 +542,11 @@ public class DeterministicStateMachineTest {
 
 			assertEquals(new TypeEventA(), processedEvent);
 			assertEquals(another, machine.getActiveState());
-
-			machine.close();
 		} catch (FsmException e) {
 			fail("Should not be executed");
-		} catch (IOException e) {
-			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -589,12 +562,7 @@ public class DeterministicStateMachineTest {
 
 		assertEquals(new State("state"), machine.getActiveState());
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 
 	@Test
@@ -612,12 +580,7 @@ public class DeterministicStateMachineTest {
 		states.add(new State("state"));
 		assertEquals(states, machine.getActiveStates());
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 
 	@Test
@@ -677,15 +640,14 @@ public class DeterministicStateMachineTest {
 		try {
 			// Ok
 			processedEvent = machine.process(new TypeEventB());
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		}
 
 		assertEquals(new TypeEventB(), processedEvent);
 		assertEquals(state, machine.getActiveState());
+
+		machine.close();
 	}
 
 	@Test
@@ -734,11 +696,6 @@ public class DeterministicStateMachineTest {
 			fail("Should not be executed");
 		}
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 }

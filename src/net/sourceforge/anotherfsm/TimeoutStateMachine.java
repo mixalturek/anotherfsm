@@ -18,7 +18,6 @@
 
 package net.sourceforge.anotherfsm;
 
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -81,16 +80,13 @@ class TimeoutStateMachine extends SynchronizedStateMachine {
 	}
 
 	@Override
-	public synchronized void close() throws IOException {
+	public synchronized void close() {
 		try {
 			super.close();
 		} finally {
 			if (timer != null) {
 				timer.cancel();
 				timer = null;
-			} else {
-				logger.warn("Timer is not running while closing, state machine probably not started yet");
-				// Don't throw exceptions while destroying
 			}
 		}
 	}

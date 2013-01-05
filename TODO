@@ -27,8 +27,4 @@ TODO
 - Analyzer and visualization of FSM transitions logs.
 - Track and check internal FSM state - creating, running, stopped
 
-- Move to JDK 1.7
-- Change StateMachine to implement java.lang.AutoCloseable instead of java.io.Closeable
-- http://docs.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html
-
 - AsciiSchemaEditor.

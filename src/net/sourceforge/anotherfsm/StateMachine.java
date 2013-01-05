@@ -18,7 +18,6 @@
 
 package net.sourceforge.anotherfsm;
 
-import java.io.Closeable;
 import java.util.Set;
 
 /**
@@ -30,7 +29,7 @@ import java.util.Set;
  * @see AnotherFsm#genSynchronizedStateMachine(String)
  * @see AnotherFsm#genTimeoutStateMachine(String)
  */
-public interface StateMachine extends Processor, Closeable {
+public interface StateMachine extends Processor, AutoCloseable {
 	/**
 	 * Set the start state.
 	 * 
@@ -87,6 +86,16 @@ public interface StateMachine extends Processor, Closeable {
 	 * @see #close()
 	 */
 	public void start() throws FsmException;
+
+	/**
+	 * Finish processing of the events, free all allocated resources. This
+	 * method can be called multiple times. No method of the object should be
+	 * called from now.
+	 * 
+	 * @see #start()
+	 */
+	@Override
+	public void close();
 
 	/**
 	 * Get the currently active state. Intended use is in deterministic state

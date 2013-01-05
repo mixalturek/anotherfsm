@@ -3,9 +3,6 @@ package net.sourceforge.anotherfsm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 import org.junit.BeforeClass;
@@ -61,12 +58,7 @@ public class TimeoutStateMachineTest {
 			assertTrue(e.getMessage().contains("Transition already defined"));
 		}
 
-		// Remove warning
-		try {
-			machine.close();
-		} catch (IOException e) {
-			// Do nothing
-		}
+		machine.close();
 	}
 
 	@Test
@@ -83,12 +75,11 @@ public class TimeoutStateMachineTest {
 		try {
 			machine.setStartState(new State("state"));
 			machine.start();
-			machine.close();
 		} catch (FsmException e) {
 			fail("Should not be executed");
-		} catch (IOException e) {
-			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -109,15 +100,13 @@ public class TimeoutStateMachineTest {
 			Thread.sleep(TIMEOUT * 2);
 
 			assertEquals(timeoutState, machine.getActiveState());
-
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
 			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -138,36 +127,30 @@ public class TimeoutStateMachineTest {
 			Thread.sleep(TIMEOUT * 2);
 
 			assertEquals(startState, machine.getActiveState());
-
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
 			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
 	public final void testClose() {
 		StateMachine machine = new TimeoutStateMachine("fsm");
-
-		try {
-			machine.close();
-		} catch (IOException e) {
-			fail("Should not be executed");
-		}
+		machine.close();
 
 		try {
 			machine.setStartState(new State("state"));
 			machine.start();
-			machine.close();
 		} catch (FsmException e) {
 			fail("Should not be executed");
-		} catch (IOException e) {
-			fail("Should not be executed");
 		}
+
+		machine.close();
+		machine.close();
+		machine.close();
 	}
 
 	@Test
@@ -197,13 +180,11 @@ public class TimeoutStateMachineTest {
 			processedEvent = machine.process(new TypeEventB());
 			assertEquals(new TypeEventB(), processedEvent);
 			assertEquals(startState, machine.getActiveState());
-
-			machine.close();
 		} catch (FsmException e) {
 			fail("Should not be executed");
-		} catch (IOException e) {
-			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -256,15 +237,13 @@ public class TimeoutStateMachineTest {
 
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
-
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
 			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -337,15 +316,13 @@ public class TimeoutStateMachineTest {
 
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
-
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
 			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -421,15 +398,13 @@ public class TimeoutStateMachineTest {
 			assertTrue(System.currentTimeMillis() - startTime < TIMEOUT * 3);
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
-
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
 			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -466,15 +441,13 @@ public class TimeoutStateMachineTest {
 			// be deterministic in such case than hide more serious error.
 
 			assertEquals(1, listener.transitionsNum);
-
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
 			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 
 	@Test
@@ -514,14 +487,12 @@ public class TimeoutStateMachineTest {
 			// 3 during development
 			assertTrue(listener.transitionsNum >= 3
 					&& listener.transitionsNum <= 5);
-
-			machine.close();
 		} catch (FsmException e) {
-			fail("Should not be executed");
-		} catch (IOException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
 			fail("Should not be executed");
 		}
+
+		machine.close();
 	}
 }

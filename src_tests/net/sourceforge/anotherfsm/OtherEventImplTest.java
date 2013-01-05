@@ -2,9 +2,6 @@ package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-
-import java.io.IOException;
-
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 import org.junit.BeforeClass;
@@ -104,10 +101,6 @@ public class OtherEventImplTest {
 			// Do nothing
 		}
 
-		try {
-			machine.close();
-		} catch (IOException e) {
-			fail("Should not be executed");
-		}
+		machine.close();
 	}
 }
