@@ -30,6 +30,9 @@ import java.util.Set;
  * @see AnotherFsm#genTimeoutStateMachine(String)
  */
 public interface StateMachine extends Processor, AutoCloseable {
+	/** The name of temporary generated initial state. */
+	public static final String INITIAL_STATE_NAME = "@INITIAL@";
+
 	/**
 	 * Set the start state.
 	 * 
@@ -77,13 +80,17 @@ public interface StateMachine extends Processor, AutoCloseable {
 	public void addListener(TransitionListener listener);
 
 	/**
-	 * Start processing of the events, building of the state machine is
-	 * finished.
+	 * Building of the state machine is finished, prepare it to events
+	 * processing.
+	 * 
+	 * Listeners of start state will be notified with non-loop transition from
+	 * temporary generated initial state and StartEvent object.
 	 * 
 	 * @throws FsmException
 	 *             if something fails
 	 * @see StartEvent
 	 * @see #close()
+	 * @see #INITIAL_STATE_NAME
 	 */
 	public void start() throws FsmException;
 

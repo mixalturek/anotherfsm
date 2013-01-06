@@ -118,7 +118,6 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 		if (!loopTransition)
 			lastStateEnterIdNonLoop = new Object();
 
-		// FIXME: schedule all timeouts in a state
 		scheduleTimeoutTransition(loopTransition,
 				TimeoutEvent.instance_LOOP_RESTART);
 		scheduleTimeoutTransition(loopTransition,

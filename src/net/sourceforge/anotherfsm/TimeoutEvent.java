@@ -21,17 +21,21 @@ package net.sourceforge.anotherfsm;
 /**
  * The timeout event.
  * 
+ * State machines allow only two transitions of timeout event per state
+ * independently to the timeout values. If a state had two same timeout types
+ * the first one would be always processed and the second never.
+ * 
  * @author Michal Turek
  * 
  * @see TimeoutStateMachine
+ * @see Type#LOOP_RESTART
+ * @see Type#LOOP_NO_RESTART
  */
-public class TimeoutEvent extends TypeEvent {
-	// FIXME: remove
+public class TimeoutEvent implements Event {
 	/** The instance of the object for use in timeout state machine. */
 	static TimeoutEvent instance_LOOP_RESTART = new TimeoutEvent(1,
 			TimeoutEvent.Type.LOOP_RESTART);
 
-	// FIXME: remove
 	/** The instance of the object for use in timeout state machine. */
 	static TimeoutEvent instance_LOOP_NO_RESTART = new TimeoutEvent(1,
 			TimeoutEvent.Type.LOOP_NO_RESTART);
@@ -69,21 +73,29 @@ public class TimeoutEvent extends TypeEvent {
 		return type;
 	}
 
-	// FIXME: use timeout too
 	@Override
 	public int hashCode() {
-		return super.hashCode() + type.hashCode();
+		return 34893234 + type.hashCode();
 	}
 
-	// FIXME: use timeout too
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(obj) && type.equals(((TimeoutEvent) obj).getType());
+		if (this == obj)
+			return true;
+
+		if (obj == null)
+			return false;
+
+		if (!(obj instanceof TimeoutEvent))
+			return false;
+
+		TimeoutEvent other = (TimeoutEvent) obj;
+		return type == other.type;
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "(" + timeout + ", " + type + ")";
+		return getClass().getSimpleName() + "(" + type + ", " + timeout + ")";
 	}
 
 	/**

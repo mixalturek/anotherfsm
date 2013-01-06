@@ -121,7 +121,7 @@ public class TimeoutStateMachineTest {
 
 			Thread.sleep(TIMEOUT * 2);
 
-			assertEquals(startState, machine.getActiveState());
+			assertEquals(timeoutState, machine.getActiveState());
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
@@ -482,6 +482,48 @@ public class TimeoutStateMachineTest {
 			// 3 during development
 			assertTrue(listener.transitionsNum >= 3
 					&& listener.transitionsNum <= 5);
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		} catch (InterruptedException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testProcessTwoTimeouts() {
+		StateMachine machine = new TimeoutStateMachine("fsm");
+		final State startState = new State("startState");
+		final State timeoutState = new State("timeoutState");
+		Transition restartTimeout = new Transition(startState,
+				new TimeoutEvent(TIMEOUT, TimeoutEvent.Type.LOOP_RESTART),
+				startState);
+		Transition noRestartTimeout = new Transition(
+				startState,
+				new TimeoutEvent(TIMEOUT * 3, TimeoutEvent.Type.LOOP_NO_RESTART),
+				timeoutState);
+
+		TransitionListenerImpl restartListener = new TransitionListenerImpl();
+		TransitionListenerImpl noRestartListener = new TransitionListenerImpl();
+		restartTimeout.addListener(restartListener);
+		noRestartTimeout.addListener(noRestartListener);
+
+		try {
+			machine.addState(startState);
+			machine.addState(timeoutState);
+			machine.addTransition(restartTimeout);
+			machine.addTransition(noRestartTimeout);
+			machine.setStartState(startState);
+			machine.start();
+
+			Thread.sleep(TIMEOUT * 4);
+
+			// 2 during development
+			assertTrue(restartListener.transitionsNum >= 2
+					&& restartListener.transitionsNum <= 4);
+			assertEquals(1, noRestartListener.transitionsNum);
+			assertEquals(timeoutState, machine.getActiveState());
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {

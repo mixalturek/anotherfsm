@@ -3,9 +3,6 @@ TODO
 
 - Solve TODO: and FIXME: in code.
 
-- TimeoutEvent, use all parameters during comparison.
-- Schedule all timeouts in a state to have general code.
-
 - First release.
 
 - Verify logged messages during the processing and preprocessing.
@@ -22,6 +19,8 @@ TODO
 	- Example for log4j and slf4j logger.
 
 - Verify "Do nothing" exceptions in unit tests.
+- Update fail("Should not be executed"); to fail("Should not be executed" + e);
+
 - FsmEditor or QFsm patch.
 - Analyzer and visualization of FSM transitions logs.
 - Track and check internal FSM state - creating, running, stopped

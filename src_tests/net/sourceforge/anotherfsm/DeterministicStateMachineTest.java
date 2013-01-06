@@ -261,7 +261,9 @@ public class DeterministicStateMachineTest {
 						State current) {
 					switch (enteredNum) {
 					case 0:
-						assertEquals(startState, previous);
+						assertEquals(
+								new State(StateMachine.INITIAL_STATE_NAME),
+								previous);
 						assertEquals(new StartEvent(), event);
 						assertEquals(startState, current);
 						real.add("startState.onStateEnter");
@@ -324,7 +326,9 @@ public class DeterministicStateMachineTest {
 						State current) {
 					switch (enteredNum) {
 					case 0:
-						assertEquals(startState, previous);
+						assertEquals(
+								new State(StateMachine.INITIAL_STATE_NAME),
+								previous);
 						assertEquals(new StartEvent(), event);
 						assertEquals(startState, current);
 						real.add("fsm.onStateEnter");
