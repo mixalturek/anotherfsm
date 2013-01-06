@@ -48,7 +48,7 @@ abstract class ProcessorAdapter implements Processor {
 		Helpers.ensureNotNull(name, "name");
 
 		this.name = name;
-		logger = AnotherFsm.getInstance().getLogger(getClass(), name);
+		logger = AnotherFsm.getLogger(getClass(), name);
 	}
 
 	@Override

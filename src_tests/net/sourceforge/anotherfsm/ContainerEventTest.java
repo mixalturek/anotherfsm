@@ -11,7 +11,7 @@ import org.junit.Test;
 public class ContainerEventTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.init(new StdStreamLoggerFactory());
+		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
 	}
 
 	@Test

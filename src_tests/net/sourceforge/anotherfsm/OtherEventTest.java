@@ -10,7 +10,7 @@ import org.junit.Test;
 public class OtherEventTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.init(new StdStreamLoggerFactory());
+		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
 	}
 
 	@Test

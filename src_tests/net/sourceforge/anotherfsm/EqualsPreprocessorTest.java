@@ -29,7 +29,7 @@ import org.junit.Test;
 public class EqualsPreprocessorTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.init(new StdStreamLoggerFactory());
+		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
 	}
 
 	@Test

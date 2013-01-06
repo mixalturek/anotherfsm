@@ -20,6 +20,7 @@ package net.sourceforge.anotherfsm;
 
 import net.sourceforge.anotherfsm.logger.FsmLogger;
 import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
+import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 /**
  * Factory of classes, the main class in this library. Method init() must be
@@ -29,49 +30,34 @@ import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
  * 
  * @see #init(FsmLoggerFactory)
  */
-public class AnotherFsm {
+public abstract class AnotherFsm {
 	/**
 	 * The version of the library. The string has format
 	 * "major.minor.release-note".
 	 */
 	public static final String VERSION = "0.1.0-dev";
 
-	/** The singleton instance. */
-	private static AnotherFsm instance;
-
 	/** The factory of loggers. */
-	private final FsmLoggerFactory loggerFactory;
+	private static FsmLoggerFactory loggerFactory = new StdStreamLoggerFactory();
 
 	/**
-	 * Initialize the library. This method must be called before all other
-	 * methods and just once.
+	 * Forbid creating instances.
+	 */
+	private AnotherFsm() {
+		// Do nothing
+	}
+
+	/**
+	 * Define a logger factory that will be used to create loggers. The default
+	 * logging subsystem is standard output and error streams.
+	 * 
+	 * Existing loggers will remain untouched. Prefer to call this method before
+	 * all other ones in the library and just once.
 	 * 
 	 * @param loggerFactory
 	 *            the logger factory that will be used for creating loggers
 	 */
-	public static void init(FsmLoggerFactory loggerFactory) {
-		instance = new AnotherFsm(loggerFactory);
-	}
-
-	/**
-	 * Get the singleton instance. The class must be initialized before the
-	 * first call.
-	 * 
-	 * @return the singleton instance.
-	 * @see #init(FsmLoggerFactory)
-	 */
-	public static AnotherFsm getInstance() {
-		// Don't check the value, it's documented.
-		return instance;
-	}
-
-	/**
-	 * Create the object.
-	 * 
-	 * @param loggerFactory
-	 *            the logger factory that will be used for creating loggers
-	 */
-	private AnotherFsm(FsmLoggerFactory factory) {
+	public static void setLoggerFactory(FsmLoggerFactory factory) {
 		Helpers.ensureNotNull(factory, "factory");
 
 		loggerFactory = factory;
@@ -84,7 +70,7 @@ public class AnotherFsm {
 	 *            the class
 	 * @return the logger
 	 */
-	public FsmLogger getLogger(Class<Object> clazz) {
+	public static FsmLogger getLogger(Class<Object> clazz) {
 		Helpers.ensureNotNull(clazz, "class");
 
 		return loggerFactory.getLogger(clazz);
@@ -99,7 +85,7 @@ public class AnotherFsm {
 	 *            the class instance
 	 * @return the logger
 	 */
-	public FsmLogger getLogger(Class<?> clazz, String instance) {
+	public static FsmLogger getLogger(Class<?> clazz, String instance) {
 		Helpers.ensureNotNull(clazz, "class");
 		Helpers.ensureNotNull(instance, "instance");
 
@@ -113,7 +99,7 @@ public class AnotherFsm {
 	 *            the logger name
 	 * @return the logger
 	 */
-	public FsmLogger getLogger(String name) {
+	public static FsmLogger getLogger(String name) {
 		Helpers.ensureNotNull(name, "name");
 
 		return loggerFactory.getLogger(name);
