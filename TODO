@@ -5,9 +5,6 @@ TODO
 
 - First release.
 
-- Verify logged messages during the processing and preprocessing.
-- Unit test for order of called preprocessors.
-
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.
 

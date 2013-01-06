@@ -80,7 +80,7 @@ abstract class ProcessorAdapter implements Processor {
 		Event preprocessedEvent = event;
 
 		for (Preprocessor preprocessor : preprocessors) {
-			preprocessedEvent = preprocessor.process(event);
+			preprocessedEvent = preprocessor.process(preprocessedEvent);
 
 			if (preprocessedEvent == null)
 				return null;

@@ -61,7 +61,7 @@ abstract class PreprocessorAdapter extends ProcessorAdapter implements
 		}
 
 		if (!event.equals(resultEvent) && logger.isInfoEnabled()) {
-			logger.info("Event processed: " + event + Transition.TR
+			logger.info("Event preprocessed: " + event + Transition.TR
 					+ resultEvent);
 		}
 

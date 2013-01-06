@@ -495,7 +495,7 @@ public class DeterministicStateMachineTest {
 			machine.setStartState(state);
 
 			preprocessor.addProcessor(TypeEventA.class,
-					new TypePreprocessor.Processor<TypeEventA>() {
+					new Preprocessor.Processor<TypeEventA>() {
 						@Override
 						public Event process(TypeEventA event) {
 							return null;
@@ -503,7 +503,7 @@ public class DeterministicStateMachineTest {
 					});
 
 			preprocessor.addProcessor(TypeEventB.class,
-					new TypePreprocessor.Processor<TypeEventB>() {
+					new Preprocessor.Processor<TypeEventB>() {
 						@Override
 						public Event process(TypeEventB event) {
 							return new TypeEventA();
@@ -708,6 +708,85 @@ public class DeterministicStateMachineTest {
 			assertTrue(transition.getEvent() instanceof TimeoutEvent);
 			assertEquals(TimeoutEvent.Type.LOOP_NO_RESTART,
 					((TimeoutEvent) transition.getEvent()).getType());
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testPreprocessorsOrder() {
+		StateMachine machine = new DeterministicStateMachine("fsm");
+		State state = new State("state");
+		State another = new State("another");
+		Transition transition = new Transition(state, new TypeEventC(), another);
+		Transition transitionBack = new Transition(another, new TypeEventC(),
+				state);
+		Event processedEvent = null;
+
+		TypePreprocessor typePreprocessor = new TypePreprocessor("type");
+		EqualsPreprocessor equalsPreprocessor = new EqualsPreprocessor("equals");
+
+		try {
+			machine.addPreprocessor(typePreprocessor);
+			machine.addPreprocessor(equalsPreprocessor);
+			machine.addState(state);
+			machine.addState(another);
+			machine.addTransition(transition);
+			machine.addTransition(transitionBack);
+			machine.setStartState(state);
+
+			typePreprocessor.addProcessor(TypeEventA.class,
+					new Preprocessor.Processor<TypeEventA>() {
+						@Override
+						public Event process(TypeEventA event) {
+							return null;
+						}
+					});
+
+			typePreprocessor.addProcessor(TypeEventB.class,
+					new Preprocessor.Processor<TypeEventB>() {
+						@Override
+						public Event process(TypeEventB event) {
+							return new TypeEventA();
+						}
+					});
+
+			equalsPreprocessor.addProcessor(new TypeEventA(),
+					new Preprocessor.Processor<TypeEventA>() {
+						@Override
+						public Event process(TypeEventA event) {
+							return new TypeEventC();
+						}
+					});
+
+			equalsPreprocessor.addProcessor(new TypeEventB(),
+					new Preprocessor.Processor<TypeEventB>() {
+						@Override
+						public Event process(TypeEventB event) {
+							fail("Should not be executed");
+							return null;
+						}
+					});
+
+			machine.start();
+
+			// TypePreprocessor(TypeEventA) -> null
+			processedEvent = machine.process(new TypeEventA());
+			assertNull(processedEvent);
+			assertEquals(state, machine.getActiveState());
+
+			// TypePreprocessor(TypeEventB) -> TypeEventA
+			// EqualsPreprocessor(TypeEventA) -> TypeEventC
+			processedEvent = machine.process(new TypeEventB());
+			assertEquals(new TypeEventC(), processedEvent);
+			assertEquals(another, machine.getActiveState());
+
+			// No preprocessor
+			processedEvent = machine.process(new TypeEventC());
+			assertEquals(new TypeEventC(), processedEvent);
+			assertEquals(state, machine.getActiveState());
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		}
