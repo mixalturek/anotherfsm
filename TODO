@@ -9,6 +9,8 @@ TODO
 - ThreadQueueStateMachine.
 
 - Ant build.xml.
+	- Fix javadoc.
+	- Clean.
 
 - Web.
 	- Examples.
