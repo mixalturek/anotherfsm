@@ -11,6 +11,7 @@ TODO
 - Ant build.xml.
 	- Fix javadoc.
 	- Clean.
+	- Execute junit tests.
 
 - Web.
 	- Examples.
