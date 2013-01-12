@@ -30,17 +30,22 @@ import net.sourceforge.anotherfsm.TimeoutEvent.Type;
  * Building of the object is NOT synchronized and should be done just in one
  * thread. Only the processing of the events is synchronized.
  * 
- * Note creating of this object also executes an additional thread for a timer
- * and generating of timeout events. Code of callbacks/listeners for timeout
- * events is executed under this thread.
+ * Note this object executes an additional thread for a timer and generating of
+ * timeout events. Code of callbacks/listeners for timeout events is executed
+ * under this thread.
  * 
  * @author Michal Turek
  * 
  * @see TimeoutEvent
+ * @see #start()
+ * @see #close()
  */
 public class TimeoutStateMachine extends SynchronizedStateMachine {
 	/** The timer for scheduling timeout transitions. */
 	private Timer timer = null;
+
+	/** The inner thread used for timer is a daemon thread. */
+	private final boolean daemon;
 
 	/**
 	 * The unique ID of the last state enter to forbid timeout in incorrect
@@ -57,13 +62,29 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 	private Object lastStateEnterIdNonLoop = new Object();
 
 	/**
-	 * Create the state machine.
+	 * Create the state machine. The inner thread used for timer will NOT be a
+	 * daemon.
 	 * 
 	 * @param name
 	 *            the name of the state machine
 	 */
 	public TimeoutStateMachine(String name) {
+		this(name, false);
+	}
+
+	/**
+	 * Create the state machine.
+	 * 
+	 * @param name
+	 *            the name of the state machine
+	 * @param daemon
+	 *            the inner thread used for timer is a daemon thread
+	 * 
+	 * @see java.lang.Thread
+	 */
+	public TimeoutStateMachine(String name, boolean daemon) {
 		super(name);
+		this.daemon = daemon;
 	}
 
 	@Override
@@ -75,7 +96,7 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 		}
 
 		timer = new Timer(getClass().getSimpleName()
-				+ Helpers.CLASS_INSTANCE_DELIMITER + getName(), false);
+				+ Helpers.CLASS_INSTANCE_DELIMITER + getName(), daemon);
 
 		try {
 			super.start();
