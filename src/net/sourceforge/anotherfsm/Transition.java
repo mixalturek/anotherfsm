@@ -45,7 +45,7 @@ class Transition {
 	/**
 	 * Create the object.
 	 * 
-	 * @param sourceState
+	 * @param source
 	 *            the source state
 	 * @param event
 	 *            the event

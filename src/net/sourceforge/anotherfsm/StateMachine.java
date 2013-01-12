@@ -21,13 +21,9 @@ package net.sourceforge.anotherfsm;
 import java.util.Set;
 
 /**
- * Abstract state machine
+ * Interface for all state machines.
  * 
  * @author Michal Turek
- * 
- * @see AnotherFsm#genDeterministicStateMachine(String)
- * @see AnotherFsm#genSynchronizedStateMachine(String)
- * @see AnotherFsm#genTimeoutStateMachine(String)
  */
 public interface StateMachine extends Processor, AutoCloseable {
 	/** The name of temporary generated initial state. */

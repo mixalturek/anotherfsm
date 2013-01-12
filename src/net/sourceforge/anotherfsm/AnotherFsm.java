@@ -23,12 +23,9 @@ import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 /**
- * Factory of classes, the main class in this library. Method init() must be
- * called before use.
+ * The main class in this library for configuration purposes.
  * 
  * @author Michal Turek
- * 
- * @see #init(FsmLoggerFactory)
  */
 public abstract class AnotherFsm {
 	/**
@@ -54,7 +51,7 @@ public abstract class AnotherFsm {
 	 * Existing loggers will remain untouched. Prefer to call this method before
 	 * all other ones in the library and just once.
 	 * 
-	 * @param loggerFactory
+	 * @param factory
 	 *            the logger factory that will be used for creating loggers
 	 */
 	public static void setLoggerFactory(FsmLoggerFactory factory) {

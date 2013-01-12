@@ -60,8 +60,6 @@ class TransitionMap {
 	 * 
 	 * @param event
 	 *            the event
-	 * @param state
-	 *            the source state
 	 * @return the transition or null
 	 */
 	public Transition getTransition(Event event) {

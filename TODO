@@ -12,14 +12,17 @@ TODO
 	- Fix javadoc.
 	- Clean.
 	- Execute junit tests.
+	- Split compile target.
 
 - Web.
 	- Examples.
 	- Generate javadoc - API, full.
 	- Example for log4j and slf4j logger.
 
-- Verify "Do nothing" exceptions in unit tests.
-- Update fail("Should not be executed"); to fail("Should not be executed" + e);
+- Tests
+	- Verify "Do nothing" exceptions in unit tests.
+	- Update fail("Should not be executed"); to fail("Should not be executed" + e);
+	- Execute state machine tests for all state machines.
 
 - FsmEditor or QFsm patch.
 - Analyzer and visualization of FSM transitions logs.
