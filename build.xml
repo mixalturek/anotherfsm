@@ -32,10 +32,13 @@
 	</path>
 	
 	<path id="classpath-tests">
-		<pathelement location="${builddir}/classes" />
-		<pathelement location="/usr/share/java/junit4.jar" />
+		<path refid="classpath"/>
+		<pathelement location="${builddir}/classes_tests/" />
+		<pathelement location="lib/junit4-4.8.2.jar" />
+		<pathelement location="lib/hamcrest-core-1.1.jar" />
 	</path>
 
+	<!-- Echo available targets. -->
 	<target name="usage">
 		<echo>
 This ANT build scpript supports the following targets:
@@ -45,6 +48,7 @@ compile              - Process all compile targets.
     compile-sources  - Compile all source codes.
     compile-examples - Compile all examples.
     compile-tests    - Compile all tests.
+tests                - Execute junit tests.
 jar                  - Build jar packages.
 javadoc              - Process all javadoc targets.
     javadoc-api      - Generate JavaDoc documentation.
@@ -111,6 +115,21 @@ all                  - Process full build.
 			fork="false"
 			deprecation="on"
 			debug="on" />
+	</target>
+	
+	<!-- Execute junit tests. -->
+	<target name="tests" depends="compile-tests">
+		<mkdir dir="${builddir}/tests/" />
+		<junit printsummary="yes" haltonfailure="yes" showoutput="no">
+			<classpath refid="classpath-tests" />
+		 	<batchtest fork="yes" todir="${builddir}/tests">
+				<formatter type="xml"/>
+		 		<formatter type="plain"/>
+		 		<fileset dir="src_tests">
+					<include name="**/*Test.java"/>
+				</fileset>
+			</batchtest>
+		</junit> 
 	</target>
 
 	<!-- Build jar packages. -->
@@ -202,11 +221,15 @@ all                  - Process full build.
 			<fileset dir="src_tests"/>
 		</copy>
 		
+		<copy todir="${builddir}/dist/lib/">
+			<fileset dir="lib"/>
+		</copy>
+		
 		<copy todir="${builddir}/dist/doc/">
 			<fileset dir="${builddir}/doc/"/>
 		</copy>
 	</target>
 
     <!-- Process full build. -->
-    <target name="all" depends="compile,jar,javadoc,dist"/>
+    <target name="all" depends="compile,tests,jar,javadoc,dist"/>
 </project>

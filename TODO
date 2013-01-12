@@ -8,9 +8,6 @@ TODO
 	- Solve TODO: and FIXME: in code.
 	- TimeoutStateMachine can be daemon.
 
-- Ant build.xml.
-	- Execute junit tests.
-
 - Web.
 	- Examples.
 	- Example for log4j and slf4j logger.
@@ -20,6 +17,7 @@ TODO
 	- Update fail("Should not be executed"); to fail("Should not be executed" + e);
 
 - Future
+	- Build server.
 	- ThreadQueueProcessor.
 	- NonDeterministicStateMachine.
 	- FsmEditor or QFsm patch.
