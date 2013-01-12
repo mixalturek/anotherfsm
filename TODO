@@ -1,31 +1,27 @@
 TODO
 ====
 
-- Solve TODO: and FIXME: in code.
-
-- First release.
-
-- NonDeterministicStateMachine.
-- ThreadQueueStateMachine.
+- General
+	- First release.
 
 - Code
+	- Solve TODO: and FIXME: in code.
 	- TimeoutStateMachine can be daemon.
 
 - Ant build.xml.
-	- Clean.
 	- Execute junit tests.
 
 - Web.
 	- Examples.
-	- Generate javadoc - API, full.
 	- Example for log4j and slf4j logger.
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
 	- Update fail("Should not be executed"); to fail("Should not be executed" + e);
 
-- FsmEditor or QFsm patch.
-- Analyzer and visualization of FSM transitions logs.
-- Track and check internal FSM state - creating, running, stopped
-
-- AsciiSchemaEditor.
+- Future
+	- ThreadQueueProcessor.
+	- NonDeterministicStateMachine.
+	- FsmEditor or QFsm patch.
+	- Analyzer and visualization of FSM transitions logs.
+	- AsciiSchemaEditor.

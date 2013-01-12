@@ -40,15 +40,17 @@
 		<echo>
 This ANT build scpript supports the following targets:
 
-clean            - Clean all generated files.
-compile-sources  - Compile all source codes.
-compile-examples - Compile all examples.
-compile-tests    - Compile all tests.
-jar              - Build jar packages.
-javadoc          - Generate JavaDoc documentation.
-javadoc-private  - Generate JavaDoc documentation including private members.
-dist             - Copy all files to the distribution directory.
-all              - Process full build.
+clean                - Clean all generated files.
+compile              - Process all compile targets.
+    compile-sources  - Compile all source codes.
+    compile-examples - Compile all examples.
+    compile-tests    - Compile all tests.
+jar                  - Build jar packages.
+javadoc              - Process all javadoc targets.
+    javadoc-api      - Generate JavaDoc documentation.
+    javadoc-full     - Generate full JavaDoc documentation.
+dist                 - Copy files to the distribution directory.
+all                  - Process full build.
 		</echo>
 	</target>
 	
@@ -61,14 +63,14 @@ all              - Process full build.
 	<target name="init">
 		<tstamp />
 		<mkdir dir="${builddir}/" />
-		<mkdir dir="${builddir}/classes/" />
-		<mkdir dir="${builddir}/classes_examples/" />
-		<mkdir dir="${builddir}/classes_tests/" />
-		<mkdir dir="${builddir}/dist/" />
 	</target>
+	
+	<!-- Process all compile targets. -->
+	<target name="compile" depends="compile-sources,compile-examples,compile-tests"/>
 
 	<!-- Compile all source codes. -->
 	<target name="compile-sources" depends="init">
+		<mkdir dir="${builddir}/classes/" />
 		<javac srcdir="src" destdir="${builddir}/classes"
 			classpathref="classpath"
 			source="${javac.source}"
@@ -83,6 +85,7 @@ all              - Process full build.
 		
 	<!-- Compile all examples. -->
 	<target name="compile-examples" depends="compile-sources">
+		<mkdir dir="${builddir}/classes_examples/" />
 		<javac srcdir="src_examples" destdir="${builddir}/classes_examples"
 			classpathref="classpath"
 			source="${javac.source}"
@@ -97,6 +100,7 @@ all              - Process full build.
 		
 	<!-- Compile all tests. -->
 	<target name="compile-tests" depends="compile-sources">
+		<mkdir dir="${builddir}/classes_tests/" />
 		<javac srcdir="src_tests" destdir="${builddir}/classes_tests"
 			classpathref="classpath-tests"
 			source="${javac.source}"
@@ -126,8 +130,11 @@ all              - Process full build.
 		</jar>
 	</target>
 
+	<!-- Process all javadoc targets. -->
+	<target name="javadoc" depends="javadoc-api,javadoc-full"/>
+	
 	<!-- Generate JavaDoc documentation. -->
-	<target name="javadoc">
+	<target name="javadoc-api">
 		<javadoc
 			sourcepath="src"
 			destdir="${builddir}/doc"
@@ -151,10 +158,10 @@ all              - Process full build.
 	</target>
 	
     <!-- Generate JavaDoc documentation including private members. -->
-	<target name="javadoc-private">
+	<target name="javadoc-full">
 		<javadoc
-			sourcepath="src"
-			destdir="${builddir}/doc_private"
+			sourcepath="src;src_examples;src_tests"
+			destdir="${builddir}/doc_full"
 			packagenames="net.sourceforge.anotherfsm.*"
 			access="private"
 			author="true"
@@ -167,18 +174,39 @@ all              - Process full build.
 			splitindex="true"
 			use="true"
 			version="true"
-			classpathref="classpath"
+			classpathref="classpath-tests"
 			doctitle="${projectName} ${version}"
 			windowtitle="${projectName}"
 			bottom="&lt;i&gt;Copyright 2013 ${author}, &lt;a href=&quot;${projectWeb}&quot;&gt;${projectName}&lt;/a&gt;.&lt;/i&gt;"
 		/>
 	</target>
     
-	<!-- Copy all files to the distribution directory. -->
-	<target name="dist" depends="jar,javadoc,javadoc-private">
-		<copy file="${builddir}/${jarname}" todir="${builddir}/dist/" />
+	<!-- Copy files to the distribution directory. -->
+	<target name="dist" depends="jar,javadoc-api">
+		<copy todir="${builddir}/dist/">
+			<fileset file="${builddir}/${jarname}"/>
+			<fileset file="LICENSE"/>
+			<fileset file="NOTICE"/>
+			<fileset file="build.xml"/>
+		</copy>
+		
+		<copy todir="${builddir}/dist/src/">
+			<fileset dir="src"/>
+		</copy>
+			
+		<copy todir="${builddir}/dist/src_examples/">
+			<fileset dir="src_examples"/>
+		</copy>
+		
+		<copy todir="${builddir}/dist/src_tests/">
+			<fileset dir="src_tests"/>
+		</copy>
+		
+		<copy todir="${builddir}/dist/doc/">
+			<fileset dir="${builddir}/doc/"/>
+		</copy>
 	</target>
 
     <!-- Process full build. -->
-    <target name="all" depends="compile-sources,compile-examples,compile-tests,jar,dist,javadoc,javadoc-private"/>
+    <target name="all" depends="compile,jar,javadoc,dist"/>
 </project>
