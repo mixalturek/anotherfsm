@@ -8,6 +8,9 @@ TODO
 - NonDeterministicStateMachine.
 - ThreadQueueStateMachine.
 
+- Code
+	- TimeoutStateMachine can be daemon.
+
 - Ant build.xml.
 	- Clean.
 	- Execute junit tests.
@@ -20,7 +23,6 @@ TODO
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
 	- Update fail("Should not be executed"); to fail("Should not be executed" + e);
-	- Execute state machine tests for all state machines.
 
 - FsmEditor or QFsm patch.
 - Analyzer and visualization of FSM transitions logs.

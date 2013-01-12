@@ -1,3 +1,21 @@
+/*
+ *  Copyright 2013 Michal Turek, Another FSM
+ *
+ *      http://anotherfsm.sourceforge.net/
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
@@ -17,6 +35,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class DeterministicStateMachineTest {
+	/**
+	 * Generate state machine object. Redefine this method in subclasses to use
+	 * these tests for them too.
+	 * 
+	 * @return the state machine
+	 */
+	protected StateMachine genStateMachine() {
+		return new DeterministicStateMachine("fsm");
+	}
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
@@ -24,7 +52,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testGetName() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		assertEquals("fsm", machine.getName());
 
 		machine.close();
@@ -32,7 +60,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testSetStartState() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		assertNull(machine.getActiveState());
 
 		try {
@@ -62,7 +90,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testStart() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		State state = new State("state", State.Type.FINAL);
 		StateListenerImpl listener = new StateListenerImpl(
 				StateListener.Type.LOOP_PROCESS);
@@ -126,7 +154,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testAddState() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		assertEquals(0, machine.getStates().size());
 
 		try {
@@ -159,7 +187,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testAddTransition() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		assertEquals(0, machine.getStates().size());
 		assertEquals(0, machine.getTransitions().size());
 
@@ -235,7 +263,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testAddListenerStateTransitionListener() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		final State startState = new State("state");
 		final State finalState = new State("another", State.Type.FINAL);
 		Transition transition = new Transition(startState, new TypeEventA(),
@@ -479,7 +507,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testAddProcessor() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		State state = new State("state");
 		State another = new State("another");
 		Transition transition = new Transition(state, new TypeEventA(), another);
@@ -555,7 +583,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testGetActiveState() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		assertNull(machine.getActiveState());
 
 		try {
@@ -571,7 +599,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testGetActiveStates() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		assertEquals(new HashSet<State>(), machine.getActiveStates());
 
 		try {
@@ -589,7 +617,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testProcess() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		State state = new State("state");
 		State another = new State("another");
 		Transition transition = new Transition(state, new TypeEventA(), another);
@@ -656,6 +684,8 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testGetTransition() {
+		// This is a test of DeterministicStateMachine implementation, not the
+		// general StateMachine interface
 		DeterministicStateMachine machine = new DeterministicStateMachine("fsm");
 		Transition transition = null;
 
@@ -717,7 +747,7 @@ public class DeterministicStateMachineTest {
 
 	@Test
 	public final void testPreprocessorsOrder() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
+		StateMachine machine = genStateMachine();
 		State state = new State("state");
 		State another = new State("another");
 		Transition transition = new Transition(state, new TypeEventC(), another);
@@ -789,6 +819,112 @@ public class DeterministicStateMachineTest {
 			assertEquals(state, machine.getActiveState());
 		} catch (FsmException e) {
 			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testContainerEvent() {
+		StateMachine machine = genStateMachine();
+		State state = new State("state");
+		State another = new State("another");
+		Transition transitionA = new Transition(state,
+				new ContainerEvent<Character>('A'), another);
+		Transition transitionB = new Transition(state,
+				new ContainerEvent<Character>('B'), another);
+		Transition transitionOther = new Transition(state, OtherEvent.instance,
+				state);
+
+		Event processedEvent = null;
+
+		try {
+			machine.addState(state);
+			machine.addState(another);
+			machine.addTransition(transitionA);
+			machine.addTransition(transitionB);
+			machine.addTransition(transitionOther);
+			machine.setStartState(state);
+			machine.start();
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		try {
+			processedEvent = machine
+					.process(new ContainerEvent<Character>('W'));
+			assertEquals(OtherEvent.instance, processedEvent);
+			assertEquals(new ContainerEvent<Character>('W'),
+					((OtherEvent) processedEvent).getSourceEvent());
+			assertEquals(state, machine.getActiveState());
+
+			processedEvent = machine
+					.process(new ContainerEvent<Character>('A'));
+			assertEquals(new ContainerEvent<Character>('A'), processedEvent);
+			assertEquals(another, machine.getActiveState());
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testOtherEvent() {
+		StateMachine machine = genStateMachine();
+		final State state = new State("state");
+		final State another = new State("another");
+		Transition loop = new Transition(state, new TypeEventA(), state);
+		Transition transition = new Transition(state, OtherEvent.instance,
+				another);
+		Transition back = new Transition(another, new TypeEventA(), state);
+
+		TransitionListenerImpl listener = new TransitionListenerImpl() {
+			@Override
+			public void onTransition(State source, Event event,
+					State destination) {
+				assertEquals(state, source);
+				assertEquals(OtherEvent.instance, event);
+				assertEquals(new TypeEventB(),
+						((OtherEvent) event).getSourceEvent());
+				assertEquals(another, destination);
+
+				super.onTransition(source, event, destination);
+			}
+		};
+
+		Event processedEvent = null;
+
+		try {
+			machine.addState(state);
+			machine.addState(another);
+			machine.addTransition(loop);
+			machine.addTransition(transition);
+			machine.addTransition(back);
+			machine.setStartState(state);
+			machine.start();
+
+			transition.addListener(listener);
+
+			processedEvent = machine.process(new TypeEventA());
+			assertEquals(new TypeEventA(), processedEvent);
+
+			processedEvent = machine.process(new TypeEventB());
+			assertEquals(1, listener.transitionsNum);
+			assertEquals(OtherEvent.instance, processedEvent);
+			assertEquals(new TypeEventB(),
+					((OtherEvent) processedEvent).getSourceEvent());
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		try {
+			assertEquals(another, machine.getActiveState());
+			processedEvent = machine.process(new TypeEventB());
+			fail("Should not be executed");
+		} catch (FsmException e) {
+			// No such transition
+			// Do nothing
 		}
 
 		machine.close();

@@ -1,24 +1,40 @@
+/*
+ *  Copyright 2013 Michal Turek, Another FSM
+ *
+ *      http://anotherfsm.sourceforge.net/
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TimeoutStateMachineTest {
+public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 	/** The default timeout for the tests. */
 	private static final long TIMEOUT = 10;
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
+	@Override
+	protected StateMachine genStateMachine() {
+		return new TimeoutStateMachine("fsm");
 	}
 
 	@Test
-	public final void testAddTransition() {
+	public final void testAddTransitionTimeoutEvent() {
 		StateMachine machine = new TimeoutStateMachine("fsm");
 		State state = new State("state");
 
@@ -57,7 +73,7 @@ public class TimeoutStateMachineTest {
 	}
 
 	@Test
-	public final void testStart() {
+	public final void testStartTimeout() {
 		StateMachine machine = new TimeoutStateMachine("fsm");
 
 		try {

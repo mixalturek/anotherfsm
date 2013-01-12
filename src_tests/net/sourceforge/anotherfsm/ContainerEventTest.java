@@ -1,19 +1,29 @@
+/*
+ *  Copyright 2013 Michal Turek, Another FSM
+ *
+ *      http://anotherfsm.sourceforge.net/
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
-import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ContainerEventTest {
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
-	}
-
 	@Test
 	public final void testEqualsObject() {
 		assertEquals(new ContainerEvent<Character>('A'),
@@ -32,50 +42,5 @@ public class ContainerEventTest {
 				new ContainerEvent<Character>('A').toString());
 		assertEquals("ContainerEvent(TypeEventA)",
 				new ContainerEvent<TypeEventA>(new TypeEventA()).toString());
-	}
-
-	@Test
-	public final void testStateMachine() {
-		StateMachine machine = new DeterministicStateMachine("fsm");
-		State state = new State("state");
-		State another = new State("another");
-		Transition transitionA = new Transition(state,
-				new ContainerEvent<Character>('A'), another);
-		Transition transitionB = new Transition(state,
-				new ContainerEvent<Character>('B'), another);
-		Transition transitionOther = new Transition(state, OtherEvent.instance,
-				state);
-
-		Event processedEvent = null;
-
-		try {
-			machine.addState(state);
-			machine.addState(another);
-			machine.addTransition(transitionA);
-			machine.addTransition(transitionB);
-			machine.addTransition(transitionOther);
-			machine.setStartState(state);
-			machine.start();
-		} catch (FsmException e) {
-			fail("Should not be executed");
-		}
-
-		try {
-			processedEvent = machine
-					.process(new ContainerEvent<Character>('W'));
-			assertEquals(OtherEvent.instance, processedEvent);
-			assertEquals(new ContainerEvent<Character>('W'),
-					((OtherEvent) processedEvent).getSourceEvent());
-			assertEquals(state, machine.getActiveState());
-
-			processedEvent = machine
-					.process(new ContainerEvent<Character>('A'));
-			assertEquals(new ContainerEvent<Character>('A'), processedEvent);
-			assertEquals(another, machine.getActiveState());
-		} catch (FsmException e) {
-			fail("Should not be executed");
-		}
-
-		machine.close();
 	}
 }

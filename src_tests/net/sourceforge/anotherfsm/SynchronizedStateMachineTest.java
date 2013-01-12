@@ -18,12 +18,9 @@
 
 package net.sourceforge.anotherfsm;
 
-
-public class TransitionListenerImpl implements TransitionListener {
-	public int transitionsNum = 0;
-
+public class SynchronizedStateMachineTest extends DeterministicStateMachineTest {
 	@Override
-	public void onTransition(State source, Event event, State destination) {
-		++transitionsNum;
+	protected StateMachine genStateMachine() {
+		return new SynchronizedStateMachine("fsm");
 	}
 }
