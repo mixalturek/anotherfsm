@@ -40,13 +40,15 @@
 		<echo>
 This ANT build scpript supports the following targets:
 
-clean           - Clean all generated files.
-compile         - Compile all source codes including examples and tests.
-jar             - Build jar packages.
-javadoc         - Generate JavaDoc documentation.
-javadoc-private - Generate JavaDoc documentation including private members.
-dist            - Copy all files to the distribution directory.
-all             - Process full build.
+clean            - Clean all generated files.
+compile-sources  - Compile all source codes.
+compile-examples - Compile all examples.
+compile-tests    - Compile all tests.
+jar              - Build jar packages.
+javadoc          - Generate JavaDoc documentation.
+javadoc-private  - Generate JavaDoc documentation including private members.
+dist             - Copy all files to the distribution directory.
+all              - Process full build.
 		</echo>
 	</target>
 	
@@ -65,8 +67,8 @@ all             - Process full build.
 		<mkdir dir="${builddir}/dist/" />
 	</target>
 
-	<!-- Compile all source codes including examples and tests. -->
-	<target name="compile" depends="init">
+	<!-- Compile all source codes. -->
+	<target name="compile-sources" depends="init">
 		<javac srcdir="src" destdir="${builddir}/classes"
 			classpathref="classpath"
 			source="${javac.source}"
@@ -77,7 +79,10 @@ all             - Process full build.
 			fork="false"
 			deprecation="on"
 			debug="on" />
+	</target>
 		
+	<!-- Compile all examples. -->
+	<target name="compile-examples" depends="compile-sources">
 		<javac srcdir="src_examples" destdir="${builddir}/classes_examples"
 			classpathref="classpath"
 			source="${javac.source}"
@@ -88,7 +93,10 @@ all             - Process full build.
 			fork="false"
 			deprecation="on"
 			debug="on" />
+	</target>
 		
+	<!-- Compile all tests. -->
+	<target name="compile-tests" depends="compile-sources">
 		<javac srcdir="src_tests" destdir="${builddir}/classes_tests"
 			classpathref="classpath-tests"
 			source="${javac.source}"
@@ -102,7 +110,7 @@ all             - Process full build.
 	</target>
 
 	<!-- Build jar packages. -->
-	<target name="jar" depends="init,compile">
+	<target name="jar" depends="init,compile-sources">
 		<delete file="${builddir}/${jarname}" />
 		
 		<jar jarfile="${builddir}/${jarname}" basedir="${builddir}/classes">
@@ -172,5 +180,5 @@ all             - Process full build.
 	</target>
 
     <!-- Process full build. -->
-    <target name="all" depends="compile,jar,dist,javadoc,javadoc-private"/>
+    <target name="all" depends="compile-sources,compile-examples,compile-tests,jar,dist,javadoc,javadoc-private"/>
 </project>
