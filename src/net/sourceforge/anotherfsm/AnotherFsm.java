@@ -67,7 +67,7 @@ public abstract class AnotherFsm {
 	 *            the class
 	 * @return the logger
 	 */
-	public static FsmLogger getLogger(Class<Object> clazz) {
+	public static FsmLogger getLogger(Class<?> clazz) {
 		Helpers.ensureNotNull(clazz, "class");
 
 		return loggerFactory.getLogger(clazz);

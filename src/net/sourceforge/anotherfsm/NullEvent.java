@@ -19,7 +19,7 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Null event is event equivalent of null.
+ * Null event is equivalent of null in events world.
  * 
  * @author Michal Turek
  */

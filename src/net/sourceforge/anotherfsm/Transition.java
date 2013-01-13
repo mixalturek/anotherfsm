@@ -26,7 +26,7 @@ import java.util.List;
  * 
  * @author Michal Turek
  */
-class Transition {
+public class Transition {
 	/** The delimiter for string representation. */
 	static final String TR = " -> ";
 

@@ -26,7 +26,7 @@ import java.util.List;
  * 
  * @author Michal Turek
  */
-class State {
+public class State {
 	/** The name of the state. */
 	private final String name;
 

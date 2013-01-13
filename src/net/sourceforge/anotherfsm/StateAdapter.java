@@ -28,6 +28,16 @@ public class StateAdapter implements StateListener {
 	private final StateListener.Type type;
 
 	/**
+	 * Create the object. The listener will be processed even on loop
+	 * transitions.
+	 * 
+	 * @see StateListener#Type
+	 */
+	public StateAdapter() {
+		this(StateListener.Type.LOOP_PROCESS);
+	}
+
+	/**
 	 * Create the object.
 	 * 
 	 * @param type

@@ -19,12 +19,11 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Abstract event that causes the FSM transitions.
+ * Base class of all events that cause the transitions.
  * 
  * @author Michal Turek
  */
 public interface Event {
-
 	@Override
 	public int hashCode();
 
