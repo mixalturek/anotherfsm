@@ -53,6 +53,7 @@ jar                  - Build jar packages.
 javadoc              - Process all javadoc targets.
     javadoc-api      - Generate JavaDoc documentation.
     javadoc-full     - Generate full JavaDoc documentation.
+web                  - Build offline version of project's website.
 dist                 - Copy files to the distribution directory.
 all                  - Process full build.
 		</echo>
@@ -199,6 +200,19 @@ all                  - Process full build.
 			bottom="&lt;i&gt;Copyright 2013 ${author}, &lt;a href=&quot;${projectWeb}&quot;&gt;${projectName}&lt;/a&gt;.&lt;/i&gt;"
 		/>
 	</target>
+	
+	<!-- Build offline version of project's website. -->
+	<target name="web" depends="javadoc-api">
+		<copy todir="${builddir}/web/">
+			<fileset dir="web/" excludes="**/*.php"/>
+		</copy>
+		
+		<copy todir="${builddir}/web/doc/">
+			<fileset dir="${builddir}/doc/"/>
+		</copy>
+		
+		<exec executable="utils/offline_web.sh"/>
+	</target>
     
 	<!-- Copy files to the distribution directory. -->
 	<target name="dist" depends="jar,javadoc-api">
@@ -210,19 +224,19 @@ all                  - Process full build.
 		</copy>
 		
 		<copy todir="${builddir}/dist/src/">
-			<fileset dir="src"/>
+			<fileset dir="src/"/>
 		</copy>
 			
 		<copy todir="${builddir}/dist/src_examples/">
-			<fileset dir="src_examples"/>
+			<fileset dir="src_examples/"/>
 		</copy>
 		
 		<copy todir="${builddir}/dist/src_tests/">
-			<fileset dir="src_tests"/>
+			<fileset dir="src_tests/"/>
 		</copy>
 		
 		<copy todir="${builddir}/dist/lib/">
-			<fileset dir="lib"/>
+			<fileset dir="lib/"/>
 		</copy>
 		
 		<copy todir="${builddir}/dist/doc/">
@@ -231,5 +245,5 @@ all                  - Process full build.
 	</target>
 
     <!-- Process full build. -->
-    <target name="all" depends="compile,tests,jar,javadoc,dist"/>
+    <target name="all" depends="compile,tests,jar,javadoc,dist,web"/>
 </project>

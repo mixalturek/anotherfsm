@@ -1,0 +1,58 @@
+/*
+ *  Copyright 2013 Michal Turek, Another FSM
+ *
+ *      http://anotherfsm.sourceforge.net/
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+html, body 		{ margin: 0px; padding: 0px; }
+
+body
+{
+	font-family: Verdana, "Bitstream Vera Sans", Geneva, Arial, sans-serif;
+	background-color: #051822;
+	color: white;
+	line-height: 1.6em;
+	font-size: 10pt;
+}
+
+#header			{ border-bottom: 3px solid white; margin-bottom: 2em; }
+#header pre     { margin: 1em; }
+#header	.state  { color: white; font-weight: bold; }
+#header #logo	{ position: fixed; bottom: 1em; right: 1em; }
+
+#page			{ margin-left: 18%; margin-right: 6em; margin-bottom: 5em; min-height: 5em; }
+#footer			{ clear: both; border-top: 3px solid white; margin-top: 2em; text-align: center; }
+
+#menu			{ float: left; width: 17%; margin-left: 1em; margin-bottom: 2em; }
+#menu .label	{ font-weight: bold; margin-top: 1em; }
+#menu .active	{ color: red; }
+
+p				{ text-align: justify; }
+h2				{ margin-top: 1.5em; }
+pre				{ overflow: auto; padding: 1em; line-height: 1.2em; }
+img				{ border: none; }
+div.img			{ font-style: italic; text-align: center; margin: 2em; }
+
+a, .m						{ color: yellow; text-decoration: none; }
+a:hover, .m:hover			{ color: red; }
+a.blank:after				{ content: " " url('img/website/blank.gif'); }
+a.down:after				{ content: " " url('img/website/down.gif'); }
+a.blank:hover:after			{ content: " " url('img/website/blank_hover.gif'); }
+a.down:hover:after			{ content: " " url('img/website/down_hover.gif'); }
+
+.warn					{ color: red; font-weight: bold; }
+.todo					{ color: red; font-weight: bold; }
+.todo:before			{ content: "TODO: "; }
+.invalid_link			{ color: blue; font-weight: bold; }

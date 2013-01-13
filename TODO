@@ -1,15 +1,13 @@
-TODO
-====
-
 - General
 	- First release.
 
 - Code
-	- Solve TODO: and FIXME: in code.
+	- Solve TODO and FIXME in code if any.
 
 - Web.
 	- Examples.
 	- Example for log4j and slf4j logger.
+	- print.css
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
