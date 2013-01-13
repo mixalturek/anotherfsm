@@ -7,7 +7,6 @@
 - Web.
 	- Examples.
 	- Example for log4j and slf4j logger.
-	- print.css
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.

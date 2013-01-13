@@ -45,12 +45,12 @@ pre				{ overflow: auto; padding: 1em; line-height: 1.2em; }
 img				{ border: none; }
 div.img			{ font-style: italic; text-align: center; margin: 2em; }
 
-a, .m						{ color: yellow; text-decoration: none; }
-a:hover, .m:hover			{ color: red; }
-a.blank:after				{ content: " " url('img/website/blank.gif'); }
-a.down:after				{ content: " " url('img/website/down.gif'); }
-a.blank:hover:after			{ content: " " url('img/website/blank_hover.gif'); }
-a.down:hover:after			{ content: " " url('img/website/down_hover.gif'); }
+a, .m					{ color: yellow; text-decoration: none; }
+a:hover, .m:hover		{ color: red; }
+a.blank:after			{ content: " " url('img/website/blank.gif'); }
+a.down:after			{ content: " " url('img/website/down.gif'); }
+a.blank:hover:after		{ content: " " url('img/website/blank_hover.gif'); }
+a.down:hover:after		{ content: " " url('img/website/down_hover.gif'); }
 
 .warn					{ color: red; font-weight: bold; }
 .todo					{ color: red; font-weight: bold; }

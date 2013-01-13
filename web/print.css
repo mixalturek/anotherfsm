@@ -16,11 +16,10 @@
  *  limitations under the License.
  */
 
-body				{ background-color: white; background-image: none; color: black; }
+body						{ background-color: white; background-image: none; color: black; }
 
-#page, #main 			{ padding: 0px; margin: 0px; border: none; width: 100%; }
+#page						{ padding: 0px; margin: 0px; border: none; width: 100%; }
 #menu, #footer, #header		{ display: none; }
-th, td				{ border: 1px solid black; }
 
-a:hover, .m:hover	{ color: black; }
+a:hover, .m:hover			{ color: black; }
 a.blank:after, a.down:after	{ content: ""; }
