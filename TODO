@@ -7,6 +7,10 @@
 - Web.
 	- Support for examples.
 	- Example for log4j and slf4j logger.
+	- Link to full javadoc.
+	- Update information at http://sourceforge.net/projects/anotherfsm/
+	- News
+	- FAQ
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
