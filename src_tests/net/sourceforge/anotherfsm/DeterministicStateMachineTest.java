@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
+import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class DeterministicStateMachineTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
+		AnotherFsm.setLoggerFactory(new NoLoggerFactory());
 	}
 
 	@Test

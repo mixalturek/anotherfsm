@@ -21,7 +21,7 @@ package net.sourceforge.anotherfsm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
-import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
+import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import org.junit.Test;
 public class EqualsPreprocessorTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
+		AnotherFsm.setLoggerFactory(new NoLoggerFactory());
 	}
 
 	@Test

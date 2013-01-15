@@ -420,7 +420,31 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 	@Test
 	public final void testRuntimeExcpetionInTimeoutCallback() {
-		StateMachine machine = new TimeoutStateMachine("fsm");
+		class TestStateMachine extends TimeoutStateMachine {
+			public boolean exceptionOccurred = false;
+
+			public TestStateMachine(String name) {
+				super(name);
+			}
+
+			@Override
+			public Event process(Event event) throws FsmException {
+				try {
+					super.process(event);
+					fail("Should not be executed");
+				} catch (NullPointerException e) {
+					assertEquals("Testing exception", e.getMessage());
+					exceptionOccurred = true;
+
+					// The thread is not finished but notifyEnter() and
+					// scheduling of a new timeout is not processed
+				}
+
+				return event;
+			}
+		}
+
+		TestStateMachine machine = new TestStateMachine("fsm");
 		final State startState = new State("startState");
 		Transition toTimeout = new Transition(startState, new TimeoutEvent(
 				TIMEOUT, TimeoutEvent.Type.LOOP_RESTART), startState);
@@ -432,7 +456,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 				super.onTransition(source, event, destination);
 
 				// Serious error in the client code
-				throw new NullPointerException();
+				throw new NullPointerException("Testing exception");
 			}
 		};
 
@@ -452,6 +476,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			// be deterministic in such case than hide more serious error.
 
 			assertEquals(1, listener.transitionsNum);
+			assertTrue(machine.exceptionOccurred);
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
