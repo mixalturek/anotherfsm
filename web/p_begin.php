@@ -35,6 +35,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 <title><?php echo PAGE_TITLE;?></title>
 
 <style type="text/css" media="all">@import "style.css";</style>
+<style type="text/css" media="all">@import "style_examples.css";</style>
 <style type="text/css" media="print">@import "print.css";</style>
 <link href="img/website/anotherfsm_16x16.png" rel="shortcut icon" type="image/x-icon" />
 </head>

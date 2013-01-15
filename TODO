@@ -4,13 +4,14 @@
 - Code
 	- Solve compiler warnings, TODO and FIXME in code if any. Never delete this.
 
-- Web.
+- Web
 	- Support for examples.
 	- Example for log4j and slf4j logger.
 	- Link to full javadoc.
 	- Update information at http://sourceforge.net/projects/anotherfsm/
 	- News
 	- FAQ
+	- http://en.wikipedia.org/wiki/Finite-state_machine
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.

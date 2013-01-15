@@ -10,6 +10,10 @@
 <li><?php Blank('http://sourceforge.net/projects/anotherfsm/support', 'Support');?></li>
 </ul>
 
+<div class="label">Examples</div>
+<ul>
+<li><?php MenuItem('example_first', 'First example');?></li>
+</ul>
 
 <div class="label">Development</div>
 <ul>

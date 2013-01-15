@@ -83,4 +83,21 @@ function MenuItem($addr, $text)
 	echo (basename($_SERVER['PHP_SELF']) == "$addr.php")
 		? "<span class=\"active\">$text</span>" : Web($addr, $text);
 }
+
+// Highligh Java code
+include_once '/usr/share/php-geshi/geshi.php';
+
+function ReadfileJava($filename)
+{
+	echo "<div class=\"example_filename\">$filename</div>\n\n";
+	
+	$fileContent = file_get_contents("../$filename");
+	// Replace tabs using 4 spaces (the same as defined in Eclipse)
+	$fileContent = str_replace('	', '    ', $fileContent);
+
+	$geshi = new GeSHi($fileContent, 'java');
+	$geshi->enable_classes();
+	// echo $geshi->get_stylesheet();
+	echo $geshi->parse_code();
+}
 ?>
