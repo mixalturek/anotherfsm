@@ -2,11 +2,10 @@
 	- First release.
 
 - Code
-	- Solve TODO and FIXME in code if any.
-	- Finish first example.
+	- Solve compiler warnings, TODO and FIXME in code if any. Never delete this.
 
 - Web.
-	- Examples.
+	- Support for examples.
 	- Example for log4j and slf4j logger.
 
 - Tests

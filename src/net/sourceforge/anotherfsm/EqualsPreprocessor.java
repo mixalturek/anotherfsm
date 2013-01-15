@@ -54,8 +54,8 @@ public class EqualsPreprocessor extends PreprocessorAdapter {
 	 * @throws FsmException
 	 *             if the processor is already defined
 	 */
-	public <T extends Event> void addProcessor(T event, Processor<T> processor)
-			throws FsmException {
+	public <T extends Event> void addProcessor(T event,
+			Preprocessor.Processor<T> processor) throws FsmException {
 		Helpers.ensureNotNull(event, "event");
 		Helpers.ensureNotNull(processor, "processor");
 

@@ -22,92 +22,60 @@ import java.io.IOException;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.CharacterEvent;
-import net.sourceforge.anotherfsm.Event;
 import net.sourceforge.anotherfsm.FsmException;
-import net.sourceforge.anotherfsm.State;
-import net.sourceforge.anotherfsm.StateAdapter;
+import net.sourceforge.anotherfsm.StateMachine;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 /**
- * Search "AnotherFSM" string in the input from user.
+ * Search "AnotherFSM" string in the input from user and exit the application
+ * after it is entered.
  * 
  * @author Michal Turek
  */
 public class FirstExample {
 	static {
+		// Register factory of loggers before any logger is created
 		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
 	}
 
-	/** The logger object. */
+	/** The logger object for this class. */
 	private final static FsmLogger logger = AnotherFsm
 			.getLogger(FirstExample.class);
 
-	/** State machine to search a string. */
-	private final SearchFsm machine;
-
 	/**
-	 * Execute the application.
+	 * The application start function.
 	 * 
 	 * @param args
 	 *            the input arguments, unused
 	 */
 	public static void main(String[] args) {
 		try {
-			FirstExample example = new FirstExample();
-			example.run();
-		} catch (FsmException | IOException e) {
-			logger.fatal("Unexpected exception occurred", e);
-		}
-	}
+			// Create instance of the state machine and start processing
+			StateMachine machine = new SearchFsmProcessor("search");
+			machine.start();
 
-	/**
-	 * Create the object.
-	 * 
-	 * @throws FsmException
-	 *             if building of state machine fails
-	 */
-	private FirstExample() throws FsmException {
-		machine = new SearchFsm();
+			logger.info("Type 'AnotherFSM' string to exit.");
 
-		machine.stateA.addListener(new StateAdapter() {
-			@Override
-			public void onStateEnter(State previous, Event event, State current) {
-				logger.info("State 'A' entered");
-			}
-		});
-
-		machine.addListener(new StateAdapter() {
-			@Override
-			public void onStateEnter(State previous, Event event, State current) {
-				if (current.isFinalState())
-					logger.info("Final state entered: " + current);
-			}
-		});
-	}
-
-	/**
-	 * Execute the processing.
-	 * 
-	 * @throws IOException
-	 *             if reading data from standard input fails
-	 * @throws FsmException
-	 *             if a state machine operation fails
-	 */
-	public void run() throws IOException, FsmException {
-		machine.start();
-
-		logger.info("Type 'AnotherFSM' string to exit");
-
-		while (true) {
-			char c = (char) System.in.read();
-			if (c != '\n')
+			while (true) {
+				// Read a character from user and pass it to the state machine
+				char c = (char) System.in.read();
 				machine.process(new CharacterEvent(c));
 
-			if (machine.isInFinalState()) {
-				logger.debug("Final state entered, breaking the read loop");
-				break;
+				// Exit after a final state is entered
+				if (machine.isInFinalState()) {
+					logger.debug("'AnotherFSM' string found in input, exiting");
+					break;
+				}
 			}
+
+			// Release all resources allocated by state machine
+			machine.close();
+
+			logger.debug("End of main()");
+		} catch (FsmException | IOException e) {
+			// Process any exception that may occur
+			logger.fatal("Unexpected exception occurred", e);
 		}
 	}
 }

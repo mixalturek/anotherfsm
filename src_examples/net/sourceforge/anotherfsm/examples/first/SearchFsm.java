@@ -26,16 +26,18 @@ import net.sourceforge.anotherfsm.State;
 import net.sourceforge.anotherfsm.Transition;
 
 /**
- * State machine to search "AnotherFSM" string.
+ * State machine to search hard coded "AnotherFSM" string. This class will be
+ * generated from state machine schema after the editor and/or generator is
+ * implemented.
  * 
- * Note the state machine is not fully correct. Every state should contain
+ * Note the state machine is not fully correct. Every state should also contain
  * transition on 'A' character to {@link #stateA} but this was ignored for
  * simplicity.
  * 
  * @author Michal Turek
  */
 class SearchFsm extends DeterministicStateMachine {
-	// The states.
+	// The states
 	public final State stateStart;
 	public final State stateA;
 	public final State stateN;
@@ -48,7 +50,7 @@ class SearchFsm extends DeterministicStateMachine {
 	public final State stateS;
 	public final State stateM;
 
-	// The transitions to search "AnotherFSM" string.
+	// The transitions to search "AnotherFSM" string
 	public final Transition trStartToA;
 	public final Transition trAtoN;
 	public final Transition trNtoO;
@@ -60,7 +62,7 @@ class SearchFsm extends DeterministicStateMachine {
 	public final Transition trFtoS;
 	public final Transition trStoM;
 
-	// The transitions to return searching to the beginning on bad input.
+	// The transitions to return searching to the beginning on bad input
 	public final Transition trStartOther;
 	public final Transition trAOther;
 	public final Transition trNOther;
@@ -76,12 +78,15 @@ class SearchFsm extends DeterministicStateMachine {
 	/**
 	 * Create the object, build the state machine.
 	 * 
+	 * @param name
+	 *            the name of the state machine
 	 * @throws FsmException
 	 *             if building of state machine fails
 	 */
-	public SearchFsm() throws FsmException {
-		super("search");
+	public SearchFsm(String name) throws FsmException {
+		super(name);
 
+		// Create the states
 		stateStart = new State("Start state");
 		stateA = new State("State A");
 		stateN = new State("State N");
@@ -94,6 +99,7 @@ class SearchFsm extends DeterministicStateMachine {
 		stateS = new State("State S");
 		stateM = new State("State M", State.Type.FINAL);
 
+		// Create the transitions for searching
 		trStartToA = new Transition(stateStart, new CharacterEvent('A'), stateA);
 		trAtoN = new Transition(stateA, new CharacterEvent('n'), stateN);
 		trNtoO = new Transition(stateN, new CharacterEvent('o'), stateO);
@@ -105,6 +111,7 @@ class SearchFsm extends DeterministicStateMachine {
 		trFtoS = new Transition(stateF, new CharacterEvent('S'), stateS);
 		trStoM = new Transition(stateS, new CharacterEvent('M'), stateM);
 
+		// Create the transitions for bad input
 		trStartOther = new Transition(stateStart, OtherEvent.instance,
 				stateStart);
 		trAOther = new Transition(stateA, OtherEvent.instance, stateStart);
@@ -118,6 +125,7 @@ class SearchFsm extends DeterministicStateMachine {
 		trSOther = new Transition(stateS, OtherEvent.instance, stateStart);
 		trMOther = new Transition(stateM, OtherEvent.instance, stateStart);
 
+		// Register states
 		addState(stateStart);
 		addState(stateA);
 		addState(stateN);
@@ -130,6 +138,7 @@ class SearchFsm extends DeterministicStateMachine {
 		addState(stateS);
 		addState(stateM);
 
+		// Register transitions for searching
 		addTransition(trStartToA);
 		addTransition(trAtoN);
 		addTransition(trNtoO);
@@ -141,6 +150,7 @@ class SearchFsm extends DeterministicStateMachine {
 		addTransition(trFtoS);
 		addTransition(trStoM);
 
+		// Register transitions for bad input
 		addTransition(trStartOther);
 		addTransition(trAOther);
 		addTransition(trNOther);
@@ -153,6 +163,7 @@ class SearchFsm extends DeterministicStateMachine {
 		addTransition(trSOther);
 		addTransition(trMOther);
 
+		// Define the start state
 		setStartState(stateStart);
 	}
 }

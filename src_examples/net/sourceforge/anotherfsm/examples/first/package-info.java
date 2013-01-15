@@ -17,7 +17,9 @@
  */
 
 /**
- * First example to introduce main features of Another FSM library.
+ * First example to introduce main features of Another FSM library. Of course
+ * this is overkill solution for such simple task, remember it's only a
+ * demonstration.
  *
  * @author Michal Turek
  */
