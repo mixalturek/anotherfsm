@@ -30,7 +30,7 @@ import net.sourceforge.anotherfsm.logger.FsmLogger;
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 /**
- * Search "Another FSM" string in the input from user.
+ * Search "AnotherFSM" string in the input from user.
  * 
  * @author Michal Turek
  */

@@ -72,8 +72,16 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 		if (currentState == null)
 			throw new FsmException("Start state not defined");
 
+		State source = new State(INITIAL_STATE_NAME);
+		Event event = new StartEvent();
+
+		String transStr = source + Transition.TR + event + Transition.TR
+				+ currentState;
+
+		logger.info("Transition started:  " + transStr);
 		notifyEnter(new State(INITIAL_STATE_NAME), new StartEvent(),
 				currentState);
+		logger.info("Transition finished: " + transStr);
 	}
 
 	@Override
