@@ -17,10 +17,24 @@
  */
 
 /**
- * First example to introduce main features of Another FSM library. Of course
- * this is overkill solution for such simple task, remember it's only a
- * demonstration.
+ * Introduction to the main features of Another FSM library.
+ * 
+ * The code searches "AnotherFSM" string in the user input and exits the
+ * application after it is entered. Of course this implementation is an overkill
+ * solution for such simple task, remember it's only a demonstration.
+ * 
+ * <h3>Classes</h3>
+ * 
+ * <ul>
+ * <li>{@link net.sourceforge.anotherfsm.examples.first.SearchFsm}
+ *            Defines structure of the state machine.</li>
+ * <li>{@link net.sourceforge.anotherfsm.examples.first.SearchFsmProcessor}
+ *            Defines listeners for the states and transitions.</li>
+ * <li>{@link net.sourceforge.anotherfsm.examples.first.FirstExample}
+ *            Defines main() method, passes data to the state machine.</li>
+ * </ul>
  *
  * @author Michal Turek
  */
 package net.sourceforge.anotherfsm.examples.first;
+

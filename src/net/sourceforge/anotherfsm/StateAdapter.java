@@ -31,7 +31,7 @@ public class StateAdapter implements StateListener {
 	 * Create the object. The listener will be processed even on loop
 	 * transitions.
 	 * 
-	 * @see StateListener#Type
+	 * @see StateListener.Type
 	 */
 	public StateAdapter() {
 		this(StateListener.Type.LOOP_PROCESS);

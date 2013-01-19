@@ -100,4 +100,12 @@ function ReadfileJava($filename)
 	// echo $geshi->get_stylesheet();
 	echo $geshi->parse_code();
 }
+
+// Link to Javadoc of example
+function ExampleJavadoc($link)
+{
+	echo "<p class=\"example_javadoc\">\n";
+	Blank("doc_full/$link", 'Javadoc for this example.');
+	echo "\n</p>\n";
+}
 ?>

@@ -25,24 +25,18 @@
 /*
  * Updates for this website.
  */
- 
-.example_filename
-{
-	margin: 0;
-	padding: 1em;
-	border: 1px solid white;
-	font-family:monospace;
-	font-weight: bold;
-	background-color: #ADB3D2;
-	color: black;
-}
 
-.java
-{ 
+.java, .example_filename, .example_output
+{
 	margin: 0;
 	margin-bottom: 2em;
 	padding: 1em;
 	border: 1px solid white;
-	background-color: #D2DAFF;
 	color: black;
+	font-family: monospace;
 }
+
+.java				{ background-color: #C8C8FF; }
+.example_filename	{ margin-bottom: 0; background-color: #6E6E8C; font-weight: bold; }
+.example_javadoc	{ }
+.example_output		{ background-color: #C8FFC8; font-size: 9pt; }

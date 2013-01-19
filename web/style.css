@@ -28,8 +28,8 @@ body
 }
 
 #header			{ border-bottom: 3px solid white; margin-bottom: 2em; }
-#header pre     { margin: 1em; }
-#header	.state  { color: white; font-weight: bold; }
+#header			{ margin: 1em; }
+#header	.state	{ color: white; font-weight: bold; }
 #header #logo	{ position: fixed; bottom: 1em; right: 1em; }
 
 #page			{ margin-left: 18%; margin-right: 6em; margin-bottom: 5em; min-height: 5em; }
@@ -40,6 +40,7 @@ body
 #menu .active	{ color: red; }
 
 p				{ text-align: justify; }
+h1				{ margin-top: 1em; }
 h2				{ margin-top: 1.5em; }
 pre				{ overflow: auto; padding: 1em; line-height: 1.2em; }
 img				{ border: none; }

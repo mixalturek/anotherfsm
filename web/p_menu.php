@@ -17,6 +17,7 @@
 
 <div class="label">Development</div>
 <ul>
+<li><?php Blank('doc_full/index.html', 'Full Javadoc');?></li>
 <li><?php Blank('http://sourceforge.net/projects/anotherfsm/', 'Project');?></li>
 <li><?php Blank('http://sourceforge.net/p/anotherfsm/code/', 'Repository');?></li>
 <li><?php Blank('http://sourceforge.net/p/anotherfsm/code/commit_browser', 'Commits');?></li>

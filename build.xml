@@ -202,13 +202,17 @@ all                  - Process full build.
 	</target>
 	
 	<!-- Build offline version of project's website. -->
-	<target name="web" depends="javadoc-api">
+	<target name="web" depends="javadoc">
 		<copy todir="${builddir}/web/">
 			<fileset dir="web/" excludes="**/*.php"/>
 		</copy>
 		
 		<copy todir="${builddir}/web/doc/">
 			<fileset dir="${builddir}/doc/"/>
+		</copy>
+		
+		<copy todir="${builddir}/web/doc_full/">
+			<fileset dir="${builddir}/doc_full/"/>
 		</copy>
 		
 		<exec executable="utils/offline_web.sh"/>
@@ -245,5 +249,5 @@ all                  - Process full build.
 	</target>
 
     <!-- Process full build. -->
-    <target name="all" depends="compile,tests,jar,javadoc,dist,web"/>
+    <target name="all" depends="compile,tests,jar,javadoc,dist"/>
 </project>

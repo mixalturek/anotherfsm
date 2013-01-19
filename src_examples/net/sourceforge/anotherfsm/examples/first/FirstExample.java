@@ -51,8 +51,11 @@ public class FirstExample {
 	 */
 	public static void main(String[] args) {
 		try {
-			// Create instance of the state machine and start processing
-			StateMachine machine = new SearchFsmProcessor("search");
+			// Create instance of the state machine
+			StateMachine machine = new SearchFsmProcessor(
+					FirstExample.class.getSimpleName());
+
+			// Building done in the constructor, prepare for events processing
 			machine.start();
 
 			logger.info("Type 'AnotherFSM' string to exit.");
