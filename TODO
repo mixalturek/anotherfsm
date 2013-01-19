@@ -5,7 +5,6 @@
 	- Solve compiler warnings, TODO and FIXME in code if any. Never delete this.
 
 - Web
-	- Example for log4j and slf4j logger.
 	- Update information at http://sourceforge.net/projects/anotherfsm/
 	- Check browsers
 

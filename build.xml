@@ -31,8 +31,15 @@
 		<pathelement location="${builddir}/classes" />
 	</path>
 	
+	<path id="classpath-examples">
+		<path refid="classpath"/>
+		<pathelement location="${builddir}/classes_examples/" />
+		<pathelement location="lib/log4j-1.2.17.jar" />
+	</path>
+		
 	<path id="classpath-tests">
 		<path refid="classpath"/>
+		<path refid="classpath-examples"/>
 		<pathelement location="${builddir}/classes_tests/" />
 		<pathelement location="lib/junit4-4.8.2.jar" />
 		<pathelement location="lib/hamcrest-core-1.1.jar" />
@@ -92,7 +99,7 @@ all                  - Process full build.
 	<target name="compile-examples" depends="compile-sources">
 		<mkdir dir="${builddir}/classes_examples/" />
 		<javac srcdir="src_examples" destdir="${builddir}/classes_examples"
-			classpathref="classpath"
+			classpathref="classpath-examples"
 			source="${javac.source}"
 			target="${javac.target}"
 			encoding="utf8"

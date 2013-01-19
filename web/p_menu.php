@@ -14,6 +14,7 @@
 <div class="label">Examples</div>
 <ul>
 <li><?php MenuItem('example_first', 'First example');?></li>
+<li><?php MenuItem('example_logger_injection', 'Logger injection');?></li>
 </ul>
 
 <div class="label">Development</div>

@@ -16,32 +16,36 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.examples.first;
-
-import java.io.IOException;
+package net.sourceforge.anotherfsm.examples.loggerinjection;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
-import net.sourceforge.anotherfsm.CharacterEvent;
+import net.sourceforge.anotherfsm.ContainerEvent;
+import net.sourceforge.anotherfsm.DeterministicStateMachine;
 import net.sourceforge.anotherfsm.FsmException;
+import net.sourceforge.anotherfsm.State;
 import net.sourceforge.anotherfsm.StateMachine;
+import net.sourceforge.anotherfsm.Transition;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
-import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
+
+import org.apache.log4j.BasicConfigurator;
 
 /**
- * Search "AnotherFSM" string in the input from user and exit the application
- * after it is entered.
+ * Log a message using log4j library.
  * 
  * @author Michal Turek
  */
-public class FirstExample {
+public class LoggerInjectionExample {
 	static {
 		// Register factory of loggers before any logger is created
-		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
+		AnotherFsm.setLoggerFactory(new Log4jLoggerFactory());
+
+		// Configure log4j somehow, this may be at the beginning of main()
+		BasicConfigurator.configure();
 	}
 
 	/** The logger object for this class. */
 	private final static FsmLogger logger = AnotherFsm
-			.getLogger(FirstExample.class);
+			.getLogger(LoggerInjectionExample.class);
 
 	/**
 	 * The application start function.
@@ -50,31 +54,27 @@ public class FirstExample {
 	 *            the input arguments, unused
 	 */
 	public static void main(String[] args) {
+		// Log something using the log4j wrapper
+		logger.info("Hello world.");
+
 		try {
-			// Create instance of the state machine
-			StateMachine machine = new SearchFsmProcessor(
-					FirstExample.class.getSimpleName());
+			// Create state machine to demonstrate that log4j is used internally
+			StateMachine machine = new DeterministicStateMachine("test");
 
-			// Building done in the constructor, prepare for events processing
+			State state = new State("state");
+			Transition transition = new Transition(state,
+					new ContainerEvent<String>("event"));
+
+			machine.addState(state);
+			machine.addTransition(transition);
+			machine.setStartState(state);
+
+			// Messages should be logged using log4j here
 			machine.start();
+			machine.process(new ContainerEvent<String>("event"));
 
-			logger.info("Type 'AnotherFSM' string to exit.");
-
-			while (true) {
-				// Read a character from user and pass it to the state machine
-				char c = (char) System.in.read();
-				machine.process(new CharacterEvent(c));
-
-				// Exit after a final state is entered
-				if (machine.isInFinalState()) {
-					logger.debug("'AnotherFSM' string found in input, exiting");
-					break;
-				}
-			}
-
-			// Release all resources allocated by state machine
 			machine.close();
-		} catch (FsmException | IOException e) {
+		} catch (FsmException e) {
 			// Process any exception that may occur
 			logger.fatal("Unexpected exception occurred", e);
 		}
