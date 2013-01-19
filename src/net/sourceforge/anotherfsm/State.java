@@ -193,7 +193,7 @@ public class State {
 	}
 
 	/**
-	 * The types of the states.
+	 * The type of the states.
 	 * 
 	 * Note start state has meaning only for FSM, it's the default state during
 	 * the processing. Both default and final state can be the start state.

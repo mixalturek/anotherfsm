@@ -21,7 +21,7 @@ package net.sourceforge.anotherfsm.logger;
 import net.sourceforge.anotherfsm.Helpers;
 
 /**
- * Factory of loggers that logs to standard output and standard error streams.
+ * Factory of loggers that log to standard output and standard error streams.
  * 
  * @author Michal Turek
  */

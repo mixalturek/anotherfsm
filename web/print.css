@@ -24,12 +24,12 @@ body						{ background-color: white; background-image: none; color: black; }
 a:hover, .m:hover			{ color: black; }
 a.blank:after, a.down:after	{ content: ""; }
 
-.java, .example_filename, .example_output
+.java, .java .head, .example_output
 {
 	background-color: white;
 	color: black;
 	border: 0px;
 }
 
-.example_filename			{ border: 2px solid black; }
+.java .head					{ border: 1px solid black; }
 .example_javadoc			{ display: none; }

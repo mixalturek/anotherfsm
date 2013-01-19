@@ -19,11 +19,17 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Base class of all events that cause the transitions.
+ * Base class of all events that cause the transitions. The objects should be
+ * immutable or never changed after they are passed to the state machine.
  * 
  * @author Michal Turek
  */
 public interface Event {
+	/**
+	 * Get the hash code of the object.
+	 * 
+	 * @return the hash code
+	 */
 	@Override
 	public int hashCode();
 

@@ -37,4 +37,3 @@
  * @author Michal Turek
  */
 package net.sourceforge.anotherfsm.examples.first;
-

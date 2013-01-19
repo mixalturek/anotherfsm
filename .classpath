@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="build/src" path="src"/>
-	<classpathentry kind="src" output="build/src_tests" path="src_tests"/>
-	<classpathentry kind="src" output="build/src_examples" path="src_examples"/>
+	<classpathentry kind="src" output="build/classes" path="src"/>
+	<classpathentry kind="src" output="build/classes_tests" path="src_tests"/>
+	<classpathentry kind="src" output="build/classes_examples" path="src_examples"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="build"/>
