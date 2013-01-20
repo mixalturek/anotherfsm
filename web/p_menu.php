@@ -24,12 +24,10 @@
 <li><?php Blank('http://sourceforge.net/p/anotherfsm/code/', 'Repository');?></li>
 <li><?php Blank('http://sourceforge.net/p/anotherfsm/code/commit_browser', 'Commits');?></li>
 <li><?php Blank('http://sourceforge.net/p/anotherfsm/tickets/', 'Tickets');?></li>
-<li><?php Blank('http://sourceforge.net/p/anotherfsm/code/feed/', 'RSS');?></li>
 </ul>
 
-<div class="label">Other</div>
-<ul>
-<li><?php Blank('http://sourceforge.net/', 'SourceForge');?></li>
-</ul>
+<div id="sf_logo"><a href="http://sourceforge.net/">
+<img src="http://sourceforge.net/sflogo.php?group_id=741715&amp;type=2" alt="SourceForge.net Logo" width="125" height="37" />
+</a></div>
 
 </div><!--div id="menu"-->

@@ -21,7 +21,7 @@ define('PAGE_TITLE', 'Another FSM');
 include_once 'p_begin.php';
 ?>
 
-<p><em>Another FSM</em> is yet another implementation of state machines for programming language Java.</p>
+<p><em>Another FSM</em> is yet another implementation of state machines, a library for Java programming language.</p>
 
 <h2>Features</h2>
 

@@ -1,8 +1,11 @@
 - General
 	- First release.
+	- Replace Another FSM by AnotherFSM.
+	- piwik web analysis, site id
 
 - Code
 	- Solve compiler warnings, TODO and FIXME in code if any. Never delete this.
+	- FindBugs.
 
 - Web
 	- Update information at http://sourceforge.net/projects/anotherfsm/
