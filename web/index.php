@@ -30,9 +30,9 @@ include_once 'p_begin.php';
 <li>Global and local listeners of transitions and state enter/exit.</li>
 <li>Type-based and equals-based event preprocessors.</li>
 <li>Predefined and user defined events.</li>
-<li>Separated state machine building, registration of listeners and processing of events.</li>
-<li>Generalized logging, whatever backend can be injected.</li>
-<li>Apache 2 license, version 2.0.</li>
+<li><?php Web('example_first', 'Separated state machine building, registration of listeners and processing of events.'); ?></li>
+<li><?php Web('example_logger_injection', 'Generalized logging, whatever backend can be injected.')?></li>
+<li><?php Web('license', 'Apache 2 license, version 2.0.'); ?></li>
 <li>Well-designed API, fully documented code, unit tests.</li>
 </ul>
 
@@ -46,11 +46,11 @@ include_once 'p_begin.php';
 
 <p><em>I'm sorry, the followign text is only in the Czech language. It would be really difficult for me to translate it and keep the meaning untouched.</em></p>
 
-<p lang="cs">Přestane svítit světlo, našroubujeme novou o 10 W silnější žárovku a zkusíme rozsvítit, ale šuplík nejde otevřít a také vypadnou vchodové dveře. No jasně, abychom se dostali do šuplíku, v koupelně přece musí kapat voda!</p>
+<p lang="cs">Přestalo svítit světlo. Našroubujeme novou o 10 W silnější žárovku a zkusíme rozsvítit, ale šuplík nejde otevřít a také vypadnou vchodové dveře. No jasně, abychom se dostali do šuplíku, v koupelně přece musí kapat voda!</p>
 
-<p lang="cs">Těžce znovupostavené dveře pro tuhle chvíli spolu s kusem stěny přelepíme do kříže izolepou, snad to na chvíli vydrží, pořádně se spraví až bude čas. Takové zdržení a zdražení by nikdo nepřipustil, museli bychom zároveň vyndat tu červenou lodičku z botníku a to je od minulého pátku tabu. Od teď sice chodíme domů oknem, je to nepohodlné, ale bydlíme v přízemí a ta trochu nepohody za opravené dveře stojí, o tom nebudeme diskutovat.</p>
+<p lang="cs">Těžce znovupostavené dveře pro tuhle chvíli spolu s kusem stěny přelepíme do kříže izolepou, snad to na chvíli vydrží, pořádně se spraví až bude čas. Takové zdržení a zdražení by nikdo nepřipustil, museli bychom zároveň vyndat v předsíni tu červenou lodičku z botníku a to je od minulého pátku tabu. Od teď sice chodíme domů oknem, je to nepohodlné, ale bydlíme v přízemí a ta trochu nepohody za opravené dveře stojí.</p>
 
-<p lang="cs">Při každém čtyřicátém druhém příchodu domů bydlíme v tisícím sedmém patře. A také nechtějte vědět, co všechno by se stalo, kdyby při došlápnutí na parapet dokápla kapka vody do umyvadla, hlavně všechno správně načasovat. Pochybujete o svém duševním zdraví, či o duševním zdraví jiných jedinců? Naprogramujte si aspoň jednou za čas něco hezkého, z čeho můžete mít radost...</p>
+<p lang="cs">Při každém čtyřicátém druhém příchodu domů bydlíme v tisícím sedmém patře. A také nechtějte vědět, co všechno by se stalo, kdyby při došlápnutí na parapet dokápla kapka vody do umyvadla - hlavně všechno správně načasovat. Pochybujete o svém duševním zdraví, či o duševním zdraví jiných jedinců? Naprogramujte si aspoň jednou za čas něco hezkého, z čeho můžete mít radost...</p>
 
 <?php
 include_once 'p_end.php';
