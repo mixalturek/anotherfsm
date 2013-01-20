@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -26,7 +26,7 @@ import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
 /**
  * Factory for wrapper of log4j's logger.
  * 
- * Note Another FSM supports by default the following factories/backends.
+ * Note AnotherFSM supports by default the following factories/backends.
  * 
  * <ul>
  * <li>{@link net.sourceforge.anotherfsm.logger.NoLoggerFactory}

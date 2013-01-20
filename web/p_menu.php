@@ -1,6 +1,6 @@
 <div id="menu">
 
-<div class="label">Another FSM</div>
+<div class="label">AnotherFSM</div>
 <ul>
 <li><?php MenuItem('index', 'About');?></li>
 <li><?php MenuItem('news', 'News');?></li>

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -17,7 +17,7 @@
  */
 
 /**
- * Example to show how to inject unsupported logger to Another FSM.
+ * Example to show how to inject unsupported logger to AnotherFSM.
  * Log4j (http://logging.apache.org/log4j/1.2/) will be used for demonstration.
  *
  * <h3>Classes</h3>

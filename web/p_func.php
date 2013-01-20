@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -104,7 +104,7 @@ function ReadfileJava($filename)
 	// Anotations
 	$geshi->add_keyword_group('Anotation', '', true, array('@Override'));
 	
-	// Another FSM main classes
+	// AnotherFSM main classes
 	$geshi->add_keyword_group('AnotherFsm', '', true, genKeywords('../src/net/sourceforge/anotherfsm/'));
 	$geshi->set_url_for_keyword_group('AnotherFsm', 'doc/net/sourceforge/anotherfsm/{FNAME}.html');
 	
@@ -123,7 +123,7 @@ function ReadfileJava($filename)
 	echo $geshi->parse_code();
 }
 
-// Generate Another FSM keywords from .java file names
+// Generate AnotherFSM keywords from .java file names
 function genKeywords($directory)
 {
 	$keywords = array();

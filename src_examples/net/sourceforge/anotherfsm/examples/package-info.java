@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -17,7 +17,7 @@
  */
 
 /**
- * Examples and tutorials for Another FSM project.
+ * Examples and tutorials for AnotherFSM project.
  * 
  * Every example is stored in its own sub-package that contains complete source
  * codes to compile and execute the particular example.

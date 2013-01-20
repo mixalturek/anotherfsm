@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -17,11 +17,11 @@
  *  limitations under the License.
  */
 
-define('PAGE_TITLE', 'Another FSM');
+define('PAGE_TITLE', 'AnotherFSM');
 include_once 'p_begin.php';
 ?>
 
-<p><em>Another FSM</em> is yet another implementation of state machines, a library for Java programming language.</p>
+<p><em>AnotherFSM</em> is yet another implementation of state machines, a library for Java programming language.</p>
 
 <h2>Features</h2>
 

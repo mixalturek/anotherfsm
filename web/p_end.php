@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -21,7 +21,7 @@
 </div><!--div id="page"-->
 
 <div id="footer">
-<div>Copyright &copy; 2013 Michal Turek, <?php Blank('http://woq.nipax.cz/');?></div>
+<div>Copyright &copy; 2012 - 2013 Michal Turek, <?php Blank('http://woq.nipax.cz/');?></div>
 </div>
 
 </body>

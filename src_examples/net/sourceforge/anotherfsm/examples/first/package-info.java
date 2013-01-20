@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -17,7 +17,7 @@
  */
 
 /**
- * Introduction to the main features of Another FSM library.
+ * Introduction to the main features of AnotherFSM library.
  * 
  * The code searches "AnotherFSM" string in the user input and exits the
  * application after it is entered. Of course this implementation is an overkill

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 Michal Turek, Another FSM
+ *  Copyright 2012 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *

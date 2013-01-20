@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
-   -  Copyright 2013 Michal Turek, Another FSM
+   -  Copyright 2013 Michal Turek, AnotherFSM
    -
    -      http://anotherfsm.sourceforge.net/
    -
@@ -18,7 +18,7 @@
    -->
 
 <project name="anotherfsm" basedir="." default="usage">
-	<property name="projectName" value="Another FSM"/>
+	<property name="projectName" value="AnotherFSM"/>
 	<property name="version" value="0.1.0-dev"/><!-- See AnotherFsm.java -->
 	<property name="author" value="Michal Turek" />
 	<property name="projectWeb" value="http://anotherfsm.sourceforge.net/"/>

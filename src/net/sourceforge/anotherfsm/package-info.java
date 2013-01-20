@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 Michal Turek, Another FSM
+ *  Copyright 2013 Michal Turek, AnotherFSM
  *
  *      http://anotherfsm.sourceforge.net/
  *
@@ -17,8 +17,8 @@
  */
 
 /**
- * Another FSM is yet another implementation of state machines for programming 
- * language Java.
+ * AnotherFSM is yet another implementation of state machines,
+ * a library for Java programming language.
  * 
  * <h3>Features</h3>
  * 
