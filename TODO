@@ -6,13 +6,17 @@
 
 - Web
 	- Update information at http://sourceforge.net/projects/anotherfsm/
-	- Check browsers
+	- Examples
+		- State machine with timeouts.
+		- Event preprocessors.
+		- User events.
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
 	- Update fail("Should not be executed"); to fail("Should not be executed" + e);
 
 - Future
+	- QFsm support.
 	- Build server.
 	- ThreadQueueProcessor.
 	- NonDeterministicStateMachine.

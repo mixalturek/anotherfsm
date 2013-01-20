@@ -27,7 +27,6 @@
 <li><?php Blank('http://sourceforge.net/p/anotherfsm/code/feed/', 'RSS');?></li>
 </ul>
 
-
 <div class="label">Other</div>
 <ul>
 <li><?php Blank('http://sourceforge.net/', 'SourceForge');?></li>

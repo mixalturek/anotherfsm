@@ -146,8 +146,8 @@ function genKeywords($directory)
 // Display link to Javadoc of example
 function ExampleJavadoc($link)
 {
-	echo "<p class=\"example_javadoc\">\n";
+	echo "<p class=\"example_javadoc\">";
 	Blank("doc_full/$link", 'Javadoc for this example.');
-	echo "\n</p>\n";
+	echo "</p>\n\n";
 }
 ?>
