@@ -1,10 +1,4 @@
-- General
-	- First release.
-	- piwik web analysis, site id
-
 - Code
-	- Solve compiler warnings, TODO and FIXME in code if any. Never delete this.
-	- FindBugs.
 
 - Web
 	- Update information at http://sourceforge.net/projects/anotherfsm/
@@ -25,3 +19,8 @@
 	- FsmEditor or QFsm patch.
 	- Analyzer and visualization of FSM transitions logs.
 	- AsciiSchemaEditor.
+
+- Release HOWTO
+	- Solve compiler warnings, TODO and FIXME.
+	- Execute FindBugs.
+	- Generate Javadoc.

@@ -61,6 +61,6 @@ public class SynchronizedStateMachine extends DeterministicStateMachine {
 
 	@Override
 	public synchronized boolean isInFinalState() {
-		return isInFinalState();
+		return super.isInFinalState();
 	}
 }

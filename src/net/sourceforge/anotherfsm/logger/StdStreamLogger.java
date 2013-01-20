@@ -19,6 +19,7 @@
 package net.sourceforge.anotherfsm.logger;
 
 import java.io.PrintStream;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,10 +38,6 @@ import net.sourceforge.anotherfsm.Helpers;
 class StdStreamLogger implements FsmLogger {
 	/** The logger name. */
 	private final String name;
-
-	/** Formatter of date. */
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss,SSS");
 
 	/**
 	 * Create the object.
@@ -148,6 +145,9 @@ class StdStreamLogger implements FsmLogger {
 	 */
 	private void log(PrintStream stream, String severity, String message,
 			Throwable throwable) {
+		// Formatter must be local, format() modifies member variables
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+
 		String date = dateFormat.format(new Date());
 		String thread = Thread.currentThread().getName();
 
