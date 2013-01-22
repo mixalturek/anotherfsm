@@ -1,6 +1,7 @@
 - General
 
 - Code
+	- Ant findbugs target.
 
 - Web
 	- Examples
@@ -11,10 +12,10 @@
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
 	- Update fail("Should not be executed"); to fail("Should not be executed" + e);
+	- Coverage.
 
 - Future
 	- QFsm support.
-	- Build server.
 	- ThreadQueueProcessor.
 	- NonDeterministicStateMachine.
 	- FsmEditor or QFsm patch.
