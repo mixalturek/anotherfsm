@@ -27,7 +27,7 @@
 </ul>
 
 <div id="sf_logo"><a href="http://sourceforge.net/">
-<img src="http://sourceforge.net/sflogo.php?group_id=741715&amp;type=2" alt="SourceForge.net Logo" width="125" height="37" />
+<img src="http://sflogo.sourceforge.net/sflogo.php?group_id=741715&amp;type=2" alt="SourceForge.net" />
 </a></div>
 
 </div><!--div id="menu"-->
