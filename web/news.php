@@ -21,6 +21,11 @@ define('PAGE_TITLE', 'News');
 include_once 'p_begin.php';
 ?>
 
+<h2>Tue Jan 22 15:32:21 CET 2013</h2>
+<ul>
+<li>First 0.1.0 release, <?php Blank('http://sourceforge.net/projects/anotherfsm/files/', 'download');?>.</li>
+</ul>
+
 <h2>Fri Dec 07 22:14:49 CET 2012</h2>
 <ul>
 <li>Serious work on implementation started.</li>
