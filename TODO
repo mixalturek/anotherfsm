@@ -1,7 +1,8 @@
+- General
+
 - Code
 
 - Web
-	- Update information at http://sourceforge.net/projects/anotherfsm/
 	- Examples
 		- State machine with timeouts.
 		- Event preprocessors.
@@ -22,5 +23,12 @@
 
 - Release HOWTO
 	- Solve compiler warnings, TODO and FIXME.
-	- Execute FindBugs.
-	- Generate Javadoc.
+	- FindBugs.
+	- Javadoc.
+	- Web news.
+	- Web.
+	- Update versions in build.xml and AnotherFsm.java.
+	- Git commit, push, tag.
+	- Update versions in build.xml and AnotherFsm.java.
+	- Deploy web.
+	- Deploy dist files.
