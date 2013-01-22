@@ -182,7 +182,7 @@ all                  - Process full build.
 			classpathref="classpath"
 			doctitle="${projectName} ${version}"
 			windowtitle="${projectName}"
-			bottom="&lt;i&gt;Copyright 2013 ${author}, &lt;a href=&quot;${projectWeb}&quot;&gt;${projectName}&lt;/a&gt;.&lt;/i&gt;"
+			bottom="&lt;i&gt;Copyright 2012-2013 ${author}, &lt;a href=&quot;${projectWeb}&quot;&gt;${projectName}&lt;/a&gt;.&lt;/i&gt;"
 		/>
 	</target>
 	
