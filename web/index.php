@@ -37,6 +37,15 @@ include_once 'p_begin.php';
 </ul>
 
 
+<h2>Similar projects</h2>
+
+<ul>
+<li>FSM part of Voice Application Framework developped by <?php Blank('http://www.ttc-marconi.com/', 'TTC MARCONI s.r.o.'); ?> as closed proprietary solution not available to public. First version of AnotherFSM is mainly its open source reimplementation, generalized, with better architecture and several new features. The VAF code was used neither in AnotherFSM nor as inspiration. There were only two years old memories at the beginning.</li>
+
+<li><?php Blank('http://doc.qt.digia.com/qt/statemachine-api.html', 'Qt State Machine Framework'); ?>, C++.</li>
+</ul>
+
+
 <h2>Motivation</h2>
 
 <p>I wanted to enjoy programming, you can enjoy it too...</p>
