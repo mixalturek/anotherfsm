@@ -1,0 +1,49 @@
+<?xml version='1.0'?>
+<!DOCTYPE qfsmproject SYSTEM 'qfsm.dtd'>
+<qfsmproject version="0.52" author="Qfsm">
+  <machine nummooreout="0" transfontitalic="0" draw_it="1" statefontsize="8" transfont="Helvetica" statefontitalic="0" author="STATE MACHINE AUTHOR" description="STATE MACHINE DESCRIPTION" version="STATE MACHINE VERSION" name="STATE MACHINE" arrowtype="1" numbits="2" statefontweight="50" statefont="Helvetica" numin="0" transfontsize="8" transfontweight="50" type="2" numout="0" initialstate="0">
+    <outputnames_moore></outputnames_moore>
+    <inputnames></inputnames>
+    <outputnames></outputnames>
+    <itransition ypos="223" endx="123" xpos="63" endy="223"/>
+    <state pencolor="0" radius="40" description="FIRST STATE DESCRIPTION" finalstate="0" moore_outputs="" ypos="223" code="0" xpos="163" linewidth="1">FIRST STATE</state>
+    <state pencolor="0" radius="40" description="SECOND STATE DESCRIPTION" finalstate="0" moore_outputs="" ypos="222" code="1" xpos="434" linewidth="1">SECOND STATE</state>
+    <state pencolor="0" radius="40" description="FINAL STATE DESCRIPTION" finalstate="1" moore_outputs="" ypos="74" code="2" xpos="306" linewidth="1">FINAL STATE</state>
+    <transition c1x="266.6664851168897" c2y="222.2841331762911" c1y="222.5682663525822" description="FIRST TO SECOND DESCRIPTION" straight="1" type="2" ypos="222.8523995288733" endx="394" xpos="202.9997276753345" endy="222" c2x="330.3332425584449">
+      <from>0</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">FIRST TO SECOND</inputs>
+      <outputs>FIRST TO SECOND OUTPUT</outputs>
+    </transition>
+    <transition c1x="233.5977738820847" c2y="322.5284192033147" c1y="320.0358404039149" description="FIRST TO FIRST DESCRIPTION" straight="1" type="2" ypos="260.3338242481224" endx="150.0020375070273" xpos="177.3591631723548" endy="260.8292607782821" c2x="95.96199756191075">
+      <from>0</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">FIRST TO FIRST</inputs>
+      <outputs>FIRST TO FIRST OUTPUT</outputs>
+    </transition>
+    <transition c1x="503.3824573913882" c2y="320.6848628340658" c1y="319.908501195413" description="SECOND TO SECOND DESCRIPTION" straight="1" type="2" ypos="259.5099504289482" endx="420.5313979159949" xpos="447.8925742329437" endy="259.6642636713202" c2x="365.7263019353601">
+      <from>1</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">SECOND TO SECOND</inputs>
+      <outputs>SECOND TO SECOND OUTPUT</outputs>
+    </transition>
+    <transition c1x="332.6684796661258" c2y="243.5966546955807" c1y="243.6134791740603" description="SECOND TO FIRST DESCRIPTION" straight="1" type="2" ypos="243.63030365254" endx="197.2997170285018" xpos="400.3528609849379" endy="243.5798302171011" c2x="264.9840983473138">
+      <from>1</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">SECOND TO FIRST</inputs>
+      <outputs>SECOND TO FIRST OUTPUT</outputs>
+    </transition>
+    <transition c1x="384.3346330791148" c2y="130.1759481374532" c1y="160.8491877135374" description="SECOND TO FINAL DESCRIPTION" straight="1" type="2" ypos="191.5224272896216" endx="336.8157728449876" xpos="408.0940631961784" endy="99.50270856136903" c2x="360.5752029620512">
+      <from>1</from>
+      <to>2</to>
+      <inputs default="0" any="0" invert="0">SECOND TO FINAL</inputs>
+      <outputs>SECOND TO FINAL OUTPUT</outputs>
+    </transition>
+    <transition c1x="246.3141783096459" c2y="161.4943922715183" c1y="130.3590486376485" description="FINAL TO FIRST DESCRIPTION" straight="1" type="2" ypos="99.22370500377863" endx="189.0316549382387" xpos="274.9554399953494" endy="192.6297359053881" c2x="217.6729166239423">
+      <from>2</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">FINAL TO FIRST</inputs>
+      <outputs>FINAL TO FIRST OUTPUT</outputs>
+    </transition>
+  </machine>
+</qfsmproject>
