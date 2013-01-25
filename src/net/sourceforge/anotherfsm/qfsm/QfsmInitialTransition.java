@@ -24,8 +24,15 @@ package net.sourceforge.anotherfsm.qfsm;
  * @author Michal Turek
  */
 public class QfsmInitialTransition {
-	public int xpos;
-	public int ypos;
-	public int endx;
-	public int endy;
+	/** The X coordinate of the position. */
+	public double xpos;
+
+	/** The Y coordinate of the position. */
+	public double ypos;
+
+	/** The X coordinate of the end position. */
+	public double endx;
+
+	/** The X coordinate of the end position. */
+	public double endy;
 }

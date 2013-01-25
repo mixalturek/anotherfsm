@@ -26,20 +26,86 @@ import java.util.List;
  * @author Michal Turek
  */
 public class QfsmMachine {
-	/** The name of the state machine diagram. */
+	/** The value of undefined state ID. */
+	public static final int UNDEFINED_ID = -1;
+
+	/** The name of the state machine. */
 	public String name;
 
-	/** The description of the state machine diagram. */
-	public String description;
-
-	/** The author of the state machine diagram. */
-	public String author;
-
-	/** The version of the state machine diagram. */
+	/** The version of the state machine. */
 	public String version;
 
-	/** The ID of start state. */
-	public int initialstate;
+	/** The author of the state machine. */
+	public String author;
+
+	/** The description of the state machine. */
+	public String description;
+
+	/** The type of the state machine. */
+	public MachineType type;
+
+	/** The number of bits used to code the state. */
+	public int numMooreOutputs;
+
+	/** The effective number of encoding bits. */
+	public int numEncodingBits;
+
+	/** The number of input bits. */
+	public int numInputs;
+
+	/** The number of output bits. */
+	public int numOutputs;
+
+	/** The start/initial state ID. */
+	public int startStateId;
+
+	/** The font family name used to draw the state names. */
+	public String stateFont;
+
+	/** The point size of the font used to draw the state names. */
+	public int stateFontSize;
+
+	/**
+	 * Weight of the font used to draw the state names which is one of the
+	 * enumerated values from {@code QFont::Weight}.
+	 * 
+	 * @see {@link http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum}
+	 */
+	public int stateFontWeight;
+
+	/** The font style used to draw the state names is italic. */
+	public boolean stateFontItalic;
+
+	/** The font family name used to draw the transition conditions. */
+	public String transitionFont;
+
+	/** The point size of the font used to draw the transition conditions. */
+	public int transitionFontSize;
+	/**
+	 * Weight of the font used to draw the transition conditions which is one of
+	 * the enumerated values from {@code QFont::Weight}.
+	 * 
+	 * @see {@link http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum}
+	 */
+	public int transitionFontWeight;
+
+	/** The font style used to draw the transition conditions is italic. */
+	public int transitionFontItalic;
+
+	/** The arrow type. */
+	public ArrowType arrowType;
+
+	/** The initial transition should be drawn. */
+	public boolean drawInitialTransition;
+
+	/** The names of the input bits. */
+	public String inputNames;
+
+	/** The names of the output bits. */
+	public String outputNames;
+
+	/** The names of the moore outputs (state coding). */
+	public String outputNamesMoore;
 
 	/** The states. */
 	public List<QfsmState> states;
@@ -47,39 +113,13 @@ public class QfsmMachine {
 	/** The transitions. */
 	public List<QfsmTransition> transitions;
 
-	/** The initial transition. */
-	public QfsmInitialTransition itransition;
-
-	public int draw_it;
-
-	public MachineType type;
-	public int arrowtype;
-
-	public int numin;
-	public int numout;
-	public int numbits;
-	public int nummooreout;
-
-	public String transfont;
-	public int transfontsize;
-	public int transfontweight;
-	public int transfontitalic;
-
-	public String statefont;
-	public int statefontsize;
-	public int statefontweight;
-	public int statefontitalic;
-
-	public String inputnames;
-	public String outputnames;
-	public String outputnames_moore;
+	/** The initial transition, optional (will be empty). */
+	public QfsmInitialTransition initialTransition;
 
 	/**
-	 * The type of the state machine.
+	 * The state machine type.
 	 * 
 	 * @author Michal Turek
-	 * 
-	 * @see Qfsm source code, Machine.h, Machine.type
 	 */
 	public static enum MachineType {
 		// Type: 0: Binary / 1: ASCII / 2: Free Text
@@ -90,9 +130,9 @@ public class QfsmMachine {
 		 * 
 		 * @param value
 		 *            the integer value from the data file
-		 * @return the coresponding enum value
+		 * @return the corresponding enum value
 		 * @throws QfsmException
-		 *             if the type is not supported
+		 *             if the value is not supported
 		 */
 		public static MachineType convert(int value) throws QfsmException {
 			MachineType[] values = values();
@@ -100,7 +140,35 @@ public class QfsmMachine {
 			if (value < 0 || value >= values.length)
 				throw new QfsmException("Unsupported machine type: " + value);
 
-			return values()[value];
+			return values[value];
+		}
+	}
+
+	/**
+	 * The arrow type.
+	 * 
+	 * @author Michal Turek
+	 */
+	public static enum ArrowType {
+		// Arrow type: 0: line arrow / 1: solid arrow
+		LINE, SOLID;
+
+		/**
+		 * Convert an integer value to the enum.
+		 * 
+		 * @param value
+		 *            the integer value from the data file
+		 * @return the corresponding enum value
+		 * @throws QfsmException
+		 *             if the value is not supported
+		 */
+		public static ArrowType convert(int value) throws QfsmException {
+			ArrowType[] values = values();
+
+			if (value < 0 || value >= values.length)
+				throw new QfsmException("Unsupported arrow type: " + value);
+
+			return values[value];
 		}
 	}
 }

@@ -24,35 +24,86 @@ package net.sourceforge.anotherfsm.qfsm;
  * @author Michal Turek
  */
 public class QfsmTransition {
+	/** The transition type. */
+	public TransitionType type;
+
+	/** The X coordinate of the position. */
+	public double xpos;
+
+	/** The Y coordinate of the position. */
+	public double ypos;
+
+	/** The X coordinate of the end position. */
+	public double endx;
+
+	/** The X coordinate of the end position. */
+	public double endy;
+
+	/** The X coordinate of the first control point position. */
+	public double c1x;
+
+	/** The Y coordinate of the first control point position. */
+	public double c1y;
+
+	/** The X coordinate of the second control point position. */
+	public double c2x;
+
+	/** The Y coordinate of the second control point position. */
+	public double c2y;
+
+	/** The transition is drawn as straight line (not as bezier curve). */
+	public boolean straight;
+
 	/** The description of the transition. */
 	public String description;
 
-	/** The ID of the start state. */
-	public int from;
+	/** The start state ID. */
+	public int startStateId;
 
-	/** The ID of the destination state. */
-	public int to;
+	/** The destination state ID. */
+	public int destinationStateId;
 
-	/** The input event. */
-	public String inputsText;
+	/** The input is inverted. */
+	public boolean inputInvert;
 
-	public int inputsDefault;
-	public int inputsAny;
-	public int inputsInvert;
+	/** The input is any. */
+	public boolean inputAny;
 
-	/** The output. */
+	/** The input is default. */
+	public boolean inputDefault;
+
+	/** The input information. */
+	public String inputText;
+
+	/** The output information. */
 	public String outputsText;
 
-	public double c1x;
-	public double c1y;
-	public double c2x;
-	public double c2y;
+	/**
+	 * The transition type.
+	 * 
+	 * @author Michal Turek
+	 */
+	public static enum TransitionType {
+		// Type of the transition. 0: Binary / 1: ASCII
+		// Note 2 is undocumented in Qfsm sources
+		BINARY, ASCII, FREE_TEXT;
 
-	public double xpos;
-	public double ypos;
-	public double endx;
-	public double endy;
+		/**
+		 * Convert an integer value to the enum.
+		 * 
+		 * @param value
+		 *            the integer value from the data file
+		 * @return the corresponding enum value
+		 * @throws QfsmException
+		 *             if the value is not supported
+		 */
+		public static TransitionType convert(int value) throws QfsmException {
+			TransitionType[] values = values();
 
-	public int straight;
-	public int type;
+			if (value < 0 || value >= values.length)
+				throw new QfsmException("Unsupported transition type: " + value);
+
+			return values[value];
+		}
+	}
 }

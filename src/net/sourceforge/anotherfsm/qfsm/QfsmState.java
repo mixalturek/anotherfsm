@@ -27,20 +27,30 @@ public class QfsmState {
 	/** The state name. */
 	public String name;
 
-	/** The state code or ID in references. */
-	public int code;
-
 	/** The state description. */
 	public String description;
 
-	/** The state is final. */
-	public boolean finalstate;
+	/** The state code/ID. */
+	public int stateId;
 
+	/** The moore outputs of the state. */
+	public String mooreOutputs;
+
+	/** The X coordinate of the position. */
 	public int xpos;
-	public int ypos;
-	public int radius;
-	public int linewidth;
-	public int pencolor;
 
-	public String moore_outputs;
+	/** The Y coordinate of the position. */
+	public int ypos;
+
+	/** The radius of the circle. */
+	public int radius;
+
+	/** The color of the state ({@code ARGB & 0x00ffffff}). */
+	public int color;
+
+	/** The width of the line. */
+	public int lineWidth;
+
+	/** The state is final/end state. */
+	public boolean finalState;
 }

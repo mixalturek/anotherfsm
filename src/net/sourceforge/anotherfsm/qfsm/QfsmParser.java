@@ -56,29 +56,34 @@ public class QfsmParser {
 
 	/**
 	 * Parse a Qfsm file. Data files from Qfsm of 0.52 and 0.53 versions should
-	 * be parsed and loaded without problems.
+	 * be successfully parsed.
 	 * 
-	 * <h3>Differences from Qfsm</h3>
+	 * <h3>Limitations and differences from Qfsm</h3>
 	 * 
 	 * <ul>
-	 * <li>{@link QfsmMachine#initialstate} is optional in Qfsm, a warning will
-	 * be logged in such case</li>
-	 * <li></li>
-	 * <li></li>
-	 * <li>TODO:</li>
+	 * <li>{@link QfsmMachine#startStateId} attribute is optional in Qfsm, a
+	 * warning will be logged if not defined.</li>
+	 * <li>{@link QfsmMachine#initialTransition} element is optional in Qfsm, a
+	 * warning will be logged if not defined.</li>
+	 * <li>Several text parameters that contain multiple values (list) are not
+	 * parsed to the smallest pieces.</li>
 	 * </ul>
 	 * 
 	 * Note Qfsm supports various state machine types, but not all of them were
-	 * tested. Please create a new ticket if loading of your file fails and you
-	 * believe the issue is in this library.
+	 * tested. Please report a bug if loading of your file fails and you believe
+	 * the issue is in this library (patch appreciated).
 	 * 
 	 * @param file
 	 *            the input file
 	 * @throws QfsmException
-	 *             if parsing fails
+	 *             if parsing fails for any reason
 	 * 
 	 * @see Qfsm source code, Project.cpp, Project::getDomDocument()
 	 */
+	// TODO: different FSM types
+	// TODO: FSM with broken/unlinked transition
+	// TODO: LANG=cs_CZ
+	// TODO: version 0.53
 	public static QfsmProject parse(File file) throws QfsmException {
 		XmlUtils.ensureNotNull(file, "Input file");
 
@@ -149,65 +154,77 @@ public class QfsmParser {
 		QfsmMachine machine = new QfsmMachine();
 
 		machine.name = XmlUtils.getAtribute(machineEl, "name");
-		machine.description = XmlUtils.getAtribute(machineEl, "description");
-		machine.author = XmlUtils.getAtribute(machineEl, "author");
 		machine.version = XmlUtils.getAtribute(machineEl, "version");
-
-		// Optional in Qfsm but mandatory here
-		String initialState = XmlUtils.getOptionalAtribute(machineEl,
-				"initialstate");
-
-		if (initialState.isEmpty())
-			logger.warn("Optional attribute is not defined: initialstate");
-		else
-			machine.initialstate = XmlUtils.toInt(initialState);
-
-		machine.draw_it = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"draw_it"));
+		machine.author = XmlUtils.getAtribute(machineEl, "author");
+		machine.description = XmlUtils.getAtribute(machineEl, "description");
 
 		machine.type = QfsmMachine.MachineType.convert(XmlUtils.toInt(XmlUtils
 				.getAtribute(machineEl, "type")));
-		machine.arrowtype = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"arrowtype"));
 
-		machine.numin = XmlUtils
-				.toInt(XmlUtils.getAtribute(machineEl, "numin"));
-		machine.numout = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
+		machine.numMooreOutputs = XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "nummooreout"));
+
+		machine.numEncodingBits = XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "numbits"));
+
+		machine.numInputs = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
+				"numin"));
+
+		machine.numOutputs = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
 				"numout"));
-		machine.numbits = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"numbits"));
-		machine.nummooreout = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"nummooreout"));
 
-		machine.transfont = XmlUtils.getAtribute(machineEl, "transfont");
-		machine.transfontsize = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"transfontsize"));
-		machine.transfontweight = XmlUtils.toInt(XmlUtils.getAtribute(
+		String initialState = XmlUtils.getOptionalAtribute(machineEl,
+				"initialstate");
+
+		if (initialState.isEmpty()) {
+			logger.warn("Optional attribute is not defined: initialstate");
+			machine.startStateId = QfsmMachine.UNDEFINED_ID;
+		} else {
+			machine.startStateId = XmlUtils.toInt(initialState);
+		}
+
+		machine.stateFont = XmlUtils.getAtribute(machineEl, "statefont");
+		machine.stateFontSize = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
+				"statefontsize"));
+		machine.stateFontWeight = XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "statefontweight"));
+		machine.stateFontItalic = XmlUtils.toBoolean(XmlUtils.getAtribute(
+				machineEl, "statefontitalic"));
+
+		machine.transitionFont = XmlUtils.getAtribute(machineEl, "transfont");
+		machine.transitionFontSize = XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "transfontsize"));
+		machine.transitionFontWeight = XmlUtils.toInt(XmlUtils.getAtribute(
 				machineEl, "transfontweight"));
-		machine.transfontitalic = XmlUtils.toInt(XmlUtils.getAtribute(
+		machine.transitionFontItalic = XmlUtils.toInt(XmlUtils.getAtribute(
 				machineEl, "transfontitalic"));
 
-		machine.statefont = XmlUtils.getAtribute(machineEl, "statefont");
-		machine.statefontsize = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"statefontsize"));
-		machine.statefontweight = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "statefontweight"));
-		machine.statefontitalic = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "statefontitalic"));
+		machine.arrowType = QfsmMachine.ArrowType.convert(XmlUtils
+				.toInt(XmlUtils.getAtribute(machineEl, "arrowtype")));
+
+		machine.drawInitialTransition = XmlUtils.toBoolean(XmlUtils
+				.getAtribute(machineEl, "draw_it"));
+
+		machine.inputNames = XmlUtils.getOptionalText(XmlUtils.getOneElement(
+				machineEl, "inputnames"));
+		machine.outputNames = XmlUtils.getOptionalText(XmlUtils.getOneElement(
+				machineEl, "outputnames"));
+		machine.outputNamesMoore = XmlUtils.getOptionalText(XmlUtils
+				.getOneElement(machineEl, "outputnames_moore"));
+
+		Element initialTransitionEl = XmlUtils.getOneOptionalElement(machineEl,
+				"itransition");
+
+		if (initialTransitionEl == null) {
+			logger.warn("Optional element is not defined: itransition");
+			machine.initialTransition = new QfsmInitialTransition();
+		} else {
+			machine.initialTransition = parseInitialTransition(initialTransitionEl);
+		}
 
 		machine.states = parseStates(XmlUtils.getElements(machineEl, "state"));
 		machine.transitions = parseTransitions(XmlUtils.getElements(machineEl,
 				"transition"));
-
-		machine.itransition = parseInitialTransition(XmlUtils.getOneElement(
-				machineEl, "itransition"));
-
-		machine.inputnames = XmlUtils.getOptionalText(XmlUtils.getOneElement(
-				machineEl, "inputnames"));
-		machine.outputnames = XmlUtils.getOptionalText(XmlUtils.getOneElement(
-				machineEl, "outputnames"));
-		machine.outputnames_moore = XmlUtils.getOptionalText(XmlUtils
-				.getOneElement(machineEl, "outputnames_moore"));
 
 		return machine;
 	}
@@ -220,20 +237,21 @@ public class QfsmParser {
 			QfsmState state = new QfsmState();
 
 			state.name = XmlUtils.getText(element);
-			state.code = XmlUtils.toInt(XmlUtils.getAtribute(element, "code"));
 			state.description = XmlUtils.getAtribute(element, "description");
-			state.finalstate = XmlUtils.toBoolean(XmlUtils.getAtribute(element,
-					"finalstate"));
+			state.stateId = XmlUtils.toInt(XmlUtils.getAtribute(element, "code"));
+			state.mooreOutputs = XmlUtils.getAtribute(element, "moore_outputs");
+
 			state.xpos = XmlUtils.toInt(XmlUtils.getAtribute(element, "xpos"));
 			state.ypos = XmlUtils.toInt(XmlUtils.getAtribute(element, "ypos"));
 			state.radius = XmlUtils.toInt(XmlUtils.getAtribute(element,
 					"radius"));
-			state.linewidth = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"linewidth"));
-			state.pencolor = XmlUtils.toInt(XmlUtils.getAtribute(element,
+			state.color = XmlUtils.toInt(XmlUtils.getAtribute(element,
 					"pencolor"));
-			state.moore_outputs = XmlUtils
-					.getAtribute(element, "moore_outputs");
+			state.lineWidth = XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"linewidth"));
+
+			state.finalState = XmlUtils.toBoolean(XmlUtils.getAtribute(element,
+					"finalstate"));
 
 			states.add(state);
 		}
@@ -248,24 +266,17 @@ public class QfsmParser {
 		for (Element element : elements) {
 			QfsmTransition transition = new QfsmTransition();
 
-			transition.description = XmlUtils.getAtribute(element,
-					"description");
-			transition.from = XmlUtils.toInt(XmlUtils.getText(XmlUtils
-					.getOneElement(element, "from")));
-			transition.to = XmlUtils.toInt(XmlUtils.getText(XmlUtils
-					.getOneElement(element, "to")));
+			transition.type = QfsmTransition.TransitionType.convert(XmlUtils
+					.toInt(XmlUtils.getAtribute(element, "type")));
 
-			Element inputs = XmlUtils.getOneElement(element, "inputs");
-			transition.inputsText = XmlUtils.getText(inputs);
-			transition.inputsDefault = XmlUtils.toInt(XmlUtils.getAtribute(
-					inputs, "default"));
-			transition.inputsAny = XmlUtils.toInt(XmlUtils.getAtribute(inputs,
-					"any"));
-			transition.inputsInvert = XmlUtils.toInt(XmlUtils.getAtribute(
-					inputs, "invert"));
-
-			transition.outputsText = XmlUtils.getText(XmlUtils.getOneElement(
-					element, "outputs"));
+			transition.xpos = XmlUtils.toDouble(XmlUtils.getAtribute(element,
+					"xpos"));
+			transition.ypos = XmlUtils.toDouble(XmlUtils.getAtribute(element,
+					"ypos"));
+			transition.endx = XmlUtils.toDouble(XmlUtils.getAtribute(element,
+					"endx"));
+			transition.endy = XmlUtils.toDouble(XmlUtils.getAtribute(element,
+					"endy"));
 
 			transition.c1x = XmlUtils.toDouble(XmlUtils.getAtribute(element,
 					"c1x"));
@@ -275,18 +286,28 @@ public class QfsmParser {
 					"c2x"));
 			transition.c2y = XmlUtils.toDouble(XmlUtils.getAtribute(element,
 					"c2y"));
-			transition.xpos = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"xpos"));
-			transition.ypos = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"ypos"));
-			transition.endx = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"endx"));
-			transition.endy = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"endy"));
-			transition.straight = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"straight"));
-			transition.type = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"type"));
+
+			transition.straight = XmlUtils.toBoolean(XmlUtils.getAtribute(
+					element, "straight"));
+
+			transition.description = XmlUtils.getAtribute(element,
+					"description");
+			transition.startStateId = XmlUtils.toInt(XmlUtils.getText(XmlUtils
+					.getOneElement(element, "from")));
+			transition.destinationStateId = XmlUtils.toInt(XmlUtils
+					.getText(XmlUtils.getOneElement(element, "to")));
+
+			Element inputs = XmlUtils.getOneElement(element, "inputs");
+			transition.inputInvert = XmlUtils.toBoolean(XmlUtils.getAtribute(
+					inputs, "invert"));
+			transition.inputAny = XmlUtils.toBoolean(XmlUtils.getAtribute(
+					inputs, "any"));
+			transition.inputDefault = XmlUtils.toBoolean(XmlUtils.getAtribute(
+					inputs, "default"));
+			transition.inputText = XmlUtils.getText(inputs);
+
+			transition.outputsText = XmlUtils.getText(XmlUtils.getOneElement(
+					element, "outputs"));
 
 			transitions.add(transition);
 		}
@@ -298,10 +319,10 @@ public class QfsmParser {
 			throws QfsmException {
 		QfsmInitialTransition itr = new QfsmInitialTransition();
 
-		itr.xpos = XmlUtils.toInt(XmlUtils.getAtribute(itrEl, "xpos"));
-		itr.ypos = XmlUtils.toInt(XmlUtils.getAtribute(itrEl, "ypos"));
-		itr.endx = XmlUtils.toInt(XmlUtils.getAtribute(itrEl, "endx"));
-		itr.endy = XmlUtils.toInt(XmlUtils.getAtribute(itrEl, "endy"));
+		itr.xpos = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "xpos"));
+		itr.ypos = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "ypos"));
+		itr.endx = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "endx"));
+		itr.endy = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "endy"));
 
 		return itr;
 	}

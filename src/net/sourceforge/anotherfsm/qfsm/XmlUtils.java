@@ -86,12 +86,32 @@ class XmlUtils {
 	public static Element getOneElement(Element element, String name)
 			throws QfsmException {
 		NodeList list = element.getElementsByTagName(name);
-		if (list.getLength() != 1) {
-			throw new QfsmException("Unexpected count of machine nodes: "
-					+ list.getLength());
-		}
 
-		return toElement(list.item(0));
+		switch (list.getLength()) {
+		case 1:
+			return toElement(list.item(0));
+
+		default:
+			throw new QfsmException("Unexpected count of subelements: " + name
+					+ ", " + list.getLength());
+		}
+	}
+
+	public static Element getOneOptionalElement(Element element, String name)
+			throws QfsmException {
+		NodeList list = element.getElementsByTagName(name);
+
+		switch (list.getLength()) {
+		case 0:
+			return null;
+
+		case 1:
+			return toElement(list.item(0));
+
+		default:
+			throw new QfsmException("Unexpected count of subelements: " + name
+					+ ", " + list.getLength());
+		}
 	}
 
 	public static List<Element> getElements(Element element, String name)

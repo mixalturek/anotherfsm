@@ -24,7 +24,7 @@ package net.sourceforge.anotherfsm.qfsm;
  * @author Michal Turek
  */
 public class QfsmProject {
-	/** The application that created the file, {@code Qfsm} for Qfsm. */
+	/** The application that created the file, {@code Qfsm} for Qfsm tool. */
 	public String author;
 
 	/** The version of the application that created the file. */
