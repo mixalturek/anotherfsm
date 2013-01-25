@@ -23,6 +23,7 @@ package net.sourceforge.anotherfsm.qfsm;
  * 
  * @author Michal Turek
  */
+// TODO: remove the class
 public class QfsmProject {
 	/** The application that created the file, {@code Qfsm} for Qfsm tool. */
 	public String author;

@@ -37,19 +37,19 @@ public class QfsmState {
 	public String mooreOutputs;
 
 	/** The X coordinate of the position. */
-	public int xpos;
+	public int drawPosX;
 
 	/** The Y coordinate of the position. */
-	public int ypos;
+	public int drawPosY;
 
 	/** The radius of the circle. */
-	public int radius;
+	public int drawRadius;
 
 	/** The color of the state ({@code ARGB & 0x00ffffff}). */
-	public int color;
+	public int drawColor;
 
 	/** The width of the line. */
-	public int lineWidth;
+	public int drawLineWidth;
 
 	/** The state is final/end state. */
 	public boolean finalState;

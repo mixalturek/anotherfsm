@@ -28,31 +28,31 @@ public class QfsmTransition {
 	public TransitionType type;
 
 	/** The X coordinate of the position. */
-	public double xpos;
+	public double drawPosX;
 
 	/** The Y coordinate of the position. */
-	public double ypos;
+	public double drawPosY;
 
 	/** The X coordinate of the end position. */
-	public double endx;
+	public double drawEndPosX;
 
 	/** The X coordinate of the end position. */
-	public double endy;
+	public double drawEndPosY;
 
 	/** The X coordinate of the first control point position. */
-	public double c1x;
+	public double drawBezier1PosX;
 
 	/** The Y coordinate of the first control point position. */
-	public double c1y;
+	public double drawBezier1PosY;
 
 	/** The X coordinate of the second control point position. */
-	public double c2x;
+	public double drawBezier2PosX;
 
 	/** The Y coordinate of the second control point position. */
-	public double c2y;
+	public double drawBezier2PosY;
 
 	/** The transition is drawn as straight line (not as bezier curve). */
-	public boolean straight;
+	public boolean drawStraight;
 
 	/** The description of the transition. */
 	public String description;
@@ -64,7 +64,7 @@ public class QfsmTransition {
 	public int destinationStateId;
 
 	/** The input is inverted. */
-	public boolean inputInvert;
+	public boolean inputInverted;
 
 	/** The input is any. */
 	public boolean inputAny;

@@ -60,10 +60,10 @@ public class QfsmMachine {
 	public int startStateId;
 
 	/** The font family name used to draw the state names. */
-	public String stateFont;
+	public String drawStateFont;
 
 	/** The point size of the font used to draw the state names. */
-	public int stateFontSize;
+	public int drawStateFontSize;
 
 	/**
 	 * Weight of the font used to draw the state names which is one of the
@@ -71,32 +71,32 @@ public class QfsmMachine {
 	 * 
 	 * @see {@link http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum}
 	 */
-	public int stateFontWeight;
+	public int drawStateFontWeight;
 
 	/** The font style used to draw the state names is italic. */
-	public boolean stateFontItalic;
+	public boolean drawStateFontItalic;
 
 	/** The font family name used to draw the transition conditions. */
-	public String transitionFont;
+	public String drawTransitionFont;
 
 	/** The point size of the font used to draw the transition conditions. */
-	public int transitionFontSize;
+	public int drawTransitionFontSize;
 	/**
 	 * Weight of the font used to draw the transition conditions which is one of
 	 * the enumerated values from {@code QFont::Weight}.
 	 * 
 	 * @see {@link http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum}
 	 */
-	public int transitionFontWeight;
+	public int drawTransitionFontWeight;
 
 	/** The font style used to draw the transition conditions is italic. */
-	public int transitionFontItalic;
+	public int drawTransitionFontItalic;
 
 	/** The arrow type. */
-	public ArrowType arrowType;
+	public ArrowType draArrowType;
 
 	/** The initial transition should be drawn. */
-	public boolean drawInitialTransition;
+	public boolean drawDisplayInitialTransition;
 
 	/** The names of the input bits. */
 	public String inputNames;
@@ -113,7 +113,7 @@ public class QfsmMachine {
 	/** The transitions. */
 	public List<QfsmTransition> transitions;
 
-	/** The initial transition, optional (will be empty). */
+	/** The initial transition, optional (won't be null). */
 	public QfsmInitialTransition initialTransition;
 
 	/**
