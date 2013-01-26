@@ -51,6 +51,7 @@ public class QfsmParserTest {
 			assertEquals(QfsmMachine.MachineType.FREE_TEXT, machine.getType());
 			assertEquals(0, machine.getNumOutputs());
 			assertEquals(0, machine.getStartStateId());
+			assertEquals("FIRST STATE", machine.getStartState().getName());
 
 			assertEquals("", machine.getOutputNames());
 			assertEquals("", machine.getInputNames());
@@ -127,6 +128,9 @@ public class QfsmParserTest {
 					DELTA);
 			assertEquals(0, transition.getSourceStateId());
 			assertEquals(1, transition.getDestinationStateId());
+			assertEquals("FIRST STATE", transition.getSourceState().getName());
+			assertEquals("SECOND STATE", transition.getDestinationState()
+					.getName());
 			assertEquals(false, transition.isInputDefault());
 			assertEquals(false, transition.isInputAny());
 			assertEquals(false, transition.isInputInverted());
@@ -153,6 +157,9 @@ public class QfsmParserTest {
 					DELTA);
 			assertEquals(0, transition.getSourceStateId());
 			assertEquals(0, transition.getDestinationStateId());
+			assertEquals("FIRST STATE", transition.getSourceState().getName());
+			assertEquals("FIRST STATE", transition.getDestinationState()
+					.getName());
 			assertEquals(false, transition.isInputDefault());
 			assertEquals(false, transition.isInputAny());
 			assertEquals(false, transition.isInputInverted());
@@ -179,6 +186,9 @@ public class QfsmParserTest {
 					DELTA);
 			assertEquals(1, transition.getSourceStateId());
 			assertEquals(1, transition.getDestinationStateId());
+			assertEquals("SECOND STATE", transition.getSourceState().getName());
+			assertEquals("SECOND STATE", transition.getDestinationState()
+					.getName());
 			assertEquals(false, transition.isInputDefault());
 			assertEquals(false, transition.isInputAny());
 			assertEquals(false, transition.isInputInverted());
@@ -205,6 +215,9 @@ public class QfsmParserTest {
 					DELTA);
 			assertEquals(1, transition.getSourceStateId());
 			assertEquals(0, transition.getDestinationStateId());
+			assertEquals("SECOND STATE", transition.getSourceState().getName());
+			assertEquals("FIRST STATE", transition.getDestinationState()
+					.getName());
 			assertEquals(false, transition.isInputDefault());
 			assertEquals(false, transition.isInputAny());
 			assertEquals(false, transition.isInputInverted());
@@ -231,6 +244,9 @@ public class QfsmParserTest {
 					DELTA);
 			assertEquals(1, transition.getSourceStateId());
 			assertEquals(2, transition.getDestinationStateId());
+			assertEquals("SECOND STATE", transition.getSourceState().getName());
+			assertEquals("FINAL STATE", transition.getDestinationState()
+					.getName());
 			assertEquals(false, transition.isInputDefault());
 			assertEquals(false, transition.isInputAny());
 			assertEquals(false, transition.isInputInverted());
@@ -257,6 +273,9 @@ public class QfsmParserTest {
 					DELTA);
 			assertEquals(2, transition.getSourceStateId());
 			assertEquals(0, transition.getDestinationStateId());
+			assertEquals("FINAL STATE", transition.getSourceState().getName());
+			assertEquals("FIRST STATE", transition.getDestinationState()
+					.getName());
 			assertEquals(false, transition.isInputDefault());
 			assertEquals(false, transition.isInputAny());
 			assertEquals(false, transition.isInputInverted());

@@ -59,6 +59,9 @@ public class QfsmMachine {
 	/** The start/initial state ID. */
 	private int startStateId;
 
+	/** The start/initial state. */
+	private QfsmState startState;
+
 	/** The font family name used to draw the state names. */
 	private String drawStateFont;
 
@@ -125,7 +128,7 @@ public class QfsmMachine {
 	 * @throws QfsmException
 	 *             if the state does not exist
 	 */
-	public QfsmState getState(String stateName) throws QfsmException {
+	QfsmState getState(String stateName) throws QfsmException {
 		XmlUtils.ensureNotNull(stateName, "stateName");
 
 		for (QfsmState state : states) {
@@ -133,7 +136,7 @@ public class QfsmMachine {
 				return state;
 		}
 
-		throw new QfsmException("State does not exist: " + name);
+		throw new QfsmException("State does not exist: " + stateName);
 	}
 
 	/**
@@ -145,16 +148,16 @@ public class QfsmMachine {
 	 * @throws QfsmException
 	 *             if the state does not exist
 	 */
-	public QfsmState getState(int stateId) throws QfsmException {
+	QfsmState getState(int stateId) throws QfsmException {
 		for (QfsmState state : states) {
 			if (stateId == state.getStateId())
 				return state;
 		}
 
-		throw new QfsmException("State does not exist: " + name);
+		throw new QfsmException("State does not exist: " + stateId);
 	}
 
-	public QfsmTransition getTransition(int startStateId, String inputEvent,
+	QfsmTransition getTransition(int startStateId, String inputEvent,
 			int destinationStateId) throws QfsmException {
 		XmlUtils.ensureNotNull(inputEvent, "inputText");
 
@@ -168,6 +171,22 @@ public class QfsmMachine {
 
 		throw new QfsmException("State does not exist: " + startStateId + ", "
 				+ inputEvent + ", " + destinationStateId);
+	}
+
+	/**
+	 * Evaluate state IDs to object references.
+	 * 
+	 * @throws QfsmException
+	 *             if some of the states does not exist
+	 */
+	void evaluateStates() throws QfsmException {
+		startState = getState(startStateId);
+
+		for (QfsmTransition transition : transitions) {
+			transition.setSourceState(getState(transition.getSourceStateId()));
+			transition.setDestinationState(getState(transition
+					.getDestinationStateId()));
+		}
 	}
 
 	public String getName() {
@@ -248,6 +267,14 @@ public class QfsmMachine {
 
 	public void setStartStateId(int startStateId) {
 		this.startStateId = startStateId;
+	}
+
+	public QfsmState getStartState() {
+		return startState;
+	}
+
+	public void setStartState(QfsmState startState) {
+		this.startState = startState;
 	}
 
 	public String getDrawStateFont() {

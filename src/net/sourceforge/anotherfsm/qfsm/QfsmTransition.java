@@ -60,8 +60,14 @@ public class QfsmTransition {
 	/** The source state ID. */
 	private int sourceStateId;
 
+	/** The source state. */
+	private QfsmState sourceState;
+
 	/** The destination state ID. */
 	private int destinationStateId;
+
+	/** The destination state. */
+	private QfsmState destinationState;
 
 	/** The input is inverted. */
 	private boolean inputInverted;
@@ -174,12 +180,28 @@ public class QfsmTransition {
 		this.sourceStateId = sourceStateId;
 	}
 
+	public QfsmState getSourceState() {
+		return sourceState;
+	}
+
+	public void setSourceState(QfsmState sourceState) {
+		this.sourceState = sourceState;
+	}
+
 	public int getDestinationStateId() {
 		return destinationStateId;
 	}
 
 	public void setDestinationStateId(int destinationStateId) {
 		this.destinationStateId = destinationStateId;
+	}
+
+	public QfsmState getDestinationState() {
+		return destinationState;
+	}
+
+	public void setDestinationState(QfsmState destinationState) {
+		this.destinationState = destinationState;
 	}
 
 	public boolean isInputInverted() {

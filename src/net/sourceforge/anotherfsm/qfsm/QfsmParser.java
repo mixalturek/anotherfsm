@@ -227,6 +227,7 @@ public class QfsmParser {
 		machine.setTransitions(parseTransitions(XmlUtils.getElements(machineEl,
 				"transition")));
 
+		machine.evaluateStates();
 		return machine;
 	}
 
