@@ -55,6 +55,16 @@ class XmlUtils {
 		}
 	}
 
+	/**
+	 * Verify the string is not empty.
+	 * 
+	 * @param string
+	 *            the string
+	 * @param objectName
+	 *            the string name
+	 * @throws QfsmException
+	 *             if the string is empty
+	 */
 	public static void ensureNotEmpty(String string, String objectName)
 			throws QfsmException {
 		ensureNotNull(string, objectName);
@@ -64,6 +74,16 @@ class XmlUtils {
 		}
 	}
 
+	/**
+	 * Check the element has the expected name.
+	 * 
+	 * @param element
+	 *            the element
+	 * @param expected
+	 *            the expected name
+	 * @throws QfsmException
+	 *             if the element name differs from the expected one
+	 */
 	public static void checkElementName(Element element, String expected)
 			throws QfsmException {
 		ensureNotNull(element, "element");
@@ -75,7 +95,18 @@ class XmlUtils {
 		}
 	}
 
+	/**
+	 * Convert a node to an element.
+	 * 
+	 * @param node
+	 *            the node
+	 * @return the element
+	 * @throws QfsmException
+	 *             if the node is not element
+	 */
 	public static Element toElement(Node node) throws QfsmException {
+		ensureNotNull(node, "node");
+
 		if (node.getNodeType() != Node.ELEMENT_NODE) {
 			throw new QfsmException("Node is not element: " + node);
 		}
@@ -83,8 +114,23 @@ class XmlUtils {
 		return (Element) node;
 	}
 
+	/**
+	 * Get one subelement with a concrete name.
+	 * 
+	 * @param element
+	 *            the parent element
+	 * @param name
+	 *            the subelement name
+	 * @return the subelement
+	 * @throws QfsmException
+	 *             if the element is not defined or if more than one element of
+	 *             this name is defined
+	 */
 	public static Element getOneElement(Element element, String name)
 			throws QfsmException {
+		ensureNotNull(element, "element");
+		ensureNotNull(name, "name");
+
 		NodeList list = element.getElementsByTagName(name);
 
 		switch (list.getLength()) {
@@ -97,8 +143,22 @@ class XmlUtils {
 		}
 	}
 
+	/**
+	 * Get one optional subelement with a concrete name.
+	 * 
+	 * @param element
+	 *            the parent element
+	 * @param name
+	 *            the subelement name
+	 * @return the subelement or null if the subelement is not defined
+	 * @throws QfsmException
+	 *             if more than one element of this name is defined
+	 */
 	public static Element getOneOptionalElement(Element element, String name)
 			throws QfsmException {
+		ensureNotNull(element, "element");
+		ensureNotNull(name, "name");
+
 		NodeList list = element.getElementsByTagName(name);
 
 		switch (list.getLength()) {
@@ -114,8 +174,22 @@ class XmlUtils {
 		}
 	}
 
+	/**
+	 * Get all subelements with a concrete name.
+	 * 
+	 * @param element
+	 *            the parent element
+	 * @param name
+	 *            the subelements name
+	 * @return the list of subelements
+	 * @throws QfsmException
+	 *             if something fails
+	 */
 	public static List<Element> getElements(Element element, String name)
 			throws QfsmException {
+		ensureNotNull(element, "element");
+		ensureNotNull(name, "name");
+
 		List<Element> elements = new LinkedList<Element>();
 
 		NodeList list = element.getElementsByTagName(name);
@@ -126,6 +200,15 @@ class XmlUtils {
 		return elements;
 	}
 
+	/**
+	 * Get text located inside an element.
+	 * 
+	 * @param element
+	 *            the parent element
+	 * @return the text
+	 * @throws QfsmException
+	 *             if the text is empty
+	 */
 	public static String getText(Element element) throws QfsmException {
 		ensureNotNull(element, "element");
 
@@ -135,12 +218,32 @@ class XmlUtils {
 		return value;
 	}
 
+	/**
+	 * Get optional text located inside an element.
+	 * 
+	 * @param element
+	 *            the parent element
+	 * @return the text or empty string
+	 * @throws QfsmException
+	 *             if something fails
+	 */
 	public static String getOptionalText(Element element) throws QfsmException {
 		ensureNotNull(element, "element");
 
 		return element.getTextContent();
 	}
 
+	/**
+	 * Get a value of an attribute.
+	 * 
+	 * @param element
+	 *            the parent element
+	 * @param name
+	 *            the attribute name
+	 * @return the attribute value
+	 * @throws QfsmException
+	 *             if the attribute is not defined
+	 */
 	public static String getAtribute(Element element, String name)
 			throws QfsmException {
 		ensureNotNull(element, "element");
@@ -150,20 +253,18 @@ class XmlUtils {
 			throw new QfsmException("Attribute is not defined: " + name);
 		}
 
-		String value = element.getAttribute(name);
-		// ensureNotEmpty(value, "value");
-
-		return value;
+		return element.getAttribute(name);
 	}
 
 	/**
-	 * Get a value of optional attribute.
+	 * Get a value of an optional attribute.
 	 * 
 	 * @param element
-	 *            the source element
+	 *            the parent element
 	 * @param name
 	 *            the attribute name
-	 * @return the value if the attribute is defined or empty string
+	 * @return the attribute value or empty string if the attribute is not
+	 *         defined
 	 * @throws QfsmException
 	 *             if something fails
 	 */
@@ -175,23 +276,57 @@ class XmlUtils {
 		return element.getAttribute(name);
 	}
 
+	/**
+	 * Parse string to an integer value.
+	 * 
+	 * @param string
+	 *            the string
+	 * @return the integer
+	 * @throws QfsmException
+	 *             if the parsing fails
+	 */
 	public static int toInt(String string) throws QfsmException {
+		ensureNotNull(string, "string");
+
 		try {
 			return Integer.parseInt(string);
 		} catch (NumberFormatException e) {
-			throw new QfsmException("Integer parsing failed: " + string);
+			throw new QfsmException("Integer parsing failed: " + string, e);
 		}
 	}
 
+	/**
+	 * Parse string to a double value.
+	 * 
+	 * @param string
+	 *            the string
+	 * @return the double value
+	 * @throws QfsmException
+	 *             if the parsing fails
+	 */
 	public static double toDouble(String string) throws QfsmException {
+		ensureNotNull(string, "string");
+
 		try {
 			return Double.parseDouble(string);
 		} catch (NumberFormatException e) {
-			throw new QfsmException("Integer parsing failed: " + string);
+			throw new QfsmException("Double parsing failed: " + string, e);
 		}
 	}
 
+	/**
+	 * Parse string to a boolean value. The allowed keywords are
+	 * {@code 0, false, no, 1, true, yes} independent to case.
+	 * 
+	 * @param string
+	 *            the string
+	 * @return the boolean value
+	 * @throws QfsmException
+	 *             if the parsing fails
+	 */
 	public static boolean toBoolean(String string) throws QfsmException {
+		ensureNotNull(string, "string");
+
 		switch (string.toLowerCase()) {
 		case "0":
 		case "false":
