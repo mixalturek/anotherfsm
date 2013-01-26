@@ -130,7 +130,7 @@ all                  - Process full build.
 	<!-- Execute junit tests. -->
 	<target name="tests" depends="compile-tests">
 		<mkdir dir="${builddir}/tests/" />
-		<junit printsummary="yes" haltonfailure="yes" showoutput="no">
+		<junit printsummary="yes" haltonfailure="no" showoutput="no" failureProperty="test.failed">
 			<classpath refid="classpath-tests" />
 		 	<batchtest fork="yes" todir="${builddir}/tests">
 				<formatter type="xml"/>
@@ -139,7 +139,13 @@ all                  - Process full build.
 					<include name="**/*Test.java"/>
 				</fileset>
 			</batchtest>
-		</junit> 
+		</junit>
+		
+		<antcall target="tests-result"/>
+	</target>
+	
+	<target name="tests-result" if="test.failed">
+	    <echo message="JUnit tests failed!"/>
 	</target>
 
 	<!-- Build jar packages. -->

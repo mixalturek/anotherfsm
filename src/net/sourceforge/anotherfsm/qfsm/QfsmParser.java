@@ -73,12 +73,12 @@ public class QfsmParser {
 	 * tested. Please report a bug if loading of your file fails and you believe
 	 * the issue is in this library (patch appreciated).
 	 * 
+	 * See Qfsm source code, Project.cpp, Project::getDomDocument().
+	 * 
 	 * @param file
 	 *            the input file
 	 * @throws QfsmException
 	 *             if parsing fails for any reason
-	 * 
-	 * @see Qfsm source code, Project.cpp, Project::getDomDocument()
 	 */
 	// TODO: different FSM types
 	// TODO: FSM with broken/unlinked transition
@@ -184,14 +184,15 @@ public class QfsmParser {
 		}
 
 		machine.drawStateFont = XmlUtils.getAtribute(machineEl, "statefont");
-		machine.drawStateFontSize = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"statefontsize"));
+		machine.drawStateFontSize = XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "statefontsize"));
 		machine.drawStateFontWeight = XmlUtils.toInt(XmlUtils.getAtribute(
 				machineEl, "statefontweight"));
 		machine.drawStateFontItalic = XmlUtils.toBoolean(XmlUtils.getAtribute(
 				machineEl, "statefontitalic"));
 
-		machine.drawTransitionFont = XmlUtils.getAtribute(machineEl, "transfont");
+		machine.drawTransitionFont = XmlUtils.getAtribute(machineEl,
+				"transfont");
 		machine.drawTransitionFontSize = XmlUtils.toInt(XmlUtils.getAtribute(
 				machineEl, "transfontsize"));
 		machine.drawTransitionFontWeight = XmlUtils.toInt(XmlUtils.getAtribute(
@@ -238,11 +239,14 @@ public class QfsmParser {
 
 			state.name = XmlUtils.getText(element);
 			state.description = XmlUtils.getAtribute(element, "description");
-			state.stateId = XmlUtils.toInt(XmlUtils.getAtribute(element, "code"));
+			state.stateId = XmlUtils.toInt(XmlUtils
+					.getAtribute(element, "code"));
 			state.mooreOutputs = XmlUtils.getAtribute(element, "moore_outputs");
 
-			state.drawPosX = XmlUtils.toInt(XmlUtils.getAtribute(element, "xpos"));
-			state.drawPosY = XmlUtils.toInt(XmlUtils.getAtribute(element, "ypos"));
+			state.drawPosX = XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"xpos"));
+			state.drawPosY = XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"ypos"));
 			state.drawRadius = XmlUtils.toInt(XmlUtils.getAtribute(element,
 					"radius"));
 			state.drawColor = XmlUtils.toInt(XmlUtils.getAtribute(element,
@@ -269,23 +273,23 @@ public class QfsmParser {
 			transition.type = QfsmTransition.TransitionType.convert(XmlUtils
 					.toInt(XmlUtils.getAtribute(element, "type")));
 
-			transition.drawPosX = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"xpos"));
-			transition.drawPosY = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"ypos"));
-			transition.drawEndPosX = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"endx"));
-			transition.drawEndPosY = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"endy"));
+			transition.drawPosX = XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "xpos"));
+			transition.drawPosY = XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "ypos"));
+			transition.drawEndPosX = XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "endx"));
+			transition.drawEndPosY = XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "endy"));
 
-			transition.drawBezier1PosX = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"c1x"));
-			transition.drawBezier1PosY = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"c1y"));
-			transition.drawBezier2PosX = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"c2x"));
-			transition.drawBezier2PosY = XmlUtils.toDouble(XmlUtils.getAtribute(element,
-					"c2y"));
+			transition.drawBezier1PosX = XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c1x"));
+			transition.drawBezier1PosY = XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c1y"));
+			transition.drawBezier2PosX = XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c2x"));
+			transition.drawBezier2PosY = XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c2y"));
 
 			transition.drawStraight = XmlUtils.toBoolean(XmlUtils.getAtribute(
 					element, "straight"));
@@ -321,8 +325,10 @@ public class QfsmParser {
 
 		itr.drawPosX = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "xpos"));
 		itr.drawPosY = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "ypos"));
-		itr.drawEndPosX = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "endx"));
-		itr.drawEndPosY = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "endy"));
+		itr.drawEndPosX = XmlUtils
+				.toDouble(XmlUtils.getAtribute(itrEl, "endx"));
+		itr.drawEndPosY = XmlUtils
+				.toDouble(XmlUtils.getAtribute(itrEl, "endy"));
 
 		return itr;
 	}

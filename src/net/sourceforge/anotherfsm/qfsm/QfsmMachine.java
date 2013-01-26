@@ -69,7 +69,7 @@ public class QfsmMachine {
 	 * Weight of the font used to draw the state names which is one of the
 	 * enumerated values from {@code QFont::Weight}.
 	 * 
-	 * @see {@link http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum}
+	 * See http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum.
 	 */
 	public int drawStateFontWeight;
 
@@ -85,7 +85,7 @@ public class QfsmMachine {
 	 * Weight of the font used to draw the transition conditions which is one of
 	 * the enumerated values from {@code QFont::Weight}.
 	 * 
-	 * @see {@link http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum}
+	 * See http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum.
 	 */
 	public int drawTransitionFontWeight;
 
