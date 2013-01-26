@@ -197,10 +197,10 @@ public class QfsmParser {
 				machineEl, "transfontsize")));
 		machine.setDrawTransitionFontWeight(XmlUtils.toInt(XmlUtils
 				.getAtribute(machineEl, "transfontweight")));
-		machine.setDrawTransitionFontItalic(XmlUtils.toInt(XmlUtils
+		machine.setDrawTransitionFontItalic(XmlUtils.toBoolean(XmlUtils
 				.getAtribute(machineEl, "transfontitalic")));
 
-		machine.setDraArrowType(QfsmMachine.ArrowType.convert(XmlUtils
+		machine.setDrawArrowType(QfsmMachine.ArrowType.convert(XmlUtils
 				.toInt(XmlUtils.getAtribute(machineEl, "arrowtype"))));
 
 		machine.setDrawDisplayInitialTransition(XmlUtils.toBoolean(XmlUtils
@@ -297,8 +297,8 @@ public class QfsmParser {
 
 			transition.setDescription(XmlUtils.getAtribute(element,
 					"description"));
-			transition.setStartStateId(XmlUtils.toInt(XmlUtils.getText(XmlUtils
-					.getOneElement(element, "from"))));
+			transition.setSourceStateId(XmlUtils.toInt(XmlUtils
+					.getText(XmlUtils.getOneElement(element, "from"))));
 			transition.setDestinationStateId(XmlUtils.toInt(XmlUtils
 					.getText(XmlUtils.getOneElement(element, "to"))));
 
@@ -309,9 +309,9 @@ public class QfsmParser {
 					inputs, "any")));
 			transition.setInputDefault(XmlUtils.toBoolean(XmlUtils.getAtribute(
 					inputs, "default")));
-			transition.setInputText(XmlUtils.getText(inputs));
+			transition.setInputEvent(XmlUtils.getText(inputs));
 
-			transition.setOutputsText(XmlUtils.getText(XmlUtils.getOneElement(
+			transition.setOutputText(XmlUtils.getText(XmlUtils.getOneElement(
 					element, "outputs")));
 
 			transitions.add(transition);

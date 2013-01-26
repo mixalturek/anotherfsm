@@ -57,8 +57,8 @@ public class QfsmTransition {
 	/** The description of the transition. */
 	private String description;
 
-	/** The start state ID. */
-	private int startStateId;
+	/** The source state ID. */
+	private int sourceStateId;
 
 	/** The destination state ID. */
 	private int destinationStateId;
@@ -73,10 +73,10 @@ public class QfsmTransition {
 	private boolean inputDefault;
 
 	/** The input information. */
-	private String inputText;
+	private String inputEvent;
 
 	/** The output information. */
-	private String outputsText;
+	private String outputText;
 
 	public TransitionType getType() {
 		return type;
@@ -166,12 +166,12 @@ public class QfsmTransition {
 		this.description = description;
 	}
 
-	public int getStartStateId() {
-		return startStateId;
+	public int getSourceStateId() {
+		return sourceStateId;
 	}
 
-	public void setStartStateId(int startStateId) {
-		this.startStateId = startStateId;
+	public void setSourceStateId(int sourceStateId) {
+		this.sourceStateId = sourceStateId;
 	}
 
 	public int getDestinationStateId() {
@@ -206,20 +206,20 @@ public class QfsmTransition {
 		this.inputDefault = inputDefault;
 	}
 
-	public String getInputText() {
-		return inputText;
+	public String getInputEvent() {
+		return inputEvent;
 	}
 
-	public void setInputText(String inputText) {
-		this.inputText = inputText;
+	public void setInputEvent(String inputEvent) {
+		this.inputEvent = inputEvent;
 	}
 
-	public String getOutputsText() {
-		return outputsText;
+	public String getOutputText() {
+		return outputText;
 	}
 
-	public void setOutputsText(String outputsText) {
-		this.outputsText = outputsText;
+	public void setOutputText(String outputText) {
+		this.outputText = outputText;
 	}
 
 	/**

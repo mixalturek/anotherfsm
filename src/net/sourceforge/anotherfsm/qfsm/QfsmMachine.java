@@ -90,10 +90,10 @@ public class QfsmMachine {
 	private int drawTransitionFontWeight;
 
 	/** The font style used to draw the transition conditions is italic. */
-	private int drawTransitionFontItalic;
+	private boolean drawTransitionFontItalic;
 
 	/** The arrow type. */
-	private ArrowType draArrowType;
+	private ArrowType drawArrowType;
 
 	/** The initial transition should be drawn. */
 	private boolean drawDisplayInitialTransition;
@@ -115,6 +115,60 @@ public class QfsmMachine {
 
 	/** The initial transition, optional (won't be null). */
 	private QfsmInitialTransition initialTransition;
+
+	/**
+	 * Get a state with a specified name.
+	 * 
+	 * @param stateName
+	 *            the name
+	 * @return the state
+	 * @throws QfsmException
+	 *             if the state does not exist
+	 */
+	public QfsmState getState(String stateName) throws QfsmException {
+		XmlUtils.ensureNotNull(stateName, "stateName");
+
+		for (QfsmState state : states) {
+			if (stateName.equals(state.getName()))
+				return state;
+		}
+
+		throw new QfsmException("State does not exist: " + name);
+	}
+
+	/**
+	 * Get a state with a specified ID.
+	 * 
+	 * @param stateId
+	 *            the state ID
+	 * @return the state
+	 * @throws QfsmException
+	 *             if the state does not exist
+	 */
+	public QfsmState getState(int stateId) throws QfsmException {
+		for (QfsmState state : states) {
+			if (stateId == state.getStateId())
+				return state;
+		}
+
+		throw new QfsmException("State does not exist: " + name);
+	}
+
+	public QfsmTransition getTransition(int startStateId, String inputEvent,
+			int destinationStateId) throws QfsmException {
+		XmlUtils.ensureNotNull(inputEvent, "inputText");
+
+		for (QfsmTransition transition : transitions) {
+			if (startStateId == transition.getSourceStateId()
+					&& inputEvent.equals(transition.getInputEvent())
+					&& destinationStateId == transition.getDestinationStateId()) {
+				return transition;
+			}
+		}
+
+		throw new QfsmException("State does not exist: " + startStateId + ", "
+				+ inputEvent + ", " + destinationStateId);
+	}
 
 	public String getName() {
 		return name;
@@ -252,20 +306,20 @@ public class QfsmMachine {
 		this.drawTransitionFontWeight = drawTransitionFontWeight;
 	}
 
-	public int getDrawTransitionFontItalic() {
+	public boolean isDrawTransitionFontItalic() {
 		return drawTransitionFontItalic;
 	}
 
-	public void setDrawTransitionFontItalic(int drawTransitionFontItalic) {
+	public void setDrawTransitionFontItalic(boolean drawTransitionFontItalic) {
 		this.drawTransitionFontItalic = drawTransitionFontItalic;
 	}
 
-	public ArrowType getDraArrowType() {
-		return draArrowType;
+	public ArrowType getDrawArrowType() {
+		return drawArrowType;
 	}
 
-	public void setDraArrowType(ArrowType draArrowType) {
-		this.draArrowType = draArrowType;
+	public void setDrawArrowType(ArrowType drawArrowType) {
+		this.drawArrowType = drawArrowType;
 	}
 
 	public boolean isDrawDisplayInitialTransition() {
