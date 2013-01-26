@@ -26,11 +26,35 @@ package net.sourceforge.anotherfsm.qfsm;
 // TODO: remove the class
 public class QfsmProject {
 	/** The application that created the file, {@code Qfsm} for Qfsm tool. */
-	public String author;
+	private String author;
 
 	/** The version of the application that created the file. */
-	public String version;
+	private String version;
 
 	/** The state machine. */
-	public QfsmMachine machine;
+	private QfsmMachine machine;
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public QfsmMachine getMachine() {
+		return machine;
+	}
+
+	public void setMachine(QfsmMachine machine) {
+		this.machine = machine;
+	}
 }

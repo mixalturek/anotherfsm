@@ -116,35 +116,35 @@ public class QfsmParser {
 
 		QfsmProject project = new QfsmProject();
 
-		project.author = XmlUtils.getAtribute(projectEl, "author");
+		project.setAuthor(XmlUtils.getAtribute(projectEl, "author"));
 
-		switch (project.author) {
+		switch (project.getAuthor()) {
 		case "Qfsm":
 			break; // ok
 
 		default:
 			logger.warn("Unexpected project author, an issue may occur: "
-					+ project.author);
+					+ project.getAuthor());
 			logger.info("Only files from 'Qfsm' were tested");
 			break;
 		}
 
-		project.version = XmlUtils.getAtribute(projectEl, "version");
+		project.setVersion(XmlUtils.getAtribute(projectEl, "version"));
 
-		switch (project.version) {
+		switch (project.getVersion()) {
 		case "0.52":
 		case "0.53":
 			break; // ok
 
 		default:
 			logger.warn("Unexpected project version, an issue may occur: "
-					+ project.version);
+					+ project.getVersion());
 			logger.info("Only files from Qfsm '0.52' and '0.53' were tested");
 			break;
 		}
 
-		project.machine = parseMachine(XmlUtils.getOneElement(projectEl,
-				"machine"));
+		project.setMachine(parseMachine(XmlUtils.getOneElement(projectEl,
+				"machine")));
 
 		return project;
 	}
@@ -153,79 +153,79 @@ public class QfsmParser {
 			throws QfsmException {
 		QfsmMachine machine = new QfsmMachine();
 
-		machine.name = XmlUtils.getAtribute(machineEl, "name");
-		machine.version = XmlUtils.getAtribute(machineEl, "version");
-		machine.author = XmlUtils.getAtribute(machineEl, "author");
-		machine.description = XmlUtils.getAtribute(machineEl, "description");
+		machine.setName(XmlUtils.getAtribute(machineEl, "name"));
+		machine.setVersion(XmlUtils.getAtribute(machineEl, "version"));
+		machine.setAuthor(XmlUtils.getAtribute(machineEl, "author"));
+		machine.setDescription(XmlUtils.getAtribute(machineEl, "description"));
 
-		machine.type = QfsmMachine.MachineType.convert(XmlUtils.toInt(XmlUtils
-				.getAtribute(machineEl, "type")));
+		machine.setType(QfsmMachine.MachineType.convert(XmlUtils.toInt(XmlUtils
+				.getAtribute(machineEl, "type"))));
 
-		machine.numMooreOutputs = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "nummooreout"));
+		machine.setNumMooreOutputs(XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "nummooreout")));
 
-		machine.numEncodingBits = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "numbits"));
+		machine.setNumEncodingBits(XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "numbits")));
 
-		machine.numInputs = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"numin"));
+		machine.setNumInputs(XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
+				"numin")));
 
-		machine.numOutputs = XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
-				"numout"));
+		machine.setNumOutputs(XmlUtils.toInt(XmlUtils.getAtribute(machineEl,
+				"numout")));
 
 		String initialState = XmlUtils.getOptionalAtribute(machineEl,
 				"initialstate");
 
 		if (initialState.isEmpty()) {
 			logger.warn("Optional attribute is not defined: initialstate");
-			machine.startStateId = QfsmMachine.UNDEFINED_ID;
+			machine.setStartStateId(QfsmMachine.UNDEFINED_ID);
 		} else {
-			machine.startStateId = XmlUtils.toInt(initialState);
+			machine.setStartStateId(XmlUtils.toInt(initialState));
 		}
 
-		machine.drawStateFont = XmlUtils.getAtribute(machineEl, "statefont");
-		machine.drawStateFontSize = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "statefontsize"));
-		machine.drawStateFontWeight = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "statefontweight"));
-		machine.drawStateFontItalic = XmlUtils.toBoolean(XmlUtils.getAtribute(
-				machineEl, "statefontitalic"));
+		machine.setDrawStateFont(XmlUtils.getAtribute(machineEl, "statefont"));
+		machine.setDrawStateFontSize(XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "statefontsize")));
+		machine.setDrawStateFontWeight(XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "statefontweight")));
+		machine.setDrawStateFontItalic(XmlUtils.toBoolean(XmlUtils.getAtribute(
+				machineEl, "statefontitalic")));
 
-		machine.drawTransitionFont = XmlUtils.getAtribute(machineEl,
-				"transfont");
-		machine.drawTransitionFontSize = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "transfontsize"));
-		machine.drawTransitionFontWeight = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "transfontweight"));
-		machine.drawTransitionFontItalic = XmlUtils.toInt(XmlUtils.getAtribute(
-				machineEl, "transfontitalic"));
+		machine.setDrawTransitionFont(XmlUtils.getAtribute(machineEl,
+				"transfont"));
+		machine.setDrawTransitionFontSize(XmlUtils.toInt(XmlUtils.getAtribute(
+				machineEl, "transfontsize")));
+		machine.setDrawTransitionFontWeight(XmlUtils.toInt(XmlUtils
+				.getAtribute(machineEl, "transfontweight")));
+		machine.setDrawTransitionFontItalic(XmlUtils.toInt(XmlUtils
+				.getAtribute(machineEl, "transfontitalic")));
 
-		machine.draArrowType = QfsmMachine.ArrowType.convert(XmlUtils
-				.toInt(XmlUtils.getAtribute(machineEl, "arrowtype")));
+		machine.setDraArrowType(QfsmMachine.ArrowType.convert(XmlUtils
+				.toInt(XmlUtils.getAtribute(machineEl, "arrowtype"))));
 
-		machine.drawDisplayInitialTransition = XmlUtils.toBoolean(XmlUtils
-				.getAtribute(machineEl, "draw_it"));
+		machine.setDrawDisplayInitialTransition(XmlUtils.toBoolean(XmlUtils
+				.getAtribute(machineEl, "draw_it")));
 
-		machine.inputNames = XmlUtils.getOptionalText(XmlUtils.getOneElement(
-				machineEl, "inputnames"));
-		machine.outputNames = XmlUtils.getOptionalText(XmlUtils.getOneElement(
-				machineEl, "outputnames"));
-		machine.outputNamesMoore = XmlUtils.getOptionalText(XmlUtils
-				.getOneElement(machineEl, "outputnames_moore"));
+		machine.setInputNames(XmlUtils.getOptionalText(XmlUtils.getOneElement(
+				machineEl, "inputnames")));
+		machine.setOutputNames(XmlUtils.getOptionalText(XmlUtils.getOneElement(
+				machineEl, "outputnames")));
+		machine.setOutputNamesMoore(XmlUtils.getOptionalText(XmlUtils
+				.getOneElement(machineEl, "outputnames_moore")));
 
 		Element initialTransitionEl = XmlUtils.getOneOptionalElement(machineEl,
 				"itransition");
 
 		if (initialTransitionEl == null) {
 			logger.warn("Optional element is not defined: itransition");
-			machine.initialTransition = new QfsmInitialTransition();
+			machine.setInitialTransition(new QfsmInitialTransition());
 		} else {
-			machine.initialTransition = parseInitialTransition(initialTransitionEl);
+			machine.setInitialTransition(parseInitialTransition(initialTransitionEl));
 		}
 
-		machine.states = parseStates(XmlUtils.getElements(machineEl, "state"));
-		machine.transitions = parseTransitions(XmlUtils.getElements(machineEl,
-				"transition"));
+		machine.setStates(parseStates(XmlUtils.getElements(machineEl, "state")));
+		machine.setTransitions(parseTransitions(XmlUtils.getElements(machineEl,
+				"transition")));
 
 		return machine;
 	}
@@ -237,25 +237,26 @@ public class QfsmParser {
 		for (Element element : elements) {
 			QfsmState state = new QfsmState();
 
-			state.name = XmlUtils.getText(element);
-			state.description = XmlUtils.getAtribute(element, "description");
-			state.stateId = XmlUtils.toInt(XmlUtils
-					.getAtribute(element, "code"));
-			state.mooreOutputs = XmlUtils.getAtribute(element, "moore_outputs");
+			state.setName(XmlUtils.getText(element));
+			state.setDescription(XmlUtils.getAtribute(element, "description"));
+			state.setStateId(XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"code")));
+			state.setMooreOutputs(XmlUtils
+					.getAtribute(element, "moore_outputs"));
 
-			state.drawPosX = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"xpos"));
-			state.drawPosY = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"ypos"));
-			state.drawRadius = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"radius"));
-			state.drawColor = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"pencolor"));
-			state.drawLineWidth = XmlUtils.toInt(XmlUtils.getAtribute(element,
-					"linewidth"));
+			state.setDrawPosX(XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"xpos")));
+			state.setDrawPosY(XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"ypos")));
+			state.setDrawRadius(XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"radius")));
+			state.setDrawColor(XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"pencolor")));
+			state.setDrawLineWidth(XmlUtils.toInt(XmlUtils.getAtribute(element,
+					"linewidth")));
 
-			state.finalState = XmlUtils.toBoolean(XmlUtils.getAtribute(element,
-					"finalstate"));
+			state.setFinalState(XmlUtils.toBoolean(XmlUtils.getAtribute(
+					element, "finalstate")));
 
 			states.add(state);
 		}
@@ -270,48 +271,48 @@ public class QfsmParser {
 		for (Element element : elements) {
 			QfsmTransition transition = new QfsmTransition();
 
-			transition.type = QfsmTransition.TransitionType.convert(XmlUtils
-					.toInt(XmlUtils.getAtribute(element, "type")));
+			transition.setType(QfsmTransition.TransitionType.convert(XmlUtils
+					.toInt(XmlUtils.getAtribute(element, "type"))));
 
-			transition.drawPosX = XmlUtils.toDouble(XmlUtils.getAtribute(
-					element, "xpos"));
-			transition.drawPosY = XmlUtils.toDouble(XmlUtils.getAtribute(
-					element, "ypos"));
-			transition.drawEndPosX = XmlUtils.toDouble(XmlUtils.getAtribute(
-					element, "endx"));
-			transition.drawEndPosY = XmlUtils.toDouble(XmlUtils.getAtribute(
-					element, "endy"));
+			transition.setDrawPosX(XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "xpos")));
+			transition.setDrawPosY(XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "ypos")));
+			transition.setDrawEndPosX(XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "endx")));
+			transition.setDrawEndPosY(XmlUtils.toDouble(XmlUtils.getAtribute(
+					element, "endy")));
 
-			transition.drawBezier1PosX = XmlUtils.toDouble(XmlUtils
-					.getAtribute(element, "c1x"));
-			transition.drawBezier1PosY = XmlUtils.toDouble(XmlUtils
-					.getAtribute(element, "c1y"));
-			transition.drawBezier2PosX = XmlUtils.toDouble(XmlUtils
-					.getAtribute(element, "c2x"));
-			transition.drawBezier2PosY = XmlUtils.toDouble(XmlUtils
-					.getAtribute(element, "c2y"));
+			transition.setDrawBezier1PosX(XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c1x")));
+			transition.setDrawBezier1PosY(XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c1y")));
+			transition.setDrawBezier2PosX(XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c2x")));
+			transition.setDrawBezier2PosY(XmlUtils.toDouble(XmlUtils
+					.getAtribute(element, "c2y")));
 
-			transition.drawStraight = XmlUtils.toBoolean(XmlUtils.getAtribute(
-					element, "straight"));
+			transition.setDrawStraight(XmlUtils.toBoolean(XmlUtils.getAtribute(
+					element, "straight")));
 
-			transition.description = XmlUtils.getAtribute(element,
-					"description");
-			transition.startStateId = XmlUtils.toInt(XmlUtils.getText(XmlUtils
-					.getOneElement(element, "from")));
-			transition.destinationStateId = XmlUtils.toInt(XmlUtils
-					.getText(XmlUtils.getOneElement(element, "to")));
+			transition.setDescription(XmlUtils.getAtribute(element,
+					"description"));
+			transition.setStartStateId(XmlUtils.toInt(XmlUtils.getText(XmlUtils
+					.getOneElement(element, "from"))));
+			transition.setDestinationStateId(XmlUtils.toInt(XmlUtils
+					.getText(XmlUtils.getOneElement(element, "to"))));
 
 			Element inputs = XmlUtils.getOneElement(element, "inputs");
-			transition.inputInverted = XmlUtils.toBoolean(XmlUtils.getAtribute(
-					inputs, "invert"));
-			transition.inputAny = XmlUtils.toBoolean(XmlUtils.getAtribute(
-					inputs, "any"));
-			transition.inputDefault = XmlUtils.toBoolean(XmlUtils.getAtribute(
-					inputs, "default"));
-			transition.inputText = XmlUtils.getText(inputs);
+			transition.setInputInverted(XmlUtils.toBoolean(XmlUtils
+					.getAtribute(inputs, "invert")));
+			transition.setInputAny(XmlUtils.toBoolean(XmlUtils.getAtribute(
+					inputs, "any")));
+			transition.setInputDefault(XmlUtils.toBoolean(XmlUtils.getAtribute(
+					inputs, "default")));
+			transition.setInputText(XmlUtils.getText(inputs));
 
-			transition.outputsText = XmlUtils.getText(XmlUtils.getOneElement(
-					element, "outputs"));
+			transition.setOutputsText(XmlUtils.getText(XmlUtils.getOneElement(
+					element, "outputs")));
 
 			transitions.add(transition);
 		}
@@ -323,12 +324,12 @@ public class QfsmParser {
 			throws QfsmException {
 		QfsmInitialTransition itr = new QfsmInitialTransition();
 
-		itr.drawPosX = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "xpos"));
-		itr.drawPosY = XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "ypos"));
-		itr.drawEndPosX = XmlUtils
-				.toDouble(XmlUtils.getAtribute(itrEl, "endx"));
-		itr.drawEndPosY = XmlUtils
-				.toDouble(XmlUtils.getAtribute(itrEl, "endy"));
+		itr.setDrawPosX(XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "xpos")));
+		itr.setDrawPosY(XmlUtils.toDouble(XmlUtils.getAtribute(itrEl, "ypos")));
+		itr.setDrawEndPosX(XmlUtils.toDouble(XmlUtils
+				.getAtribute(itrEl, "endx")));
+		itr.setDrawEndPosY(XmlUtils.toDouble(XmlUtils
+				.getAtribute(itrEl, "endy")));
 
 		return itr;
 	}

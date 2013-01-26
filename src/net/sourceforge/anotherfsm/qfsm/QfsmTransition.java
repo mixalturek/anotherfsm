@@ -25,58 +25,202 @@ package net.sourceforge.anotherfsm.qfsm;
  */
 public class QfsmTransition {
 	/** The transition type. */
-	public TransitionType type;
+	private TransitionType type;
 
 	/** The X coordinate of the position. */
-	public double drawPosX;
+	private double drawPosX;
 
 	/** The Y coordinate of the position. */
-	public double drawPosY;
+	private double drawPosY;
 
 	/** The X coordinate of the end position. */
-	public double drawEndPosX;
+	private double drawEndPosX;
 
 	/** The X coordinate of the end position. */
-	public double drawEndPosY;
+	private double drawEndPosY;
 
 	/** The X coordinate of the first control point position. */
-	public double drawBezier1PosX;
+	private double drawBezier1PosX;
 
 	/** The Y coordinate of the first control point position. */
-	public double drawBezier1PosY;
+	private double drawBezier1PosY;
 
 	/** The X coordinate of the second control point position. */
-	public double drawBezier2PosX;
+	private double drawBezier2PosX;
 
 	/** The Y coordinate of the second control point position. */
-	public double drawBezier2PosY;
+	private double drawBezier2PosY;
 
 	/** The transition is drawn as straight line (not as bezier curve). */
-	public boolean drawStraight;
+	private boolean drawStraight;
 
 	/** The description of the transition. */
-	public String description;
+	private String description;
 
 	/** The start state ID. */
-	public int startStateId;
+	private int startStateId;
 
 	/** The destination state ID. */
-	public int destinationStateId;
+	private int destinationStateId;
 
 	/** The input is inverted. */
-	public boolean inputInverted;
+	private boolean inputInverted;
 
 	/** The input is any. */
-	public boolean inputAny;
+	private boolean inputAny;
 
 	/** The input is default. */
-	public boolean inputDefault;
+	private boolean inputDefault;
 
 	/** The input information. */
-	public String inputText;
+	private String inputText;
 
 	/** The output information. */
-	public String outputsText;
+	private String outputsText;
+
+	public TransitionType getType() {
+		return type;
+	}
+
+	public void setType(TransitionType type) {
+		this.type = type;
+	}
+
+	public double getDrawPosX() {
+		return drawPosX;
+	}
+
+	public void setDrawPosX(double drawPosX) {
+		this.drawPosX = drawPosX;
+	}
+
+	public double getDrawPosY() {
+		return drawPosY;
+	}
+
+	public void setDrawPosY(double drawPosY) {
+		this.drawPosY = drawPosY;
+	}
+
+	public double getDrawEndPosX() {
+		return drawEndPosX;
+	}
+
+	public void setDrawEndPosX(double drawEndPosX) {
+		this.drawEndPosX = drawEndPosX;
+	}
+
+	public double getDrawEndPosY() {
+		return drawEndPosY;
+	}
+
+	public void setDrawEndPosY(double drawEndPosY) {
+		this.drawEndPosY = drawEndPosY;
+	}
+
+	public double getDrawBezier1PosX() {
+		return drawBezier1PosX;
+	}
+
+	public void setDrawBezier1PosX(double drawBezier1PosX) {
+		this.drawBezier1PosX = drawBezier1PosX;
+	}
+
+	public double getDrawBezier1PosY() {
+		return drawBezier1PosY;
+	}
+
+	public void setDrawBezier1PosY(double drawBezier1PosY) {
+		this.drawBezier1PosY = drawBezier1PosY;
+	}
+
+	public double getDrawBezier2PosX() {
+		return drawBezier2PosX;
+	}
+
+	public void setDrawBezier2PosX(double drawBezier2PosX) {
+		this.drawBezier2PosX = drawBezier2PosX;
+	}
+
+	public double getDrawBezier2PosY() {
+		return drawBezier2PosY;
+	}
+
+	public void setDrawBezier2PosY(double drawBezier2PosY) {
+		this.drawBezier2PosY = drawBezier2PosY;
+	}
+
+	public boolean isDrawStraight() {
+		return drawStraight;
+	}
+
+	public void setDrawStraight(boolean drawStraight) {
+		this.drawStraight = drawStraight;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getStartStateId() {
+		return startStateId;
+	}
+
+	public void setStartStateId(int startStateId) {
+		this.startStateId = startStateId;
+	}
+
+	public int getDestinationStateId() {
+		return destinationStateId;
+	}
+
+	public void setDestinationStateId(int destinationStateId) {
+		this.destinationStateId = destinationStateId;
+	}
+
+	public boolean isInputInverted() {
+		return inputInverted;
+	}
+
+	public void setInputInverted(boolean inputInverted) {
+		this.inputInverted = inputInverted;
+	}
+
+	public boolean isInputAny() {
+		return inputAny;
+	}
+
+	public void setInputAny(boolean inputAny) {
+		this.inputAny = inputAny;
+	}
+
+	public boolean isInputDefault() {
+		return inputDefault;
+	}
+
+	public void setInputDefault(boolean inputDefault) {
+		this.inputDefault = inputDefault;
+	}
+
+	public String getInputText() {
+		return inputText;
+	}
+
+	public void setInputText(String inputText) {
+		this.inputText = inputText;
+	}
+
+	public String getOutputsText() {
+		return outputsText;
+	}
+
+	public void setOutputsText(String outputsText) {
+		this.outputsText = outputsText;
+	}
 
 	/**
 	 * The transition type.

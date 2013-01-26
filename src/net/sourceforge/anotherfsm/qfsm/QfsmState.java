@@ -25,32 +25,112 @@ package net.sourceforge.anotherfsm.qfsm;
  */
 public class QfsmState {
 	/** The state name. */
-	public String name;
+	private String name;
 
 	/** The state description. */
-	public String description;
+	private String description;
 
 	/** The state code/ID. */
-	public int stateId;
+	private int stateId;
 
 	/** The moore outputs of the state. */
-	public String mooreOutputs;
+	private String mooreOutputs;
 
 	/** The X coordinate of the position. */
-	public int drawPosX;
+	private int drawPosX;
 
 	/** The Y coordinate of the position. */
-	public int drawPosY;
+	private int drawPosY;
 
 	/** The radius of the circle. */
-	public int drawRadius;
+	private int drawRadius;
 
 	/** The color of the state ({@code ARGB & 0x00ffffff}). */
-	public int drawColor;
+	private int drawColor;
 
 	/** The width of the line. */
-	public int drawLineWidth;
+	private int drawLineWidth;
 
 	/** The state is final/end state. */
-	public boolean finalState;
+	private boolean finalState;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(int stateId) {
+		this.stateId = stateId;
+	}
+
+	public String getMooreOutputs() {
+		return mooreOutputs;
+	}
+
+	public void setMooreOutputs(String mooreOutputs) {
+		this.mooreOutputs = mooreOutputs;
+	}
+
+	public int getDrawPosX() {
+		return drawPosX;
+	}
+
+	public void setDrawPosX(int drawPosX) {
+		this.drawPosX = drawPosX;
+	}
+
+	public int getDrawPosY() {
+		return drawPosY;
+	}
+
+	public void setDrawPosY(int drawPosY) {
+		this.drawPosY = drawPosY;
+	}
+
+	public int getDrawRadius() {
+		return drawRadius;
+	}
+
+	public void setDrawRadius(int drawRadius) {
+		this.drawRadius = drawRadius;
+	}
+
+	public int getDrawColor() {
+		return drawColor;
+	}
+
+	public void setDrawColor(int drawColor) {
+		this.drawColor = drawColor;
+	}
+
+	public int getDrawLineWidth() {
+		return drawLineWidth;
+	}
+
+	public void setDrawLineWidth(int drawLineWidth) {
+		this.drawLineWidth = drawLineWidth;
+	}
+
+	public boolean isFinalState() {
+		return finalState;
+	}
+
+	public void setFinalState(boolean finalState) {
+		this.finalState = finalState;
+	}
 }

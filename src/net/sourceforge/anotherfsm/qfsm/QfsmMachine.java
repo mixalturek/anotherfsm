@@ -30,40 +30,40 @@ public class QfsmMachine {
 	public static final int UNDEFINED_ID = -1;
 
 	/** The name of the state machine. */
-	public String name;
+	private String name;
 
 	/** The version of the state machine. */
-	public String version;
+	private String version;
 
 	/** The author of the state machine. */
-	public String author;
+	private String author;
 
 	/** The description of the state machine. */
-	public String description;
+	private String description;
 
 	/** The type of the state machine. */
-	public MachineType type;
+	private MachineType type;
 
 	/** The number of bits used to code the state. */
-	public int numMooreOutputs;
+	private int numMooreOutputs;
 
 	/** The effective number of encoding bits. */
-	public int numEncodingBits;
+	private int numEncodingBits;
 
 	/** The number of input bits. */
-	public int numInputs;
+	private int numInputs;
 
 	/** The number of output bits. */
-	public int numOutputs;
+	private int numOutputs;
 
 	/** The start/initial state ID. */
-	public int startStateId;
+	private int startStateId;
 
 	/** The font family name used to draw the state names. */
-	public String drawStateFont;
+	private String drawStateFont;
 
 	/** The point size of the font used to draw the state names. */
-	public int drawStateFontSize;
+	private int drawStateFontSize;
 
 	/**
 	 * Weight of the font used to draw the state names which is one of the
@@ -71,50 +71,259 @@ public class QfsmMachine {
 	 * 
 	 * See http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum.
 	 */
-	public int drawStateFontWeight;
+	private int drawStateFontWeight;
 
 	/** The font style used to draw the state names is italic. */
-	public boolean drawStateFontItalic;
+	private boolean drawStateFontItalic;
 
 	/** The font family name used to draw the transition conditions. */
-	public String drawTransitionFont;
+	private String drawTransitionFont;
 
 	/** The point size of the font used to draw the transition conditions. */
-	public int drawTransitionFontSize;
+	private int drawTransitionFontSize;
 	/**
 	 * Weight of the font used to draw the transition conditions which is one of
 	 * the enumerated values from {@code QFont::Weight}.
 	 * 
 	 * See http://qt-project.org/doc/qt-4.8/qfont.html#Weight-enum.
 	 */
-	public int drawTransitionFontWeight;
+	private int drawTransitionFontWeight;
 
 	/** The font style used to draw the transition conditions is italic. */
-	public int drawTransitionFontItalic;
+	private int drawTransitionFontItalic;
 
 	/** The arrow type. */
-	public ArrowType draArrowType;
+	private ArrowType draArrowType;
 
 	/** The initial transition should be drawn. */
-	public boolean drawDisplayInitialTransition;
+	private boolean drawDisplayInitialTransition;
 
 	/** The names of the input bits. */
-	public String inputNames;
+	private String inputNames;
 
 	/** The names of the output bits. */
-	public String outputNames;
+	private String outputNames;
 
 	/** The names of the moore outputs (state coding). */
-	public String outputNamesMoore;
+	private String outputNamesMoore;
 
 	/** The states. */
-	public List<QfsmState> states;
+	private List<QfsmState> states;
 
 	/** The transitions. */
-	public List<QfsmTransition> transitions;
+	private List<QfsmTransition> transitions;
 
 	/** The initial transition, optional (won't be null). */
-	public QfsmInitialTransition initialTransition;
+	private QfsmInitialTransition initialTransition;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public MachineType getType() {
+		return type;
+	}
+
+	public void setType(MachineType type) {
+		this.type = type;
+	}
+
+	public int getNumMooreOutputs() {
+		return numMooreOutputs;
+	}
+
+	public void setNumMooreOutputs(int numMooreOutputs) {
+		this.numMooreOutputs = numMooreOutputs;
+	}
+
+	public int getNumEncodingBits() {
+		return numEncodingBits;
+	}
+
+	public void setNumEncodingBits(int numEncodingBits) {
+		this.numEncodingBits = numEncodingBits;
+	}
+
+	public int getNumInputs() {
+		return numInputs;
+	}
+
+	public void setNumInputs(int numInputs) {
+		this.numInputs = numInputs;
+	}
+
+	public int getNumOutputs() {
+		return numOutputs;
+	}
+
+	public void setNumOutputs(int numOutputs) {
+		this.numOutputs = numOutputs;
+	}
+
+	public int getStartStateId() {
+		return startStateId;
+	}
+
+	public void setStartStateId(int startStateId) {
+		this.startStateId = startStateId;
+	}
+
+	public String getDrawStateFont() {
+		return drawStateFont;
+	}
+
+	public void setDrawStateFont(String drawStateFont) {
+		this.drawStateFont = drawStateFont;
+	}
+
+	public int getDrawStateFontSize() {
+		return drawStateFontSize;
+	}
+
+	public void setDrawStateFontSize(int drawStateFontSize) {
+		this.drawStateFontSize = drawStateFontSize;
+	}
+
+	public int getDrawStateFontWeight() {
+		return drawStateFontWeight;
+	}
+
+	public void setDrawStateFontWeight(int drawStateFontWeight) {
+		this.drawStateFontWeight = drawStateFontWeight;
+	}
+
+	public boolean isDrawStateFontItalic() {
+		return drawStateFontItalic;
+	}
+
+	public void setDrawStateFontItalic(boolean drawStateFontItalic) {
+		this.drawStateFontItalic = drawStateFontItalic;
+	}
+
+	public String getDrawTransitionFont() {
+		return drawTransitionFont;
+	}
+
+	public void setDrawTransitionFont(String drawTransitionFont) {
+		this.drawTransitionFont = drawTransitionFont;
+	}
+
+	public int getDrawTransitionFontSize() {
+		return drawTransitionFontSize;
+	}
+
+	public void setDrawTransitionFontSize(int drawTransitionFontSize) {
+		this.drawTransitionFontSize = drawTransitionFontSize;
+	}
+
+	public int getDrawTransitionFontWeight() {
+		return drawTransitionFontWeight;
+	}
+
+	public void setDrawTransitionFontWeight(int drawTransitionFontWeight) {
+		this.drawTransitionFontWeight = drawTransitionFontWeight;
+	}
+
+	public int getDrawTransitionFontItalic() {
+		return drawTransitionFontItalic;
+	}
+
+	public void setDrawTransitionFontItalic(int drawTransitionFontItalic) {
+		this.drawTransitionFontItalic = drawTransitionFontItalic;
+	}
+
+	public ArrowType getDraArrowType() {
+		return draArrowType;
+	}
+
+	public void setDraArrowType(ArrowType draArrowType) {
+		this.draArrowType = draArrowType;
+	}
+
+	public boolean isDrawDisplayInitialTransition() {
+		return drawDisplayInitialTransition;
+	}
+
+	public void setDrawDisplayInitialTransition(
+			boolean drawDisplayInitialTransition) {
+		this.drawDisplayInitialTransition = drawDisplayInitialTransition;
+	}
+
+	public String getInputNames() {
+		return inputNames;
+	}
+
+	public void setInputNames(String inputNames) {
+		this.inputNames = inputNames;
+	}
+
+	public String getOutputNames() {
+		return outputNames;
+	}
+
+	public void setOutputNames(String outputNames) {
+		this.outputNames = outputNames;
+	}
+
+	public String getOutputNamesMoore() {
+		return outputNamesMoore;
+	}
+
+	public void setOutputNamesMoore(String outputNamesMoore) {
+		this.outputNamesMoore = outputNamesMoore;
+	}
+
+	public List<QfsmState> getStates() {
+		return states;
+	}
+
+	public void setStates(List<QfsmState> states) {
+		this.states = states;
+	}
+
+	public List<QfsmTransition> getTransitions() {
+		return transitions;
+	}
+
+	public void setTransitions(List<QfsmTransition> transitions) {
+		this.transitions = transitions;
+	}
+
+	public QfsmInitialTransition getInitialTransition() {
+		return initialTransition;
+	}
+
+	public void setInitialTransition(QfsmInitialTransition initialTransition) {
+		this.initialTransition = initialTransition;
+	}
 
 	/**
 	 * The state machine type.

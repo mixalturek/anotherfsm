@@ -25,14 +25,46 @@ package net.sourceforge.anotherfsm.qfsm;
  */
 public class QfsmInitialTransition {
 	/** The X coordinate of the position. */
-	public double drawPosX;
+	private double drawPosX;
 
 	/** The Y coordinate of the position. */
-	public double drawPosY;
+	private double drawPosY;
 
 	/** The X coordinate of the end position. */
-	public double drawEndPosX;
+	private double drawEndPosX;
 
 	/** The X coordinate of the end position. */
-	public double drawEndPosY;
+	private double drawEndPosY;
+
+	public double getDrawPosX() {
+		return drawPosX;
+	}
+
+	public void setDrawPosX(double drawPosX) {
+		this.drawPosX = drawPosX;
+	}
+
+	public double getDrawPosY() {
+		return drawPosY;
+	}
+
+	public void setDrawPosY(double drawPosY) {
+		this.drawPosY = drawPosY;
+	}
+
+	public double getDrawEndPosX() {
+		return drawEndPosX;
+	}
+
+	public void setDrawEndPosX(double drawEndPosX) {
+		this.drawEndPosX = drawEndPosX;
+	}
+
+	public double getDrawEndPosY() {
+		return drawEndPosY;
+	}
+
+	public void setDrawEndPosY(double drawEndPosY) {
+		this.drawEndPosY = drawEndPosY;
+	}
 }

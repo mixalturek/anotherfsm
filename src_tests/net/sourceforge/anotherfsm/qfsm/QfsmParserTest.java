@@ -25,8 +25,8 @@ public class QfsmParserTest {
 			QfsmProject project = QfsmParser.parse(new File(
 					"src_tests/net/sourceforge/anotherfsm/qfsm/test.fsm"));
 
-			assertEquals("0.52", project.version);
-			assertEquals("Qfsm", project.author);
+			assertEquals("0.52", project.getVersion());
+			assertEquals("Qfsm", project.getAuthor());
 		} catch (QfsmException e) {
 			e.printStackTrace();
 			fail("Should not be executed" + e);
