@@ -3,7 +3,6 @@
 - Code
 	- Qfsm
 		- Test different FSM types.
-		- Test FSM with broken/unlinked transition.
 		- Test version 0.53.
 		- Java code generator.
 	- Logger
@@ -19,7 +18,7 @@
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
-	- Update fail("Should not be executed"); to fail("Should not be executed" + e);
+	- Update fail("Should not be executed"); to fail("Should not be executed: " + e);
 	- Coverage.
 
 - Future

@@ -108,7 +108,8 @@ class XmlUtils {
 		ensureNotNull(node, "node");
 
 		if (node.getNodeType() != Node.ELEMENT_NODE) {
-			throw new QfsmException("Node is not element: " + node);
+			throw new QfsmException("Node is not element: "
+					+ node.getNodeName() + ", " + node.getNodeType());
 		}
 
 		return (Element) node;
@@ -138,8 +139,9 @@ class XmlUtils {
 			return toElement(list.item(0));
 
 		default:
-			throw new QfsmException("Unexpected count of subelements: " + name
-					+ ", " + list.getLength());
+			throw new QfsmException("Expected one subelement: "
+					+ element.getNodeName() + "." + name + ", count "
+					+ list.getLength());
 		}
 	}
 
@@ -169,8 +171,9 @@ class XmlUtils {
 			return toElement(list.item(0));
 
 		default:
-			throw new QfsmException("Unexpected count of subelements: " + name
-					+ ", " + list.getLength());
+			throw new QfsmException("Expected one or no subelement: "
+					+ element.getNodeName() + "." + name + ", count "
+					+ list.getLength());
 		}
 	}
 
@@ -250,7 +253,8 @@ class XmlUtils {
 		ensureNotNull(name, "name");
 
 		if (!element.hasAttribute(name)) {
-			throw new QfsmException("Attribute is not defined: " + name);
+			throw new QfsmException("Attribute is not defined: "
+					+ element.getNodeName() + "." + name);
 		}
 
 		return element.getAttribute(name);

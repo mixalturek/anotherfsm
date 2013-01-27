@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<!DOCTYPE qfsmproject SYSTEM 'qfsm.dtd'>
+<qfsmproject version="0.52" author="Qfsm">
+  <machine nummooreout="0" transfontitalic="0" draw_it="1" statefontsize="8" transfont="Helvetica" statefontitalic="0" author="" description="Broken transition." version="" name="FSM" arrowtype="1" numbits="1" statefontweight="50" statefont="Helvetica" numin="0" transfontsize="8" transfontweight="50" type="2" numout="0" initialstate="0">
+    <outputnames_moore></outputnames_moore>
+    <inputnames></inputnames>
+    <outputnames></outputnames>
+    <itransition ypos="155" endx="128" xpos="68" endy="155"/>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="155" code="0" xpos="168" linewidth="1">State_0</state>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="149" code="1" xpos="358" linewidth="1">State_1</state>
+    <transition c1x="266.090330983166" c2y="216.1829262436366" c1y="192.3658524872731" description="broken transition" straight="1" type="2" ypos="168.5487787309097" endx="387" xpos="205.6354964747491" endy="240" c2x="326.545165491583">
+      <from>0</from>
+      <inputs default="0" any="0" invert="0">event</inputs>
+      <outputs></outputs>
+    </transition>
+  </machine>
+</qfsmproject>

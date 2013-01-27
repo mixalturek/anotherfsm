@@ -84,6 +84,9 @@ public class QfsmParser {
 	 * warning will be logged if not defined.</li>
 	 * <li>Several text parameters that contain multiple values (list) are not
 	 * parsed to the smallest pieces.</li>
+	 * <li>Parsing of file with broken transition - source and/or destination
+	 * state is not connected - throws an exception and the file is not loaded.
+	 * The file should be fixed first in such case.</li>
 	 * </ul>
 	 * 
 	 * Note Qfsm supports various state machine types, but not all of them were

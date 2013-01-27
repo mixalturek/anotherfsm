@@ -284,8 +284,7 @@ public class QfsmParserTest {
 			assertEquals("FINAL TO FIRST", transition.getInputEvent());
 			assertEquals("FINAL TO FIRST OUTPUT", transition.getOutputText());
 		} catch (QfsmException e) {
-			e.printStackTrace();
-			fail("Should not be executed" + e);
+			fail("Should not be executed: " + e);
 		}
 	}
 
@@ -295,8 +294,7 @@ public class QfsmParserTest {
 			// Check the file is loadable (no exception)
 			QfsmParser.parse(DATA_DIR + "lang_cs_cz.fsm");
 		} catch (QfsmException e) {
-			e.printStackTrace();
-			fail("Should not be executed" + e);
+			fail("Should not be executed: " + e);
 		}
 	}
 
@@ -314,8 +312,18 @@ public class QfsmParserTest {
 			assertEquals(0, machine.getStates().size());
 			assertEquals(0, machine.getTransitions().size());
 		} catch (QfsmException e) {
-			e.printStackTrace();
-			fail("Should not be executed" + e);
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
+	public void testParseBrokenTransition() {
+		try {
+			QfsmParser.parse(DATA_DIR + "broken_transition.fsm");
+			fail("Should not be executed");
+		} catch (QfsmException e) {
+			assertEquals("Expected one subelement: transition.to, count 0",
+					e.getMessage());
 		}
 	}
 }
