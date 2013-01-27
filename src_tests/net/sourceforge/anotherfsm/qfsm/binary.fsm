@@ -1,0 +1,24 @@
+<?xml version='1.0'?>
+<!DOCTYPE qfsmproject SYSTEM 'qfsm.dtd'>
+<qfsmproject version="0.52" author="Qfsm">
+  <machine nummooreout="0" transfontitalic="0" draw_it="1" statefontsize="8" transfont="Helvetica" statefontitalic="0" author="" description="" version="" name="FSM" arrowtype="1" numbits="1" statefontweight="50" statefont="Helvetica" numin="4" transfontsize="8" transfontweight="50" type="0" numout="2" initialstate="0">
+    <outputnames_moore></outputnames_moore>
+    <inputnames>a,b,c,d</inputnames>
+    <outputnames>y,z</outputnames>
+    <itransition ypos="163" endx="125" xpos="65" endy="163"/>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="163" code="0" xpos="165" linewidth="1">State_0</state>
+    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="155" code="1" xpos="382" linewidth="1">State_1</state>
+    <transition c1x="250.7666172124316" c2y="160.7135816282826" c1y="161.2089827537096" description="" straight="1" type="0" ypos="161.7043838791366" endx="342.3418281782983" xpos="204.9790117294983" endy="160.2181805028555" c2x="296.554222695365">
+      <from>0</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">0001</inputs>
+      <outputs>00</outputs>
+    </transition>
+    <transition c1x="223.2435335423383" c2y="253.6149317254515" c1y="267.9175428634435" description="" straight="1" type="0" ypos="201.8057000058133" endx="147.4878995636676" xpos="174.7014250014533" endy="198.962846637993" c2x="86.33022086981714">
+      <from>0</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">0000</inputs>
+      <outputs>00</outputs>
+    </transition>
+  </machine>
+</qfsmproject>

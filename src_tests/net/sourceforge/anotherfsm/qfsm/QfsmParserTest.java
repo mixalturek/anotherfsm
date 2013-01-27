@@ -326,4 +326,34 @@ public class QfsmParserTest {
 					e.getMessage());
 		}
 	}
+
+	@Test
+	public void testParseBinary() {
+		try {
+			QfsmParser.parse(DATA_DIR + "binary.fsm");
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
+	public void testParseAscii() {
+		try {
+			QfsmParser.parse(DATA_DIR + "ascii.fsm");
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
+	public void testParseQfsm053() {
+		try {
+			QfsmProject project = QfsmParser.parse(DATA_DIR + "qfsm_0_53.fsm");
+
+			assertEquals("0.53", project.getVersion());
+			assertEquals("Qfsm", project.getAuthor());
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
 }

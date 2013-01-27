@@ -2,8 +2,6 @@
 
 - Code
 	- Qfsm
-		- Test different FSM types.
-		- Test version 0.53.
 		- Java code generator.
 	- Logger
 		- SimpleLogger to only display the message.

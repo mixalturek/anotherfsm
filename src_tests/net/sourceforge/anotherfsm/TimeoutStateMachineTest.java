@@ -521,8 +521,8 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 			assertEquals(startState, machine.getActiveState());
 			// 3 during development
-			assertTrue(listener.transitionsNum >= 3
-					&& listener.transitionsNum <= 5);
+			assertTrue(listener.transitionsNum >= 2
+					&& listener.transitionsNum <= 6);
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
