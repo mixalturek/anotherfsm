@@ -1,11 +1,9 @@
 package net.sourceforge.anotherfsm.qfsm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
-
-import java.io.File;
-
 import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
@@ -13,18 +11,22 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class QfsmParserTest {
+	/** Delta for double comparison. */
 	private static final double DELTA = 1e-15;
+
+	/** Directory where data files are stored. */
+	private static final String DATA_DIR = "src_tests/net/sourceforge/anotherfsm/qfsm/";
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		// TODO: update to no logger
 		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
 	}
 
 	@Test
 	public void testParse() {
 		try {
-			QfsmProject project = QfsmParser.parse(new File(
-					"src_tests/net/sourceforge/anotherfsm/qfsm/test.fsm"));
+			QfsmProject project = QfsmParser.parse(DATA_DIR + "test.fsm");
 
 			assertEquals("0.52", project.getVersion());
 			assertEquals("Qfsm", project.getAuthor());
@@ -290,13 +292,27 @@ public class QfsmParserTest {
 	@Test
 	public void testParseLocale() {
 		try {
-			// Mainly check the file is loadable (no exception)
-			QfsmProject project = QfsmParser
-					.parse(new File(
-							"src_tests/net/sourceforge/anotherfsm/qfsm/lang_cs_cz.fsm"));
+			// Check the file is loadable (no exception)
+			QfsmParser.parse(DATA_DIR + "lang_cs_cz.fsm");
+		} catch (QfsmException e) {
+			e.printStackTrace();
+			fail("Should not be executed" + e);
+		}
+	}
 
-			assertEquals("0.52", project.getVersion());
-			assertEquals("Qfsm", project.getAuthor());
+	@Test
+	public void testParseEmptyFreeText() {
+		try {
+			QfsmProject project = QfsmParser.parse(DATA_DIR
+					+ "empty_freetext.fsm");
+
+			QfsmMachine machine = project.getMachine();
+
+			assertEquals(QfsmMachine.UNDEFINED_ID, machine.getStartStateId());
+			assertNull(machine.getStartState());
+			assertNull(machine.getInitialTransition());
+			assertEquals(0, machine.getStates().size());
+			assertEquals(0, machine.getTransitions().size());
 		} catch (QfsmException e) {
 			e.printStackTrace();
 			fail("Should not be executed" + e);

@@ -56,10 +56,14 @@ public class QfsmMachine {
 	/** The number of output bits. */
 	private int numOutputs;
 
-	/** The start/initial state ID. */
+	/**
+	 * The start/initial state ID, optional.
+	 * 
+	 * @see #UNDEFINED_ID
+	 */
 	private int startStateId;
 
-	/** The start/initial state. */
+	/** The start/initial state. May be null if start state is not defined. */
 	private QfsmState startState;
 
 	/** The font family name used to draw the state names. */
@@ -116,7 +120,10 @@ public class QfsmMachine {
 	/** The transitions. */
 	private List<QfsmTransition> transitions;
 
-	/** The initial transition, optional (won't be null). */
+	/**
+	 * The initial transition, optional. May be null if initial transition is
+	 * not defined.
+	 */
 	private QfsmInitialTransition initialTransition;
 
 	/**
@@ -180,7 +187,10 @@ public class QfsmMachine {
 	 *             if some of the states does not exist
 	 */
 	void evaluateStates() throws QfsmException {
-		startState = getState(startStateId);
+		if (startStateId == UNDEFINED_ID)
+			startState = null;
+		else
+			startState = getState(startStateId);
 
 		for (QfsmTransition transition : transitions) {
 			transition.setSourceState(getState(transition.getSourceStateId()));

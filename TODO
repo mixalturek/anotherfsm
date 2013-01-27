@@ -5,8 +5,9 @@
 		- Test different FSM types.
 		- Test FSM with broken/unlinked transition.
 		- Test version 0.53.
-		- Test empty file.
 		- Java code generator.
+	- Logger
+		- SimpleLogger to only display the message.
 	- Ant findbugs target.
 
 - Web

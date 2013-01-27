@@ -56,6 +56,22 @@ public class QfsmParser {
 	}
 
 	/**
+	 * Parse a Qfsm file.
+	 * 
+	 * @param path
+	 *            the filesystem path
+	 * @return the object representation of the Qfsm data file
+	 * @throws QfsmException
+	 *             if parsing fails for any reason
+	 * 
+	 * @see #parse(File)
+	 */
+	public static QfsmProject parse(String path) throws QfsmException {
+		XmlUtils.ensureNotNull(path, "path");
+		return parse(new File(path));
+	}
+
+	/**
 	 * Parse a Qfsm file. Data files from Qfsm of 0.52 and 0.53 versions should
 	 * be successfully parsed.
 	 * 
@@ -78,11 +94,12 @@ public class QfsmParser {
 	 * 
 	 * @param file
 	 *            the input file
+	 * @return the object representation of the Qfsm data file
 	 * @throws QfsmException
 	 *             if parsing fails for any reason
 	 */
 	public static QfsmProject parse(File file) throws QfsmException {
-		XmlUtils.ensureNotNull(file, "Input file");
+		XmlUtils.ensureNotNull(file, "file");
 
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
@@ -216,7 +233,7 @@ public class QfsmParser {
 
 		if (initialTransitionEl == null) {
 			logger.warn("Optional element is not defined: itransition");
-			machine.setInitialTransition(new QfsmInitialTransition());
+			machine.setInitialTransition(null);
 		} else {
 			machine.setInitialTransition(parseInitialTransition(initialTransitionEl));
 		}
