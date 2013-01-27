@@ -6,6 +6,7 @@
 	- Logger
 		- SimpleLogger to only display the message.
 	- Ant findbugs target.
+	- Get version from jar package (AnotherFsm.VERSION).
 
 - Web
 	- Examples
