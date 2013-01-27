@@ -42,7 +42,7 @@ public class QfsmParserTest {
 			assertEquals("STATE MACHINE DESCRIPTION", machine.getDescription());
 			assertEquals("STATE MACHINE VERSION", machine.getVersion());
 			assertEquals("STATE MACHINE", machine.getName());
-			assertEquals(QfsmMachine.ArrowType.SOLID,
+			assertEquals(QfsmMachine.ArrowType.FILLED,
 					machine.getDrawArrowType());
 			assertEquals(2, machine.getNumEncodingBits());
 			assertEquals(50, machine.getDrawStateFontWeight());

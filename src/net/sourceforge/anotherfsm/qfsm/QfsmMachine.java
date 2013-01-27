@@ -450,8 +450,9 @@ public class QfsmMachine {
 	 * @author Michal Turek
 	 */
 	public static enum ArrowType {
-		// Arrow type: 0: line arrow / 1: solid arrow
-		LINE, SOLID;
+		// Arrow type: 0: line arrow / 1: solid arrow,
+		// MachinePropertiesDlgImpl.cpp
+		LINE, FILLED, WHITE, FILLED_POINTED, WHITE_POINTED;
 
 		/**
 		 * Convert an integer value to the enum.
