@@ -286,4 +286,20 @@ public class QfsmParserTest {
 			fail("Should not be executed" + e);
 		}
 	}
+
+	@Test
+	public void testParseLocale() {
+		try {
+			// Mainly check the file is loadable (no exception)
+			QfsmProject project = QfsmParser
+					.parse(new File(
+							"src_tests/net/sourceforge/anotherfsm/qfsm/lang_cs_cz.fsm"));
+
+			assertEquals("0.52", project.getVersion());
+			assertEquals("Qfsm", project.getAuthor());
+		} catch (QfsmException e) {
+			e.printStackTrace();
+			fail("Should not be executed" + e);
+		}
+	}
 }

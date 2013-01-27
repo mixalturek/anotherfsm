@@ -31,6 +31,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.EntityResolver;
@@ -80,10 +81,6 @@ public class QfsmParser {
 	 * @throws QfsmException
 	 *             if parsing fails for any reason
 	 */
-	// TODO: different FSM types
-	// TODO: FSM with broken/unlinked transition
-	// TODO: LANG=cs_CZ
-	// TODO: version 0.53
 	public static QfsmProject parse(File file) throws QfsmException {
 		XmlUtils.ensureNotNull(file, "Input file");
 
@@ -105,7 +102,8 @@ public class QfsmParser {
 			document.getDocumentElement().normalize();
 
 			return parseProject(document.getDocumentElement());
-		} catch (ParserConfigurationException | SAXException | IOException e) {
+		} catch (ParserConfigurationException | SAXException | DOMException
+				| IOException e) {
 			throw new QfsmException("Parsing failed: " + file, e);
 		}
 	}
@@ -312,8 +310,8 @@ public class QfsmParser {
 					inputs, "default")));
 			transition.setInputEvent(XmlUtils.getText(inputs));
 
-			transition.setOutputText(XmlUtils.getText(XmlUtils.getOneElement(
-					element, "outputs")));
+			transition.setOutputText(XmlUtils.getOptionalText(XmlUtils
+					.getOneElement(element, "outputs")));
 
 			transitions.add(transition);
 		}

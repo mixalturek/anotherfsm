@@ -1,6 +1,12 @@
 - General
 
 - Code
+	- Qfsm
+		- Test different FSM types.
+		- Test FSM with broken/unlinked transition.
+		- Test version 0.53.
+		- Test empty file.
+		- Java code generator.
 	- Ant findbugs target.
 
 - Web
