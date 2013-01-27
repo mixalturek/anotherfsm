@@ -43,15 +43,15 @@ import org.xml.sax.SAXException;
  * 
  * @author Michal Turek
  */
-public class QfsmParser {
+public class Parser {
 	/** The logger. */
 	private static final FsmLogger logger = AnotherFsm
-			.getLogger(QfsmParser.class);
+			.getLogger(Parser.class);
 
 	/**
 	 * Forbid creating objects.
 	 */
-	private QfsmParser() {
+	private Parser() {
 		// Do nothing
 	}
 

@@ -26,7 +26,7 @@ public class QfsmParserTest {
 	@Test
 	public void testParse() {
 		try {
-			QfsmProject project = QfsmParser.parse(DATA_DIR + "test.fsm");
+			QfsmProject project = Parser.parse(DATA_DIR + "test.fsm");
 
 			assertEquals("0.52", project.getVersion());
 			assertEquals("Qfsm", project.getAuthor());
@@ -292,7 +292,7 @@ public class QfsmParserTest {
 	public void testParseLocale() {
 		try {
 			// Check the file is loadable (no exception)
-			QfsmParser.parse(DATA_DIR + "lang_cs_cz.fsm");
+			Parser.parse(DATA_DIR + "lang_cs_cz.fsm");
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
 		}
@@ -301,7 +301,7 @@ public class QfsmParserTest {
 	@Test
 	public void testParseEmptyFreeText() {
 		try {
-			QfsmProject project = QfsmParser.parse(DATA_DIR
+			QfsmProject project = Parser.parse(DATA_DIR
 					+ "empty_freetext.fsm");
 
 			QfsmMachine machine = project.getMachine();
@@ -319,7 +319,7 @@ public class QfsmParserTest {
 	@Test
 	public void testParseBrokenTransition() {
 		try {
-			QfsmParser.parse(DATA_DIR + "broken_transition.fsm");
+			Parser.parse(DATA_DIR + "broken_transition.fsm");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Expected one subelement: transition.to, count 0",
@@ -330,7 +330,7 @@ public class QfsmParserTest {
 	@Test
 	public void testParseBinary() {
 		try {
-			QfsmParser.parse(DATA_DIR + "binary.fsm");
+			Parser.parse(DATA_DIR + "binary.fsm");
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
 		}
@@ -339,7 +339,7 @@ public class QfsmParserTest {
 	@Test
 	public void testParseAscii() {
 		try {
-			QfsmParser.parse(DATA_DIR + "ascii.fsm");
+			Parser.parse(DATA_DIR + "ascii.fsm");
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
 		}
@@ -348,7 +348,7 @@ public class QfsmParserTest {
 	@Test
 	public void testParseQfsm053() {
 		try {
-			QfsmProject project = QfsmParser.parse(DATA_DIR + "qfsm_0_53.fsm");
+			QfsmProject project = Parser.parse(DATA_DIR + "qfsm_0_53.fsm");
 
 			assertEquals("0.53", project.getVersion());
 			assertEquals("Qfsm", project.getAuthor());
