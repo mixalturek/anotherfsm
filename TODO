@@ -12,7 +12,6 @@
 		- State machine with timeouts.
 		- Event preprocessors.
 		- User events.
-	- Mention "Suitable for event driven programming."
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.

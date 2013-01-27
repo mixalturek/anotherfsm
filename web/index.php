@@ -33,6 +33,7 @@ include_once 'p_begin.php';
 <li><?php Web('example_first', 'Separated state machine building, registration of listeners and processing of events.'); ?></li>
 <li><?php Web('example_logger_injection', 'Generalized logging, whatever backend can be injected.')?></li>
 <li><?php Web('license', 'Apache 2 license, version 2.0.'); ?></li>
+<li>Suitable for event driven programming.</li>
 <li>Well-designed API, fully documented code, unit tests.</li>
 </ul>
 
