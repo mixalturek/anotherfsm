@@ -4,7 +4,7 @@
 	
 	<OutputDirectory>.</OutputDirectory>
 	<BaseClass>DeterministicStateMachine</BaseClass>
-	<Package>net.sourceforge.anotherfsm.examples.codegenerator</Package>
+	<JavaPackage>net.sourceforge.anotherfsm.examples.codegenerator</JavaPackage>
 
 	<StateMachineClass>		
 		<Imports>
@@ -13,8 +13,6 @@
 	</StateMachineClass>
 	
 	<ProcessorClass>
-		<RewriteExistingFile>no</RewriteExistingFile>
-		
 		<TypePreprocessor>yes</TypePreprocessor>
 		<EqualsPreprocessor>yes</EqualsPreprocessor>
 		

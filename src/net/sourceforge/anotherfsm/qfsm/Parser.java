@@ -45,8 +45,7 @@ import org.xml.sax.SAXException;
  */
 public class Parser {
 	/** The logger. */
-	private static final FsmLogger logger = AnotherFsm
-			.getLogger(Parser.class);
+	private static final FsmLogger logger = AnotherFsm.getLogger(Parser.class);
 
 	/**
 	 * Forbid creating objects.
@@ -59,7 +58,7 @@ public class Parser {
 	 * Parse a Qfsm file.
 	 * 
 	 * @param path
-	 *            the filesystem path
+	 *            the file system path
 	 * @return the object representation of the Qfsm data file
 	 * @throws QfsmException
 	 *             if parsing fails for any reason
