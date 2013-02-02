@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 import net.sourceforge.anotherfsm.AnotherFsm;
-import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
+import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,8 +19,7 @@ public class QfsmParserTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// TODO: update to no logger
-		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
+		AnotherFsm.setLoggerFactory(new NoLoggerFactory());
 	}
 
 	@Test
@@ -301,8 +300,7 @@ public class QfsmParserTest {
 	@Test
 	public void testParseEmptyFreeText() {
 		try {
-			QfsmProject project = Parser.parse(DATA_DIR
-					+ "empty_freetext.fsm");
+			QfsmProject project = Parser.parse(DATA_DIR + "empty_freetext.fsm");
 
 			QfsmMachine machine = project.getMachine();
 

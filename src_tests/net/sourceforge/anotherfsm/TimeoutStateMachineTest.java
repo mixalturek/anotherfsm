@@ -18,7 +18,13 @@
 
 package net.sourceforge.anotherfsm;
 
+import static org.hamcrest.Matchers.both;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -318,10 +324,11 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			}
 
 			assertEquals(5, i);
-			// 27 during development
-			assertTrue(System.currentTimeMillis() - startTime > TIMEOUT * 2);
-
 			assertEquals(0, listener.transitionsNum);
+
+			// 27 during development
+			assertThat(System.currentTimeMillis() - startTime,
+					greaterThan(TIMEOUT * 2));
 
 			Thread.sleep(TIMEOUT * 2);
 
@@ -402,11 +409,14 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 				assertEquals(new TypeEventB(), processedEvent);
 			}
 
-			// System.err.println(i);
-			// 4 during development
-			assertTrue(i >= 2 && i <= 6);
 			// 12 during development
-			assertTrue(System.currentTimeMillis() - startTime < TIMEOUT * 3);
+			assertThat(System.currentTimeMillis() - startTime,
+					lessThan(TIMEOUT * 3));
+
+			// 4 during development
+			assertThat(i,
+					both(greaterThanOrEqualTo(2)).and(lessThanOrEqualTo(6)));
+
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
 		} catch (FsmException e) {
@@ -521,8 +531,8 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 			assertEquals(startState, machine.getActiveState());
 			// 3 during development
-			assertTrue(listener.transitionsNum >= 2
-					&& listener.transitionsNum <= 6);
+			assertThat(listener.transitionsNum, both(greaterThanOrEqualTo(2))
+					.and(lessThanOrEqualTo(6)));
 		} catch (FsmException e) {
 			fail("Should not be executed");
 		} catch (InterruptedException e) {
@@ -561,8 +571,8 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			Thread.sleep(TIMEOUT * 4);
 
 			// 2 during development
-			assertTrue(restartListener.transitionsNum >= 2
-					&& restartListener.transitionsNum <= 4);
+			assertThat(restartListener.transitionsNum,
+					both(greaterThanOrEqualTo(2)).and(lessThanOrEqualTo(4)));
 			assertEquals(1, noRestartListener.transitionsNum);
 			assertEquals(timeoutState, machine.getActiveState());
 		} catch (FsmException e) {

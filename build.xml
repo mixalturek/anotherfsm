@@ -42,8 +42,8 @@
 		<path refid="classpath"/>
 		<path refid="classpath-examples"/>
 		<pathelement location="${builddir}/classes_tests/" />
-		<pathelement location="lib/junit4-4.8.2.jar" />
-		<pathelement location="lib/hamcrest-core-1.1.jar" />
+		<pathelement location="lib/junit-4.10.jar" />
+		<pathelement location="lib/hamcrest-all-1.3.jar" />
 	</path>
 
 	<!-- Echo available targets. -->
@@ -94,7 +94,10 @@ all                  - Process full build.
 			includeJavaRuntime="false"
 			fork="false"
 			deprecation="on"
-			debug="on" />
+			debug="on">
+			
+			<compilerarg value="-Xlint"/>
+		</javac>
 	</target>
 		
 	<!-- Compile all examples. -->
@@ -109,7 +112,10 @@ all                  - Process full build.
 			includeJavaRuntime="false"
 			fork="false"
 			deprecation="on"
-			debug="on" />
+			debug="on">
+			
+			<compilerarg value="-Xlint"/>
+		</javac>
 	</target>
 		
 	<!-- Compile all tests. -->
@@ -124,7 +130,10 @@ all                  - Process full build.
 			includeJavaRuntime="false"
 			fork="false"
 			deprecation="on"
-			debug="on" />
+			debug="on">
+			
+			<compilerarg value="-Xlint"/>
+		</javac>
 	</target>
 	
 	<!-- Execute junit tests. -->

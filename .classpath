@@ -4,7 +4,8 @@
 	<classpathentry kind="src" output="build/classes_tests" path="src_tests"/>
 	<classpathentry kind="src" output="build/classes_examples" path="src_examples"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="lib/hamcrest-all-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
