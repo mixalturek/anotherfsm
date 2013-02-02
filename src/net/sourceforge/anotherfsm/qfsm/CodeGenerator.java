@@ -52,10 +52,6 @@ public class CodeGenerator {
 	 * 
 	 * @param parameters
 	 *            program arguments
-	 * @param configuration
-	 *            configuration of generator
-	 * @param qfsm
-	 *            Qfsm data file
 	 * @throws QfsmException
 	 */
 	private CodeGenerator(CodeGeneratorParameters parameters)
@@ -111,7 +107,6 @@ public class CodeGenerator {
 	 *            the input arguments
 	 * 
 	 * @see CodeGeneratorParameters
-	 * @see StatusCode
 	 */
 	public static void main(String[] args) {
 		CodeGeneratorParameters parameters = null;
