@@ -3,6 +3,7 @@
 - Code
 	- Qfsm
 		- Java code generator.
+		- CodeGenerator [-t | --generate-template file]
 	- Logger
 		- SimpleLogger to only display the message.
 	- Ant findbugs target.

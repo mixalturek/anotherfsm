@@ -136,7 +136,8 @@ class CodeGeneratorParameters {
 	 * Write usage to the standard output.
 	 */
 	public static void showUsage() {
-		System.out.println("java CodeGenerator [arguments] parameters");
+		System.out.println("Usage:");
+		System.out.println("\tjava CodeGenerator [arguments] parameters");
 		System.out.println();
 		System.out.println("Arguments: ");
 		System.out.println("\t[-h | --help]            Show this usage.");
@@ -151,9 +152,9 @@ class CodeGeneratorParameters {
 	/**
 	 * Dump the parsed parameters.
 	 */
-	public void dumpParameters() {
-		System.out.println("Show usage: " + (usage ? "yes" : "no"));
+	public void dump() {
 		System.out.println("Verbose output: " + (verbose ? "yes" : "no"));
+		System.out.println("Show usage: " + (usage ? "yes" : "no"));
 		System.out.println("Override output files: " + (force ? "yes" : "no"));
 		System.out.println("Configuration file: " + configFile);
 		System.out.println("Qfsm file: " + qfsmFile);
