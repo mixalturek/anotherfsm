@@ -86,13 +86,18 @@ public class CodeGenerator {
 		content = content.replace("{{FSM_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", configuration
 				.getBaseClass().trim());
-		content = content.replace("{{START_STATE}}", identifier(machine
-				.getStartState().getName()));
+		content = content.replace("{{START_STATE}}",
+				identifier(machine.getStartState()));
 
-		content = content
-				.replace("{{DECLARATIONS}}", generateFsmDeclarations());
-		content = content.replace("{{CONSTRUCTOR_BODY}}",
-				generateFsmCreations());
+		content = content.replace("{{DECLARATIONS_STATES}}",
+				generateFsmDeclarationsStates());
+		content = content.replace("{{DECLARATIONS_TRANSITIONS}}",
+				generateFsmDeclarationsTransitions());
+
+		content = content.replace("{{CONSTRUCTOR_BODY_STATES}}",
+				generateFsmInitializationStates());
+		content = content.replace("{{CONSTRUCTOR_BODY_TRANSITIONS}}",
+				generateFsmInitializationTransitions());
 
 		File file = new File(configuration.getOutputDirectory()
 				+ File.separator + className + ".java");
@@ -100,7 +105,7 @@ public class CodeGenerator {
 		writeFile(file, content);
 	}
 
-	private String generateFsmDeclarations() throws QfsmException {
+	private String generateFsmDeclarationsStates() throws QfsmException {
 		String template = loadTemplate("TemplateStateDeclaration.txt");
 
 		StringBuilder builder = new StringBuilder();
@@ -110,8 +115,7 @@ public class CodeGenerator {
 
 			content = content
 					.replace("{{DESCRIPTION}}", state.getDescription());
-			content = content.replace("{{JAVA_NAME}}",
-					identifier(state.getName()));
+			content = content.replace("{{JAVA_NAME}}", identifier(state));
 
 			builder.append(content);
 		}
@@ -119,16 +123,15 @@ public class CodeGenerator {
 		return builder.toString();
 	}
 
-	private String generateFsmCreations() throws QfsmException {
-		String template = loadTemplate("TemplateStateCreation.txt");
+	private String generateFsmInitializationStates() throws QfsmException {
+		String template = loadTemplate("TemplateStateInitialization.txt");
 
 		StringBuilder builder = new StringBuilder();
 
 		for (QfsmState state : machine.getStates()) {
 			String content = template;
 
-			content = content.replace("{{JAVA_NAME}}",
-					identifier(state.getName()));
+			content = content.replace("{{JAVA_NAME}}", identifier(state));
 
 			content = content.replace("{{NAME}}", state.getName());
 
@@ -137,6 +140,45 @@ public class CodeGenerator {
 			} else {
 				content = content.replace("{{FINAL}}", "");
 			}
+
+			builder.append(content);
+		}
+
+		return builder.toString();
+	}
+
+	private String generateFsmDeclarationsTransitions() throws QfsmException {
+		String template = loadTemplate("TemplateTransitionDeclaration.txt");
+
+		StringBuilder builder = new StringBuilder();
+
+		for (QfsmTransition transition : machine.getTransitions()) {
+			String content = template;
+
+			content = content.replace("{{DESCRIPTION}}",
+					transition.getDescription());
+			content = content.replace("{{JAVA_NAME}}", identifier(transition));
+
+			builder.append(content);
+		}
+
+		return builder.toString();
+	}
+
+	private String generateFsmInitializationTransitions() throws QfsmException {
+		String template = loadTemplate("TemplateTransitionInitialization.txt");
+
+		StringBuilder builder = new StringBuilder();
+
+		for (QfsmTransition transition : machine.getTransitions()) {
+			String content = template;
+
+			content = content.replace("{{JAVA_NAME}}", identifier(transition));
+			content = content.replace("{{SOURCE_STATE}}",
+					identifier(transition.getSourceState()));
+			content = content.replace("{{EVENT}}", transition.getInputEvent());
+			content = content.replace("{{DESTINATION_STATE}}",
+					identifier(transition.getDestinationState()));
 
 			builder.append(content);
 		}
@@ -172,8 +214,28 @@ public class CodeGenerator {
 	}
 
 	private String identifier(String name) {
-		// TODO:
-		return name;
+		StringBuilder builder = new StringBuilder();
+
+		for (int i = 0; i < name.length(); ++i) {
+			char c = name.charAt(i);
+			if (c == '.')
+				builder.append("_");
+			else if (Character.isJavaIdentifierPart(c))
+				builder.append(c);
+			// Else ignore it
+		}
+
+		return builder.toString();
+	}
+
+	private String identifier(QfsmState state) {
+		return identifier(state.getName());
+	}
+
+	private String identifier(QfsmTransition transition) {
+		return identifier(transition.getSourceState()) + "_"
+				+ identifier(transition.getInputEvent()) + "_"
+				+ identifier(transition.getDestinationState());
 	}
 
 	private String loadTemplate(String name) throws QfsmException {

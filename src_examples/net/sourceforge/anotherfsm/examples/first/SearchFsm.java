@@ -100,16 +100,17 @@ class SearchFsm extends DeterministicStateMachine {
 		stateM = new State("State M", State.Type.FINAL);
 
 		// Create the transitions for searching
-		trStartToA = new Transition(stateStart, new CharacterEvent('A'), stateA);
-		trAtoN = new Transition(stateA, new CharacterEvent('n'), stateN);
-		trNtoO = new Transition(stateN, new CharacterEvent('o'), stateO);
-		trOtoT = new Transition(stateO, new CharacterEvent('t'), stateT);
-		trTtoH = new Transition(stateT, new CharacterEvent('h'), stateH);
-		trHtoE = new Transition(stateH, new CharacterEvent('e'), stateE);
-		trEtoR = new Transition(stateE, new CharacterEvent('r'), stateR);
-		trRtoF = new Transition(stateR, new CharacterEvent('F'), stateF);
-		trFtoS = new Transition(stateF, new CharacterEvent('S'), stateS);
-		trStoM = new Transition(stateS, new CharacterEvent('M'), stateM);
+		trStartToA = new Transition(stateStart, CharacterEvent.instance('A'),
+				stateA);
+		trAtoN = new Transition(stateA, CharacterEvent.instance('n'), stateN);
+		trNtoO = new Transition(stateN, CharacterEvent.instance('o'), stateO);
+		trOtoT = new Transition(stateO, CharacterEvent.instance('t'), stateT);
+		trTtoH = new Transition(stateT, CharacterEvent.instance('h'), stateH);
+		trHtoE = new Transition(stateH, CharacterEvent.instance('e'), stateE);
+		trEtoR = new Transition(stateE, CharacterEvent.instance('r'), stateR);
+		trRtoF = new Transition(stateR, CharacterEvent.instance('F'), stateF);
+		trFtoS = new Transition(stateF, CharacterEvent.instance('S'), stateS);
+		trStoM = new Transition(stateS, CharacterEvent.instance('M'), stateM);
 
 		// Create the transitions for bad input
 		trStartOther = new Transition(stateStart, OtherEvent.instance,

@@ -6,33 +6,33 @@
     <inputnames></inputnames>
     <outputnames></outputnames>
     <itransition ypos="338" endx="211" xpos="151" endy="338"/>
-    <state pencolor="0" radius="40" description="" finalstate="0" moore_outputs="" ypos="338" code="0" xpos="251" linewidth="1">stateStart</state>
+    <state pencolor="0" radius="40" description="The start state." finalstate="0" moore_outputs="" ypos="338" code="0" xpos="251" linewidth="1">stateStart</state>
     <state pencolor="0" radius="40" description="&quot;A&quot; processed." finalstate="0" moore_outputs="" ypos="534" code="1" xpos="194" linewidth="1">stateA</state>
     <state pencolor="0" radius="40" description="&quot;An&quot; processed." finalstate="0" moore_outputs="" ypos="637" code="2" xpos="437" linewidth="1">stateN</state>
     <state pencolor="0" radius="40" description="&quot;Ano&quot; processed." finalstate="0" moore_outputs="" ypos="639" code="3" xpos="705" linewidth="1">stateO</state>
     <state pencolor="0" radius="40" description="&quot;Anot&quot; processed." finalstate="0" moore_outputs="" ypos="555" code="4" xpos="954" linewidth="1">stateT</state>
-    <state pencolor="0" radius="40" description="&quot;Anoth&quot; processed." finalstate="0" moore_outputs="" ypos="398" code="5" xpos="909" linewidth="1">StateH</state>
+    <state pencolor="0" radius="40" description="&quot;Anoth&quot; processed." finalstate="0" moore_outputs="" ypos="398" code="5" xpos="909" linewidth="1">stateH</state>
     <state pencolor="0" radius="40" description="&quot;Anothe&quot; processed." finalstate="0" moore_outputs="" ypos="253" code="6" xpos="913" linewidth="1">stateE</state>
     <state pencolor="0" radius="40" description="&quot;Another&quot; processed." finalstate="0" moore_outputs="" ypos="97" code="7" xpos="952" linewidth="1">stateR</state>
     <state pencolor="0" radius="40" description="&quot;AnotherF&quot; processed." finalstate="0" moore_outputs="" ypos="52" code="8" xpos="680" linewidth="1">stateF</state>
     <state pencolor="0" radius="40" description="&quot;AnotherFS&quot; processed." finalstate="0" moore_outputs="" ypos="49" code="9" xpos="424" linewidth="1">stateS</state>
     <state pencolor="0" radius="40" description="&quot;AnotherFSM&quot; processed." finalstate="1" moore_outputs="" ypos="140" code="10" xpos="188" linewidth="1">stateM</state>
-    <transition c1x="217.8657864641713" c2y="452.8954895577942" c1y="410.8669798114389" description="" straight="1" type="2" ypos="368.8384700650836" endx="202.5478751522173" xpos="225.5247421201483" endy="494.9239993041496" c2x="210.2068308081943">
+    <transition c1x="217.8657864641713" c2y="452.8954895577943" c1y="410.8669798114389" description="" straight="1" type="2" ypos="368.8384700650836" endx="202.5478751522173" xpos="225.5247421201483" endy="494.9239993041496" c2x="210.2068308081943">
       <from>0</from>
       <to>1</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('A')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('A')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="230.1622186795998" c2y="278.0000000000884" c1y="219.8230696386" description="" straight="1" type="2" ypos="298.1522120763223" endx="279.2842712474619" xpos="254.4862297098159" endy="309.7157287525381" c2x="354.9230484541837">
+    <transition c1x="230.1622186795996" c2y="278.0000000000882" c1y="219.8230696386" description="" straight="1" type="2" ypos="298.1522120763223" endx="279.2842712474618" xpos="254.4862297098159" endy="309.715728752538" c2x="354.9230484541836">
       <from>0</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="285.8250389477528" c2y="601.8243315931294" c1y="577.0850241919698" description="" straight="1" type="2" ypos="552.3457167908101" endx="398.3854642788693" xpos="229.5448262821945" endy="626.563638994289" c2x="342.1052516133111">
+    <transition c1x="285.8250389477528" c2y="601.8243315931294" c1y="577.0850241919698" description="" straight="1" type="2" ypos="552.3457167908101" endx="398.3854642788693" xpos="229.5448262821945" endy="626.563638994289" c2x="342.105251613311">
       <from>1</from>
       <to>2</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('n')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('n')</inputs>
       <outputs></outputs>
     </transition>
     <transition c1x="239.5426674321817" c2y="428.7156774018641" c1y="479.4313548037283" description="" straight="1" type="2" ypos="530.1470322055924" endx="251.0000012121212" xpos="233.814000542212" endy="378" c2x="245.2713343221515">
@@ -50,10 +50,10 @@
     <transition c1x="539.7005506689235" c2y="636.4334120003224" c1y="636.7167060001613" description="" straight="1" type="2" ypos="637" endx="665.1016520067706" xpos="477" endy="636.1501180004836" c2x="602.4011013378471">
       <from>2</from>
       <to>3</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('o')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('o')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="543.7805939255936" c2y="446.2769812267784" c1y="529.6981740134751" description="" straight="1" type="2" ypos="613.1193668001719" endx="282.3399071635814" xpos="674.5009373065998" endy="362.8557884400818" c2x="413.0602505445875">
+    <transition c1x="543.7805939255936" c2y="446.2769812267784" c1y="529.6981740134752" description="" straight="1" type="2" ypos="613.1193668001719" endx="282.3399071635814" xpos="674.5009373065998" endy="362.8557884400818" c2x="413.0602505445875">
       <from>3</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
@@ -62,19 +62,19 @@
     <transition c1x="801.7714509247793" c2y="591.1814076179476" c1y="609.9728526026481" description="" straight="1" type="2" ypos="628.7642975873487" endx="917.9779345454168" xpos="743.6682091144605" endy="572.389962633247" c2x="859.8746927350981">
       <from>3</from>
       <to>4</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('t')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('t')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="707.4627410318133" c2y="414.13689740553" c1y="477.2341674782841" description="" straight="1" type="2" ypos="540.3314375510379" endx="288.8149192650509" xpos="916.7866519151945" endy="351.0396273327761" c2x="498.1388301484321">
+    <transition c1x="707.4627410318133" c2y="414.13689740553" c1y="477.234167478284" description="" straight="1" type="2" ypos="540.3314375510379" endx="288.8149192650509" xpos="916.7866519151945" endy="351.0396273327761" c2x="498.1388301484321">
       <from>4</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="934.7089485550065" c2y="463.2475722299549" c1y="490.0341865542769" description="" straight="1" type="2" ypos="516.8208008785988" endx="919.9888451158952" xpos="942.0690002745621" endy="436.4609579056329" c2x="927.3488968354508">
+    <transition c1x="934.7089485550065" c2y="463.2475722299549" c1y="490.0341865542768" description="" straight="1" type="2" ypos="516.8208008785988" endx="919.9888451158952" xpos="942.0690002745621" endy="436.4609579056329" c2x="927.3488968354508">
       <from>4</from>
       <to>5</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('h')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('h')</inputs>
       <outputs></outputs>
     </transition>
     <transition c1x="676.3794019221803" c2y="360.8529239826588" c1y="376.6742224259713" description="" straight="1" type="2" ypos="392.4955208692838" endx="290.3771030203393" xpos="869.3805513731007" endy="345.0316255393463" c2x="483.3782524712598">
@@ -83,13 +83,13 @@
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="910.1990189896808" c2y="314.5550714137086" c1y="336.2961422852051" description="" straight="1" type="2" ypos="358.0372131567017" endx="909.1470322055924" xpos="910.7250123817252" endy="292.814000542212" c2x="909.6730255976368">
+    <transition c1x="910.1990189896809" c2y="314.5550714137086" c1y="336.2961422852051" description="" straight="1" type="2" ypos="358.0372131567017" endx="909.1470322055924" xpos="910.7250123817252" endy="292.814000542212" c2x="909.6730255976366">
       <from>5</from>
       <to>6</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('e')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('e')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="679.0614824999432" c2y="308.8933684606292" c1y="282.6366189207746" description="" straight="1" type="2" ypos="256.3798693809202" endx="290.8983479932294" xpos="873.1430497533" endy="335.1501180004836" c2x="484.9799152465863">
+    <transition c1x="679.0614824999432" c2y="308.8933684606291" c1y="282.6366189207747" description="" straight="1" type="2" ypos="256.3798693809202" endx="290.8983479932294" xpos="873.1430497533" endy="335.1501180004836" c2x="484.9799152465862">
       <from>6</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
@@ -98,10 +98,10 @@
     <transition c1x="928.7341239267854" c2y="161.7382428813058" c1y="187.9357693774139" description="" straight="1" type="2" ypos="214.1332958735221" endx="941.2942454485562" xpos="922.4540631659" endy="135.5407163851976" c2x="935.0141846876709">
       <from>6</from>
       <to>7</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('r')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('r')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="705.7512754038819" c2y="252.7979486702523" c1y="181.7515812371402" description="" straight="1" type="2" ypos="110.7052138040281" endx="288.4114502982513" xpos="914.4211879566972" endy="323.8443161033643" c2x="497.0813628510666">
+    <transition c1x="705.7512754038819" c2y="252.7979486702522" c1y="181.7515812371402" description="" straight="1" type="2" ypos="110.7052138040281" endx="288.4114502982513" xpos="914.4211879566972" endy="323.8443161033643" c2x="497.0813628510666">
       <from>7</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
@@ -110,19 +110,19 @@
     <transition c1x="848.2120427112194" c2y="70.77100773633178" c1y="79.54689471179276" description="" straight="1" type="2" ypos="88.32278168725375" endx="718.7310929483743" xpos="912.9525175926419" endy="61.99512076087079" c2x="783.4715678297969">
       <from>7</from>
       <to>8</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('F')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('F')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="527.6669142718" c2y="236.5884251339031" c1y="157.0979005602412" description="" straight="1" type="2" ypos="77.6073759865792" endx="284.4584451831901" xpos="649.271148816105" endy="316.0789497075651" c2x="406.0626797274952">
+    <transition c1x="527.6669142718" c2y="236.5884251339031" c1y="157.0979005602412" description="" straight="1" type="2" ypos="77.6073759865792" endx="284.4584451831901" xpos="649.271148816105" endy="316.0789497075651" c2x="406.0626797274951">
       <from>8</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="581.3371834459124" c2y="50.99941367271776" c1y="50.5790249293599" description="" straight="1" type="2" ypos="50.15863618600205" endx="463.9267398652476" xpos="640.0424052362446" endy="51.41980241607561" c2x="522.6319616555799">
+    <transition c1x="581.3371834459123" c2y="50.99941367271776" c1y="50.5790249293599" description="" straight="1" type="2" ypos="50.15863618600205" endx="463.9267398652476" xpos="640.0424052362446" endy="51.41980241607561" c2x="522.63196165558">
       <from>8</from>
       <to>9</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('S')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('S')</inputs>
       <outputs></outputs>
     </transition>
     <transition c1x="360.4463894099817" c2y="231.2254929786291" c1y="157.3794973938706" description="" straight="1" type="2" ypos="83.53350180911198" endx="273.7093182321464" xpos="403.8149249988994" endy="305.0714885633877" c2x="317.077853821064">
@@ -131,13 +131,13 @@
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="332.7245602887936" c2y="105.6962960822843" c1y="83.6727033614789" description="" straight="1" type="2" ypos="61.64911064067351" endx="226.068344710422" xpos="386.0526680779794" endy="127.7198888030897" c2x="279.3964524996078">
+    <transition c1x="332.7245602887936" c2y="105.6962960822843" c1y="83.67270336147891" description="" straight="1" type="2" ypos="61.64911064067351" endx="226.068344710422" xpos="386.0526680779794" endy="127.7198888030897" c2x="279.3964524996078">
       <from>9</from>
       <to>10</to>
-      <inputs default="0" any="0" invert="0">new CharacterEvent('M')</inputs>
+      <inputs default="0" any="0" invert="0">CharacterEvent.instance('M')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="210.7436206953313" c2y="259.7535098644678" c1y="219.3535791270698" description="" straight="1" type="2" ypos="178.9536483896717" endx="238.0524928374804" xpos="197.0891846242567" endy="300.1534406018658" c2x="224.3980567664059">
+    <transition c1x="210.7436206953313" c2y="259.7535098644678" c1y="219.3535791270697" description="" straight="1" type="2" ypos="178.9536483896717" endx="238.0524928374804" xpos="197.0891846242567" endy="300.1534406018658" c2x="224.3980567664058">
       <from>10</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>

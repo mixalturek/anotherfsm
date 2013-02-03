@@ -26,18 +26,20 @@ import org.junit.Test;
 public class CharacterEventTest {
 	@Test
 	public final void testGetCharacter() {
-		assertEquals('A', new CharacterEvent('A').getCharacter());
-		assertEquals('B', new CharacterEvent('B').getCharacter());
+		assertEquals('A', CharacterEvent.instance('A').getCharacter());
+		assertEquals('B', CharacterEvent.instance('B').getCharacter());
 	}
 
 	@Test
 	public final void testEqualsObject() {
-		assertEquals(new CharacterEvent('A'), new CharacterEvent('A'));
-		assertFalse(new CharacterEvent('A').equals(new CharacterEvent('B')));
+		assertEquals(CharacterEvent.instance('A'), CharacterEvent.instance('A'));
+		assertFalse(CharacterEvent.instance('A').equals(
+				CharacterEvent.instance('B')));
 	}
 
 	@Test
 	public final void testToString() {
-		assertEquals("CharacterEvent(A)", new CharacterEvent('A').toString());
+		assertEquals("CharacterEvent(A)", CharacterEvent.instance('A')
+				.toString());
 	}
 }

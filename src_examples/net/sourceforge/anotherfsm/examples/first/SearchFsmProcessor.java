@@ -50,7 +50,7 @@ public class SearchFsmProcessor extends SearchFsm {
 		EqualsPreprocessor preprocessor = new EqualsPreprocessor(name);
 
 		// Don't pass newline characters to the state machine
-		preprocessor.addProcessor(new CharacterEvent('\n'),
+		preprocessor.addProcessor(CharacterEvent.instance('\n'),
 				new Preprocessor.Processor<CharacterEvent>() {
 					@Override
 					public Event process(CharacterEvent event) {

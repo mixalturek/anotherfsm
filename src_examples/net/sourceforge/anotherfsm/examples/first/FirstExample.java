@@ -63,7 +63,7 @@ public class FirstExample {
 			while (true) {
 				// Read a character from user and pass it to the state machine
 				char c = (char) System.in.read();
-				machine.process(new CharacterEvent(c));
+				machine.process(CharacterEvent.instance(c));
 
 				// Exit after a final state is entered
 				if (machine.isInFinalState()) {

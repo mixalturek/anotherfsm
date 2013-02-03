@@ -25,11 +25,25 @@ package net.sourceforge.anotherfsm;
  */
 public class CharacterEvent extends ContainerEvent<Character> {
 	/**
+	 * Create instance of this class.
+	 * 
+	 * @param character
+	 *            the character
+	 * @return the instance
+	 */
+	public static CharacterEvent instance(char character) {
+		return new CharacterEvent(character);
+	}
+
+	/**
 	 * Create object.
 	 * 
 	 * @param character
 	 *            the character
+	 * @see #instance(char)
+	 * @deprecated Prefer {@link #instance(char)} method instead.
 	 */
+	@Deprecated
 	public CharacterEvent(char character) {
 		super(character);
 	}
