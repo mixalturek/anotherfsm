@@ -23,7 +23,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.lang.management.ManagementFactory;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
@@ -39,9 +38,10 @@ public class CodeGenerator {
 	/** The logger. */
 	private final FsmLogger logger;
 
+	/** Suffix of generated state machine class name. */
 	private static final String FSM_CLASS_SUFFIX = "Fsm";
 
-	/** Program arguments. */
+	/** Program parameters. */
 	private final CodeGeneratorParameters parameters;
 
 	/** Configuration of generator. */
@@ -69,7 +69,13 @@ public class CodeGenerator {
 		machine = qfsm.getMachine();
 	}
 
-	private void generateFsm() throws QfsmException {
+	/**
+	 * Generate the state machine file.
+	 * 
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private void genFsmFile() throws QfsmException {
 		String className = identifier(machine.getName()) + FSM_CLASS_SUFFIX;
 
 		String content = loadTemplate("TemplateFsm.txt");
@@ -90,14 +96,14 @@ public class CodeGenerator {
 				identifier(machine.getStartState()));
 
 		content = content.replace("{{DECLARATIONS_STATES}}",
-				generateFsmDeclarationsStates());
+				genStateDeclarations());
 		content = content.replace("{{DECLARATIONS_TRANSITIONS}}",
-				generateFsmDeclarationsTransitions());
+				genTransitionDeclarations());
 
 		content = content.replace("{{CONSTRUCTOR_BODY_STATES}}",
-				generateFsmInitializationStates());
+				genStateInitializations());
 		content = content.replace("{{CONSTRUCTOR_BODY_TRANSITIONS}}",
-				generateFsmInitializationTransitions());
+				genTransitionInitializations());
 
 		File file = new File(configuration.getOutputDirectory()
 				+ File.separator + className + ".java");
@@ -105,7 +111,14 @@ public class CodeGenerator {
 		writeFile(file, content);
 	}
 
-	private String generateFsmDeclarationsStates() throws QfsmException {
+	/**
+	 * Generate declarations of states.
+	 * 
+	 * @return the string representation of declarations
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genStateDeclarations() throws QfsmException {
 		String template = loadTemplate("TemplateStateDeclaration.txt");
 
 		StringBuilder builder = new StringBuilder();
@@ -123,7 +136,14 @@ public class CodeGenerator {
 		return builder.toString();
 	}
 
-	private String generateFsmInitializationStates() throws QfsmException {
+	/**
+	 * Generate initializations of states.
+	 * 
+	 * @return the string representation of initializations
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genStateInitializations() throws QfsmException {
 		String template = loadTemplate("TemplateStateInitialization.txt");
 
 		StringBuilder builder = new StringBuilder();
@@ -132,7 +152,6 @@ public class CodeGenerator {
 			String content = template;
 
 			content = content.replace("{{JAVA_NAME}}", identifier(state));
-
 			content = content.replace("{{NAME}}", state.getName());
 
 			if (state.isFinalState()) {
@@ -147,7 +166,14 @@ public class CodeGenerator {
 		return builder.toString();
 	}
 
-	private String generateFsmDeclarationsTransitions() throws QfsmException {
+	/**
+	 * Generate declarations of transitions.
+	 * 
+	 * @return the string representations of declarations
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genTransitionDeclarations() throws QfsmException {
 		String template = loadTemplate("TemplateTransitionDeclaration.txt");
 
 		StringBuilder builder = new StringBuilder();
@@ -165,7 +191,14 @@ public class CodeGenerator {
 		return builder.toString();
 	}
 
-	private String generateFsmInitializationTransitions() throws QfsmException {
+	/**
+	 * Generate initializations of transitions.
+	 * 
+	 * @return the string representation fo initializations
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genTransitionInitializations() throws QfsmException {
 		String template = loadTemplate("TemplateTransitionInitialization.txt");
 
 		StringBuilder builder = new StringBuilder();
@@ -186,16 +219,21 @@ public class CodeGenerator {
 		return builder.toString();
 	}
 
+	/**
+	 * Write a text file.
+	 * 
+	 * @param file
+	 *            the destination file
+	 * @param content
+	 *            the text content of the file
+	 * @throws QfsmException
+	 *             if something fails
+	 */
 	private void writeFile(File file, String content) throws QfsmException {
-		logger.info("Writing file: " + file.getPath());
-
-		if (file.exists()) {
-			if (parameters.isForce()) {
-				logger.info("File exists, overwriting");
-			} else {
-				logger.info("File exists, use '-f | --force' parameter to overwrite");
-				return;
-			}
+		if (file.exists() && !parameters.isForce()) {
+			logger.warn("File exists, use '-f | --force' parameter to overwrite: "
+					+ file.getPath());
+			return;
 		}
 
 		try {
@@ -205,19 +243,24 @@ public class CodeGenerator {
 		} catch (IOException e) {
 			throw new QfsmException("Writing file failed", e);
 		}
-
-		logger.info("File written: " + file.getPath());
 	}
 
 	private void generateProcessor() {
 
 	}
 
-	private String identifier(String name) {
+	/**
+	 * Generate a Java identifier from a string.
+	 * 
+	 * @param str
+	 *            the input string
+	 * @return the generated Java identifier
+	 */
+	private String identifier(String str) {
 		StringBuilder builder = new StringBuilder();
 
-		for (int i = 0; i < name.length(); ++i) {
-			char c = name.charAt(i);
+		for (int i = 0; i < str.length(); ++i) {
+			char c = str.charAt(i);
 			if (c == '.')
 				builder.append("_");
 			else if (Character.isJavaIdentifierPart(c))
@@ -225,19 +268,43 @@ public class CodeGenerator {
 			// Else ignore it
 		}
 
+		// TODO: check empty string
 		return builder.toString();
 	}
 
+	/**
+	 * Generate a Java identifier from a state.
+	 * 
+	 * @param state
+	 *            the state
+	 * @return the Java identifier
+	 */
 	private String identifier(QfsmState state) {
 		return identifier(state.getName());
 	}
 
+	/**
+	 * Generate a Java identifier from a transition.
+	 * 
+	 * @param transition
+	 *            the transition
+	 * @return the Java identifier
+	 */
 	private String identifier(QfsmTransition transition) {
 		return identifier(transition.getSourceState()) + "_"
 				+ identifier(transition.getInputEvent()) + "_"
 				+ identifier(transition.getDestinationState());
 	}
 
+	/**
+	 * Load a template for the code generation.
+	 * 
+	 * @param name
+	 *            the path in file system or in jar package
+	 * @return the text content of the template file
+	 * @throws QfsmException
+	 *             if something fails
+	 */
 	private String loadTemplate(String name) throws QfsmException {
 		InputStream stream = getClass().getResourceAsStream(name);
 		try {
@@ -283,15 +350,13 @@ public class CodeGenerator {
 
 		try {
 			CodeGenerator generator = new CodeGenerator(parameters);
-			generator.generateFsm();
+			generator.genFsmFile();
 			generator.generateProcessor();
 		} catch (QfsmException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
 
-		System.out.println("Time: "
-				+ ManagementFactory.getRuntimeMXBean().getUptime() + " ms");
 		System.out.println("Exiting main()");// TODO: remove
 	}
 }
