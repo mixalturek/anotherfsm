@@ -4,6 +4,8 @@
 	- Qfsm
 		- Java code generator.
 		- CodeGenerator [-t | --generate-template file]
+		- Put command line arguments to the generated files.
+		- java -classpath build/anotherfsm-0.2.0-dev.jar net.sourceforge.anotherfsm.qfsm.CodeGenerator
 	- Logger
 		- SimpleLogger to only display the message.
 	- Ant findbugs target.

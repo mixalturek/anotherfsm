@@ -1,0 +1,4 @@
+	/**
+	 * {{DESCRIPTION}}
+	 */
+	public final Transition {{JAVA_NAME}};

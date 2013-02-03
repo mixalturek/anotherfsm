@@ -1,0 +1,2 @@
+		{{JAVA_NAME}} = new Transition({{SOURCE_STATE}}, {{EVENT}}, {{DESTINATION_STATE}});
+		addTransition({{JAVA_NAME}});

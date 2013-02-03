@@ -1,0 +1,5 @@
+	/**
+	 * {{DESCRIPTION}}
+	 */
+	public final State {{JAVA_NAME}};
+

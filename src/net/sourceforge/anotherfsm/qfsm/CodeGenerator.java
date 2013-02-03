@@ -21,6 +21,7 @@ package net.sourceforge.anotherfsm.qfsm;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 
@@ -38,6 +39,8 @@ public class CodeGenerator {
 	/** The logger. */
 	private final FsmLogger logger;
 
+	private static final String FSM_CLASS_SUFFIX = "Fsm";
+
 	/** Program arguments. */
 	private final CodeGeneratorParameters parameters;
 
@@ -46,6 +49,9 @@ public class CodeGenerator {
 
 	/** Qfsm data file. */
 	private final QfsmProject qfsm;
+
+	/** Qfsm state machine. */
+	private final QfsmMachine machine;
 
 	/**
 	 * Create the object.
@@ -60,13 +66,86 @@ public class CodeGenerator {
 		this.parameters = parameters;
 		configuration = Configuration.parse(parameters.getConfigFile());
 		qfsm = Parser.parse(parameters.getQfsmFile());
+		machine = qfsm.getMachine();
 	}
 
 	private void generateFsm() throws QfsmException {
-		File file = new File(configuration.getOutputDirectory()
-				+ File.separator + qfsm.getMachine().getName() + "Fsm.java");
+		String className = identifier(machine.getName()) + FSM_CLASS_SUFFIX;
 
-		logger.info("Generating file: " + file.getPath());
+		String content = loadTemplate("TemplateFsm.txt");
+
+		content = content.replace("{{FILE_HEADER}}", configuration
+				.getFileHeader().trim());
+		content = content.replace("{{PACKAGE}}", configuration.getJavaPackage()
+				.trim());
+		content = content.replace("{{IMPORTS}}", configuration.getFsmImports()
+				.trim());
+		content = content.replace("{{FSM_DESCRIPTION}}",
+				machine.getDescription());
+		content = content.replace("{{FSM_AUTHOR}}", machine.getAuthor());
+		content = content.replace("{{FSM_NAME}}", className);
+		content = content.replace("{{BASE_CLASS}}", configuration
+				.getBaseClass().trim());
+		content = content.replace("{{START_STATE}}", identifier(machine
+				.getStartState().getName()));
+
+		content = content
+				.replace("{{DECLARATIONS}}", generateFsmDeclarations());
+		content = content.replace("{{CONSTRUCTOR_BODY}}",
+				generateFsmCreations());
+
+		File file = new File(configuration.getOutputDirectory()
+				+ File.separator + className + ".java");
+
+		writeFile(file, content);
+	}
+
+	private String generateFsmDeclarations() throws QfsmException {
+		String template = loadTemplate("TemplateStateDeclaration.txt");
+
+		StringBuilder builder = new StringBuilder();
+
+		for (QfsmState state : machine.getStates()) {
+			String content = template;
+
+			content = content
+					.replace("{{DESCRIPTION}}", state.getDescription());
+			content = content.replace("{{JAVA_NAME}}",
+					identifier(state.getName()));
+
+			builder.append(content);
+		}
+
+		return builder.toString();
+	}
+
+	private String generateFsmCreations() throws QfsmException {
+		String template = loadTemplate("TemplateStateCreation.txt");
+
+		StringBuilder builder = new StringBuilder();
+
+		for (QfsmState state : machine.getStates()) {
+			String content = template;
+
+			content = content.replace("{{JAVA_NAME}}",
+					identifier(state.getName()));
+
+			content = content.replace("{{NAME}}", state.getName());
+
+			if (state.isFinalState()) {
+				content = content.replace("{{FINAL}}", ", State.Type.FINAL");
+			} else {
+				content = content.replace("{{FINAL}}", "");
+			}
+
+			builder.append(content);
+		}
+
+		return builder.toString();
+	}
+
+	private void writeFile(File file, String content) throws QfsmException {
+		logger.info("Writing file: " + file.getPath());
 
 		if (file.exists()) {
 			if (parameters.isForce()) {
@@ -79,25 +158,33 @@ public class CodeGenerator {
 
 		try {
 			PrintWriter out = new PrintWriter(new FileWriter(file));
-
-			out.println(configuration.getFileHeader().trim());
-			out.println();
-			out.println("package " + configuration.getJavaPackage().trim()
-					+ ";");
-			out.println();
-			out.println(configuration.getFsmImports().trim());
-			out.println();
-
+			out.println(content);
 			out.close();
 		} catch (IOException e) {
 			throw new QfsmException("Writing file failed", e);
 		}
 
-		logger.info("File generated: " + file.getPath());
+		logger.info("File written: " + file.getPath());
 	}
 
 	private void generateProcessor() {
 
+	}
+
+	private String identifier(String name) {
+		// TODO:
+		return name;
+	}
+
+	private String loadTemplate(String name) throws QfsmException {
+		InputStream stream = getClass().getResourceAsStream(name);
+		try {
+			byte[] data = new byte[stream.available()];
+			stream.read(data);
+			return new String(data);
+		} catch (IOException e) {
+			throw new QfsmException("Template loading failed: " + name, e);
+		}
 	}
 
 	/**

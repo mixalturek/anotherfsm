@@ -98,6 +98,10 @@ all                  - Process full build.
 			
 			<compilerarg value="-Xlint"/>
 		</javac>
+		
+		<copy todir="${builddir}/classes">
+			<fileset dir="src" includes="**/Template*.txt"/>
+		</copy>
 	</target>
 		
 	<!-- Compile all examples. -->

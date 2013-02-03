@@ -1,0 +1,30 @@
+{{FILE_HEADER}}
+
+package {{PACKAGE}};
+
+{{IMPORTS}}
+
+/**
+ * {{FSM_DESCRIPTION}}
+ * 
+ * @author {{FSM_AUTHOR}}
+ */
+class {{FSM_NAME}} extends {{BASE_CLASS}} {
+{{DECLARATIONS}}
+
+	/**
+	 * Create the object, build the state machine.
+	 * 
+	 * @param name
+	 *            the name of the state machine
+	 * @throws FsmException
+	 *             if building of state machine fails
+	 */
+	public {{FSM_NAME}}(String name) throws FsmException {
+		super(name);
+
+{{CONSTRUCTOR_BODY}}
+		
+		setStartState({{START_STATE}});
+	}
+}
