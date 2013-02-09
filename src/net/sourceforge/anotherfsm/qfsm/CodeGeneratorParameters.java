@@ -30,9 +30,6 @@ class CodeGeneratorParameters {
 	/** Show usage. */
 	private boolean usage = false;
 
-	/** Verbose output. */
-	private boolean verbose = false;
-
 	/** Force, override output files. */
 	private boolean force = false;
 
@@ -59,11 +56,6 @@ class CodeGeneratorParameters {
 			case "-h":
 			case "--help":
 				usage = true;
-				break;
-
-			case "-v":
-			case "--verbose":
-				verbose = true;
 				break;
 
 			case "-f":
@@ -149,23 +141,8 @@ class CodeGeneratorParameters {
 		System.out.println("\t-m | --qfsm-file file    Qfsm file.");
 	}
 
-	/**
-	 * Dump the parsed parameters.
-	 */
-	public void dump() {
-		System.out.println("Verbose output: " + (verbose ? "yes" : "no"));
-		System.out.println("Show usage: " + (usage ? "yes" : "no"));
-		System.out.println("Override output files: " + (force ? "yes" : "no"));
-		System.out.println("Configuration file: " + configFile);
-		System.out.println("Qfsm file: " + qfsmFile);
-	}
-
 	public boolean isUsage() {
 		return usage;
-	}
-
-	public boolean isVerbose() {
-		return verbose;
 	}
 
 	public boolean isForce() {

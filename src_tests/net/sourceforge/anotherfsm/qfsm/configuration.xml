@@ -7,7 +7,7 @@
 	<JavaPackage>java package</JavaPackage>
 
 	<StateMachineClass>		
-		<Imports>state machine imports</Imports>
+		<Imports>java imports</Imports>
 	</StateMachineClass>
 	
 	<ProcessorClass>
@@ -20,7 +20,7 @@
 		<StateListener>yes</StateListener>
 		<TransitionListener>yes</TransitionListener>
 		
-		<Imports>processor imports</Imports>
+		<Imports>java imports</Imports>
 	</ProcessorClass>
 
 	<FileHeader>file header</FileHeader>

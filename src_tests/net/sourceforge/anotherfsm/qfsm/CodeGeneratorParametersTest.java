@@ -16,7 +16,6 @@ public class CodeGeneratorParametersTest {
 			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
 			assertFalse(params.isForce());
 			assertFalse(params.isUsage());
-			assertFalse(params.isVerbose());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
 		}
@@ -41,30 +40,6 @@ public class CodeGeneratorParametersTest {
 		try {
 			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
 			assertTrue(params.isUsage());
-		} catch (QfsmException e) {
-			fail("Should not be executed: " + e);
-		}
-	}
-
-	@Test
-	public void testIsVerboseShort() {
-		String[] args = { "-m", "unused", "-c", "unused", "-v" };
-
-		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
-			assertTrue(params.isVerbose());
-		} catch (QfsmException e) {
-			fail("Should not be executed: " + e);
-		}
-	}
-
-	@Test
-	public void testIsVerboseLong() {
-		String[] args = { "-m", "unused", "-c", "unused", "--verbose" };
-
-		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
-			assertTrue(params.isVerbose());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
 		}

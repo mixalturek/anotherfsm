@@ -27,9 +27,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
+import net.sourceforge.anotherfsm.logger.BasicLoggerFactory;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
-import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
-import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 /**
  * The code generator main class.
@@ -37,8 +36,13 @@ import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
  * @author Michal Turek
  */
 public class CodeGenerator {
+	static {
+		AnotherFsm.setLoggerFactory(new BasicLoggerFactory());
+	}
+
 	/** The logger. */
-	private final FsmLogger logger;
+	private static final FsmLogger logger = AnotherFsm
+			.getLogger(CodeGenerator.class);
 
 	/** Suffix of generated state machine class name. */
 	private static final String FSM_CLASS_SUFFIX = "Fsm";
@@ -67,17 +71,16 @@ public class CodeGenerator {
 	 */
 	private CodeGenerator(CodeGeneratorParameters parameters)
 			throws QfsmException {
-		logger = AnotherFsm.getLogger(this.getClass());
 		this.parameters = parameters;
 		configuration = Configuration.parse(parameters.getConfigFile());
 		qfsm = Parser.parse(parameters.getQfsmFile());
 		machine = qfsm.getMachine();
 
+		// Continual conversions to identifiers have bad performance but it is
+		// only one time and acceptable here
 		Collections.sort(machine.getStates(), new Comparator<QfsmState>() {
 			@Override
 			public int compare(QfsmState o1, QfsmState o2) {
-				// Continual conversions to identifiers have bad performance but
-				// it is only one time and acceptable here
 				return identifier(o1).compareTo(identifier(o2));
 			}
 		});
@@ -86,9 +89,6 @@ public class CodeGenerator {
 				new Comparator<QfsmTransition>() {
 					@Override
 					public int compare(QfsmTransition o1, QfsmTransition o2) {
-						// Continual conversions to identifiers have bad
-						// performance but it is only one time and acceptable
-						// here
 						return identifier(o1).compareTo(identifier(o2));
 					}
 				});
@@ -303,7 +303,7 @@ public class CodeGenerator {
 	/**
 	 * Generate initializations of transitions.
 	 * 
-	 * @return the string representation fo initializations
+	 * @return the string representation of initializations
 	 * @throws QfsmException
 	 *             if something fails
 	 */
@@ -387,6 +387,8 @@ public class CodeGenerator {
 		} catch (IOException e) {
 			throw new QfsmException("Writing file failed", e);
 		}
+
+		logger.info("File written: " + file.getAbsolutePath());
 	}
 
 	/**
@@ -408,6 +410,7 @@ public class CodeGenerator {
 			// Else ignore it
 		}
 
+		// Ignore empty identifier, the generated file will show it
 		return builder.toString();
 	}
 
@@ -470,8 +473,7 @@ public class CodeGenerator {
 			parameters = new CodeGeneratorParameters(args);
 		} catch (QfsmException e) {
 			CodeGeneratorParameters.showUsage();
-			System.err.println("Parameters parsing failed");
-			e.printStackTrace();
+			logger.error("Parameters parsing failed", e);
 			System.exit(1);
 		}
 
@@ -480,22 +482,13 @@ public class CodeGenerator {
 			System.exit(0);
 		}
 
-		if (parameters.isVerbose()) {
-			AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
-			parameters.dump();
-		} else {
-			AnotherFsm.setLoggerFactory(new NoLoggerFactory());
-		}
-
 		try {
 			CodeGenerator generator = new CodeGenerator(parameters);
 			generator.genFsmFile();
 			generator.generateProcessor();
 		} catch (QfsmException e) {
-			e.printStackTrace();
+			logger.error("Unexpected error", e);
 			System.exit(1);
 		}
-
-		System.out.println("Exiting main()");// TODO: remove
 	}
 }
