@@ -37,6 +37,27 @@ class SearchStringProcessor extends SearchStringFsm {
 	public SearchStringProcessor(String name) throws FsmException {
 		super(name);
 
+		addListener(new StateAdapter(StateListener.Type.LOOP_NO_PROCESS) {
+			@Override
+			public void onStateEnter(State previous, Event event, State current) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onStateExit(State current, Event event, State next) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+
+		addListener(new TransitionListener() {
+			@Override
+			public void onTransition(State source, Event event,	State destination) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+
 		stateA.addListener(new StateAdapter(StateListener.Type.LOOP_NO_PROCESS) {
 			@Override
 			public void onStateEnter(State previous, Event event, State current) {

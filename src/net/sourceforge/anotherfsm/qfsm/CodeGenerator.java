@@ -154,9 +154,20 @@ public class CodeGenerator {
 		content = content.replace("{{CLASS_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", baseClassName);
 
-		content = content.replace("{{STATE_LISTENERS}}", genStateListeners());
-		content = content.replace("{{TRANSITION_LISTENERS}}",
-				genTransitionListeners());
+		content = content.replace("{{GLOBAL_STATE_LISTENERS}}", configuration
+				.isGlobalStateListener() ? genGlobalStateListeners() : "");
+
+		content = content
+				.replace(
+						"{{GLOBAL_TRANSITION_LISTENERS}}",
+						configuration.isGlobalTransitionListener() ? genGlobalTransitionListener()
+								: "");
+
+		content = content.replace("{{STATE_LISTENERS}}",
+				configuration.isStateListener() ? genStateListeners() : "");
+
+		content = content.replace("{{TRANSITION_LISTENERS}}", configuration
+				.isTransitionListener() ? genTransitionListeners() : "");
 
 		writeFile(new File(configuration.getOutputDirectory() + File.separator
 				+ className + ".java"), content);
@@ -241,6 +252,18 @@ public class CodeGenerator {
 	}
 
 	/**
+	 * Generate the global state listener.
+	 * 
+	 * @return the string representation of listener
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genGlobalStateListeners() throws QfsmException {
+		String template = loadTemplate("TemplateStateListener.txt");
+		return template.replace("{{JAVA_NAME}}.", "");
+	}
+
+	/**
 	 * Generate declarations of transitions.
 	 * 
 	 * @return the string representations of declarations
@@ -314,6 +337,18 @@ public class CodeGenerator {
 		}
 
 		return builder.toString();
+	}
+
+	/**
+	 * Generate the global transition listener.
+	 * 
+	 * @return the string representation of listener
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genGlobalTransitionListener() throws QfsmException {
+		String template = loadTemplate("TemplateTransitionListener.txt");
+		return template.replace("{{JAVA_NAME}}.", "");
 	}
 
 	/**

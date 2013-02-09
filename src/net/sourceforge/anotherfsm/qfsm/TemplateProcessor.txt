@@ -21,6 +21,8 @@ class {{CLASS_NAME}} extends {{BASE_CLASS}} {
 	public {{CLASS_NAME}}(String name) throws FsmException {
 		super(name);
 
+{{GLOBAL_STATE_LISTENERS}}
+{{GLOBAL_TRANSITION_LISTENERS}}
 {{STATE_LISTENERS}}
 {{TRANSITION_LISTENERS}}
 	}
