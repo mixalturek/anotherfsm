@@ -244,6 +244,80 @@ public class CodeGeneratorParametersTest {
 	}
 
 	@Test
+	public void testGetConfigTemplateShort() {
+		String[] args = { "-t", "test" };
+
+		try {
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			assertEquals("test", params.getConfigTemplate());
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
+	public void testGetConfigTemplateLong() {
+		String[] args = { "--template", "test" };
+
+		try {
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			assertEquals("test", params.getConfigTemplate());
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
+	public void testGetConfigTemplateShortPreprocess() {
+		String[] args = { "-t=test" };
+
+		try {
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			assertEquals("test", params.getConfigTemplate());
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
+	public void testGetConfigTemplateLongPreprocess() {
+		String[] args = { "--template=test" };
+
+		try {
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			assertEquals("test", params.getConfigTemplate());
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
+	public void testGetConfigTemplateShortBroken() {
+		String[] args = { "-t" };
+
+		try {
+			new CodeGeneratorParameters(args);
+			fail("Should not be executed");
+		} catch (QfsmException e) {
+			assertEquals("Missing second argument of -t | --template",
+					e.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetConfigTemplateLongBroken() {
+		String[] args = { "--template" };
+
+		try {
+			new CodeGeneratorParameters(args);
+			fail("Should not be executed");
+		} catch (QfsmException e) {
+			assertEquals("Missing second argument of -t | --template",
+					e.getMessage());
+		}
+	}
+
+	@Test
 	public void testUnexpectedParameter() {
 		String[] args = { "-c", "unused", "-m", "unused", "unexpected 1",
 				"-u 2", "--unexpected 3" };

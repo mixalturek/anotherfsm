@@ -131,7 +131,7 @@ public class CodeGenerator {
 				genTransitionInitializations());
 
 		writeFile(new File(configuration.getOutputDirectory() + File.separator
-				+ className + ".java"), content);
+				+ className + ".java"), content, parameters.isForce());
 	}
 
 	private void generateProcessor() throws QfsmException {
@@ -182,7 +182,7 @@ public class CodeGenerator {
 				.isTransitionListener() ? genTransitionListeners() : "");
 
 		writeFile(new File(configuration.getOutputDirectory() + File.separator
-				+ className + ".java"), content);
+				+ className + ".java"), content, parameters.isForce());
 	}
 
 	/**
@@ -370,11 +370,14 @@ public class CodeGenerator {
 	 *            the destination file
 	 * @param content
 	 *            the text content of the file
+	 * @param force
+	 *            rewrite existing file
 	 * @throws QfsmException
 	 *             if something fails
 	 */
-	private void writeFile(File file, String content) throws QfsmException {
-		if (file.exists() && !parameters.isForce()) {
+	private static void writeFile(File file, String content, boolean force)
+			throws QfsmException {
+		if (file.exists() && !force) {
 			logger.warn("File exists, use '-f | --force' parameter to overwrite: "
 					+ file.getPath());
 			return;
@@ -447,8 +450,8 @@ public class CodeGenerator {
 	 * @throws QfsmException
 	 *             if something fails
 	 */
-	private String loadTemplate(String name) throws QfsmException {
-		InputStream stream = getClass().getResourceAsStream(name);
+	private static String loadTemplate(String name) throws QfsmException {
+		InputStream stream = CodeGenerator.class.getResourceAsStream(name);
 		try {
 			byte[] data = new byte[stream.available()];
 			stream.read(data);
@@ -483,6 +486,13 @@ public class CodeGenerator {
 		}
 
 		try {
+			if (parameters.getConfigTemplate() != null) {
+				String template = loadTemplate("TemplateConfiguration.txt");
+				writeFile(new File(parameters.getConfigTemplate()), template,
+						parameters.isForce());
+				System.exit(0);
+			}
+
 			CodeGenerator generator = new CodeGenerator(parameters);
 			generator.genFsmFile();
 			generator.generateProcessor();

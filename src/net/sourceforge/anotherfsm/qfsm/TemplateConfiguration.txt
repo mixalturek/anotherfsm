@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <AnotherFsmCodeGenerator>
+	<!-- The version of configuration file. -->
 	<Version>0.1.0</Version>
 	
+	<!-- The output directory relative to the current one. -->
 	<OutputDirectory>.</OutputDirectory>
+	
+	<!-- The base class of state machine. -->
 	<BaseClass>DeterministicStateMachine</BaseClass>
+	
+	<!-- Java package of the generated files. -->
 	<JavaPackage>net.sourceforge.anotherfsm.examples.codegenerator</JavaPackage>
 
-	<StateMachineClass>		
+	<!-- Configuration of the state machine class. -->
+	<StateMachineClass>
+		<!-- Java imports that will be inserted to the state machine file. -->
 		<Imports>
 			import net.sourceforge.anotherfsm.*;
 		</Imports>
 	</StateMachineClass>
-	
+
+	<!-- Configuration of the processor class. -->
 	<ProcessorClass>
+		<!-- Generate type preprocessor. -->
 		<TypePreprocessor>yes</TypePreprocessor>
+		
+		<!-- Generate equals preprocessor. -->
 		<EqualsPreprocessor>yes</EqualsPreprocessor>
 		
+		<!-- Generate global listener for states. -->
 		<GlobalStateListener>yes</GlobalStateListener>
+		
+		<!-- Generate global listener for transitions. -->
 		<GlobalTransitionListener>yes</GlobalTransitionListener>
 		
+		<!-- Generate listeners for states. -->
 		<StateListener>yes</StateListener>
+		
+		<!-- Generate listeners for transitions. -->
 		<TransitionListener>yes</TransitionListener>
 		
+		<!-- Java imports that will be inserted to the processor file. -->
 		<Imports>
 			import net.sourceforge.anotherfsm.*;
 		</Imports>
 	</ProcessorClass>
 
+	<!-- File header that will be put at the top of every generated file. -->
+	<!-- This content is not required, update it as you want. -->
 	<FileHeader>
-		<!-- This content is not required, update it as you want. -->
 		<![CDATA[
 		/*
 		 *  Copyright 2013 Michal Turek, AnotherFSM

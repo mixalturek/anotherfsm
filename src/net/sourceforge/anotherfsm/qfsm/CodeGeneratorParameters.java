@@ -33,11 +33,14 @@ class CodeGeneratorParameters {
 	/** Force, override output files. */
 	private boolean force = false;
 
+	/** Generate only template for configuration. */
+	private String configTemplate = null;
+
 	/** The qfsm file */
-	private String configFile;
+	private String configFile = null;
 
 	/** The configuration file */
-	private String qfsmFile;
+	private String qfsmFile = null;
 
 	/**
 	 * Create the object.
@@ -61,6 +64,17 @@ class CodeGeneratorParameters {
 			case "-f":
 			case "--force":
 				force = true;
+				break;
+
+			case "-t":
+			case "--template":
+				if (i + 1 >= params.length) {
+					throw new QfsmException(
+							"Missing second argument of -t | --template");
+				}
+
+				++i;
+				configTemplate = params[i];
 				break;
 
 			case "-c":
@@ -91,14 +105,16 @@ class CodeGeneratorParameters {
 			}
 		}
 
-		if (configFile == null) {
-			throw new QfsmException(
-					"Missing mandatory parameter: -c | --config-file");
-		}
+		if (configTemplate == null) {
+			if (configFile == null) {
+				throw new QfsmException(
+						"Missing mandatory parameter: -c | --config-file");
+			}
 
-		if (qfsmFile == null) {
-			throw new QfsmException(
-					"Missing mandatory parameter: -m | --qfsm-file");
+			if (qfsmFile == null) {
+				throw new QfsmException(
+						"Missing mandatory parameter: -m | --qfsm-file");
+			}
 		}
 
 		if (!unexpected.isEmpty()) {
@@ -132,13 +148,13 @@ class CodeGeneratorParameters {
 		System.out.println("\tjava CodeGenerator [arguments] parameters");
 		System.out.println();
 		System.out.println("Arguments: ");
-		System.out.println("\t[-h | --help]            Show this usage.");
-		System.out.println("\t[-v | --verbose]         Verbose output.");
-		System.out.println("\t[-f | --force]           Override output files.");
+		System.out.println("\t[-h | --help]           Show this usage.");
+		System.out.println("\t[-f | --force]          Override output files.");
 		System.out.println();
 		System.out.println("Parameters: ");
-		System.out.println("\t-c | --config-file file  Configuration file.");
-		System.out.println("\t-m | --qfsm-file file    Qfsm file.");
+		System.out.println("\t-t | --template file    Generate config.");
+		System.out.println("\t-c | --config-file file Configuration file.");
+		System.out.println("\t-m | --qfsm-file file   Qfsm file.");
 	}
 
 	public boolean isUsage() {
@@ -147,6 +163,10 @@ class CodeGeneratorParameters {
 
 	public boolean isForce() {
 		return force;
+	}
+
+	public String getConfigTemplate() {
+		return configTemplate;
 	}
 
 	public String getConfigFile() {
