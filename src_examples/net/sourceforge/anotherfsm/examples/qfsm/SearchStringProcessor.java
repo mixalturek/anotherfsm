@@ -37,6 +37,14 @@ class SearchStringProcessor extends SearchStringFsm {
 	public SearchStringProcessor(String name) throws FsmException {
 		super(name);
 
+		TypePreprocessor typePreprocessor = new TypePreprocessor(name);
+		// TODO Auto-generated method stub
+		addPreprocessor(typePreprocessor);
+
+		EqualsPreprocessor equalsPreprocessor = new EqualsPreprocessor(name);
+		// TODO Auto-generated method stub
+		addPreprocessor(equalsPreprocessor);
+
 		addListener(new StateAdapter(StateListener.Type.LOOP_NO_PROCESS) {
 			@Override
 			public void onStateEnter(State previous, Event event, State current) {

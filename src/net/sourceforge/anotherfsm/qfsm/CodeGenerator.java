@@ -154,6 +154,18 @@ public class CodeGenerator {
 		content = content.replace("{{CLASS_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", baseClassName);
 
+		content = content
+				.replace(
+						"{{TYPE_PREPROCESSOR}}",
+						configuration.isTypePreprocessor() ? loadTemplate("TemplateTypePreprocessor.txt")
+								: "");
+
+		content = content
+				.replace(
+						"{{EQUALS_PREPROCESSOR}}",
+						configuration.isEqualsPreprocessor() ? loadTemplate("TemplateEqualsPreprocessor.txt")
+								: "");
+
 		content = content.replace("{{GLOBAL_STATE_LISTENERS}}", configuration
 				.isGlobalStateListener() ? genGlobalStateListeners() : "");
 

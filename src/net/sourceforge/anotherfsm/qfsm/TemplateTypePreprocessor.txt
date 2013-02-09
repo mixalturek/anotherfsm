@@ -1,0 +1,3 @@
+		TypePreprocessor typePreprocessor = new TypePreprocessor(name);
+		// TODO Auto-generated method stub
+		addPreprocessor(typePreprocessor);
