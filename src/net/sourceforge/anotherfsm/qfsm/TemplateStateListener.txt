@@ -1,0 +1,12 @@
+		{{JAVA_NAME}}.addListener(new StateAdapter(StateListener.Type.LOOP_NO_PROCESS) {
+			@Override
+			public void onStateEnter(State previous, Event event, State current) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onStateExit(State current, Event event, State next) {
+				// TODO Auto-generated method stub
+			}
+		});
+

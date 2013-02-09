@@ -393,6 +393,7 @@ public class QfsmMachine {
 	}
 
 	public List<QfsmState> getStates() {
+		// Don't copy, CodeGenerator.CodeGenerator() expects the stored list
 		return states;
 	}
 
@@ -401,6 +402,7 @@ public class QfsmMachine {
 	}
 
 	public List<QfsmTransition> getTransitions() {
+		// Don't copy, CodeGenerator.CodeGenerator() expects the stored list
 		return transitions;
 	}
 

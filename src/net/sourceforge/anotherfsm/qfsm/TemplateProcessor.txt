@@ -10,11 +10,8 @@ package {{PACKAGE}};
  * @author {{CLASS_AUTHOR}}
  */
 class {{CLASS_NAME}} extends {{BASE_CLASS}} {
-{{DECLARATIONS_STATES}}
-{{DECLARATIONS_TRANSITIONS}}
-
 	/**
-	 * Create the object, build the state machine.
+	 * Create the object, define and connect listeners.
 	 * 
 	 * @param name
 	 *            the name of the state machine
@@ -24,8 +21,7 @@ class {{CLASS_NAME}} extends {{BASE_CLASS}} {
 	public {{CLASS_NAME}}(String name) throws FsmException {
 		super(name);
 
-{{CONSTRUCTOR_BODY_STATES}}
-{{CONSTRUCTOR_BODY_TRANSITIONS}}
-		setStartState({{START_STATE}});
+{{STATE_LISTENERS}}
+{{TRANSITION_LISTENERS}}
 	}
 }

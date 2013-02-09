@@ -23,6 +23,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
@@ -40,6 +42,9 @@ public class CodeGenerator {
 
 	/** Suffix of generated state machine class name. */
 	private static final String FSM_CLASS_SUFFIX = "Fsm";
+
+	/** Suffix of generated processor class name. */
+	private static final String PROCESSOR_CLASS_SUFFIX = "Processor";
 
 	/** Program parameters. */
 	private final CodeGeneratorParameters parameters;
@@ -67,6 +72,26 @@ public class CodeGenerator {
 		configuration = Configuration.parse(parameters.getConfigFile());
 		qfsm = Parser.parse(parameters.getQfsmFile());
 		machine = qfsm.getMachine();
+
+		Collections.sort(machine.getStates(), new Comparator<QfsmState>() {
+			@Override
+			public int compare(QfsmState o1, QfsmState o2) {
+				// Continual conversions to identifiers have bad performance but
+				// it is only one time and acceptable here
+				return identifier(o1).compareTo(identifier(o2));
+			}
+		});
+
+		Collections.sort(machine.getTransitions(),
+				new Comparator<QfsmTransition>() {
+					@Override
+					public int compare(QfsmTransition o1, QfsmTransition o2) {
+						// Continual conversions to identifiers have bad
+						// performance but it is only one time and acceptable
+						// here
+						return identifier(o1).compareTo(identifier(o2));
+					}
+				});
 	}
 
 	/**
@@ -86,10 +111,10 @@ public class CodeGenerator {
 				.trim());
 		content = content.replace("{{IMPORTS}}", configuration.getFsmImports()
 				.trim());
-		content = content.replace("{{FSM_DESCRIPTION}}",
+		content = content.replace("{{CLASS_DESCRIPTION}}",
 				machine.getDescription());
-		content = content.replace("{{FSM_AUTHOR}}", machine.getAuthor());
-		content = content.replace("{{FSM_NAME}}", className);
+		content = content.replace("{{CLASS_AUTHOR}}", machine.getAuthor());
+		content = content.replace("{{CLASS_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", configuration
 				.getBaseClass().trim());
 		content = content.replace("{{START_STATE}}",
@@ -105,10 +130,36 @@ public class CodeGenerator {
 		content = content.replace("{{CONSTRUCTOR_BODY_TRANSITIONS}}",
 				genTransitionInitializations());
 
-		File file = new File(configuration.getOutputDirectory()
-				+ File.separator + className + ".java");
+		writeFile(new File(configuration.getOutputDirectory() + File.separator
+				+ className + ".java"), content);
+	}
 
-		writeFile(file, content);
+	private void generateProcessor() throws QfsmException {
+		String className = identifier(machine.getName())
+				+ PROCESSOR_CLASS_SUFFIX;
+
+		String baseClassName = identifier(machine.getName() + FSM_CLASS_SUFFIX);
+
+		String content = loadTemplate("TemplateProcessor.txt");
+
+		content = content.replace("{{FILE_HEADER}}", configuration
+				.getFileHeader().trim());
+		content = content.replace("{{PACKAGE}}", configuration.getJavaPackage()
+				.trim());
+		content = content.replace("{{IMPORTS}}", configuration
+				.getProcessorImports().trim());
+		content = content.replace("{{CLASS_DESCRIPTION}}",
+				machine.getDescription());
+		content = content.replace("{{CLASS_AUTHOR}}", machine.getAuthor());
+		content = content.replace("{{CLASS_NAME}}", className);
+		content = content.replace("{{BASE_CLASS}}", baseClassName);
+
+		content = content.replace("{{STATE_LISTENERS}}", genStateListeners());
+		content = content.replace("{{TRANSITION_LISTENERS}}",
+				genTransitionListeners());
+
+		writeFile(new File(configuration.getOutputDirectory() + File.separator
+				+ className + ".java"), content);
 	}
 
 	/**
@@ -159,6 +210,29 @@ public class CodeGenerator {
 			} else {
 				content = content.replace("{{FINAL}}", "");
 			}
+
+			builder.append(content);
+		}
+
+		return builder.toString();
+	}
+
+	/**
+	 * Generate the state listeners.
+	 * 
+	 * @return the string representation of listeners
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genStateListeners() throws QfsmException {
+		String template = loadTemplate("TemplateStateListener.txt");
+
+		StringBuilder builder = new StringBuilder();
+
+		for (QfsmState state : machine.getStates()) {
+			String content = template;
+
+			content = content.replace("{{JAVA_NAME}}", identifier(state));
 
 			builder.append(content);
 		}
@@ -220,6 +294,29 @@ public class CodeGenerator {
 	}
 
 	/**
+	 * Generate the transition listeners.
+	 * 
+	 * @return the string representation of listeners
+	 * @throws QfsmException
+	 *             if something fails
+	 */
+	private String genTransitionListeners() throws QfsmException {
+		String template = loadTemplate("TemplateTransitionListener.txt");
+
+		StringBuilder builder = new StringBuilder();
+
+		for (QfsmTransition transition : machine.getTransitions()) {
+			String content = template;
+
+			content = content.replace("{{JAVA_NAME}}", identifier(transition));
+
+			builder.append(content);
+		}
+
+		return builder.toString();
+	}
+
+	/**
 	 * Write a text file.
 	 * 
 	 * @param file
@@ -245,10 +342,6 @@ public class CodeGenerator {
 		}
 	}
 
-	private void generateProcessor() {
-
-	}
-
 	/**
 	 * Generate a Java identifier from a string.
 	 * 
@@ -268,7 +361,6 @@ public class CodeGenerator {
 			// Else ignore it
 		}
 
-		// TODO: check empty string
 		return builder.toString();
 	}
 
