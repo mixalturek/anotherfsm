@@ -27,6 +27,9 @@ import java.util.List;
  * @author Michal Turek
  */
 class CodeGeneratorParameters {
+	/** The command line that was used to execute. */
+	private final String commandLine;
+
 	/** Show usage. */
 	private boolean usage = false;
 
@@ -47,10 +50,15 @@ class CodeGeneratorParameters {
 	 * 
 	 * @param args
 	 *            the parameters to parse
+	 * @param commandLine
+	 *            the command line that was used to execute
 	 * @throws QfsmException
 	 *             if the parameters are invalid
 	 */
-	public CodeGeneratorParameters(String[] args) throws QfsmException {
+	public CodeGeneratorParameters(String[] args, String commandLine)
+			throws QfsmException {
+		this.commandLine = commandLine;
+
 		String[] params = preprocessParameters(args);
 		List<String> unexpected = new LinkedList<String>();
 
@@ -175,5 +183,9 @@ class CodeGeneratorParameters {
 
 	public String getQfsmFile() {
 		return qfsmFile;
+	}
+
+	public String getCommandLine() {
+		return commandLine;
 	}
 }

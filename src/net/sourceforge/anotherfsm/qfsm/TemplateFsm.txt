@@ -7,6 +7,12 @@ package {{PACKAGE}};
 /**
  * {{CLASS_DESCRIPTION}}
  * 
+ * <p>
+ * This file was generated using AnotherFSM CodeGenerator:
+ * <br />
+ * {@code {{COMMAND_LINE}}}
+ * </p>
+ * 
  * @author {{CLASS_AUTHOR}}
  */
 class {{CLASS_NAME}} extends {{BASE_CLASS}} {

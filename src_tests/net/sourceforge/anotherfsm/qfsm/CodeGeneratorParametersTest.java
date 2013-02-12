@@ -13,7 +13,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c", "unused" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertFalse(params.isForce());
 			assertFalse(params.isUsage());
 		} catch (QfsmException e) {
@@ -26,7 +27,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c", "unused", "-h" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertTrue(params.isUsage());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -38,7 +40,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c", "unused", "--help" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertTrue(params.isUsage());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -50,7 +53,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c", "unused", "-f" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertTrue(params.isForce());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -62,7 +66,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c", "unused", "--force" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertTrue(params.isForce());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -74,7 +79,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c", "test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -86,7 +92,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "--config-file", "test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -98,7 +105,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c=test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -110,7 +118,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "--config-file=test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -122,7 +131,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "-c" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing second argument of -c | --config-file",
@@ -135,7 +144,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused", "--config-file" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing second argument of -c | --config-file",
@@ -148,7 +157,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-m", "unused" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing mandatory parameter: -c | --config-file",
@@ -161,7 +170,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-c", "unused", "-m", "test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getQfsmFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -173,7 +183,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-c", "unused", "--qfsm-file", "test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getQfsmFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -185,7 +196,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-c", "unused", "-m=test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getQfsmFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -197,7 +209,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-c", "unused", "--qfsm-file=test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getQfsmFile());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -209,7 +222,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-c", "unused", "-m" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing second argument of -m | --qfsm-file",
@@ -222,7 +235,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-c", "unused", "--qfsm-file" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing second argument of -m | --qfsm-file",
@@ -235,7 +248,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-c", "unused" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing mandatory parameter: -m | --qfsm-file",
@@ -248,7 +261,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-t", "test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigTemplate());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -260,7 +274,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "--template", "test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigTemplate());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -272,7 +287,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-t=test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigTemplate());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -284,7 +300,8 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "--template=test" };
 
 		try {
-			CodeGeneratorParameters params = new CodeGeneratorParameters(args);
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"");
 			assertEquals("test", params.getConfigTemplate());
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
@@ -296,7 +313,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "-t" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing second argument of -t | --template",
@@ -309,7 +326,7 @@ public class CodeGeneratorParametersTest {
 		String[] args = { "--template" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals("Missing second argument of -t | --template",
@@ -323,7 +340,7 @@ public class CodeGeneratorParametersTest {
 				"-u 2", "--unexpected 3" };
 
 		try {
-			new CodeGeneratorParameters(args);
+			new CodeGeneratorParameters(args, "");
 			fail("Should not be executed");
 		} catch (QfsmException e) {
 			assertEquals(

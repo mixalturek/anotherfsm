@@ -113,6 +113,8 @@ public class CodeGenerator {
 				.trim());
 		content = content.replace("{{CLASS_DESCRIPTION}}",
 				machine.getDescription());
+		content = content.replace("{{COMMAND_LINE}}",
+				parameters.getCommandLine());
 		content = content.replace("{{CLASS_AUTHOR}}", machine.getAuthor());
 		content = content.replace("{{CLASS_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", configuration
@@ -150,6 +152,8 @@ public class CodeGenerator {
 				.getProcessorImports().trim());
 		content = content.replace("{{CLASS_DESCRIPTION}}",
 				machine.getDescription());
+		content = content.replace("{{COMMAND_LINE}}",
+				parameters.getCommandLine());
 		content = content.replace("{{CLASS_AUTHOR}}", machine.getAuthor());
 		content = content.replace("{{CLASS_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", baseClassName);
@@ -461,6 +465,22 @@ public class CodeGenerator {
 		}
 	}
 
+	private static String formatPrompt(String[] args) {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("java -classpath anotherfsm-");
+		builder.append(AnotherFsm.VERSION);
+		builder.append(".jar ");
+		builder.append(CodeGenerator.class.getName());
+
+		for (String arg : args) {
+			builder.append(" ");
+			builder.append(arg);
+		}
+
+		return builder.toString();
+	}
+
 	/**
 	 * The program enter.
 	 * 
@@ -470,10 +490,11 @@ public class CodeGenerator {
 	 * @see CodeGeneratorParameters
 	 */
 	public static void main(String[] args) {
+
 		CodeGeneratorParameters parameters = null;
 
 		try {
-			parameters = new CodeGeneratorParameters(args);
+			parameters = new CodeGeneratorParameters(args, formatPrompt(args));
 		} catch (QfsmException e) {
 			CodeGeneratorParameters.showUsage();
 			logger.error("Parameters parsing failed", e);

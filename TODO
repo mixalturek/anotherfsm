@@ -2,9 +2,6 @@
 
 - Code
 	- Qfsm
-		- Java code generator.
-		- Put command line arguments to the generated files.
-		- java -classpath build/anotherfsm-0.2.0-dev.jar net.sourceforge.anotherfsm.qfsm.CodeGenerator
 		- Flag transition comments is Java code.
 	- Logger
 		- SimpleLogger to only display the message.

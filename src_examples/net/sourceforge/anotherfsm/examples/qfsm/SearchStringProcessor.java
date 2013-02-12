@@ -23,6 +23,12 @@ import net.sourceforge.anotherfsm.*;
 /**
  * State machine to search hard coded "AnotherFSM" string.
  * 
+ * <p>
+ * This file was generated using AnotherFSM CodeGenerator:
+ * <br />
+ * {@code java -classpath anotherfsm-0.2.0-dev.jar net.sourceforge.anotherfsm.qfsm.CodeGenerator --force --config-file SearchString.xml --qfsm-file SearchString.fsm}
+ * </p>
+ * 
  * @author Michal Turek
  */
 class SearchStringProcessor extends SearchStringFsm {
