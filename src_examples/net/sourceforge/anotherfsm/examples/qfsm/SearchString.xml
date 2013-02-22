@@ -5,6 +5,7 @@
 	<OutputDirectory>.</OutputDirectory>
 	<BaseClass>DeterministicStateMachine</BaseClass>
 	<JavaPackage>net.sourceforge.anotherfsm.examples.qfsm</JavaPackage>
+	<TransitionDescriptionContainsCode>yes</TransitionDescriptionContainsCode>
 
 	<StateMachineClass>		
 		<Imports>

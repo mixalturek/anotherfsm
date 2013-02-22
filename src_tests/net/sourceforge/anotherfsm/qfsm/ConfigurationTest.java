@@ -1,6 +1,7 @@
 package net.sourceforge.anotherfsm.qfsm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -20,6 +21,7 @@ public class ConfigurationTest {
 			assertEquals("output directory", configuration.getOutputDirectory());
 			assertEquals("base class", configuration.getBaseClass());
 			assertEquals("java package", configuration.getJavaPackage());
+			assertFalse(configuration.isTransitionDescriptionContainsCode());
 			assertEquals("state machine imports", configuration.getFsmImports());
 			assertTrue(configuration.isTypePreprocessor());
 			assertTrue(configuration.isEqualsPreprocessor());

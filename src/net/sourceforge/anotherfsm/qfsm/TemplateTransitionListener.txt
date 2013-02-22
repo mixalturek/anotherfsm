@@ -1,7 +1,7 @@
 		{{JAVA_NAME}}.addListener(new TransitionListener() {
 			@Override
 			public void onTransition(State source, Event event,	State destination) {
-				// TODO Auto-generated method stub
+				{{CODE}}
 			}
 		});
 

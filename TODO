@@ -1,10 +1,6 @@
 - General
 
 - Code
-	- Qfsm
-		- Flag transition comments is Java code.
-	- Logger
-		- SimpleLogger to only display the message.
 	- Ant findbugs target.
 	- Get version from jar package (AnotherFsm.VERSION).
 

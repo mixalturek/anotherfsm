@@ -5,6 +5,7 @@
 	<OutputDirectory>output directory</OutputDirectory>
 	<BaseClass>base class</BaseClass>
 	<JavaPackage>java package</JavaPackage>
+	<TransitionDescriptionContainsCode>no</TransitionDescriptionContainsCode>
 
 	<StateMachineClass>		
 		<Imports>state machine imports</Imports>

@@ -11,6 +11,9 @@
 	
 	<!-- Java package of the generated files. -->
 	<JavaPackage>net.sourceforge.anotherfsm.examples.codegenerator</JavaPackage>
+	
+	<!-- Description of transitions contains Java code. -->
+	<TransitionDescriptionContainsCode>no</TransitionDescriptionContainsCode>
 
 	<!-- Configuration of the state machine class. -->
 	<StateMachineClass>

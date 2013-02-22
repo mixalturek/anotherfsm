@@ -53,7 +53,7 @@
       <inputs default="0" any="0" invert="0">CharacterEvent.instance('o')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="543.7805939255936" c2y="446.2769812267784" c1y="529.6981740134752" description="" straight="1" type="2" ypos="613.1193668001719" endx="282.3399071635814" xpos="674.5009373065998" endy="362.8557884400818" c2x="413.0602505445875">
+    <transition c1x="543.7805939255936" c2y="446.2769812267785" c1y="529.6981740134752" description="" straight="1" type="2" ypos="613.1193668001719" endx="282.3399071635814" xpos="674.5009373065998" endy="362.8557884400818" c2x="413.0602505445875">
       <from>3</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
@@ -107,7 +107,7 @@
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="848.2120427112194" c2y="70.77100773633178" c1y="79.54689471179276" description="" straight="1" type="2" ypos="88.32278168725375" endx="718.7310929483743" xpos="912.9525175926419" endy="61.99512076087079" c2x="783.4715678297969">
+    <transition c1x="848.2120427112194" c2y="70.77100773633178" c1y="79.54689471179276" description="&#x9;&#x9;&#x9;&#x9;logger.info(&quot;Great, nearly done, please continue.&quot;);" straight="1" type="2" ypos="88.32278168725375" endx="718.7310929483743" xpos="912.9525175926419" endy="61.99512076087079" c2x="783.4715678297969">
       <from>7</from>
       <to>8</to>
       <inputs default="0" any="0" invert="0">CharacterEvent.instance('F')</inputs>
@@ -125,7 +125,7 @@
       <inputs default="0" any="0" invert="0">CharacterEvent.instance('S')</inputs>
       <outputs></outputs>
     </transition>
-    <transition c1x="360.4463894099817" c2y="231.2254929786291" c1y="157.3794973938706" description="" straight="1" type="2" ypos="83.53350180911198" endx="273.7093182321464" xpos="403.8149249988994" endy="305.0714885633877" c2x="317.077853821064">
+    <transition c1x="360.4463894099817" c2y="231.2254929786291" c1y="157.3794973938705" description="" straight="1" type="2" ypos="83.53350180911198" endx="273.7093182321464" xpos="403.8149249988994" endy="305.0714885633877" c2x="317.0778538210641">
       <from>9</from>
       <to>0</to>
       <inputs default="0" any="0" invert="0">OtherEvent.instance</inputs>

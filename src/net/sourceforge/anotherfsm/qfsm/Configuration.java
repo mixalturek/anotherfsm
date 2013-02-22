@@ -50,6 +50,9 @@ class Configuration {
 	/** The imports for state machine class. */
 	private String fsmImports;
 
+	/** Description of transitions contains Java code. */
+	private boolean transitionDescriptionContainsCode;
+
 	/** Generate type preprocessor. */
 	private boolean typePreprocessor;
 
@@ -133,6 +136,10 @@ class Configuration {
 		return fileHeader;
 	}
 
+	public boolean isTransitionDescriptionContainsCode() {
+		return transitionDescriptionContainsCode;
+	}
+
 	/**
 	 * Parse a configuration file.
 	 * 
@@ -199,6 +206,10 @@ class Configuration {
 
 		configuration.javaPackage = XmlUtils.getText(XmlUtils.getOneElement(
 				configurationEl, "JavaPackage"));
+
+		configuration.transitionDescriptionContainsCode = XmlUtils
+				.toBoolean(XmlUtils.getText(XmlUtils.getOneElement(
+						configurationEl, "TransitionDescriptionContainsCode")));
 
 		configuration.fsmImports = XmlUtils.getText(XmlUtils.getOneElement(
 				XmlUtils.getOneElement(configurationEl, "StateMachineClass"),

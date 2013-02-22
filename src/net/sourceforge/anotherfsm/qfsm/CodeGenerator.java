@@ -133,7 +133,7 @@ public class CodeGenerator {
 				genTransitionInitializations());
 
 		writeFile(new File(configuration.getOutputDirectory() + File.separator
-				+ className + ".java"), content, parameters.isForce());
+				+ className + ".java.generated"), content, parameters.isForce());
 	}
 
 	private void generateProcessor() throws QfsmException {
@@ -186,7 +186,7 @@ public class CodeGenerator {
 				.isTransitionListener() ? genTransitionListeners() : "");
 
 		writeFile(new File(configuration.getOutputDirectory() + File.separator
-				+ className + ".java"), content, parameters.isForce());
+				+ className + ".java.generated"), content, parameters.isForce());
 	}
 
 	/**
@@ -294,8 +294,19 @@ public class CodeGenerator {
 		for (QfsmTransition transition : machine.getTransitions()) {
 			String content = template;
 
-			content = content.replace("{{DESCRIPTION}}",
-					transition.getDescription());
+			content = content.replace(
+					"{{DESCRIPTION}}",
+					"Transition from {@code "
+							+ transition.getSourceState().getName()
+							+ "} to {@code "
+							+ transition.getDestinationState().getName()
+							+ "} on {@code "
+							+ transition.getInputEvent()
+							+ "} event."
+							+ (configuration
+									.isTransitionDescriptionContainsCode() ? ""
+									: "\n\n" + transition.getDescription()));
+
 			content = content.replace("{{JAVA_NAME}}", identifier(transition));
 
 			builder.append(content);
@@ -349,6 +360,15 @@ public class CodeGenerator {
 
 			content = content.replace("{{JAVA_NAME}}", identifier(transition));
 
+			if (configuration.isTransitionDescriptionContainsCode()) {
+				content = content.replace("{{CODE}}",
+						"// The following code is generated, don't edit it directly\n"
+								+ transition.getDescription());
+			} else {
+				content = content.replace("{{CODE}}",
+						"// TODO Auto-generated method stub");
+			}
+
 			builder.append(content);
 		}
 
@@ -363,8 +383,13 @@ public class CodeGenerator {
 	 *             if something fails
 	 */
 	private String genGlobalTransitionListener() throws QfsmException {
-		String template = loadTemplate("TemplateTransitionListener.txt");
-		return template.replace("{{JAVA_NAME}}.", "");
+		String content = loadTemplate("TemplateTransitionListener.txt");
+
+		content = content.replace("{{JAVA_NAME}}.", "");
+		content = content.replace("{{CODE}}",
+				"// TODO Auto-generated method stub");
+
+		return content;
 	}
 
 	/**
