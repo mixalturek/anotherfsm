@@ -2,10 +2,10 @@
 
 - Code
 	- Ant findbugs target.
-	- Get version from jar package (AnotherFsm.VERSION).
 
 - Web
 	- Examples
+		- Qfsm
 		- State machine with timeouts.
 		- Event preprocessors.
 		- User events.
@@ -16,7 +16,6 @@
 	- Coverage.
 
 - Future
-	- QFsm support.
 	- ThreadQueueProcessor.
 	- NonDeterministicStateMachine.
 	- FsmEditor or QFsm patch.

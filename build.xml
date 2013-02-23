@@ -167,12 +167,10 @@ all                  - Process full build.
 		
 		<jar jarfile="${builddir}/${jarname}" basedir="${builddir}/classes">
 			<manifest>
-				<section name="net/sourceforge/anotherfsm">
-					<attribute name="Implementation-Title" value="${projectName}" />
-					<attribute name="Implementation-Version" value="${version}"/>
-					<attribute name="Implementation-Vendor" value="${author}" />
-					<attribute name="Built-Date" value="${TODAY}" />
-				</section>
+				<attribute name="Implementation-Title" value="${projectName}" />
+				<attribute name="Implementation-Version" value="${version}"/>
+				<attribute name="Implementation-Vendor" value="${author}" />
+				<attribute name="Built-Date" value="${TODAY}" />
 			</manifest>
 			<metainf dir="." includes="NOTICE,LICENSE"/>
 		</jar>
