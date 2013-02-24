@@ -242,8 +242,15 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 
 		@Override
 		public void run() {
-			proccessTimeoutTransition(timeoutTransition, stateEnterId,
-					stateEnterIdNonLoop);
+			try {
+				proccessTimeoutTransition(timeoutTransition, stateEnterId,
+						stateEnterIdNonLoop);
+			} catch (Throwable e) {
+				Helpers.logThreadUnexpectedlyFinished(logger,
+						"Unexpected exception while processing timeout transition: "
+								+ timeoutTransition, e);
+				throw e;
+			}
 		}
 	}
 }

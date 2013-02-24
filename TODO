@@ -2,6 +2,10 @@
 
 - Code
 	- Ant findbugs target.
+	- logExceptionInClientCallback() change event to message.
+	- ThreadProcessor unit test.
+	- General unit test for ProcessorAdapter calls recursively start() and close() of all preprocessors.
+	- Callbacks to notify clients about fatal errors.
 
 - Web
 	- Examples
@@ -16,7 +20,6 @@
 	- Coverage.
 
 - Future
-	- ThreadQueueProcessor.
 	- NonDeterministicStateMachine.
 	- FsmEditor or QFsm patch.
 	- Analyzer and visualization of FSM transitions logs.

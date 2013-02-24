@@ -69,6 +69,8 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 
 	@Override
 	public void start() throws FsmException {
+		super.start();
+
 		if (currentState == null)
 			throw new FsmException("Start state not defined");
 
@@ -86,7 +88,7 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 
 	@Override
 	public void close() {
-		// Do nothing in this class
+		super.close();
 	}
 
 	@Override

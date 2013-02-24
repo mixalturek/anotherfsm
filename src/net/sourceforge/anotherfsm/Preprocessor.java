@@ -19,7 +19,14 @@
 package net.sourceforge.anotherfsm;
 
 /**
- * Preprocessor of events.
+ * Preprocessor of the events.
+ * 
+ * Note, if a preprocessor is registered to a processor, the processor is
+ * responsible for its starting and stopping.
+ * 
+ * @see #start()
+ * @see #close()
+ * @see Processor#addPreprocessor(Preprocessor)
  * 
  * @author Michal Turek
  */

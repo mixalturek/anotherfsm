@@ -64,6 +64,26 @@ abstract class ProcessorAdapter implements Processor {
 	}
 
 	/**
+	 * Prepare this object and recursively all registered preprocessors for
+	 * processing of the events.
+	 */
+	@Override
+	public void start() throws FsmException {
+		for (Preprocessor preprocessor : preprocessors)
+			preprocessor.start();
+	}
+
+	/**
+	 * Finish processing of the events and free all allocated resources in this
+	 * object and recursively in all registered preprocessors.
+	 */
+	@Override
+	public void close() {
+		for (Preprocessor preprocessor : preprocessors)
+			preprocessor.close();
+	}
+
+	/**
 	 * Preprocess event using all registered preprocessors (recursive). Helper
 	 * method.
 	 * 

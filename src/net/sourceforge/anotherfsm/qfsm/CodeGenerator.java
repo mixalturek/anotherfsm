@@ -19,7 +19,6 @@
 package net.sourceforge.anotherfsm.qfsm;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -412,10 +411,8 @@ public class CodeGenerator {
 			return;
 		}
 
-		try {
-			PrintWriter out = new PrintWriter(new FileWriter(file));
+		try (PrintWriter out = new PrintWriter(file, "UTF-8")) {
 			out.println(content);
-			out.close();
 		} catch (IOException e) {
 			throw new QfsmException("Writing file failed", e);
 		}
@@ -480,11 +477,10 @@ public class CodeGenerator {
 	 *             if something fails
 	 */
 	private static String loadTemplate(String name) throws QfsmException {
-		InputStream stream = CodeGenerator.class.getResourceAsStream(name);
-		try {
+		try (InputStream stream = CodeGenerator.class.getResourceAsStream(name)) {
 			byte[] data = new byte[stream.available()];
 			stream.read(data);
-			return new String(data);
+			return new String(data, "UTF-8");
 		} catch (IOException e) {
 			throw new QfsmException("Template loading failed: " + name, e);
 		}

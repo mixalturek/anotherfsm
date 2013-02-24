@@ -80,4 +80,14 @@ public class Helpers {
 						+ exception.getMessage() + ", exception " + exception,
 				exception);
 	}
+
+	public static void logThreadUnexpectedlyFinished(FsmLogger logger,
+			String message, Throwable exception) {
+		logger.fatal(
+				"Thread unexpectedly finished: " + message + ", thread "
+						+ Thread.currentThread().getName() + ", exception "
+						+ exception.getClass() + ", exception message "
+						+ exception.getMessage() + ", exception " + exception,
+				exception);
+	}
 }

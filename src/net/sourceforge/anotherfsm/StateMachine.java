@@ -76,27 +76,17 @@ public interface StateMachine extends Processor, AutoCloseable {
 	public void addListener(TransitionListener listener);
 
 	/**
-	 * Building of the state machine is finished, prepare it to events
-	 * processing.
-	 * 
 	 * Listeners of start state will be notified with non-loop transition from
-	 * temporary generated initial state and StartEvent object.
+	 * temporary generated initial state and {@link StartEvent} object.
 	 * 
 	 * @throws FsmException
 	 *             if something fails
 	 * @see StartEvent
-	 * @see #close()
 	 * @see #INITIAL_STATE_NAME
 	 */
+	@Override
 	public void start() throws FsmException;
 
-	/**
-	 * Finish processing of the events, free all allocated resources. This
-	 * method can be called multiple times. No method of the object should be
-	 * called from now.
-	 * 
-	 * @see #start()
-	 */
 	@Override
 	public void close();
 
