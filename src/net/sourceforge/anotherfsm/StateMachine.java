@@ -60,6 +60,22 @@ public interface StateMachine extends Processor, AutoCloseable {
 	public void addTransition(Transition transition) throws FsmException;
 
 	/**
+	 * Add a new preprocessor. The preprocessors will be called in the
+	 * registration order during preprocessing of the events.
+	 * 
+	 * The state machine is responsible for starting and stopping of the
+	 * registered preprocessors.
+	 * 
+	 * @param preprocessor
+	 *            the preprocessor
+	 * 
+	 * @see #process(Event)
+	 * @see #start()
+	 * @see #close()
+	 */
+	public void addPreprocessor(Preprocessor preprocessor);
+
+	/**
 	 * Add a new listener.
 	 * 
 	 * @param listener

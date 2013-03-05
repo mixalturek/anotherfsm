@@ -121,12 +121,7 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 			while (!stopRequested.get()) {
 				try {
 					Event event = queue.take();
-
-					Event preprocessedEvent = preprocessEvent(event);
-					if (preprocessedEvent == null)
-						continue;
-
-					processor.process(preprocessedEvent);
+					processor.process(event);
 				} catch (InterruptedException e) {
 					logger.warn("Waiting for the event interrupted: " + e);
 				} catch (FsmException e) {

@@ -18,9 +18,6 @@
 
 package net.sourceforge.anotherfsm;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import net.sourceforge.anotherfsm.logger.FsmLogger;
 
 /**
@@ -34,9 +31,6 @@ abstract class ProcessorAdapter implements Processor {
 
 	/** The name of the preprocessor. */
 	private final String name;
-
-	/** The preprocessors of events. */
-	private final List<Preprocessor> preprocessors = new LinkedList<Preprocessor>();
 
 	/**
 	 * Create the object.
@@ -57,55 +51,12 @@ abstract class ProcessorAdapter implements Processor {
 	}
 
 	@Override
-	public void addPreprocessor(Preprocessor preprocessor) {
-		Helpers.ensureNotNull(preprocessor, "preprocessor");
-
-		preprocessors.add(preprocessor);
-	}
-
-	/**
-	 * Prepare this object and recursively all registered preprocessors for
-	 * processing of the events.
-	 */
-	@Override
 	public void start() throws FsmException {
-		for (Preprocessor preprocessor : preprocessors)
-			preprocessor.start();
+		// Do nothing by default
 	}
 
-	/**
-	 * Finish processing of the events and free all allocated resources in this
-	 * object and recursively in all registered preprocessors.
-	 */
 	@Override
 	public void close() {
-		for (Preprocessor preprocessor : preprocessors)
-			preprocessor.close();
-	}
-
-	/**
-	 * Preprocess event using all registered preprocessors (recursive). Helper
-	 * method.
-	 * 
-	 * @param event
-	 *            the event
-	 * @return the original event, a newly generated event or null to ignore the
-	 *         event
-	 * @throws FsmException
-	 *             if something fails
-	 */
-	protected Event preprocessEvent(Event event) throws FsmException {
-		Helpers.ensureNotNull(event, "event");
-
-		Event preprocessedEvent = event;
-
-		for (Preprocessor preprocessor : preprocessors) {
-			preprocessedEvent = preprocessor.process(preprocessedEvent);
-
-			if (preprocessedEvent == null)
-				return null;
-		}
-
-		return preprocessedEvent;
+		// Do nothing by default
 	}
 }

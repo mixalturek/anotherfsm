@@ -46,6 +46,9 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 	/** The listeners. */
 	private final List<TransitionListener> transitionListeners = new LinkedList<TransitionListener>();
 
+	/** The preprocessors of events. */
+	private final List<Preprocessor> preprocessors = new LinkedList<Preprocessor>();
+
 	/**
 	 * Create the object.
 	 * 
@@ -71,6 +74,9 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 	public void start() throws FsmException {
 		super.start();
 
+		for (Preprocessor preprocessor : preprocessors)
+			preprocessor.start();
+
 		if (currentState == null)
 			throw new FsmException("Start state not defined");
 
@@ -88,6 +94,9 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 
 	@Override
 	public void close() {
+		for (Preprocessor preprocessor : preprocessors)
+			preprocessor.close();
+
 		super.close();
 	}
 
@@ -122,6 +131,13 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 		addStateInternal(transition.getSource());
 		stateTransitions.get(transition.getSource()).addTransition(transition);
 		addStateInternal(transition.getDestination());
+	}
+
+	@Override
+	public void addPreprocessor(Preprocessor preprocessor) {
+		Helpers.ensureNotNull(preprocessor, "preprocessor");
+
+		preprocessors.add(preprocessor);
 	}
 
 	@Override
@@ -272,6 +288,32 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 		}
 
 		return processInternal(transition, preprocessedEvent, event);
+	}
+
+	/**
+	 * Preprocess event using all registered preprocessors (recursive). Helper
+	 * method.
+	 * 
+	 * @param event
+	 *            the event
+	 * @return the original event, a newly generated event or null to ignore the
+	 *         event
+	 * @throws FsmException
+	 *             if something fails
+	 */
+	private Event preprocessEvent(Event event) throws FsmException {
+		Helpers.ensureNotNull(event, "event");
+
+		Event preprocessedEvent = event;
+
+		for (Preprocessor preprocessor : preprocessors) {
+			preprocessedEvent = preprocessor.process(preprocessedEvent);
+
+			if (preprocessedEvent == null)
+				return null;
+		}
+
+		return preprocessedEvent;
 	}
 
 	/**

@@ -5,7 +5,6 @@
 	- logExceptionInClientCallback() change event to message.
 	- ThreadProcessor unit test.
 	- General unit test for ProcessorAdapter calls recursively start() and close() of all preprocessors.
-	- Callbacks to notify clients about fatal errors.
 
 - Web
 	- Examples

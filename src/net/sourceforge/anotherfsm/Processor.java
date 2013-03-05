@@ -32,22 +32,6 @@ public interface Processor {
 	public String getName();
 
 	/**
-	 * Add a new preprocessor. The preprocessors will be called in the
-	 * registration order during preprocessing of the events.
-	 * 
-	 * The processor is responsible for starting and stopping of the registered
-	 * preprocessors.
-	 * 
-	 * @param preprocessor
-	 *            the preprocessor
-	 * 
-	 * @see #process(Event)
-	 * @see #start()
-	 * @see #close()
-	 */
-	public void addPreprocessor(Preprocessor preprocessor);
-
-	/**
 	 * Building of the processor is finished, prepare it to the events
 	 * processing. It is expected this method is called just once.
 	 * 

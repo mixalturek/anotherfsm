@@ -43,10 +43,6 @@ abstract class PreprocessorAdapter extends ProcessorAdapter implements
 	public Event process(Event event) throws FsmException {
 		Helpers.ensureNotNull(event, "event");
 
-		Event preprocessedEvent = preprocessEvent(event);
-		if (preprocessedEvent == null)
-			return null;
-
 		Processor processor = findProcessor(event);
 		if (processor == null)
 			return event;
