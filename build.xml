@@ -61,10 +61,12 @@ jar                  - Build jar packages.
 javadoc              - Process all javadoc targets.
     javadoc-api      - Generate JavaDoc documentation.
     javadoc-full     - Generate full JavaDoc documentation.
-web                  - Build offline version of project's website.
 dist                 - Copy files to the distribution directory.
 dist-zip             - Create an archive from the dist directory.
 all                  - Process full build.
+
+web                  - Build offline version of project's website.
+sloccount            - Count source lines of code.
 		</echo>
 	</target>
 	
@@ -297,6 +299,18 @@ all                  - Process full build.
 
 		<checksum file="${builddir}/${distname}.zip"/>
 		<checksum file="${builddir}/${jarname}"/>
+	</target>
+	
+	<!-- Count source lines of code. -->
+	<target name="sloccount">
+		<exec executable="sloccount" output="${builddir}/sloccount.sc">
+			<arg value="--duplicates"/>
+			<arg value="--wide"/>
+			<arg value="--details"/>
+			<arg value="src"/>
+			<arg value="src_examples"/>
+			<arg value="src_tests"/>
+		</exec>
 	</target>
 
     <!-- Process full build. -->
