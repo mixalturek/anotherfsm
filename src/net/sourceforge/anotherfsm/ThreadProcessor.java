@@ -43,8 +43,6 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 	/**
 	 * Create the object.
 	 * 
-	 * @param name
-	 *            the processor name
 	 * @param processor
 	 *            the internal processor that process the input events
 	 * @param daemon
@@ -53,9 +51,9 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 	 *            the queue for storing of the incoming events before their
 	 *            processing
 	 */
-	public ThreadProcessor(String name, Processor processor, boolean daemon,
+	public ThreadProcessor(Processor processor, boolean daemon,
 			BlockingQueue<Event> queue) {
-		super(name);
+		super(processor.getName());
 
 		Helpers.ensureNotNull(processor, "processor");
 		Helpers.ensureNotNull(queue, "queue");
@@ -63,7 +61,7 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 		this.processor = processor;
 		this.queue = queue;
 		thread = new Thread(this, getClass().getSimpleName()
-				+ Helpers.CLASS_INSTANCE_DELIMITER + name);
+				+ Helpers.CLASS_INSTANCE_DELIMITER + processor.getName());
 		thread.setDaemon(daemon);
 	}
 
@@ -71,13 +69,11 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 	 * Create the object. The thread will be a non-daemon thread and the queue
 	 * will be {@link LinkedBlockingQueue} with unlimited length.
 	 * 
-	 * @param name
-	 *            the processor name
 	 * @param processor
 	 *            the internal processor that process the input events
 	 */
-	public ThreadProcessor(String name, Processor processor) {
-		this(name, processor, false, new LinkedBlockingQueue<Event>());
+	public ThreadProcessor(Processor processor) {
+		this(processor, false, new LinkedBlockingQueue<Event>());
 	}
 
 	@Override

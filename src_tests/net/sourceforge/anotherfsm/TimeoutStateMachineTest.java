@@ -155,6 +155,8 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 	@Test
 	public final void testClose() {
+		int numThreads = UnitTestHelpers.getNumberOfLivingThreads();
+
 		StateMachine machine = new TimeoutStateMachine("fsm");
 		machine.close();
 
@@ -165,9 +167,20 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			fail("Should not be executed");
 		}
 
+		UnitTestHelpers.sleepThreadCommunicationDelay();
+
+		assertEquals(numThreads + 1, UnitTestHelpers.getNumberOfLivingThreads());
+
+		machine.close();
+		UnitTestHelpers.sleepThreadCommunicationDelay();
+
+		assertEquals(numThreads, UnitTestHelpers.getNumberOfLivingThreads());
+
 		machine.close();
 		machine.close();
 		machine.close();
+
+		assertEquals(numThreads, UnitTestHelpers.getNumberOfLivingThreads());
 	}
 
 	@Test

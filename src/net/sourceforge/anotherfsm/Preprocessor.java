@@ -26,7 +26,6 @@ package net.sourceforge.anotherfsm;
  * 
  * @see #start()
  * @see #close()
- * @see Processor#addPreprocessor(Preprocessor)
  * 
  * @author Michal Turek
  */

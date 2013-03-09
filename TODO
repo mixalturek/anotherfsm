@@ -3,8 +3,11 @@
 - Code
 	- Ant findbugs target.
 	- logExceptionInClientCallback() change event to message.
-	- ThreadProcessor unit test.
-	- General unit test for ProcessorAdapter calls recursively start() and close() of all preprocessors.
+	- Processor eventNotProcessed() callback.
+	- Group of processors.
+		- All of them processes the same event.
+		- The second one processes output of the first one.
+		
 
 - Web
 	- Examples
@@ -12,6 +15,7 @@
 		- State machine with timeouts.
 		- Event preprocessors.
 		- User events.
+		- ThreadProcessor
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
