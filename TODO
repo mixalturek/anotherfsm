@@ -1,13 +1,10 @@
 - General
 
 - Code
-	- Ant findbugs target.
-	- logExceptionInClientCallback() change event to message.
-	- Processor eventNotProcessed() callback.
 	- Group of processors.
 		- All of them processes the same event.
 		- The second one processes output of the first one.
-		
+	- Method to dump the state machine to a string can be useful for debugging.
 
 - Web
 	- Examples

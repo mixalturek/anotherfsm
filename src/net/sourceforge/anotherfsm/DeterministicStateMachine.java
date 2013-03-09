@@ -83,8 +83,7 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 		State source = new State(INITIAL_STATE_NAME);
 		Event event = new StartEvent();
 
-		String transStr = source + Transition.TR + event + Transition.TR
-				+ currentState;
+		String transStr = Transition.format(source, event, currentState);
 
 		logger.info("Transition started:  " + transStr);
 		notifyEnter(new State(INITIAL_STATE_NAME), new StartEvent(),
@@ -182,7 +181,10 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 				listener.onStateEnter(previous, event, current);
 			}
 		} catch (RuntimeException e) {
-			Helpers.logExceptionInClientCallback(logger, e, event);
+			Helpers.logExceptionInClientCallback(
+					logger,
+					"State enter callback failed: "
+							+ Transition.format(previous, event, current), e);
 			throw e;
 		}
 	}
@@ -214,7 +216,10 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 				listener.onStateExit(current, event, next);
 			}
 		} catch (RuntimeException e) {
-			Helpers.logExceptionInClientCallback(logger, e, event);
+			Helpers.logExceptionInClientCallback(
+					logger,
+					"State exit callback failed: "
+							+ Transition.format(current, event, next), e);
 			throw e;
 		}
 	}
@@ -243,7 +248,10 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 
 			}
 		} catch (RuntimeException e) {
-			Helpers.logExceptionInClientCallback(logger, e, event);
+			Helpers.logExceptionInClientCallback(
+					logger,
+					"Transition callback failed: "
+							+ Transition.format(source, event, destination), e);
 			throw e;
 		}
 	}
@@ -280,8 +288,9 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 					preprocessedEvent);
 
 			if (transition == null) {
-				String msg = "No such transition: " + currentState
-						+ Transition.TR + preprocessedEvent;
+				String msg = "No such transition: "
+						+ Transition.format(currentState, event,
+								preprocessedEvent);
 				logger.warn(msg);
 				throw new FsmException(msg);
 			}
@@ -326,15 +335,15 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 	 */
 	private void processCheck(Event event) throws FsmException {
 		if (event == null) {
-			String msg = "Event must not be null: " + currentState
-					+ Transition.TR + "null";
+			String msg = "Event must not be null: "
+					+ Transition.format(currentState, event);
 			logger.error(msg);
 			throw new NullPointerException(msg);
 		}
 
 		if (currentState == null) {
-			String msg = "Current/start state is null: " + currentState
-					+ Transition.TR + event;
+			String msg = "Current/start state is null: "
+					+ Transition.format(currentState, event);
 
 			logger.error(msg);
 			throw new FsmException(msg);
@@ -363,11 +372,11 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 		if (logger.isInfoEnabled()) {
 			// == is correct, equals may not consider an updated parameter
 			if (eventToProcess == matchedEvent) {
-				transStr = source + Transition.TR + eventToProcess
-						+ Transition.TR + destination;
+				transStr = Transition.format(source, eventToProcess,
+						destination);
 			} else {
-				transStr = source + Transition.TR + matchedEvent + "/"
-						+ eventToProcess + Transition.TR + destination;
+				transStr = Transition.format(source, matchedEvent,
+						eventToProcess, destination);
 			}
 
 			logger.info("Transition started:  " + transStr);

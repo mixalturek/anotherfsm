@@ -71,10 +71,10 @@ public class Helpers {
 	 * @see TimeoutStateMachine
 	 */
 	public static void logExceptionInClientCallback(FsmLogger logger,
-			RuntimeException exception, Event event) {
+			String message, RuntimeException exception) {
 		logger.fatal(
-				"Unexpected exception occurred probably in client callback code: event "
-						+ event + ", thread "
+				"Unexpected exception occurred probably in client callback code: "
+						+ message + ", thread "
 						+ Thread.currentThread().getName() + ", exception "
 						+ exception.getClass() + ", exception message "
 						+ exception.getMessage() + ", exception " + exception,

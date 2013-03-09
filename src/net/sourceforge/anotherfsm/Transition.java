@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class Transition {
 	/** The delimiter for string representation. */
-	static final String TR = " -> ";
+	private static final String TR = " -> ";
 
 	/** The source state. */
 	private final State source;
@@ -185,6 +185,86 @@ public class Transition {
 	 */
 	@Override
 	public String toString() {
+		return format(source, event, destination);
+	}
+
+	/**
+	 * Helper method to format transition parameters to the string
+	 * representation.
+	 * 
+	 * @param source
+	 *            the source state
+	 * @param event
+	 *            the input event
+	 * @param destination
+	 *            the destination state
+	 * @return the string representation
+	 */
+	static String format(State source, Event event, State destination) {
 		return source + TR + event + TR + destination;
+	}
+
+	/**
+	 * Helper method to format transition parameters to the string
+	 * representation.
+	 * 
+	 * @param source
+	 *            the source state
+	 * @param matchedEvent
+	 *            the input event that matched
+	 * @param eventToProcess
+	 *            the event that will be processed
+	 * @param destination
+	 *            the destination state
+	 * @return the string representation
+	 */
+	static String format(State source, Event matchedEvent,
+			Event eventToProcess, State destination) {
+		return source + TR + format(matchedEvent, eventToProcess) + TR
+				+ destination;
+	}
+
+	/**
+	 * Helper method to format transition parameters to the string
+	 * representation.
+	 * 
+	 * @param source
+	 *            the source state
+	 * @param event
+	 *            the input event
+	 * @return the string representation
+	 */
+	static String format(State source, Event event) {
+		return source + TR + event;
+	}
+
+	/**
+	 * Helper method to format transition parameters to the string
+	 * representation.
+	 * 
+	 * @param source
+	 *            the source state
+	 * @param matchedEvent
+	 *            the input event that matched
+	 * @param eventToProcess
+	 *            the event that will be processed
+	 * @return the string representation
+	 */
+	static String format(State source, Event matchedEvent, Event eventToProcess) {
+		return source + TR + format(matchedEvent, eventToProcess);
+	}
+
+	/**
+	 * Helper method to format transition parameters to the string
+	 * representation.
+	 * 
+	 * @param matchedEvent
+	 *            the input event that matched
+	 * @param eventToProcess
+	 *            the event that will be processed
+	 * @return the string representation
+	 */
+	static String format(Event matchedEvent, Event eventToProcess) {
+		return matchedEvent + TR + eventToProcess;
 	}
 }

@@ -52,13 +52,14 @@ abstract class PreprocessorAdapter extends ProcessorAdapter implements
 		try {
 			resultEvent = processor.process(event);
 		} catch (RuntimeException e) {
-			Helpers.logExceptionInClientCallback(logger, e, event);
+			Helpers.logExceptionInClientCallback(logger,
+					"Preprocess callback failed: " + event, e);
 			throw e;
 		}
 
 		if (!event.equals(resultEvent) && logger.isInfoEnabled()) {
-			logger.info("Event preprocessed: " + event + Transition.TR
-					+ resultEvent);
+			logger.info("Event preprocessed: "
+					+ Transition.format(event, resultEvent));
 		}
 
 		return resultEvent;
