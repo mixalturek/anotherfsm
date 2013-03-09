@@ -27,7 +27,7 @@ import static org.junit.Assert.fail;
  */
 public class UnitTestHelpers {
 	/** Expected delay for communication with a thread, in milliseconds. */
-	private static final long THREAD_COMMUNICATION_DELAY = 30;
+	private static final long THREAD_COMMUNICATION_DELAY = 40;
 
 	/**
 	 * Get the number of currently living threads in this process.
