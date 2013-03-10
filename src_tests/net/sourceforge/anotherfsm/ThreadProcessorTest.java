@@ -1,6 +1,8 @@
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -18,11 +20,14 @@ public class ThreadProcessorTest {
 
 	@Test
 	public void testStartClose() {
-		int numThreads = UnitTestHelpers.getNumberOfLivingThreads();
-
-		StateMachine machine = new TimeoutStateMachine("test", false);
-		Processor processor = new ThreadProcessor(machine, false,
+		// The object/thread's name must be unique
+		TimeoutStateMachine machine = new TimeoutStateMachine("testStartClose",
+				false);
+		ThreadProcessor processor = new ThreadProcessor(machine, false,
 				new LinkedBlockingQueue<Event>());
+
+		assertFalse(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
+		assertFalse(UnitTestHelpers.isThreadRunning(processor.getThreadName()));
 
 		try {
 			machine.setStartState(new State("start"));
@@ -33,17 +38,21 @@ public class ThreadProcessorTest {
 
 		UnitTestHelpers.sleepThreadCommunicationDelay();
 
-		// 1 thread for ThreadProcessor and 1 thread for TimeoutStateMachine
-		assertEquals(numThreads + 2, UnitTestHelpers.getNumberOfLivingThreads());
+		assertTrue(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
+		assertTrue(UnitTestHelpers.isThreadRunning(processor.getThreadName()));
 
 		processor.close();
 		UnitTestHelpers.sleepThreadCommunicationDelay();
 
-		assertEquals(numThreads, UnitTestHelpers.getNumberOfLivingThreads());
+		assertFalse(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
+		assertFalse(UnitTestHelpers.isThreadRunning(processor.getThreadName()));
 
 		processor.close();
 		processor.close();
 		processor.close();
+
+		assertFalse(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
+		assertFalse(UnitTestHelpers.isThreadRunning(processor.getThreadName()));
 	}
 
 	@Test

@@ -60,8 +60,7 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 
 		this.processor = processor;
 		this.queue = queue;
-		thread = new Thread(this, getClass().getSimpleName()
-				+ Helpers.CLASS_INSTANCE_DELIMITER + processor.getName());
+		thread = new Thread(this, getThreadName());
 		thread.setDaemon(daemon);
 	}
 
@@ -74,6 +73,16 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 	 */
 	public ThreadProcessor(Processor processor) {
 		this(processor, false, new LinkedBlockingQueue<Event>());
+	}
+
+	/**
+	 * Helper method to get the name of the internally executed thread.
+	 * 
+	 * @return the thread name
+	 */
+	String getThreadName() {
+		return getClass().getSimpleName() + Helpers.CLASS_INSTANCE_DELIMITER
+				+ processor.getName();
 	}
 
 	@Override

@@ -49,4 +49,21 @@ public class UnitTestHelpers {
 			fail("Should not be executed: " + e);
 		}
 	}
+
+	/**
+	 * Check that a tread is running.
+	 * 
+	 * @param name
+	 *            the thread name
+	 * @return true if thread with the specified name is running, otherwise
+	 *         false
+	 */
+	public static boolean isThreadRunning(String name) {
+		for (Thread thread : Thread.getAllStackTraces().keySet()) {
+			if (name.equals(thread.getName()))
+				return true;
+		}
+
+		return false;
+	}
 }

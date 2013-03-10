@@ -87,6 +87,16 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 		this.daemon = daemon;
 	}
 
+	/**
+	 * Helper method to get the name of the internally executed thread.
+	 * 
+	 * @return the thread name
+	 */
+	String getThreadName() {
+		return getClass().getSimpleName() + Helpers.CLASS_INSTANCE_DELIMITER
+				+ getName();
+	}
+
 	@Override
 	public synchronized void start() throws FsmException {
 		// The timer must be created first, super.start() generates start event
@@ -95,8 +105,7 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 					"Timer already running, state machine probably started twice");
 		}
 
-		timer = new Timer(getClass().getSimpleName()
-				+ Helpers.CLASS_INSTANCE_DELIMITER + getName(), daemon);
+		timer = new Timer(getThreadName(), daemon);
 
 		try {
 			super.start();

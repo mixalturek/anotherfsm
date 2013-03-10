@@ -24,6 +24,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -155,10 +156,11 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 	@Test
 	public final void testClose() {
-		int numThreads = UnitTestHelpers.getNumberOfLivingThreads();
-
-		StateMachine machine = new TimeoutStateMachine("fsm");
+		// The object/thread's name must be unique
+		TimeoutStateMachine machine = new TimeoutStateMachine("testClose");
 		machine.close();
+
+		assertFalse(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
 
 		try {
 			machine.setStartState(new State("state"));
@@ -169,18 +171,18 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 		UnitTestHelpers.sleepThreadCommunicationDelay();
 
-		assertEquals(numThreads + 1, UnitTestHelpers.getNumberOfLivingThreads());
+		assertTrue(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
 
 		machine.close();
 		UnitTestHelpers.sleepThreadCommunicationDelay();
 
-		assertEquals(numThreads, UnitTestHelpers.getNumberOfLivingThreads());
+		assertFalse(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
 
 		machine.close();
 		machine.close();
 		machine.close();
 
-		assertEquals(numThreads, UnitTestHelpers.getNumberOfLivingThreads());
+		assertFalse(UnitTestHelpers.isThreadRunning(machine.getThreadName()));
 	}
 
 	@Test
