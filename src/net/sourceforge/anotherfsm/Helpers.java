@@ -63,10 +63,10 @@ public class Helpers {
 	 * 
 	 * @param logger
 	 *            the logger
+	 * @param message
+	 *            the message to log
 	 * @param exception
 	 *            the exception that occurred
-	 * @param event
-	 *            the event that was processed
 	 * 
 	 * @see TimeoutStateMachine
 	 */

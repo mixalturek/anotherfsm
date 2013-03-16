@@ -310,6 +310,8 @@ sloccount            - Count source lines of code.
 			<arg value="src"/>
 			<arg value="src_examples"/>
 			<arg value="src_tests"/>
+			<arg value="utils"/>
+			<arg value="web"/>
 		</exec>
 	</target>
 
