@@ -8,7 +8,6 @@
 
 - Web
 	- Examples
-		- Qfsm
 		- State machine with timeouts.
 		- Event preprocessors.
 		- User events.

@@ -8,12 +8,12 @@ package {{PACKAGE}};
  * {{CLASS_DESCRIPTION}}
  * 
  * <p>
- * This file was generated using AnotherFSM CodeGenerator:
- * <br />
+ * This file was generated using AnotherFSM CodeGenerator:<br />
  * {@code {{COMMAND_LINE}}}
  * </p>
  * 
  * @author {{CLASS_AUTHOR}}
+ * @version {{CLASS_VERSION}}
  */
 class {{CLASS_NAME}} extends {{BASE_CLASS}} {
 	/**
@@ -26,7 +26,6 @@ class {{CLASS_NAME}} extends {{BASE_CLASS}} {
 	 */
 	public {{CLASS_NAME}}(String name) throws FsmException {
 		super(name);
-
 {{TYPE_PREPROCESSOR}}
 {{EQUALS_PREPROCESSOR}}
 {{GLOBAL_STATE_LISTENERS}}

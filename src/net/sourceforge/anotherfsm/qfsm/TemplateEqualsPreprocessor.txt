@@ -1,3 +1,5 @@
 		EqualsPreprocessor equalsPreprocessor = new EqualsPreprocessor(name);
+
 		// TODO Auto-generated method stub
+
 		addPreprocessor(equalsPreprocessor);

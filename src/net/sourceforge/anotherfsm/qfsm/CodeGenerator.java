@@ -115,6 +115,7 @@ public class CodeGenerator {
 		content = content.replace("{{COMMAND_LINE}}",
 				parameters.getCommandLine());
 		content = content.replace("{{CLASS_AUTHOR}}", machine.getAuthor());
+		content = content.replace("{{CLASS_VERSION}}", machine.getVersion());
 		content = content.replace("{{CLASS_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", configuration
 				.getBaseClass().trim());
@@ -154,6 +155,7 @@ public class CodeGenerator {
 		content = content.replace("{{COMMAND_LINE}}",
 				parameters.getCommandLine());
 		content = content.replace("{{CLASS_AUTHOR}}", machine.getAuthor());
+		content = content.replace("{{CLASS_VERSION}}", machine.getVersion());
 		content = content.replace("{{CLASS_NAME}}", className);
 		content = content.replace("{{BASE_CLASS}}", baseClassName);
 
@@ -412,7 +414,7 @@ public class CodeGenerator {
 		}
 
 		try (PrintWriter out = new PrintWriter(file, "UTF-8")) {
-			out.println(content);
+			out.print(content);
 		} catch (IOException e) {
 			throw new QfsmException("Writing file failed", e);
 		}

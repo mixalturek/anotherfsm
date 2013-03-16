@@ -86,7 +86,9 @@ function MenuItem($addr, $text)
 
 // Highligh examples, http://qbnz.com/highlighter/geshi-doc.html
 include_once '/usr/share/php-geshi/geshi.php';
-function ReadfileJava($filename)
+
+// Highlight Java code
+function readFileJava($filename)
 {
 	$fileContent = file_get_contents("../$filename");
 	
@@ -144,10 +146,66 @@ function genKeywords($directory)
 }
 
 // Display link to Javadoc of example
-function ExampleJavadoc($link)
+function exampleJavadoc($link)
 {
 	echo "<p class=\"example_javadoc\">";
 	Blank("doc_full/$link", 'Javadoc for this example.');
 	echo "</p>\n\n";
+}
+
+// Highlight Bash code
+function readFileBash($filename)
+{
+	$fileContent = file_get_contents("../$filename");
+
+	// Replace tabs using 4 spaces (the same tab width as defined in Eclipse)
+	$fileContent = str_replace('	', '    ', $fileContent);
+
+	$geshi = new GeSHi($fileContent, 'bash');
+
+	// Enable CSS
+	$geshi->enable_classes();
+
+	// Header text
+	$geshi->set_header_content($filename);
+
+	// Disable unwanted highlighting (smaller HTML)
+	// $geshi->set_keyword_group_highlighting(3, false);
+	// $geshi->set_methods_highlighting(false);
+	// $geshi->set_symbols_highlighting(false);
+	// $geshi->set_escape_characters_highlighting(false);
+
+	// Dump CSS
+	// echo $geshi->get_stylesheet();
+
+	echo $geshi->parse_code();
+}
+
+// Highlight XML code
+function readFileXml($filename)
+{
+	$fileContent = file_get_contents("../$filename");
+
+	// Replace tabs using 4 spaces (the same tab width as defined in Eclipse)
+	$fileContent = str_replace('	', '    ', $fileContent);
+
+	$geshi = new GeSHi($fileContent, 'xml');
+
+	// Enable CSS
+	$geshi->enable_classes();
+
+	// Header text
+	$geshi->set_header_content($filename);
+
+	// Disable unwanted highlighting (smaller HTML)
+	// $geshi->set_keyword_group_highlighting(3, false);
+	// $geshi->set_methods_highlighting(false);
+	// $geshi->set_symbols_highlighting(false);
+	// $geshi->set_escape_characters_highlighting(false);
+
+	// Dump CSS
+	// echo $geshi->get_stylesheet();
+
+	echo $geshi->parse_code();
 }
 ?>

@@ -18,18 +18,27 @@
 
 package net.sourceforge.anotherfsm.examples.qfsm;
 
-import net.sourceforge.anotherfsm.*;
+import net.sourceforge.anotherfsm.CharacterEvent;
+import net.sourceforge.anotherfsm.EqualsPreprocessor;
+import net.sourceforge.anotherfsm.Event;
+import net.sourceforge.anotherfsm.FsmException;
+import net.sourceforge.anotherfsm.OtherEvent;
+import net.sourceforge.anotherfsm.Preprocessor;
+import net.sourceforge.anotherfsm.State;
+import net.sourceforge.anotherfsm.StateAdapter;
+import net.sourceforge.anotherfsm.StateListener;
+import net.sourceforge.anotherfsm.TransitionListener;
 
 /**
  * State machine to search hard coded "AnotherFSM" string.
  * 
  * <p>
- * This file was generated using AnotherFSM CodeGenerator:
- * <br />
+ * This file was generated using AnotherFSM CodeGenerator:<br />
  * {@code java -classpath anotherfsm-0.2.0-dev.jar net.sourceforge.anotherfsm.qfsm.CodeGenerator --force --config-file SearchString.xml --qfsm-file SearchString.fsm}
  * </p>
  * 
  * @author Michal Turek
+ * @version 0.1.0
  */
 class SearchStringProcessor extends SearchStringFsm {
 	/**
@@ -43,41 +52,53 @@ class SearchStringProcessor extends SearchStringFsm {
 	public SearchStringProcessor(String name) throws FsmException {
 		super(name);
 
-		TypePreprocessor typePreprocessor = new TypePreprocessor(name);
-		// TODO Auto-generated method stub
-		addPreprocessor(typePreprocessor);
-
 		EqualsPreprocessor equalsPreprocessor = new EqualsPreprocessor(name);
-		// TODO Auto-generated method stub
+
+		// Don't pass newline characters to the state machine
+		equalsPreprocessor.addProcessor(CharacterEvent.instance('\n'),
+				new Preprocessor.Processor<CharacterEvent>() {
+					@Override
+					public Event process(CharacterEvent event) {
+						// Null stops the event processing in preprocessor
+						return null;
+					}
+				});
+
 		addPreprocessor(equalsPreprocessor);
 
 		addListener(new StateAdapter(StateListener.Type.LOOP_NO_PROCESS) {
 			@Override
 			public void onStateEnter(State previous, Event event, State current) {
-				// TODO Auto-generated method stub
+				// The last state of the string is a final state
+				if (current.isFinalState()) {
+					logger.info("Whole string successfully entered.");
+				}
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
 			}
 		});
 
-
 		addListener(new TransitionListener() {
 			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// TODO Auto-generated method stub
+			public void onTransition(State source, Event event,
+					State destination) {
+				// State machine tries to process OtherEvent event if no
+				// transition matches
+				if (event instanceof OtherEvent) {
+					logger.info("Oh bad character, let's start again...");
+				}
 			}
 		});
-
 
 		stateA.addListener(new StateAdapter(StateListener.Type.LOOP_NO_PROCESS) {
 			@Override
 			public void onStateEnter(State previous, Event event, State current) {
-				// TODO Auto-generated method stub
+				logger.info("Character 'A' entered, good start.");
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -89,7 +110,7 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -101,7 +122,7 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -113,7 +134,7 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -125,7 +146,7 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -137,7 +158,7 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -149,7 +170,7 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -161,7 +182,7 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -173,19 +194,20 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
 			}
 		});
 
-		stateStart.addListener(new StateAdapter(StateListener.Type.LOOP_NO_PROCESS) {
+		stateStart.addListener(new StateAdapter(
+				StateListener.Type.LOOP_NO_PROCESS) {
 			@Override
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
@@ -197,183 +219,243 @@ class SearchStringProcessor extends SearchStringFsm {
 			public void onStateEnter(State previous, Event event, State current) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void onStateExit(State current, Event event, State next) {
 				// TODO Auto-generated method stub
 			}
 		});
 
+		stateA_CharacterEvent_instancen_stateN
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateA_CharacterEvent_instancen_stateN.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateA_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateA_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateE_CharacterEvent_instancer_stateR
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateE_CharacterEvent_instancer_stateR.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateE_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateE_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateF_CharacterEvent_instanceS_stateS
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateF_CharacterEvent_instanceS_stateS.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateF_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateF_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateH_CharacterEvent_instancee_stateE
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateH_CharacterEvent_instancee_stateE.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateH_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateH_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateM_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateM_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateN_CharacterEvent_instanceo_stateO
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateN_CharacterEvent_instanceo_stateO.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateN_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateN_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateO_CharacterEvent_instancet_stateT
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateO_CharacterEvent_instancet_stateT.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateO_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateO_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateR_CharacterEvent_instanceF_stateF
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
+						logger.info("Great, nearly done, please continue.");
+					}
+				});
 
-		stateR_CharacterEvent_instanceF_stateF.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
-				logger.info("Great, nearly done, please continue.");
-			}
-		});
+		stateR_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateR_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateS_CharacterEvent_instanceM_stateM
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateS_CharacterEvent_instanceM_stateM.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateS_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateS_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateStart_CharacterEvent_instanceA_stateA
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateStart_CharacterEvent_instanceA_stateA.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateStart_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateStart_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateT_CharacterEvent_instanceh_stateH
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateT_CharacterEvent_instanceh_stateH.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
+					}
+				});
 
-			}
-		});
+		stateT_OtherEvent_instance_stateStart
+				.addListener(new TransitionListener() {
+					@Override
+					public void onTransition(State source, Event event,
+							State destination) {
+						// The following code is generated, don't edit it
+						// directly
 
-		stateT_OtherEvent_instance_stateStart.addListener(new TransitionListener() {
-			@Override
-			public void onTransition(State source, Event event,	State destination) {
-				// The following code is generated, don't edit it directly
-
-			}
-		});
-
+					}
+				});
 
 	}
 }
-

@@ -113,7 +113,7 @@ class CodeGeneratorParameters {
 			}
 		}
 
-		if (configTemplate == null) {
+		if (!usage && configTemplate == null) {
 			if (configFile == null) {
 				throw new QfsmException(
 						"Missing mandatory parameter: -c | --config-file");
@@ -157,7 +157,8 @@ class CodeGeneratorParameters {
 		System.out.println();
 		System.out.println("Arguments: ");
 		System.out.println("\t[-h | --help]           Show this usage.");
-		System.out.println("\t[-f | --force]          Override output files.");
+		System.out
+				.println("\t[-f | --force]          Override existing output files.");
 		System.out.println();
 		System.out.println("Parameters: ");
 		System.out.println("\t-t | --template file    Generate config.");

@@ -11,10 +11,11 @@
 <li><?php Blank('http://sourceforge.net/projects/anotherfsm/support', 'Support');?></li>
 </ul>
 
-<div class="label">Examples</div>
+<div class="label">Code Examples</div>
 <ul>
 <li><?php MenuItem('example_first', 'First example');?></li>
 <li><?php MenuItem('example_logger_injection', 'Logger injection');?></li>
+<li><?php MenuItem('example_qfsm', 'Qfsm example');?></li>
 </ul>
 
 <div class="label">Development</div>

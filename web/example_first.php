@@ -22,7 +22,7 @@ include_once 'p_begin.php';
 ?>
 
 <?php
-ExampleJavadoc("net/sourceforge/anotherfsm/examples/first/package-summary.html");
+ExampleJavadoc('net/sourceforge/anotherfsm/examples/first/package-summary.html');
 ReadfileJava('src_examples/net/sourceforge/anotherfsm/examples/first/package-info.java');
 ReadfileJava('src_examples/net/sourceforge/anotherfsm/examples/first/SearchFsm.java');
 ReadfileJava('src_examples/net/sourceforge/anotherfsm/examples/first/SearchFsmProcessor.java');

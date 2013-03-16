@@ -22,7 +22,7 @@ include_once 'p_begin.php';
 ?>
 
 <?php
-ExampleJavadoc("net/sourceforge/anotherfsm/examples/loggerinjection/package-summary.html");
+ExampleJavadoc('net/sourceforge/anotherfsm/examples/loggerinjection/package-summary.html');
 ReadfileJava('src_examples/net/sourceforge/anotherfsm/examples/loggerinjection/package-info.java');
 ReadfileJava('src_examples/net/sourceforge/anotherfsm/examples/loggerinjection/Log4jLogger.java');
 ReadfileJava('src_examples/net/sourceforge/anotherfsm/examples/loggerinjection/Log4jLoggerFactory.java');

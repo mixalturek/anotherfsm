@@ -25,12 +25,11 @@ a, .m						{ color: black; }
 a:hover, .m:hover			{ color: black; }
 a.blank:after, a.down:after	{ content: ""; }
 
-.java, .java .head, .example_output
+.java, .bash, .xml, .java .head, .bash .head, .xml .head, .example_output
 {
-	background-color: white;
+	background-color: none;
 	color: black;
-	border: 0px;
+	border: none;
 }
 
-.java .head					{ border: 1px solid black; }
 .example_javadoc			{ display: none; }

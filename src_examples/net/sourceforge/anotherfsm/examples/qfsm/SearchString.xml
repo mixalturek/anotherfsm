@@ -1,35 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <AnotherFsmCodeGenerator>
+	<!-- The version of configuration file. -->
 	<Version>0.1.0</Version>
-	
+
+	<!-- The output directory relative to the active one. -->
 	<OutputDirectory>.</OutputDirectory>
+
+	<!-- The state machine base class. -->
 	<BaseClass>DeterministicStateMachine</BaseClass>
+
+	<!-- Java package of the generated files. -->
 	<JavaPackage>net.sourceforge.anotherfsm.examples.qfsm</JavaPackage>
+
+	<!-- Description of transitions contains Java code. -->
 	<TransitionDescriptionContainsCode>yes</TransitionDescriptionContainsCode>
 
-	<StateMachineClass>		
+	<!-- Configuration of the generated state machine class. -->
+	<StateMachineClass>
+		<!-- Java imports to make the file compilable. -->
 		<Imports>
 import net.sourceforge.anotherfsm.*;
 		</Imports>
 	</StateMachineClass>
-	
+
+	<!-- Configuration of the generated processor class. -->
 	<ProcessorClass>
-		<TypePreprocessor>yes</TypePreprocessor>
+		<!-- Generate type preprocessor. -->
+		<TypePreprocessor>no</TypePreprocessor>
+
+		<!-- Generate equals preprocessor. -->
 		<EqualsPreprocessor>yes</EqualsPreprocessor>
-		
+
+		<!-- Generate global state listener. -->
 		<GlobalStateListener>yes</GlobalStateListener>
+		
+		<!-- Generate global transition listener. -->
 		<GlobalTransitionListener>yes</GlobalTransitionListener>
-		
+
+		<!-- Generate state listeners. -->
 		<StateListener>yes</StateListener>
+
+		<!-- Generate transition listeners. -->
 		<TransitionListener>yes</TransitionListener>
-		
+
+		<!-- Java imports to make the file compilable. -->
 		<Imports>
 import net.sourceforge.anotherfsm.*;
 		</Imports>
 	</ProcessorClass>
 
+	<!-- File header that will be put at the top of every generated file. -->
+	<!-- Update the content as you want. -->
 	<FileHeader>
-		<!-- This content is not required, update it as you want. -->
 		<![CDATA[
 /*
  *  Copyright 2013 Michal Turek, AnotherFSM

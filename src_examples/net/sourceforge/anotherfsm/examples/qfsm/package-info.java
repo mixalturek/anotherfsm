@@ -17,7 +17,39 @@
  */
 
 /**
- * TODO:
+ * This example re-implements the functionality of First example with
+ * significant help of code generated from Qfsm diagram.
+ * 
+ * The code searches "AnotherFSM" string in the user input and exits the
+ * application after it is entered. Of course this implementation is an overkill
+ * solution for such simple task, remember it's only a demonstration.
+ * 
+ * <h3>Classes</h3>
+ * 
+ * <ul>
+ * <li>SearchString.fsm
+ *            Qfsm data file, the painted diagram.</li>
+ * <li>SearchString.xml
+ *            Code generator configuration file.</li>
+ * 
+ * <li>generate.sh
+ *            Sample shell script to execute code generator.</li>
+ *            
+ * <li>SearchString.xml.generated
+ *            Generated file, no updates.</li>
+ * <li>SearchStringProcessor.java.generated
+ *            Generated file, no updates.</li>
+ * <li>SearchStringFsm.java.generated
+ *            Generated file, no updates.</li>
+ * 
+ * <li>{@link net.sourceforge.anotherfsm.examples.first.SearchStringFsm}
+ *            Defines structure of the state machine.</li>
+ * <li>{@link net.sourceforge.anotherfsm.examples.first.SearchStringProcessor}
+ *            Defines listeners for the states and transitions.</li>
+ * 
+ * <li>{@link net.sourceforge.anotherfsm.examples.first.Qfsm}
+ *            Defines main() method, passes data to the state machine.</li>
+ * </ul>
  *
  * @author Michal Turek
  */
