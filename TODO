@@ -16,7 +16,6 @@
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
-	- Update fail("Should not be executed"); to fail("Should not be executed: " + e);
 	- Coverage.
 
 - Future
@@ -24,15 +23,3 @@
 	- FsmEditor or QFsm patch.
 	- Analyzer and visualization of FSM transitions logs.
 	- AsciiSchemaEditor.
-
-- Release HOWTO
-	- Solve compiler warnings, TODO and FIXME.
-	- FindBugs.
-	- Javadoc.
-	- Web news.
-	- Web.
-	- Update versions in build.xml and AnotherFsm.java.
-	- Git commit, push, tag.
-	- Update versions in build.xml and AnotherFsm.java.
-	- Deploy web.
-	- Deploy dist files.

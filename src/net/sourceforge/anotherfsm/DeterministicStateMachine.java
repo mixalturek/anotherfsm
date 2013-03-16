@@ -336,7 +336,7 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 	private void processCheck(Event event) throws FsmException {
 		if (event == null) {
 			String msg = "Event must not be null: "
-					+ Transition.format(currentState, event);
+					+ Transition.format(currentState, null);
 			logger.error(msg);
 			throw new NullPointerException(msg);
 		}

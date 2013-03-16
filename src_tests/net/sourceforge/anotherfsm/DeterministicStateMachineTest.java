@@ -66,7 +66,7 @@ public class DeterministicStateMachineTest {
 		try {
 			machine.setStartState(new State("state"));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(new State("state"), machine.getActiveState());
@@ -109,7 +109,7 @@ public class DeterministicStateMachineTest {
 			state.addListener(listener);
 			machine.addListener(listenerFsm);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
@@ -129,13 +129,13 @@ public class DeterministicStateMachineTest {
 		try {
 			machine.setStartState(state);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
 			machine.start();
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(1, listener.enteredNum);
@@ -160,7 +160,7 @@ public class DeterministicStateMachineTest {
 		try {
 			machine.addState(new State("state"));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(1, machine.getStates().size());
@@ -177,7 +177,7 @@ public class DeterministicStateMachineTest {
 		try {
 			machine.addState(new State("another state"));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(2, machine.getStates().size());
@@ -195,7 +195,7 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(new Transition(new State("state"),
 					new TypeEventA(), new State("state")));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(1, machine.getStates().size()); // New state
@@ -230,7 +230,7 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(new Transition(new State("state"),
 					new TypeEventB(), new State("state")));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(1, machine.getStates().size());
@@ -241,7 +241,7 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(new Transition(new State("another state"),
 					new TypeEventA(), new State("state")));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(2, machine.getStates().size()); // New state
@@ -252,7 +252,7 @@ public class DeterministicStateMachineTest {
 			machine.addTransition(new Transition(new State("another state"),
 					new TypeEventB(), new State("state")));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(2, machine.getStates().size());
@@ -464,7 +464,7 @@ public class DeterministicStateMachineTest {
 				}
 			});
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
@@ -499,7 +499,7 @@ public class DeterministicStateMachineTest {
 			expected.clear();
 			real.clear();
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -540,7 +540,7 @@ public class DeterministicStateMachineTest {
 
 			machine.start();
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertNull(processedEvent);
@@ -551,7 +551,7 @@ public class DeterministicStateMachineTest {
 			processedEvent = machine.process(null);
 			fail("Should not be executed");
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (NullPointerException e) {
 			// Do nothing
 		}
@@ -575,7 +575,7 @@ public class DeterministicStateMachineTest {
 			assertEquals(new TypeEventA(), processedEvent);
 			assertEquals(another, machine.getActiveState());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -589,7 +589,7 @@ public class DeterministicStateMachineTest {
 		try {
 			machine.setStartState(new State("state"));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(new State("state"), machine.getActiveState());
@@ -605,7 +605,7 @@ public class DeterministicStateMachineTest {
 		try {
 			machine.setStartState(new State("state"));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		Set<State> states = new HashSet<State>();
@@ -632,7 +632,7 @@ public class DeterministicStateMachineTest {
 			machine.setStartState(state);
 			machine.start();
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
@@ -640,7 +640,7 @@ public class DeterministicStateMachineTest {
 			processedEvent = machine.process(null);
 			fail("Should not be executed");
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (NullPointerException e) {
 			// Do nothing
 		}
@@ -663,7 +663,7 @@ public class DeterministicStateMachineTest {
 			// Ok
 			processedEvent = machine.process(new TypeEventA());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(new TypeEventA(), processedEvent);
@@ -673,7 +673,7 @@ public class DeterministicStateMachineTest {
 			// Ok
 			processedEvent = machine.process(new TypeEventB());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		assertEquals(new TypeEventB(), processedEvent);
@@ -739,7 +739,7 @@ public class DeterministicStateMachineTest {
 			assertEquals(TimeoutEvent.Type.LOOP_NO_RESTART,
 					((TimeoutEvent) transition.getEvent()).getType());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -818,7 +818,7 @@ public class DeterministicStateMachineTest {
 			assertEquals(new TypeEventC(), processedEvent);
 			assertEquals(state, machine.getActiveState());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -847,7 +847,7 @@ public class DeterministicStateMachineTest {
 			machine.setStartState(state);
 			machine.start();
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
@@ -863,7 +863,7 @@ public class DeterministicStateMachineTest {
 			assertEquals(new ContainerEvent<Character>('A'), processedEvent);
 			assertEquals(another, machine.getActiveState());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -915,7 +915,7 @@ public class DeterministicStateMachineTest {
 			assertEquals(new TypeEventB(),
 					((OtherEvent) processedEvent).getSourceEvent());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {

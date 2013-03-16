@@ -44,7 +44,7 @@ public class TypeProcessorTest {
 						}
 					});
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
@@ -64,7 +64,7 @@ public class TypeProcessorTest {
 			processor.addProcessor(TypeEventA.class, null);
 			fail("Should not be executed");
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (NullPointerException e) {
 			// Do nothing
 		}
@@ -79,7 +79,7 @@ public class TypeProcessorTest {
 					});
 			fail("Should not be executed");
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (NullPointerException e) {
 			// Do nothing
 		}
@@ -107,14 +107,14 @@ public class TypeProcessorTest {
 						}
 					});
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
 			processedEvent = processor.process(null);
 			fail("Should not be executed");
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (NullPointerException e) {
 			// Do nothing
 		}
@@ -126,7 +126,7 @@ public class TypeProcessorTest {
 			processedEvent = processor.process(new TypeEventB());
 			assertNull(processedEvent);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 	}
 
@@ -142,7 +142,7 @@ public class TypeProcessorTest {
 			processedEvent = processor.process(new TypeEventB());
 			assertEquals(new TypeEventB(), processedEvent);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 	}
 }

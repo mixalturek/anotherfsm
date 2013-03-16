@@ -50,7 +50,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			machine.addTransition(new Transition(state, new TimeoutEvent(42,
 					TimeoutEvent.Type.LOOP_RESTART), state));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
@@ -65,7 +65,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			machine.addTransition(new Transition(state, new TimeoutEvent(42,
 					TimeoutEvent.Type.LOOP_NO_RESTART), state));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		try {
@@ -94,7 +94,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			machine.setStartState(new State("state"));
 			machine.start();
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -119,9 +119,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 			assertEquals(timeoutState, machine.getActiveState());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -146,9 +146,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 			assertEquals(timeoutState, machine.getActiveState());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -166,7 +166,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			machine.setStartState(new State("state"));
 			machine.start();
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		UnitTestHelpers.sleepThreadCommunicationDelay();
@@ -213,7 +213,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			assertEquals(new TypeEventB(), processedEvent);
 			assertEquals(startState, machine.getActiveState());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -270,9 +270,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -350,9 +350,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -435,9 +435,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			assertEquals(timeoutState, machine.getActiveState());
 			assertEquals(1, listener.transitionsNum);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -503,9 +503,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			assertEquals(1, listener.transitionsNum);
 			assertTrue(machine.exceptionOccurred);
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -549,9 +549,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			assertThat(listener.transitionsNum, both(greaterThanOrEqualTo(2))
 					.and(lessThanOrEqualTo(6)));
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
@@ -591,9 +591,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			assertEquals(1, noRestartListener.transitionsNum);
 			assertEquals(timeoutState, machine.getActiveState());
 		} catch (FsmException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {
-			fail("Should not be executed");
+			fail("Should not be executed: " + e);
 		}
 
 		machine.close();
