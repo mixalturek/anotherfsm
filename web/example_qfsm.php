@@ -21,7 +21,7 @@ define('PAGE_TITLE', 'Qfsm example');
 include_once 'p_begin.php';
 ?>
 
-<p><em>Qfsm</em> is a graphical tool for designing finite state machines that is runnable on vairous operating systems. You can download it from its home page <?php Blank('http://qfsm.sourceforge.net/'); ?>. This example re-implements the functionality of <?php Web('example_first', 'First example')?> with significant help of code generated from Qfsm diagram.</p>
+<p><em>Qfsm</em> is a graphical tool for designing finite state machines that is runnable on various operating systems. You can download it from its home page <?php Blank('http://qfsm.sourceforge.net/'); ?>. This example re-implements the functionality of <?php Web('example_first', 'First example')?> with significant help of code generated from Qfsm diagram.</p>
 
 <?php
 exampleJavadoc('net/sourceforge/anotherfsm/examples/qfsm/package-summary.html');
@@ -31,7 +31,7 @@ readfileJava('src_examples/net/sourceforge/anotherfsm/examples/qfsm/package-info
 
 <h2>State machine diagram</h2>
 
-<p>To paint a new state machine diagram please execute Qfsm and using menu <i>File - New</i> create a new project. Make sure you choose <i>Type - Free Text</i> radio button, only this state machine type is supported by AnotherFSM code generator at the moment. You should also fill the state machine name and other items in the dialog.</p>
+<p>To paint a new state machine diagram please execute Qfsm and using menu <i>File - New</i> create a new project. Make sure you select <i>Type - Free Text</i> radio button, only this state machine type is supported by AnotherFSM code generator at the moment. You should also fill the state machine name and other items in the dialog.</p>
 
 <?php
 Img('img/examples/qfsm/01_sm.png', 'State machine diagram used in this example');
@@ -48,14 +48,16 @@ Img('img/examples/qfsm/01_sm.png', 'State machine diagram used in this example')
 readFileBash('src_examples/net/sourceforge/anotherfsm/examples/qfsm/generate.sh');
 ?>
 
-<p>The generated configuration XML file contains the following possibilities. All items are mandatory. The generator splits final state machine to two classes. The base <em>StateMachineClass</em> defines the structure of states, transitions and their connections. On the other hand the child <em>ProcessorClass</em> class defines template for listeners. It is expected only the second one will be three-way-merged on state machine update and code re-generation.</p>
+<p>The generated configuration XML template contains the following possibilities. All items are mandatory.</p>
+
+<p>The generator splits state machine to two classes. The base <em>StateMachineClass</em> defines the structure of states, transitions and their connections. On the other hand the child <em>ProcessorClass</em> class defines template for listeners. It is expected only the second one will be updated manually. This is to simplify three-way-merge on state machine update and code re-generation.</p>
 
 <?php
 readFileXml('src_examples/net/sourceforge/anotherfsm/examples/qfsm/SearchString.xml.generated');
 ?>
 
 
-<p>Java code can be generated after the default configuration is updated. </p>
+<p>Java code can be generated after the default configuration is updated. The example script and execution of code generator is described above.</p>
 
 <?php
 readFileJava('src_examples/net/sourceforge/anotherfsm/examples/qfsm/SearchStringFsm.java.generated');

@@ -24,7 +24,7 @@
  * application after it is entered. Of course this implementation is an overkill
  * solution for such simple task, remember it's only a demonstration.
  * 
- * <h3>Classes</h3>
+ * <h3>Classes and files</h3>
  * 
  * <ul>
  * <li>SearchString.fsm
@@ -33,21 +33,21 @@
  *            Code generator configuration file.</li>
  * 
  * <li>generate.sh
- *            Sample shell script to execute code generator.</li>
+ *            Shell script to execute code generator and generate the files.</li>
  *            
  * <li>SearchString.xml.generated
- *            Generated file, no updates.</li>
- * <li>SearchStringProcessor.java.generated
- *            Generated file, no updates.</li>
+ *            Generated configuration template, no updates.</li>
  * <li>SearchStringFsm.java.generated
- *            Generated file, no updates.</li>
+ *            Generated state machine, no updates.</li>
+ * <li>SearchStringProcessor.java.generated
+ *            Generated listeners template, no updates.</li>
  * 
- * <li>{@link net.sourceforge.anotherfsm.examples.first.SearchStringFsm}
+ * <li>{@link net.sourceforge.anotherfsm.examples.qfsm.SearchStringFsm}
  *            Defines structure of the state machine.</li>
- * <li>{@link net.sourceforge.anotherfsm.examples.first.SearchStringProcessor}
+ * <li>{@link net.sourceforge.anotherfsm.examples.qfsm.SearchStringProcessor}
  *            Defines listeners for the states and transitions.</li>
  * 
- * <li>{@link net.sourceforge.anotherfsm.examples.first.Qfsm}
+ * <li>{@link net.sourceforge.anotherfsm.examples.qfsm.Qfsm}
  *            Defines main() method, passes data to the state machine.</li>
  * </ul>
  *

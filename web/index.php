@@ -31,6 +31,7 @@ include_once 'p_begin.php';
 <li>Type-based and equals-based event preprocessors.</li>
 <li>Predefined and user defined events.</li>
 <li><?php Web('example_first', 'Separated state machine building, registration of listeners and processing of events.'); ?></li>
+<li>Support for <?php Blank('http://qfsm.sourceforge.net/', 'Qfsm'); ?> graphical design tool and <?php Web('example_qfsm', 'code generation'); ?>.</li>
 <li><?php Web('example_logger_injection', 'Generalized logging, whatever backend can be injected.')?></li>
 <li><?php Web('license', 'Apache 2 license, version 2.0.'); ?></li>
 <li>Suitable for event driven programming.</li>
