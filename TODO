@@ -8,9 +8,7 @@
 
 - Web
 	- Examples
-		- State machine with timeouts.
 		- Event preprocessors.
-		- User events.
 		- ThreadProcessor
 
 - Tests
@@ -19,6 +17,6 @@
 
 - Future
 	- NonDeterministicStateMachine.
-	- FsmEditor or QFsm patch.
+	- FsmEditor.
 	- Analyzer and visualization of FSM transitions logs.
 	- AsciiSchemaEditor.

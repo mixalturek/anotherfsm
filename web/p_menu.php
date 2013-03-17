@@ -16,6 +16,8 @@
 <li><?php MenuItem('example_first', 'First example');?></li>
 <li><?php MenuItem('example_logger_injection', 'Logger injection');?></li>
 <li><?php MenuItem('example_qfsm', 'Qfsm example');?></li>
+<li><?php MenuItem('example_timeouts', 'Timeouts');?></li>
+<li><?php MenuItem('example_timeouts', 'User events');?></li>
 </ul>
 
 <div class="label">Development</div>

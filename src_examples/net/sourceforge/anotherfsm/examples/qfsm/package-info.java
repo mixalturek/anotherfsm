@@ -31,7 +31,6 @@
  *            Qfsm data file, the painted diagram.</li>
  * <li>SearchString.xml
  *            Code generator configuration file.</li>
- * 
  * <li>generate.sh
  *            Shell script to execute code generator and generate the files.</li>
  *            

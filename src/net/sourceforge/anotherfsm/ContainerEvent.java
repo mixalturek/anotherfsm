@@ -67,9 +67,7 @@ public class ContainerEvent<T> implements Event {
 		if (!(obj instanceof ContainerEvent))
 			return false;
 
-		// Other can contain object with whatever type
-		@SuppressWarnings("rawtypes")
-		ContainerEvent other = (ContainerEvent) obj;
+		ContainerEvent<?> other = (ContainerEvent<?>) obj;
 		return storedObject.equals(other.storedObject);
 	}
 

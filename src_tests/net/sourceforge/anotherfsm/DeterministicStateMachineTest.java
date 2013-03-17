@@ -704,11 +704,12 @@ public class DeterministicStateMachineTest {
 					OtherEvent.instance, new State("state")));
 
 			machine.addTransition(new Transition(new State("state"),
-					new TimeoutEvent(42, TimeoutEvent.Type.LOOP_RESTART),
+					TimeoutEvent.instance(42, TimeoutEvent.Type.LOOP_RESTART),
 					new State("state")));
 
 			machine.addTransition(new Transition(new State("state"),
-					new TimeoutEvent(42, TimeoutEvent.Type.LOOP_NO_RESTART),
+					TimeoutEvent
+							.instance(42, TimeoutEvent.Type.LOOP_NO_RESTART),
 					new State("state")));
 
 			transition = machine.getTransition(new State("state"),

@@ -47,13 +47,28 @@ public class TimeoutEvent implements Event {
 	private final TimeoutEvent.Type type;
 
 	/**
+	 * Create instance of this class.
+	 * 
+	 * @param timeout
+	 *            the timeout in milliseconds, must be positive
+	 * @param type
+	 *            the type of the event
+	 * @return the instance
+	 */
+	public static TimeoutEvent instance(long timeout, TimeoutEvent.Type type) {
+		return new TimeoutEvent(timeout, type);
+	}
+
+	/**
 	 * Create the object.
 	 * 
 	 * @param timeout
-	 *            the timeout in milliseconds, must be positive.
+	 *            the timeout in milliseconds, must be positive
 	 * @param type
 	 *            the type of the event
+	 * @deprecated Prefer {@link #instance(long, Type)} method instead.
 	 */
+	@Deprecated
 	public TimeoutEvent(long timeout, TimeoutEvent.Type type) {
 		// Zero passed to Java timer works too, but let's forbid it
 		if (timeout <= 0)

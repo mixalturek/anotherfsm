@@ -16,31 +16,32 @@
  *  limitations under the License.
  */
 
-package net.sourceforge.anotherfsm.examples.qfsm;
+package net.sourceforge.anotherfsm.examples.timeouts;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
-import net.sourceforge.anotherfsm.CharacterEvent;
 import net.sourceforge.anotherfsm.FsmException;
 import net.sourceforge.anotherfsm.StateMachine;
 import net.sourceforge.anotherfsm.logger.FsmLogger;
 import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
 
 /**
- * Search "AnotherFSM" string in the input from user and exit the application
- * after it is entered.
+ * The main class, simple parser of user connect/disconnect commands.
  * 
  * @author Michal Turek
  */
-public class Qfsm {
+public class Timeouts {
 	static {
 		// Register factory of loggers before any logger is created
 		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
 	}
 
 	/** The logger object for this class. */
-	private final static FsmLogger logger = AnotherFsm.getLogger(Qfsm.class);
+	private final static FsmLogger logger = AnotherFsm
+			.getLogger(Timeouts.class);
 
 	/**
 	 * The application start function.
@@ -49,30 +50,45 @@ public class Qfsm {
 	 *            the input arguments, unused
 	 */
 	public static void main(String[] args) {
-		try {
-			// Create instance of the state machine
-			StateMachine machine = new SearchStringProcessor(
-					Qfsm.class.getSimpleName());
+		// The state machine with timeouts
+		try (StateMachine machine = new TimeoutConnectionProcessor(
+				Timeouts.class.getSimpleName())) {
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					System.in));
 
 			// Building done in the constructor, prepare for events processing
 			machine.start();
 
-			logger.info("Type 'AnotherFSM' string to exit.");
-
 			while (true) {
-				// Read a character from user and pass it to the state machine
-				char c = (char) System.in.read();
-				machine.process(CharacterEvent.instance(c));
+				logger.info("Type a command: [exit|connect|disconnect]");
 
-				// Exit after a final state is entered
-				if (machine.isInFinalState()) {
-					logger.debug("'AnotherFSM' string found in input, exiting");
+				// Ignore empty commands (enter presses)
+				String command = in.readLine();
+
+				while (command.isEmpty())
+					command = in.readLine();
+
+				// Exit on 'exit' command
+				if ("exit".equals(command)) {
+					logger.info("Exiting...");
 					break;
 				}
-			}
 
-			// Release all resources allocated by state machine
-			machine.close();
+				// Create the event
+				ConnectionStateEvent.ConnectionState state = null;
+
+				try {
+					state = ConnectionStateEvent.ConnectionState
+							.valueOf(command.toUpperCase());
+				} catch (IllegalArgumentException e) {
+					logger.error("Unknown command: " + command);
+					continue;
+				}
+
+				// Process the event
+				machine.process(new ConnectionStateEvent(state));
+			}
 		} catch (FsmException | IOException e) {
 			// Process any exception that may occur
 			logger.fatal("Unexpected exception occurred", e);

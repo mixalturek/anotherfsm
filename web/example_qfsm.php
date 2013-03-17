@@ -34,7 +34,7 @@ readfileJava('src_examples/net/sourceforge/anotherfsm/examples/qfsm/package-info
 <p>To paint a new state machine diagram please execute Qfsm and using menu <i>File - New</i> create a new project. Make sure you select <i>Type - Free Text</i> radio button, only this state machine type is supported by AnotherFSM code generator at the moment. You should also fill the state machine name and other items in the dialog.</p>
 
 <?php
-Img('img/examples/qfsm/01_sm.png', 'State machine diagram used in this example');
+Img('img/examples/qfsm/SearchString_sm.png', 'State machine diagram used in this example');
 ?>
 
 <p>Ok, the diagram is finished. All states have their name, the input strings and the descriptions of transitions are properly set. You have to define the start state and optionally the final state(s). The descriptions of various items will be used for generating of Javadoc most of the time so consider to set them too. Note nearly no information from the diagram is lost during code generation.</p>
@@ -76,35 +76,35 @@ readFileJava('src_examples/net/sourceforge/anotherfsm/examples/qfsm/Qfsm.java');
 <h2>Sample output</h2>
 
 <pre class="example_output">
-2013-03-16 23:20:08,135 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  @INITIAL@ -> StartEvent -> Start state
-2013-03-16 23:20:08,138 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: @INITIAL@ -> StartEvent -> Start state
-2013-03-16 23:20:08,139 [main]  INFO Qfsm - Type 'AnotherFSM' string to exit.
+2013-03-17 16:24:52,948 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  @INITIAL@ -> StartEvent -> stateStart
+2013-03-17 16:24:52,949 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: @INITIAL@ -> StartEvent -> stateStart
+2013-03-17 16:24:52,950 [main]  INFO Qfsm - Type 'AnotherFSM' string to exit.
 AnotherFSM
-2013-03-16 23:20:15,419 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  Start state -> CharacterEvent(A) -> State A
-2013-03-16 23:20:15,419 [main]  INFO SearchFsmProcessor.Qfsm - Character 'A' entered, good start.
-2013-03-16 23:20:15,420 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: Start state -> CharacterEvent(A) -> State A
-2013-03-16 23:20:15,420 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State A -> CharacterEvent(n) -> State N
-2013-03-16 23:20:15,421 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State A -> CharacterEvent(n) -> State N
-2013-03-16 23:20:15,421 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State N -> CharacterEvent(o) -> State O
-2013-03-16 23:20:15,422 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State N -> CharacterEvent(o) -> State O
-2013-03-16 23:20:15,422 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State O -> CharacterEvent(t) -> State T
-2013-03-16 23:20:15,423 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State O -> CharacterEvent(t) -> State T
-2013-03-16 23:20:15,423 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State T -> CharacterEvent(h) -> State H
-2013-03-16 23:20:15,424 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State T -> CharacterEvent(h) -> State H
-2013-03-16 23:20:15,425 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State H -> CharacterEvent(e) -> State E
-2013-03-16 23:20:15,425 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State H -> CharacterEvent(e) -> State E
-2013-03-16 23:20:15,426 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State E -> CharacterEvent(r) -> State R
-2013-03-16 23:20:15,427 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State E -> CharacterEvent(r) -> State R
-2013-03-16 23:20:15,427 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State R -> CharacterEvent(F) -> State F
-2013-03-16 23:20:15,428 [main]  INFO SearchFsmProcessor.Qfsm - Great, nearly done, please continue.
-2013-03-16 23:20:15,429 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State R -> CharacterEvent(F) -> State F
-2013-03-16 23:20:15,429 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State F -> CharacterEvent(S) -> State S
-2013-03-16 23:20:15,430 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State F -> CharacterEvent(S) -> State S
-2013-03-16 23:20:15,430 [main]  INFO SearchFsmProcessor.Qfsm - Transition started:  State S -> CharacterEvent(M) -> State M
-2013-03-16 23:20:15,431 [main]  INFO SearchFsmProcessor.Qfsm - Whole string successfully entered.
-2013-03-16 23:20:15,431 [main]  INFO SearchFsmProcessor.Qfsm - Transition finished: State S -> CharacterEvent(M) -> State M
-2013-03-16 23:20:15,432 [main] DEBUG Qfsm - 'AnotherFSM' string found in input, exiting
-2013-03-16 23:20:15,432 [main] DEBUG Qfsm - End of main()
+2013-03-17 16:24:57,983 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateStart -> CharacterEvent(A) -> stateA
+2013-03-17 16:24:57,984 [main]  INFO SearchStringProcessor.Qfsm - Character 'A' entered, good start.
+2013-03-17 16:24:57,984 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateStart -> CharacterEvent(A) -> stateA
+2013-03-17 16:24:57,985 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateA -> CharacterEvent(n) -> stateN
+2013-03-17 16:24:57,985 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateA -> CharacterEvent(n) -> stateN
+2013-03-17 16:24:57,986 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateN -> CharacterEvent(o) -> stateO
+2013-03-17 16:24:57,987 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateN -> CharacterEvent(o) -> stateO
+2013-03-17 16:24:57,988 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateO -> CharacterEvent(t) -> stateT
+2013-03-17 16:24:57,988 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateO -> CharacterEvent(t) -> stateT
+2013-03-17 16:24:57,989 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateT -> CharacterEvent(h) -> stateH
+2013-03-17 16:24:57,990 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateT -> CharacterEvent(h) -> stateH
+2013-03-17 16:24:57,990 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateH -> CharacterEvent(e) -> stateE
+2013-03-17 16:24:57,991 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateH -> CharacterEvent(e) -> stateE
+2013-03-17 16:24:57,991 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateE -> CharacterEvent(r) -> stateR
+2013-03-17 16:24:57,992 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateE -> CharacterEvent(r) -> stateR
+2013-03-17 16:24:57,992 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateR -> CharacterEvent(F) -> stateF
+2013-03-17 16:24:57,993 [main]  INFO SearchStringProcessor.Qfsm - Great, nearly done, please continue.
+2013-03-17 16:24:57,993 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateR -> CharacterEvent(F) -> stateF
+2013-03-17 16:24:57,994 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateF -> CharacterEvent(S) -> stateS
+2013-03-17 16:24:57,994 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateF -> CharacterEvent(S) -> stateS
+2013-03-17 16:24:57,995 [main]  INFO SearchStringProcessor.Qfsm - Transition started:  stateS -> CharacterEvent(M) -> stateM
+2013-03-17 16:24:57,995 [main]  INFO SearchStringProcessor.Qfsm - Whole string successfully entered.
+2013-03-17 16:24:57,996 [main]  INFO SearchStringProcessor.Qfsm - Transition finished: stateS -> CharacterEvent(M) -> stateM
+2013-03-17 16:24:57,996 [main] DEBUG Qfsm - 'AnotherFSM' string found in input, exiting
+2013-03-17 16:24:57,997 [main] DEBUG Qfsm - End of main()
 </pre>
 
 

@@ -1,0 +1,48 @@
+<?xml version='1.0'?>
+<!DOCTYPE qfsmproject SYSTEM 'qfsm.dtd'>
+<qfsmproject version="0.52" author="Qfsm">
+  <machine nummooreout="0" transfontitalic="0" draw_it="1" statefontsize="8" transfont="Helvetica" statefontitalic="0" author="Michal Turek" description="Simple connect/disconnect state machine with timeouts." version="0.1.0" name="TimeoutConnection" arrowtype="1" numbits="1" statefontweight="50" statefont="Helvetica" numin="0" transfontsize="8" transfontweight="50" type="2" numout="0" initialstate="0">
+    <outputnames_moore></outputnames_moore>
+    <inputnames></inputnames>
+    <outputnames></outputnames>
+    <itransition ypos="149" endx="137" xpos="82" endy="149"/>
+    <state pencolor="0" radius="45" description="The client is disconnected." finalstate="0" moore_outputs="" ypos="149" code="0" xpos="182" linewidth="1">disconnected</state>
+    <state pencolor="0" radius="45" description="The client is connected." finalstate="0" moore_outputs="" ypos="150" code="1" xpos="699" linewidth="1">connected</state>
+    <transition c1x="368.4986235457799" c2y="136.5002543429579" c1y="135.8241707496491" description="&#x9;&#x9;&#x9;&#x9;logger.info(&quot;Connected&quot;);" straight="1" type="2" ypos="135.1480871563402" endx="655.8658639674426" xpos="224.8150033349485" endy="137.1763379362667" c2x="512.1822437566112">
+      <from>0</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">ConnectionStateEvent.instanceCONNECT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="114.3000765918723" c2y="47.87486275287553" c1y="44.11515189464488" description="&#x9;&#x9;&#x9;&#x9;logger.info(&quot;No action&quot;);" straight="1" type="2" ypos="106.3092515877269" endx="195.1211550334525" xpos="167.7697505292423" endy="107.0565491663465" c2x="251.9070693160455">
+      <from>0</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">ConnectionStateEvent.instanceDISCONNECT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="253.5355000983183" c2y="252.6432264352107" c1y="251.3072979666167" description="&#x9;&#x9;&#x9;&#x9;logger.info(&quot;Nobody is connected&quot;);" straight="1" type="2" ypos="191.134812990607" endx="170.4402319017856" xpos="197.8005548714777" endy="191.4003483330327" c2x="115.8836378971299">
+      <from>0</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">TimeoutEvent.instance(10000,TimeoutEvent.Type.LOOP_RESTART)</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="634.5080091755489" c2y="51.03868515036935" c1y="43.11270369660987" description="&#x9;&#x9;&#x9;&#x9;logger.info(&quot;No action&quot;);" straight="1" type="2" ypos="106.8978171650482" endx="713.3855652679377" xpos="686.0693451495144" endy="108.4732220227849" c2x="771.9379865834013">
+      <from>1</from>
+      <to>1</to>
+      <inputs default="0" any="0" invert="0">ConnectionStateEvent.instanceCONNECT</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="516.011487110832" c2y="178.4392158936706" c1y="179.3151577361406" description="&#x9;&#x9;&#x9;&#x9;logger.info(&quot;Time for connection expired&quot;);" straight="1" type="2" ypos="180.1910995786106" endx="216.7726814536355" xpos="665.6308899394303" endy="177.5632740512006" c2x="366.3920842822338">
+      <from>1</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">TimeoutEvent.instance(10000,TimeoutEvent.Type.LOOP_NO_RESTART)</inputs>
+      <outputs></outputs>
+    </transition>
+    <transition c1x="511.7673370900969" c2y="155.9217469319512" c1y="156.0009205724752" description="&#x9;&#x9;&#x9;&#x9;logger.info(&quot;Disconnected&quot;);" straight="1" type="2" ypos="156.0800942129992" endx="226.4767263942778" xpos="654.4126424380065" endy="155.8425732914273" c2x="369.1220317421873">
+      <from>1</from>
+      <to>0</to>
+      <inputs default="0" any="0" invert="0">ConnectionStateEvent.instanceDISCONNECT</inputs>
+      <outputs></outputs>
+    </transition>
+  </machine>
+</qfsmproject>
