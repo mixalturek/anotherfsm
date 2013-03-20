@@ -50,11 +50,9 @@ public class FirstExample {
 	 *            the input arguments, unused
 	 */
 	public static void main(String[] args) {
-		try {
-			// Create instance of the state machine
-			StateMachine machine = new SearchFsmProcessor(
-					FirstExample.class.getSimpleName());
-
+		// Create instance of the state machine
+		try (StateMachine machine = new SearchFsmProcessor(
+				FirstExample.class.getSimpleName())) {
 			// Building done in the constructor, prepare for events processing
 			machine.start();
 
@@ -71,9 +69,6 @@ public class FirstExample {
 					break;
 				}
 			}
-
-			// Release all resources allocated by state machine
-			machine.close();
 		} catch (FsmException | IOException e) {
 			// Process any exception that may occur
 			logger.fatal("Unexpected exception occurred", e);

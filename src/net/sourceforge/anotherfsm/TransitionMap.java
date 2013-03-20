@@ -81,4 +81,16 @@ class TransitionMap {
 	public Collection<Transition> getTransitions() {
 		return transitions.values();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+
+		for (Transition transition : transitions.values()) {
+			builder.append(transition.toString());
+			builder.append("\n");
+		}
+
+		return builder.toString();
+	}
 }

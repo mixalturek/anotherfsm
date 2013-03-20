@@ -430,4 +430,15 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 	public boolean isInFinalState() {
 		return currentState.isFinalState();
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+
+		for (TransitionMap transitions : stateTransitions.values()) {
+			builder.append(transitions.toString());
+		}
+
+		return builder.toString();
+	}
 }

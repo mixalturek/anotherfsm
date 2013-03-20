@@ -50,10 +50,9 @@ public class Timeouts {
 	 *            the input arguments, unused
 	 */
 	public static void main(String[] args) {
-		// The state machine with timeouts
+		// Create the state machine with timeouts
 		try (StateMachine machine = new TimeoutConnectionProcessor(
 				Timeouts.class.getSimpleName())) {
-
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					System.in));
 

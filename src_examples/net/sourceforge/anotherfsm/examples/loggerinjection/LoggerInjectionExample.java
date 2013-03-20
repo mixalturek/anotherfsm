@@ -57,10 +57,8 @@ public class LoggerInjectionExample {
 		// Log something using the log4j wrapper
 		logger.info("Hello world.");
 
-		try {
-			// Create state machine to demonstrate that log4j is used internally
-			StateMachine machine = new DeterministicStateMachine("test");
-
+		// Create state machine to demonstrate that log4j is used internally
+		try (StateMachine machine = new DeterministicStateMachine("test")) {
 			State state = new State("state");
 			Transition transition = new Transition(state,
 					new ContainerEvent<String>("event"));
@@ -72,8 +70,6 @@ public class LoggerInjectionExample {
 			// Messages should be logged using log4j here
 			machine.start();
 			machine.process(new ContainerEvent<String>("event"));
-
-			machine.close();
 		} catch (FsmException e) {
 			// Process any exception that may occur
 			logger.fatal("Unexpected exception occurred", e);
