@@ -65,8 +65,11 @@ dist                 - Copy files to the distribution directory.
 dist-zip             - Create an archive from the dist directory.
 all                  - Process full build.
 
+Extra targets:
+
 web                  - Build offline version of project's website.
 sloccount            - Count source lines of code.
+findbugs             - Static code analysis using FindBugs.
 		</echo>
 	</target>
 	
@@ -313,6 +316,27 @@ sloccount            - Count source lines of code.
 			<arg value="utils"/>
 			<arg value="web"/>
 		</exec>
+	</target>
+	
+	<!-- Static code analysis using FindBugs. -->
+	<property name="findbugs.home" value="/opt/findbugs-2.0.2" />
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugs.home}/lib/findbugs-ant.jar"/>
+		
+	<target name="findbugs" depends="jar">
+		<findbugs home="${findbugs.home}"
+			output="xml:withMessages"
+			outputFile="${builddir}/findbugs.xml"
+			reportLevel="low"
+			effort="max"
+			failOnError="false">
+
+			<sourcePath path="src" />
+			<class location="${builddir}/${jarname}" />
+		</findbugs>
+		
+		<xslt in="${builddir}/findbugs.xml"
+				style="${findbugs.home}/src/xsl/default.xsl"
+				out="${builddir}/findbugs.html" />
 	</target>
 
     <!-- Process full build. -->
