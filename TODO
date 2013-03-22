@@ -1,9 +1,6 @@
 - General
 
 - Code
-	- Group of processors.
-		- All of them processes the same event.
-		- The second one processes output of the first one.
 
 - Web
 	- Examples
