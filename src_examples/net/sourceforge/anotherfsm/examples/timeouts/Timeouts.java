@@ -54,7 +54,7 @@ public class Timeouts {
 		try (StateMachine machine = new TimeoutConnectionProcessor(
 				Timeouts.class.getSimpleName())) {
 			BufferedReader in = new BufferedReader(new InputStreamReader(
-					System.in));
+					System.in, "UTF-8"));
 
 			// Building done in the constructor, prepare for events processing
 			machine.start();

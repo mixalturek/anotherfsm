@@ -145,7 +145,8 @@ class CodeGeneratorParameters {
 				out.add(part);
 		}
 
-		return out.toArray(new String[0]);
+		String[] array = new String[out.size()];
+		return out.toArray(array);
 	}
 
 	/**

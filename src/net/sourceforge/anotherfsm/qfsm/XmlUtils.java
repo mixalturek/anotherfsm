@@ -20,6 +20,7 @@ package net.sourceforge.anotherfsm.qfsm;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -331,7 +332,7 @@ class XmlUtils {
 	public static boolean toBoolean(String string) throws QfsmException {
 		ensureNotNull(string, "string");
 
-		switch (string.toLowerCase()) {
+		switch (string.toLowerCase(Locale.ENGLISH)) {
 		case "0":
 		case "false":
 		case "no":

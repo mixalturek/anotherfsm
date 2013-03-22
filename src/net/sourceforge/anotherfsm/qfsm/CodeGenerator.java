@@ -480,8 +480,16 @@ public class CodeGenerator {
 	 */
 	private static String loadTemplate(String name) throws QfsmException {
 		try (InputStream stream = CodeGenerator.class.getResourceAsStream(name)) {
-			byte[] data = new byte[stream.available()];
-			stream.read(data);
+			int size = stream.available();
+			byte[] data = new byte[size];
+			int actualSize = stream.read(data);
+
+			if (actualSize != size) {
+				throw new QfsmException(
+						"Unexpected number of bytes loaded from template: expected "
+								+ size + ", actual " + actualSize);
+			}
+
 			return new String(data, "UTF-8");
 		} catch (IOException e) {
 			throw new QfsmException("Template loading failed: " + name, e);

@@ -138,6 +138,9 @@ public class QfsmMachine {
 	QfsmState getState(String stateName) throws QfsmException {
 		XmlUtils.ensureNotNull(stateName, "stateName");
 
+		if (states == null)
+			throw new QfsmException("List of states is not initialized");
+
 		for (QfsmState state : states) {
 			if (stateName.equals(state.getName()))
 				return state;
@@ -156,6 +159,9 @@ public class QfsmMachine {
 	 *             if the state does not exist
 	 */
 	QfsmState getState(int stateId) throws QfsmException {
+		if (states == null)
+			throw new QfsmException("List of states is not initialized");
+
 		for (QfsmState state : states) {
 			if (stateId == state.getStateId())
 				return state;
@@ -167,6 +173,9 @@ public class QfsmMachine {
 	QfsmTransition getTransition(int startStateId, String inputEvent,
 			int destinationStateId) throws QfsmException {
 		XmlUtils.ensureNotNull(inputEvent, "inputText");
+
+		if (transitions == null)
+			throw new QfsmException("List of transtions is not initialized");
 
 		for (QfsmTransition transition : transitions) {
 			if (startStateId == transition.getSourceStateId()
@@ -191,6 +200,9 @@ public class QfsmMachine {
 			startState = null;
 		else
 			startState = getState(startStateId);
+
+		if (transitions == null)
+			throw new QfsmException("List of transtions is not initialized");
 
 		for (QfsmTransition transition : transitions) {
 			transition.setSourceState(getState(transition.getSourceStateId()));

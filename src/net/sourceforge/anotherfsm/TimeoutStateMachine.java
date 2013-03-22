@@ -110,10 +110,8 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 		try {
 			super.start();
 		} catch (FsmException e) {
-			if (timer != null) {
-				timer.cancel();
-				timer = null;
-			}
+			timer.cancel();
+			timer = null;
 			throw e;
 		}
 	}
