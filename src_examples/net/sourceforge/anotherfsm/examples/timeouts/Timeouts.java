@@ -21,6 +21,7 @@ package net.sourceforge.anotherfsm.examples.timeouts;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
 
 import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.FsmException;
@@ -63,9 +64,9 @@ public class Timeouts {
 				logger.info("Type a command: [exit|connect|disconnect]");
 
 				// Ignore empty commands (enter presses)
-				String command = in.readLine();
+				String command = null;
 
-				while (command.isEmpty())
+				while (command == null || command.isEmpty())
 					command = in.readLine();
 
 				// Exit on 'exit' command
@@ -79,7 +80,7 @@ public class Timeouts {
 
 				try {
 					state = ConnectionStateEvent.ConnectionState
-							.valueOf(command.toUpperCase());
+							.valueOf(command.toUpperCase(Locale.ENGLISH));
 				} catch (IllegalArgumentException e) {
 					logger.error("Unknown command: " + command);
 					continue;

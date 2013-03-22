@@ -543,7 +543,6 @@ public class DeterministicStateMachineTest {
 			fail("Should not be executed: " + e);
 		}
 
-		assertNull(processedEvent);
 		assertEquals(state, machine.getActiveState());
 
 		try {
@@ -651,6 +650,7 @@ public class DeterministicStateMachineTest {
 		try {
 			// No such transition
 			processedEvent = machine.process(new TypeEventB());
+			assertNull(processedEvent);// To solve FindBugs warning
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			// Do nothing
@@ -885,7 +885,10 @@ public class DeterministicStateMachineTest {
 			public void onTransition(State source, Event event,
 					State destination) {
 				assertEquals(state, source);
-				assertEquals(OtherEvent.instance, event);
+
+				if (!(event instanceof OtherEvent))
+					fail("Expecting instance of OtherEvent");
+
 				assertEquals(new TypeEventB(),
 						((OtherEvent) event).getSourceEvent());
 				assertEquals(another, destination);
@@ -919,14 +922,20 @@ public class DeterministicStateMachineTest {
 			fail("Should not be executed: " + e);
 		}
 
+		processedEvent = null;
+
+		assertEquals(another, machine.getActiveState());
+
 		try {
-			assertEquals(another, machine.getActiveState());
 			processedEvent = machine.process(new TypeEventB());
+			assertNull(processedEvent);// To solve FindBugs warning
 			fail("Should not be executed");
 		} catch (FsmException e) {
 			// No such transition
 			// Do nothing
 		}
+
+		assertNull(processedEvent);
 
 		machine.close();
 	}
