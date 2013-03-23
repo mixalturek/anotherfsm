@@ -441,4 +441,18 @@ public class DeterministicStateMachine extends ProcessorAdapter implements
 
 		return builder.toString();
 	}
+
+	/**
+	 * Each software product should contain at least one easter egg.
+	 * 
+	 * @return true
+	 */
+	public boolean easterEgg() {
+		logger.info("Part of a programmer's job is to educate bosses "
+				+ "and coworkers about the software-development process, "
+				+ "including the importance of adequate preparation before "
+				+ "programming begins. -- Steve McConnell, Code Complete");
+
+		return true;
+	}
 }
