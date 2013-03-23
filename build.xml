@@ -28,23 +28,41 @@
 	<property name="javac.target" value="1.7" />
 	<property name="javac.source" value="1.7" />
 
+	<property name="findbugsHome" value="/opt/findbugs-2.0.2" />
+	<property name="coberturaHome" value="/opt/cobertura-1.9.4.1" />
+
 	<path id="classpath">
 		<pathelement location="${builddir}/classes" />
 	</path>
-	
+
 	<path id="classpath-examples">
 		<path refid="classpath"/>
 		<pathelement location="${builddir}/classes_examples/" />
 		<pathelement location="lib/log4j-1.2.17.jar" />
 	</path>
-		
+
+	<path id="classpath-cobertura">
+	    <fileset dir="${coberturaHome}">
+	        <include name="cobertura.jar" />
+	        <include name="lib/**/*.jar" />
+	    </fileset>
+	</path>
+
 	<path id="classpath-tests">
+		<!-- The instrumented classes must be first to support coverage. -->
+		<pathelement location="${builddir}/classes_instrumented"/>
+		<path refid="classpath-cobertura"/>
 		<path refid="classpath"/>
 		<path refid="classpath-examples"/>
 		<pathelement location="${builddir}/classes_tests/" />
 		<pathelement location="lib/junit-4.10.jar" />
 		<pathelement location="lib/hamcrest-all-1.3.jar" />
 	</path>
+
+
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugsHome}/lib/findbugs-ant.jar"/>
+	<taskdef classpathref="classpath-cobertura" resource="tasks.properties" />
+
 
 	<!-- Echo available targets. -->
 	<target name="usage">
@@ -57,22 +75,23 @@ compile              - Process all compile targets.
     compile-examples - Compile all examples.
     compile-tests    - Compile all tests.
 tests                - Execute junit tests.
+coverage-report      - Create coverage report.
 jar                  - Build jar packages.
 javadoc              - Process all javadoc targets.
     javadoc-api      - Generate JavaDoc documentation.
     javadoc-full     - Generate full JavaDoc documentation.
 dist                 - Copy files to the distribution directory.
 dist-zip             - Create an archive from the dist directory.
+findbugs             - Static code analysis using FindBugs.
+sloccount            - Count source lines of code.
 all                  - Process full build.
 
 Extra targets:
 
 web                  - Build offline version of project's website.
-sloccount            - Count source lines of code.
-findbugs             - Static code analysis using FindBugs.
 		</echo>
 	</target>
-	
+
 	<!-- Clean all generated files. -->
 	<target name="clean">
 		<delete dir="${builddir}" />
@@ -83,7 +102,7 @@ findbugs             - Static code analysis using FindBugs.
 		<tstamp />
 		<mkdir dir="${builddir}/" />
 	</target>
-	
+
 	<!-- Process all compile targets. -->
 	<target name="compile" depends="compile-sources,compile-examples,compile-tests"/>
 
@@ -100,15 +119,15 @@ findbugs             - Static code analysis using FindBugs.
 			fork="false"
 			deprecation="on"
 			debug="on">
-			
+
 			<compilerarg value="-Xlint"/>
 		</javac>
-		
+
 		<copy todir="${builddir}/classes">
 			<fileset dir="src" includes="**/Template*.txt"/>
 		</copy>
 	</target>
-		
+
 	<!-- Compile all examples. -->
 	<target name="compile-examples" depends="compile-sources">
 		<mkdir dir="${builddir}/classes_examples/" />
@@ -122,11 +141,11 @@ findbugs             - Static code analysis using FindBugs.
 			fork="false"
 			deprecation="on"
 			debug="on">
-			
+
 			<compilerarg value="-Xlint"/>
 		</javac>
 	</target>
-		
+
 	<!-- Compile all tests. -->
 	<target name="compile-tests" depends="compile-sources">
 		<mkdir dir="${builddir}/classes_tests/" />
@@ -140,15 +159,31 @@ findbugs             - Static code analysis using FindBugs.
 			fork="false"
 			deprecation="on"
 			debug="on">
-			
+
 			<compilerarg value="-Xlint"/>
 		</javac>
 	</target>
-	
+
+	<!-- Byte code instrumentation for computation of code coverage. -->
+	<target name="coverage-instrument" depends="compile-sources">
+		<delete file="${builddir}/cobertura.ser"/>
+		<delete dir="${builddir}/classes_instrumented" />
+
+		<cobertura-instrument todir="${builddir}/classes_instrumented" datafile="${builddir}/cobertura.ser">
+			<ignore regex="org.apache.log4j.*" />
+			<fileset dir="${builddir}/classes">
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+	</target>
+
 	<!-- Execute junit tests. -->
-	<target name="tests" depends="compile-tests">
+	<target name="tests" depends="compile-tests,coverage-instrument">
 		<mkdir dir="${builddir}/tests/" />
 		<junit printsummary="yes" haltonfailure="no" showoutput="no" failureProperty="test.failed">
+			<!-- Work around Cobertura incompatibilty with Java 7 -->
+			<jvmarg value="-XX:-UseSplitVerifier" />
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${builddir}/cobertura.ser" />
 			<classpath refid="classpath-tests" />
 		 	<batchtest fork="yes" todir="${builddir}/tests">
 				<formatter type="xml"/>
@@ -158,18 +193,37 @@ findbugs             - Static code analysis using FindBugs.
 				</fileset>
 			</batchtest>
 		</junit>
-		
+
 		<antcall target="tests-result"/>
+
+		<junitreport todir="${builddir}/tests/">
+			<fileset dir="${builddir}/tests/">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${builddir}/tests_html/" />
+		</junitreport>
 	</target>
-	
+
 	<target name="tests-result" if="test.failed">
 	    <echo message="JUnit tests failed!"/>
 	</target>
 
+	<!-- Create coverage report. -->
+	<target name="coverage-report" depends="tests">
+		<cobertura-report datafile="${builddir}/cobertura.ser" srcdir="src/" destdir="${builddir}/cobertura_xml" format="xml" />
+		<cobertura-report datafile="${builddir}/cobertura.ser" srcdir="src/" destdir="${builddir}/cobertura_xml" format="summaryXml" />
+		<cobertura-report datafile="${builddir}/cobertura.ser" destdir="${builddir}/cobertura_html">
+			<fileset dir="src/">
+				<include name="**/*.java"/>
+			</fileset>
+		</cobertura-report>
+	</target>
+
+
 	<!-- Build jar packages. -->
 	<target name="jar" depends="init,compile-sources">
 		<delete file="${builddir}/${jarname}" />
-		
+
 		<jar jarfile="${builddir}/${jarname}" basedir="${builddir}/classes">
 			<manifest>
 				<attribute name="Implementation-Title" value="${projectName}" />
@@ -183,7 +237,7 @@ findbugs             - Static code analysis using FindBugs.
 
 	<!-- Process all javadoc targets. -->
 	<target name="javadoc" depends="javadoc-api,javadoc-full"/>
-	
+
 	<!-- Generate JavaDoc documentation. -->
 	<target name="javadoc-api">
 		<javadoc
@@ -207,7 +261,7 @@ findbugs             - Static code analysis using FindBugs.
 			bottom="&lt;i&gt;Copyright 2012-2013 ${author}, &lt;a href=&quot;${projectWeb}&quot;&gt;${projectName}&lt;/a&gt;.&lt;/i&gt;"
 		/>
 	</target>
-	
+
     <!-- Generate JavaDoc documentation including private members. -->
 	<target name="javadoc-full">
 		<javadoc
@@ -231,60 +285,60 @@ findbugs             - Static code analysis using FindBugs.
 			bottom="&lt;i&gt;Copyright 2013 ${author}, &lt;a href=&quot;${projectWeb}&quot;&gt;${projectName}&lt;/a&gt;.&lt;/i&gt;"
 		/>
 	</target>
-	
+
 	<!-- Build offline version of project's website. -->
 	<target name="web" depends="javadoc">
 		<copy todir="${builddir}/web/">
 			<fileset dir="web/" excludes="**/*.php"/>
 		</copy>
-		
+
 		<copy todir="${builddir}/web/doc/">
 			<fileset dir="${builddir}/doc/"/>
 		</copy>
-		
+
 		<copy todir="${builddir}/web/doc_full/">
 			<fileset dir="${builddir}/doc_full/"/>
 		</copy>
-		
+
 		<exec executable="utils/offline_web.sh"/>
 	</target>
-    
+
 	<!-- Copy files to the distribution directory. -->
 	<target name="dist" depends="jar,javadoc-api">
 		<delete dir="${builddir}/dist/" />
-		
+
 		<copy todir="${builddir}/dist/">
 			<fileset file="${builddir}/${jarname}"/>
 			<fileset file="LICENSE"/>
 			<fileset file="NOTICE"/>
 			<fileset file="build.xml"/>
 		</copy>
-		
+
 		<copy todir="${builddir}/dist/src/">
 			<fileset dir="src/"/>
 		</copy>
-			
+	
 		<copy todir="${builddir}/dist/src_examples/">
 			<fileset dir="src_examples/"/>
 		</copy>
-		
+
 		<copy todir="${builddir}/dist/src_tests/">
 			<fileset dir="src_tests/"/>
 		</copy>
-		
+
 		<copy todir="${builddir}/dist/lib/">
 			<fileset dir="lib/"/>
 		</copy>
-		
+
 		<copy todir="${builddir}/dist/doc/">
 			<fileset dir="${builddir}/doc/"/>
 		</copy>
-		
+
 		<copy todir="${builddir}/dist/doc_full/">
 			<fileset dir="${builddir}/doc_full/"/>
 		</copy>
 	</target>
-	
+
 	<!-- Create an archive from the dist directory. -->
 	<target name="dist-zip" depends="jar,dist">
 		<move todir="${builddir}/${distname}"> 
@@ -295,7 +349,7 @@ findbugs             - Static code analysis using FindBugs.
 			basedir="${builddir}"
 			includes="${distname}/**/*"
 		/>
-		
+
 		<move todir="${builddir}/dist/"> 
 			<fileset dir="${builddir}/${distname}"/> 
 		</move>
@@ -303,7 +357,7 @@ findbugs             - Static code analysis using FindBugs.
 		<checksum file="${builddir}/${distname}.zip"/>
 		<checksum file="${builddir}/${jarname}"/>
 	</target>
-	
+
 	<!-- Count source lines of code. -->
 	<target name="sloccount">
 		<exec executable="sloccount" output="${builddir}/sloccount.sc">
@@ -317,13 +371,10 @@ findbugs             - Static code analysis using FindBugs.
 			<arg value="web"/>
 		</exec>
 	</target>
-	
+
 	<!-- Static code analysis using FindBugs. -->
-	<property name="findbugs.home" value="/opt/findbugs-2.0.2" />
-	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="${findbugs.home}/lib/findbugs-ant.jar"/>
-		
 	<target name="findbugs" depends="jar">
-		<findbugs home="${findbugs.home}"
+		<findbugs home="${findbugsHome}"
 			output="xml:withMessages"
 			outputFile="${builddir}/findbugs.xml"
 			reportLevel="low"
@@ -333,12 +384,13 @@ findbugs             - Static code analysis using FindBugs.
 			<sourcePath path="src" />
 			<class location="${builddir}/${jarname}" />
 		</findbugs>
-		
+
 		<xslt in="${builddir}/findbugs.xml"
-				style="${findbugs.home}/src/xsl/default.xsl"
+				style="${findbugsHome}/src/xsl/default.xsl"
 				out="${builddir}/findbugs.html" />
 	</target>
 
+
     <!-- Process full build. -->
-    <target name="all" depends="compile,tests,jar,javadoc,dist-zip"/>
+    <target name="all" depends="compile,tests,coverage-report,jar,javadoc,dist-zip,findbugs,sloccount"/>
 </project>
