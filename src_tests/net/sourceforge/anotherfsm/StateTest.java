@@ -134,6 +134,11 @@ public class StateTest {
 		assertEquals(state1Final, state1);
 		assertEquals(state2Final, state2);
 		assertEquals(state3Final, state3);
+
+		State state = new State("test");
+		assertEquals(state, state);
+		assertFalse(state.equals(null));
+		assertFalse(state.equals(new Object()));
 	}
 
 	@Test
@@ -146,5 +151,14 @@ public class StateTest {
 
 		State stateFinal = new State("state", State.Type.FINAL);
 		assertEquals("state", stateFinal.toString());
+	}
+
+	@Test
+	public final void testGetType() {
+		State state = new State("state");
+		assertEquals(State.Type.DEFAULT, state.getType());
+
+		state = new State("state", State.Type.FINAL);
+		assertEquals(State.Type.FINAL, state.getType());
 	}
 }

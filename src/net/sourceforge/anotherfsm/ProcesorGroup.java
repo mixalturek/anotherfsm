@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class ProcesorGroup implements Processor {
 	/** The inner processors. */
-	List<Processor> processors = new LinkedList<Processor>();
+	private final List<Processor> processors = new LinkedList<Processor>();
 
 	/**
 	 * Create the object.
@@ -64,6 +64,8 @@ public class ProcesorGroup implements Processor {
 
 	@Override
 	public Event process(Event event) throws FsmException {
+		Helpers.ensureNotNull(event, "event");
+
 		for (Processor processor : processors)
 			processor.process(event);
 
@@ -71,6 +73,8 @@ public class ProcesorGroup implements Processor {
 	}
 
 	public void addProcessor(Processor processor) {
+		Helpers.ensureNotNull(processor, "processor");
+
 		processors.add(processor);
 	}
 }

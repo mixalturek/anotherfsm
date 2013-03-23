@@ -174,7 +174,10 @@ public class State {
 		if (this == object)
 			return true;
 
-		if (object == null || !(object instanceof State))
+		if (object == null)
+			return false;
+
+		if (!(object instanceof State))
 			return false;
 
 		State other = (State) object;

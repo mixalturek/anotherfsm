@@ -26,7 +26,7 @@ import org.junit.Test;
 
 public class TimeoutEventTest {
 	@Test
-	public final void equalsTest() {
+	public final void testEquals() {
 		assertEquals(
 				TimeoutEvent.instance(1, TimeoutEvent.Type.LOOP_NO_RESTART),
 				TimeoutEvent.instance(2, TimeoutEvent.Type.LOOP_NO_RESTART));
@@ -37,10 +37,17 @@ public class TimeoutEventTest {
 		assertFalse(TimeoutEvent.instance(1, TimeoutEvent.Type.LOOP_RESTART)
 				.equals(TimeoutEvent.instance(1,
 						TimeoutEvent.Type.LOOP_NO_RESTART)));
+
+		TimeoutEvent event = TimeoutEvent.instance(1,
+				TimeoutEvent.Type.LOOP_NO_RESTART);
+		assertEquals(event, event);
+
+		assertFalse(event.equals(null));
+		assertFalse(event.equals(new TypeEventA()));
 	}
 
 	@Test
-	public final void invalidTimeout() {
+	public final void testInvalidTimeout() {
 		try {
 			TimeoutEvent.instance(0, TimeoutEvent.Type.LOOP_NO_RESTART);
 		} catch (IllegalArgumentException e) {

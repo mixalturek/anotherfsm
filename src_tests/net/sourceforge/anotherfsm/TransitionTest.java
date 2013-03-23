@@ -78,6 +78,17 @@ public class TransitionTest {
 		assertFalse(transition2.equals(transition3));
 		assertFalse(transition3.equals(transition1));
 		assertFalse(transition3.equals(transition2));
+
+		Transition transition = new Transition(new State("source"),
+				new TypeEventA(), new State("destination"));
+
+		assertEquals(transition, transition);
+		assertFalse(transition.equals(null));
+		assertFalse(transition.equals(new Object()));
+		assertFalse(transition.equals(new Transition(new State("different"),
+				new TypeEventA(), new State("destination"))));
+		assertFalse(transition.equals(new Transition(new State("source"),
+				new TypeEventA(), new State("different"))));
 	}
 
 	@Test

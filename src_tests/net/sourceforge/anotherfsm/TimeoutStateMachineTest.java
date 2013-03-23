@@ -602,4 +602,50 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 
 		machine.close();
 	}
+
+	@Test
+	public final void testStartTwice() {
+		StateMachine machine = new TimeoutStateMachine("test");
+		try {
+			machine.setStartState(new State("state"));
+			machine.start();
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		try {
+			machine.start();
+			fail("Should not be executed");
+		} catch (FsmException e) {
+			assertEquals(
+					"Timer already running, state machine probably started twice",
+					e.getMessage());
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testStartNotStarted() {
+		StateMachine machine = new TimeoutStateMachine("test");
+
+		try {
+			machine.setStartState(new State("state"));
+			machine.addTransition(new Transition(new State("state"),
+					new TypeEventA(), new State("state")));
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		try {
+			machine.process(new TypeEventA());
+			fail("Should not be executed");
+		} catch (FsmException e) {
+			assertEquals(
+					"Timer is not running while processing, state machine probably not started yet",
+					e.getMessage());
+		}
+
+		machine.close();
+	}
 }

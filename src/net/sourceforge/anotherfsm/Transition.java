@@ -168,7 +168,10 @@ public class Transition {
 		if (this == object)
 			return true;
 
-		if (object == null || !(object instanceof Transition))
+		if (object == null)
+			return false;
+
+		if (!(object instanceof Transition))
 			return false;
 
 		Transition other = (Transition) object;

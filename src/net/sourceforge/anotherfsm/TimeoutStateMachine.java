@@ -134,9 +134,8 @@ public class TimeoutStateMachine extends SynchronizedStateMachine {
 		super.notifyEnter(previous, event, current);
 
 		if (timer == null) {
-			String msg = "Timer is not running while processing, state machine probably not started yet";
-			logger.error(msg);
-			throw new FsmException(msg);
+			throw new FsmException(
+					"Timer is not running while processing, state machine probably not started yet");
 		}
 
 		boolean loopTransition = previous.equals(current);

@@ -118,4 +118,30 @@ public class ThreadProcessorTest {
 
 		processor.close();
 	}
+
+	@Test
+	public void testProcessTooShortQueue() {
+		Processor processor = new ThreadProcessor(new TypePreprocessor("test"),
+				false, new LinkedBlockingQueue<Event>(3));
+
+		// Processor not started to simulate too short queue for input events
+
+		try {
+			processor.process(NullEvent.instance);
+			processor.process(NullEvent.instance);
+			processor.process(NullEvent.instance);
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		try {
+			processor.process(NullEvent.instance);
+			fail("Should not be executed");
+		} catch (FsmException e) {
+			assertTrue(e.getMessage().contains(
+					"Adding event to the queue failed"));
+		}
+
+		processor.close();
+	}
 }

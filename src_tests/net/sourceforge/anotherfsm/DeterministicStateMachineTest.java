@@ -1042,6 +1042,45 @@ public class DeterministicStateMachineTest {
 	}
 
 	@Test
+	public final void testLocalLoopNoProcessTransition() {
+		StateMachine machine = genStateMachine();
+		State start = new State("start");
+		State end = new State("end");
+		StateListenerImpl listener = new StateListenerImpl(
+				StateListener.Type.LOOP_NO_PROCESS);
+		start.addListener(listener);
+
+		try {
+			machine.setStartState(start);
+			machine.addState(end);
+			machine.addTransition(new Transition(start, new TypeEventA(), start));
+			machine.addTransition(new Transition(start, new TypeEventB(), end));
+
+			assertEquals(0, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.start();
+
+			assertEquals(1, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.process(new TypeEventA());
+
+			assertEquals(1, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.process(new TypeEventB());
+
+			assertEquals(1, listener.enteredNum);
+			assertEquals(1, listener.exitedNum);
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
 	public final void testToString() {
 		StateMachine machine = genStateMachine();
 		State start = new State("start");
