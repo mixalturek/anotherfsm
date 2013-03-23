@@ -28,9 +28,11 @@
  * <li>Type-based and equals-based event preprocessors.</li>
  * <li>Predefined and user defined events.</li>
  * <li>Separated state machine building, registration of listeners and processing of events.</li>
+ * <li>Support for Qfsm graphical design tool with code generation.</li>
  * <li>Generalized logging, whatever backend can be injected.</li>
- * <li>Apache 2 license, version 2.0.</li>
+ * <li>Suitable for event driven programming.</li>
  * <li>Well-designed API, fully documented code, unit tests.</li>
+ * <li>Apache 2 license, version 2.0.</li>
  * </ul>
  *
  * @author Michal Turek
