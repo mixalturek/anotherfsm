@@ -20,6 +20,7 @@ package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
 
@@ -106,6 +107,14 @@ public class TypeProcessorTest {
 							return null;
 						}
 					});
+
+			processor.addProcessor(TypeEventC.class,
+					new Preprocessor.Processor<TypeEventC>() {
+						@Override
+						public Event process(TypeEventC event) {
+							return event;
+						}
+					});
 		} catch (FsmException e) {
 			fail("Should not be executed: " + e);
 		}
@@ -125,6 +134,10 @@ public class TypeProcessorTest {
 
 			processedEvent = processor.process(new TypeEventB());
 			assertNull(processedEvent);
+
+			TypeEventC event = new TypeEventC();
+			processedEvent = processor.process(event);
+			assertSame(event, processedEvent);
 		} catch (FsmException e) {
 			fail("Should not be executed: " + e);
 		}

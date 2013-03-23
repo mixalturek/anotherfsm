@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
-import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
+import net.sourceforge.anotherfsm.logger.NoLoggerJUnitFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import org.junit.Test;
 public class ThreadProcessorTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.setLoggerFactory(new NoLoggerFactory());
+		AnotherFsm.setLoggerFactory(new NoLoggerJUnitFactory());
 	}
 
 	@Test

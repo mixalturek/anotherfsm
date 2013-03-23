@@ -19,24 +19,24 @@
 package net.sourceforge.anotherfsm.logger;
 
 /**
- * Factory of empty logger. Prefer to not use this class and always log at least
- * something.
+ * Factory of empty logger for JUnit tests. Prefer to not use this class and
+ * always log at least something.
  * 
  * @author Michal Turek
  */
-public class NoLoggerFactory implements FsmLoggerFactory {
+public class NoLoggerJUnitFactory implements FsmLoggerFactory {
 	@Override
 	public FsmLogger getLogger(Class<?> clazz) {
-		return NoLogger.instance;
+		return NoLoggerJUnit.instance;
 	}
 
 	@Override
 	public FsmLogger getLogger(Class<?> clazz, String instance) {
-		return NoLogger.instance;
+		return NoLoggerJUnit.instance;
 	}
 
 	@Override
 	public FsmLogger getLogger(String name) {
-		return NoLogger.instance;
+		return NoLoggerJUnit.instance;
 	}
 }

@@ -18,7 +18,16 @@
 
 package net.sourceforge.anotherfsm;
 
+import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
+
+import org.junit.BeforeClass;
+
 public class SynchronizedStateMachineTest extends DeterministicStateMachineTest {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		AnotherFsm.setLoggerFactory(new NoLoggerFactory());
+	}
+
 	@Override
 	protected StateMachine genStateMachine() {
 		return new SynchronizedStateMachine("fsm");

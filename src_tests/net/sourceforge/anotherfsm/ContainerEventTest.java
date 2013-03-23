@@ -34,6 +34,12 @@ public class ContainerEventTest {
 				.equals(new ContainerEvent<TypeEventB>(new TypeEventB())));
 		assertFalse(new ContainerEvent<Object>(new Object())
 				.equals(new ContainerEvent<Object>(new Object())));
+
+		assertFalse(new ContainerEvent<Character>('A')
+				.equals(NullEvent.instance));
+
+		ContainerEvent<Character> instance = new ContainerEvent<Character>('A');
+		assertEquals(instance, instance);
 	}
 
 	@Test

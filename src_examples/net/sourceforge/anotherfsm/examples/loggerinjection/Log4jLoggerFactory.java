@@ -31,6 +31,8 @@ import net.sourceforge.anotherfsm.logger.FsmLoggerFactory;
  * <ul>
  * <li>{@link net.sourceforge.anotherfsm.logger.NoLoggerFactory}
  *            Disable logging at all.</li>
+ * <li>{@link net.sourceforge.anotherfsm.logger.BasicLoggerFactory}
+ *            Redirecting of the messages to the standard streams.</li>
  * <li>@link {@link net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory}
  *            Logging to standard output and standard error output.</li>
  * <li>{@link net.sourceforge.anotherfsm.logger.JavaLoggerFactory}

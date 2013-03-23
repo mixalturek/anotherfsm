@@ -20,8 +20,9 @@ package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
-import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
+import net.sourceforge.anotherfsm.logger.NoLoggerJUnitFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,7 +30,7 @@ import org.junit.Test;
 public class EqualsPreprocessorTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.setLoggerFactory(new NoLoggerFactory());
+		AnotherFsm.setLoggerFactory(new NoLoggerJUnitFactory());
 	}
 
 	@Test
@@ -106,6 +107,14 @@ public class EqualsPreprocessorTest {
 							return null;
 						}
 					});
+
+			processor.addProcessor(new TypeEventC(),
+					new Preprocessor.Processor<TypeEventC>() {
+						@Override
+						public Event process(TypeEventC event) {
+							return event;
+						}
+					});
 		} catch (FsmException e) {
 			fail("Should not be executed: " + e);
 		}
@@ -125,6 +134,10 @@ public class EqualsPreprocessorTest {
 
 			processedEvent = processor.process(new TypeEventB());
 			assertNull(processedEvent);
+
+			TypeEventC event = new TypeEventC();
+			processedEvent = processor.process(event);
+			assertSame(event, processedEvent);
 		} catch (FsmException e) {
 			fail("Should not be executed: " + e);
 		}

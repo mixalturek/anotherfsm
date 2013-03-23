@@ -19,6 +19,7 @@
 package net.sourceforge.anotherfsm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -29,7 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.anotherfsm.logger.NoLoggerFactory;
+import net.sourceforge.anotherfsm.logger.NoLoggerJUnitFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class DeterministicStateMachineTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		AnotherFsm.setLoggerFactory(new NoLoggerFactory());
+		AnotherFsm.setLoggerFactory(new NoLoggerJUnitFactory());
 	}
 
 	@Test
@@ -939,4 +940,136 @@ public class DeterministicStateMachineTest {
 
 		machine.close();
 	}
+
+	@Test
+	public final void testIsInFinalState() {
+		StateMachine machine = genStateMachine();
+		State start = new State("start");
+		State end = new State("end", State.Type.FINAL);
+
+		try {
+			machine.setStartState(start);
+			machine.addState(end);
+			machine.addTransition(new Transition(start, new TypeEventA(), end));
+			machine.start();
+
+			assertFalse(machine.isInFinalState());
+			machine.process(new TypeEventA());
+			assertTrue(machine.isInFinalState());
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testGlobalLoopProcessTransition() {
+		StateMachine machine = genStateMachine();
+		State start = new State("start");
+		State end = new State("end");
+		StateListenerImpl listener = new StateListenerImpl(
+				StateListener.Type.LOOP_PROCESS);
+		machine.addListener(listener);
+
+		try {
+			machine.setStartState(start);
+			machine.addState(end);
+			machine.addTransition(new Transition(start, new TypeEventA(), start));
+			machine.addTransition(new Transition(start, new TypeEventB(), end));
+
+			assertEquals(0, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.start();
+
+			assertEquals(1, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.process(new TypeEventA());
+
+			assertEquals(2, listener.enteredNum);
+			assertEquals(1, listener.exitedNum);
+
+			machine.process(new TypeEventB());
+
+			assertEquals(3, listener.enteredNum);
+			assertEquals(2, listener.exitedNum);
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testGlobalLoopNoProcessTransition() {
+		StateMachine machine = genStateMachine();
+		State start = new State("start");
+		State end = new State("end");
+		StateListenerImpl listener = new StateListenerImpl(
+				StateListener.Type.LOOP_NO_PROCESS);
+		machine.addListener(listener);
+
+		try {
+			machine.setStartState(start);
+			machine.addState(end);
+			machine.addTransition(new Transition(start, new TypeEventA(), start));
+			machine.addTransition(new Transition(start, new TypeEventB(), end));
+
+			assertEquals(0, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.start();
+
+			assertEquals(1, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.process(new TypeEventA());
+
+			assertEquals(1, listener.enteredNum);
+			assertEquals(0, listener.exitedNum);
+
+			machine.process(new TypeEventB());
+
+			assertEquals(2, listener.enteredNum);
+			assertEquals(1, listener.exitedNum);
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testToString() {
+		StateMachine machine = genStateMachine();
+		State start = new State("start");
+		State end = new State("end", State.Type.FINAL);
+
+		try {
+			assertEquals("", machine.toString());
+
+			machine.setStartState(start);
+			machine.addState(end);
+			assertEquals("", machine.toString());
+
+			machine.addTransition(new Transition(start, new TypeEventA(), end));
+			assertEquals("start -> TypeEventA -> end", machine.toString()
+					.trim());
+		} catch (FsmException e) {
+			fail("Should not be executed");
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testEasterEgg() {
+		DeterministicStateMachine machine = new DeterministicStateMachine(
+				"test");
+		assertTrue(machine.easterEgg());
+		machine.close();
+	}
+
 }

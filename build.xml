@@ -75,7 +75,7 @@ compile              - Process all compile targets.
     compile-examples - Compile all examples.
     compile-tests    - Compile all tests.
 tests                - Execute junit tests.
-coverage-report      - Create coverage report.
+coverage             - Create coverage report for unit tests.
 jar                  - Build jar packages.
 javadoc              - Process all javadoc targets.
     javadoc-api      - Generate JavaDoc documentation.
@@ -209,7 +209,7 @@ web                  - Build offline version of project's website.
 	</target>
 
 	<!-- Create coverage report. -->
-	<target name="coverage-report" depends="tests">
+	<target name="coverage" depends="tests">
 		<cobertura-report datafile="${builddir}/cobertura.ser" srcdir="src/" destdir="${builddir}/cobertura_xml" format="xml" />
 		<cobertura-report datafile="${builddir}/cobertura.ser" srcdir="src/" destdir="${builddir}/cobertura_xml" format="summaryXml" />
 		<cobertura-report datafile="${builddir}/cobertura.ser" destdir="${builddir}/cobertura_html">
@@ -392,5 +392,5 @@ web                  - Build offline version of project's website.
 
 
     <!-- Process full build. -->
-    <target name="all" depends="compile,tests,coverage-report,jar,javadoc,dist-zip,findbugs,sloccount"/>
+    <target name="all" depends="compile,tests,coverage,jar,javadoc,dist-zip,findbugs,sloccount"/>
 </project>
