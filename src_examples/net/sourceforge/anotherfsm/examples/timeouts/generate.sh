@@ -44,8 +44,3 @@ java -classpath $CLASSPATH \
 	--force \
 	--config-file TimeoutConnection.xml \
 	--qfsm-file TimeoutConnection.fsm
-
-
-# The generated files are the final ones
-mv TimeoutConnectionFsm.java.generated TimeoutConnectionFsm.java
-mv TimeoutConnectionProcessor.java.generated TimeoutConnectionProcessor.java

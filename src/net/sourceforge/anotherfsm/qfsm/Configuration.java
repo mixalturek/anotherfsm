@@ -47,6 +47,9 @@ class Configuration {
 	/** The Java package. */
 	private String javaPackage;
 
+	/** The suffix of the file name. */
+	private String fsmFileSuffix;
+
 	/** The imports for state machine class. */
 	private String fsmImports;
 
@@ -70,6 +73,9 @@ class Configuration {
 
 	/** Generate transition listener for each transition. */
 	private boolean transitionListener;
+
+	/** The suffix of the file name. */
+	private String processorFileSuffix;
 
 	/** The imports for processor class. */
 	private String processorImports;
@@ -138,6 +144,14 @@ class Configuration {
 
 	public boolean isTransitionDescriptionContainsCode() {
 		return transitionDescriptionContainsCode;
+	}
+
+	public String getFsmFileSuffix() {
+		return fsmFileSuffix;
+	}
+
+	public String getProcessorFileSuffix() {
+		return processorFileSuffix;
 	}
 
 	/**
@@ -211,9 +225,14 @@ class Configuration {
 				.toBoolean(XmlUtils.getText(XmlUtils.getOneElement(
 						configurationEl, "TransitionDescriptionContainsCode")));
 
+		Element fsmClassEl = XmlUtils.getOneElement(configurationEl,
+				"StateMachineClass");
+
+		configuration.fsmFileSuffix = XmlUtils.getOptionalText(XmlUtils
+				.getOneElement(fsmClassEl, "FileSuffix"));
+
 		configuration.fsmImports = XmlUtils.getText(XmlUtils.getOneElement(
-				XmlUtils.getOneElement(configurationEl, "StateMachineClass"),
-				"Imports"));
+				fsmClassEl, "Imports"));
 
 		Element processorClassEl = XmlUtils.getOneElement(configurationEl,
 				"ProcessorClass");
@@ -241,6 +260,9 @@ class Configuration {
 		configuration.transitionListener = XmlUtils.toBoolean(XmlUtils
 				.getText(XmlUtils.getOneElement(processorClassEl,
 						"TransitionListener")));
+
+		configuration.processorFileSuffix = XmlUtils.getOptionalText(XmlUtils
+				.getOneElement(processorClassEl, "FileSuffix"));
 
 		configuration.processorImports = XmlUtils.getText(XmlUtils
 				.getOneElement(processorClassEl, "Imports"));

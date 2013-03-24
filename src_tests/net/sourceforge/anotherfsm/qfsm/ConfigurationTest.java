@@ -22,6 +22,7 @@ public class ConfigurationTest {
 			assertEquals("base class", configuration.getBaseClass());
 			assertEquals("java package", configuration.getJavaPackage());
 			assertFalse(configuration.isTransitionDescriptionContainsCode());
+			assertEquals("fsm suffix", configuration.getFsmFileSuffix());
 			assertEquals("state machine imports", configuration.getFsmImports());
 			assertTrue(configuration.isTypePreprocessor());
 			assertTrue(configuration.isEqualsPreprocessor());
@@ -29,6 +30,8 @@ public class ConfigurationTest {
 			assertTrue(configuration.isGlobalTransitionListener());
 			assertTrue(configuration.isStateListener());
 			assertTrue(configuration.isTransitionListener());
+			assertEquals("processor suffix",
+					configuration.getProcessorFileSuffix());
 			assertEquals("processor imports",
 					configuration.getProcessorImports());
 			assertEquals("file header", configuration.getFileHeader());

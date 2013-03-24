@@ -133,7 +133,8 @@ public class CodeGenerator {
 				genTransitionInitializations());
 
 		writeFile(new File(configuration.getOutputDirectory() + File.separator
-				+ className + ".java.generated"), content, parameters.isForce());
+				+ className + ".java" + configuration.getFsmFileSuffix()),
+				content, parameters.isForce());
 	}
 
 	private void generateProcessor() throws QfsmException {
@@ -186,8 +187,11 @@ public class CodeGenerator {
 		content = content.replace("{{TRANSITION_LISTENERS}}", configuration
 				.isTransitionListener() ? genTransitionListeners() : "");
 
-		writeFile(new File(configuration.getOutputDirectory() + File.separator
-				+ className + ".java.generated"), content, parameters.isForce());
+		writeFile(
+				new File(configuration.getOutputDirectory() + File.separator
+						+ className + ".java"
+						+ configuration.getProcessorFileSuffix()), content,
+				parameters.isForce());
 	}
 
 	/**

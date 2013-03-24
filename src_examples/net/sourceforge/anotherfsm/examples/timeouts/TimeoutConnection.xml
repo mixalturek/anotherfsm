@@ -17,6 +17,9 @@
 
 	<!-- Configuration of the generated state machine class. -->
 	<StateMachineClass>
+		<!-- The suffix of the file name. -->
+		<FileSuffix></FileSuffix>
+		
 		<!-- Java imports to make the file compilable. -->
 		<Imports>
 import net.sourceforge.anotherfsm.*;
@@ -42,6 +45,9 @@ import net.sourceforge.anotherfsm.*;
 
 		<!-- Generate transition listeners. -->
 		<TransitionListener>yes</TransitionListener>
+
+		<!-- The suffix of the file name. -->
+		<FileSuffix></FileSuffix>
 
 		<!-- Java imports to make the file compilable. -->
 		<Imports>
