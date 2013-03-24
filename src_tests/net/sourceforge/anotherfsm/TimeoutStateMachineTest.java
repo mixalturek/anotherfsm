@@ -33,7 +33,7 @@ import org.junit.Test;
 
 public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 	/** The default timeout for the tests. */
-	private static final long TIMEOUT = 10;
+	private static final long TIMEOUT = 20;
 
 	@Override
 	protected StateMachine genStateMachine() {
