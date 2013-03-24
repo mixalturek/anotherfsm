@@ -447,9 +447,9 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 	}
 
 	@Test
-	public final void testRuntimeExcpetionInTimeoutCallback() {
+	public final void testRuntimeExceptionInTimeoutCallbackTransition() {
 		class TestStateMachine extends TimeoutStateMachine {
-			public boolean exceptionOccurred = false;
+			public int numExceptions = 0;
 
 			public TestStateMachine(String name) {
 				super(name);
@@ -462,7 +462,7 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 					fail("Should not be executed");
 				} catch (NullPointerException e) {
 					assertEquals("Testing exception", e.getMessage());
-					exceptionOccurred = true;
+					++numExceptions;
 
 					// The thread is not finished but notifyEnter() and
 					// scheduling of a new timeout is not processed
@@ -505,7 +505,149 @@ public class TimeoutStateMachineTest extends DeterministicStateMachineTest {
 			// be deterministic in such case than hide more serious error.
 
 			assertEquals(1, listener.transitionsNum);
-			assertTrue(machine.exceptionOccurred);
+			assertEquals(1, machine.numExceptions);
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		} catch (InterruptedException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testRuntimeExceptionInTimeoutCallbackStateExit() {
+		class TestStateMachine extends TimeoutStateMachine {
+			public int numExceptions = 0;
+
+			public TestStateMachine(String name) {
+				super(name);
+			}
+
+			@Override
+			public Event process(Event event) throws FsmException {
+				try {
+					super.process(event);
+					fail("Should not be executed");
+				} catch (NullPointerException e) {
+					assertEquals("Testing exception", e.getMessage());
+					++numExceptions;
+
+					// The thread is not finished but notifyEnter() and
+					// scheduling of a new timeout is not processed
+				}
+
+				return event;
+			}
+		}
+
+		TestStateMachine machine = new TestStateMachine("fsm");
+		final State startState = new State("startState");
+		Transition toTimeout = new Transition(startState,
+				TimeoutEvent.instance(TIMEOUT, TimeoutEvent.Type.LOOP_RESTART),
+				startState);
+
+		StateListenerImpl listener = new StateListenerImpl(
+				StateListener.Type.LOOP_PROCESS) {
+			@Override
+			public void onStateExit(State previous, Event event, State current) {
+				super.onStateExit(previous, event, current);
+
+				// Serious error in the client code
+				throw new NullPointerException("Testing exception");
+			}
+		};
+
+		startState.addListener(listener);
+
+		try {
+			machine.addState(startState);
+			machine.addTransition(toTimeout);
+			machine.setStartState(startState);
+			machine.start();
+
+			Thread.sleep(TIMEOUT * 3);
+
+			// Only the first timeout callback was processed. The timer thread
+			// then finished on unhandled runtime exception and no other timeout
+			// will be ever processed. Such situation is bad but it is better to
+			// be deterministic in such case than hide more serious error.
+
+			assertEquals(1, listener.exitedNum);
+			assertEquals(1, machine.numExceptions);
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		} catch (InterruptedException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		machine.close();
+	}
+
+	@Test
+	public final void testRuntimeExceptionInTimeoutCallbackStateEnter() {
+		class TestStateMachine extends TimeoutStateMachine {
+			public int numExceptions = 0;
+
+			public TestStateMachine(String name) {
+				super(name);
+			}
+
+			@Override
+			public Event process(Event event) throws FsmException {
+				try {
+					super.process(event);
+					fail("Should not be executed");
+				} catch (NullPointerException e) {
+					assertEquals("Testing exception", e.getMessage());
+					++numExceptions;
+
+					// The thread is not finished but notifyEnter() and
+					// scheduling of a new timeout is not processed
+				}
+
+				return event;
+			}
+		}
+
+		TestStateMachine machine = new TestStateMachine("fsm");
+		final State startState = new State("startState");
+		Transition toTimeout = new Transition(startState,
+				TimeoutEvent.instance(TIMEOUT, TimeoutEvent.Type.LOOP_RESTART),
+				startState);
+
+		StateListenerImpl listener = new StateListenerImpl(
+				StateListener.Type.LOOP_PROCESS) {
+			@Override
+			public void onStateEnter(State previous, Event event, State current) {
+				super.onStateEnter(previous, event, current);
+
+				// Throw the exception only on timeout transition not on start
+				if (event instanceof StartEvent)
+					return;
+
+				// Serious error in the client code
+				throw new NullPointerException("Testing exception");
+			}
+		};
+
+		startState.addListener(listener);
+
+		try {
+			machine.addState(startState);
+			machine.addTransition(toTimeout);
+			machine.setStartState(startState);
+			machine.start();
+
+			Thread.sleep(TIMEOUT * 3);
+
+			// Only the first timeout callback was processed. The timer thread
+			// then finished on unhandled runtime exception and no other timeout
+			// will be ever processed. Such situation is bad but it is better to
+			// be deterministic in such case than hide more serious error.
+
+			assertEquals(2, listener.enteredNum);
+			assertEquals(1, machine.numExceptions);
 		} catch (FsmException e) {
 			fail("Should not be executed: " + e);
 		} catch (InterruptedException e) {

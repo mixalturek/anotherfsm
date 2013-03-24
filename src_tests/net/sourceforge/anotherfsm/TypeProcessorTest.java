@@ -158,4 +158,30 @@ public class TypeProcessorTest {
 			fail("Should not be executed: " + e);
 		}
 	}
+
+	@Test
+	public final void testRuntimeExceptionInCallback() {
+		TypePreprocessor processor = new TypePreprocessor("processor");
+
+		try {
+			processor.addProcessor(TypeEventA.class,
+					new Preprocessor.Processor<TypeEventA>() {
+						@Override
+						public Event process(TypeEventA event) {
+							// Serious error in the client code
+							throw new NullPointerException("Testing exception");
+						}
+					});
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		try {
+			processor.process(new TypeEventA());
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		} catch (NullPointerException e) {
+			assertEquals("Testing exception", e.getMessage());
+		}
+	}
 }

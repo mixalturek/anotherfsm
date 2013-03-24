@@ -30,13 +30,6 @@ public class Helpers {
 	public static final String CLASS_INSTANCE_DELIMITER = ".";
 
 	/**
-	 * Forbid creating of the objects.
-	 */
-	private Helpers() {
-		// Do nothing
-	}
-
-	/**
 	 * Verify the passed object is not null.
 	 * 
 	 * @param object
@@ -81,6 +74,17 @@ public class Helpers {
 				exception);
 	}
 
+	/**
+	 * Log that a serious error occurred and the currently running thread is
+	 * being unexpectedly terminated.
+	 * 
+	 * @param logger
+	 *            the logger for logging
+	 * @param message
+	 *            the message to log
+	 * @param exception
+	 *            the exception that occurred
+	 */
 	public static void logThreadUnexpectedlyFinished(FsmLogger logger,
 			String message, Throwable exception) {
 		logger.fatal(

@@ -39,4 +39,9 @@ public class AnotherFsmTest {
 		AnotherFsm.setLoggerFactory(new StdStreamLoggerFactory());
 		assertEquals("name", AnotherFsm.getLogger("name").getName());
 	}
+
+	@Test
+	public synchronized void testAnotherFsm() {
+		new AnotherFsm();
+	}
 }

@@ -158,4 +158,30 @@ public class EqualsPreprocessorTest {
 			fail("Should not be executed: " + e);
 		}
 	}
+
+	@Test
+	public final void testRuntimeExceptionInCallback() {
+		EqualsPreprocessor processor = new EqualsPreprocessor("processor");
+
+		try {
+			processor.addProcessor(new TypeEventA(),
+					new Preprocessor.Processor<TypeEventA>() {
+						@Override
+						public Event process(TypeEventA event) {
+							// Serious error in the client code
+							throw new NullPointerException("Testing exception");
+						}
+					});
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		try {
+			processor.process(new TypeEventA());
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		} catch (NullPointerException e) {
+			assertEquals("Testing exception", e.getMessage());
+		}
+	}
 }

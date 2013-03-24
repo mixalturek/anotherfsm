@@ -27,7 +27,7 @@ import net.sourceforge.anotherfsm.logger.StdStreamLoggerFactory;
  * 
  * @author Michal Turek
  */
-public abstract class AnotherFsm {
+public class AnotherFsm {
 	/**
 	 * The version of the library. The string has format
 	 * "major.minor.release-note".
@@ -36,13 +36,6 @@ public abstract class AnotherFsm {
 
 	/** The factory of loggers. */
 	private static FsmLoggerFactory loggerFactory = new StdStreamLoggerFactory();
-
-	/**
-	 * Forbid creating instances.
-	 */
-	private AnotherFsm() {
-		// Do nothing
-	}
 
 	/**
 	 * Define a logger factory that will be used to create loggers. The default

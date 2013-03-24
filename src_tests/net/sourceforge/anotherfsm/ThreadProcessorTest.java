@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import net.sourceforge.anotherfsm.logger.NoLoggerJUnitFactory;
@@ -142,6 +143,60 @@ public class ThreadProcessorTest {
 					"Adding event to the queue failed"));
 		}
 
+		processor.close();
+	}
+
+	@Test
+	public final void testRuntimeExceptionInCallback() {
+		class TestThreadProcessor extends ThreadProcessor {
+			public int numExceptions = 0;
+
+			public TestThreadProcessor(Processor processor, boolean daemon,
+					BlockingQueue<Event> queue) {
+				super(processor, daemon, queue);
+			}
+
+			@Override
+			public void run() {
+				try {
+					super.run();
+					fail("Should not be executed");
+				} catch (NullPointerException e) {
+					assertEquals("Testing exception", e.getMessage());
+					++numExceptions;
+
+					// The thread is not finished but notifyEnter() and
+					// scheduling of a new timeout is not processed
+				}
+			}
+		}
+
+		TypePreprocessor preprocessor = new TypePreprocessor("processor");
+		TestThreadProcessor processor = new TestThreadProcessor(preprocessor,
+				false, new LinkedBlockingQueue<Event>(3));
+
+		try {
+			preprocessor.addProcessor(TypeEventA.class,
+					new Preprocessor.Processor<TypeEventA>() {
+						@Override
+						public Event process(TypeEventA event) {
+							// Serious error in the client code
+							throw new NullPointerException("Testing exception");
+						}
+					});
+			processor.start();
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		try {
+			processor.process(new TypeEventA());
+		} catch (FsmException e) {
+			fail("Should not be executed: " + e);
+		}
+
+		UnitTestHelpers.sleepThreadCommunicationDelay();
+		assertEquals(1, processor.numExceptions);
 		processor.close();
 	}
 }
