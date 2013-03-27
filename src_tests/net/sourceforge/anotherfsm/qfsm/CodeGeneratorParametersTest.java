@@ -348,4 +348,23 @@ public class CodeGeneratorParametersTest {
 					e.getMessage());
 		}
 	}
+
+	@Test
+	public void testShowUsage() {
+		CodeGeneratorParameters.showUsage();
+	}
+
+	@Test
+	public void testCommandLine() {
+		String[] args = { "--force", "--config-file", "file.xml",
+				"--qfsm-file", "file.fsm" };
+
+		try {
+			CodeGeneratorParameters params = new CodeGeneratorParameters(args,
+					"test");
+			assertEquals("test", params.getCommandLine());
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
 }

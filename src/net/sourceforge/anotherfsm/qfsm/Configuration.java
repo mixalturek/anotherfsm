@@ -190,7 +190,8 @@ class Configuration {
 			return parseConfiguration(document.getDocumentElement());
 		} catch (ParserConfigurationException | SAXException | DOMException
 				| IOException e) {
-			throw new QfsmException("Parsing failed: " + file, e);
+			throw new QfsmException("Parsing failed: " + file + ", "
+					+ e.getMessage(), e);
 		}
 	}
 

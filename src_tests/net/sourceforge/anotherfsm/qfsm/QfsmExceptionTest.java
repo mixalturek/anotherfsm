@@ -1,33 +1,33 @@
-package net.sourceforge.anotherfsm;
+package net.sourceforge.anotherfsm.qfsm;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-public class FsmExceptionTest {
+public class QfsmExceptionTest {
 	@Test
-	public void testFsmException() {
-		FsmException exception = new FsmException();
+	public void testQfsmException() {
+		QfsmException exception = new QfsmException();
 		assertNull(exception.getMessage());
 	}
 
 	@Test
-	public void testFsmExceptionString() {
-		FsmException exception = new FsmException("test");
+	public void testQfsmExceptionString() {
+		QfsmException exception = new QfsmException("test");
 		assertEquals("test", exception.getMessage());
 	}
 
 	@Test
-	public void testFsmExceptionThrowable() {
-		FsmException exception = new FsmException(new NullPointerException());
+	public void testQfsmExceptionThrowable() {
+		QfsmException exception = new QfsmException(new NullPointerException());
 		assertEquals(new NullPointerException().getClass(), exception
 				.getCause().getClass());
 	}
 
 	@Test
-	public void testFsmExceptionStringThrowable() {
-		FsmException exception = new FsmException("test",
+	public void testQfsmExceptionStringThrowable() {
+		QfsmException exception = new QfsmException("test",
 				new NullPointerException());
 		assertEquals("test", exception.getMessage());
 		assertEquals(new NullPointerException().getClass(), exception

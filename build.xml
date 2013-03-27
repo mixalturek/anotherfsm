@@ -265,7 +265,7 @@ web                  - Build offline version of project's website.
     <!-- Generate JavaDoc documentation including private members. -->
 	<target name="javadoc-full">
 		<javadoc
-			sourcepath="src;src_examples;src_tests"
+			sourcepath="src;src_examples"
 			destdir="${builddir}/doc_full"
 			packagenames="net.sourceforge.anotherfsm.*"
 			access="private"
@@ -279,7 +279,7 @@ web                  - Build offline version of project's website.
 			splitindex="true"
 			use="true"
 			version="true"
-			classpathref="classpath-tests"
+			classpathref="classpath-examples"
 			doctitle="${projectName} ${version}"
 			windowtitle="${projectName}"
 			bottom="&lt;i&gt;Copyright 2013 ${author}, &lt;a href=&quot;${projectWeb}&quot;&gt;${projectName}&lt;/a&gt;.&lt;/i&gt;"

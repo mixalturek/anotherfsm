@@ -48,13 +48,6 @@ public class Parser {
 	private static final FsmLogger logger = AnotherFsm.getLogger(Parser.class);
 
 	/**
-	 * Forbid creating objects.
-	 */
-	private Parser() {
-		// Do nothing
-	}
-
-	/**
 	 * Parse a Qfsm file.
 	 * 
 	 * @param path

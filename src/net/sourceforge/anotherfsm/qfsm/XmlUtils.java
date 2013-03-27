@@ -33,13 +33,6 @@ import org.w3c.dom.NodeList;
  */
 class XmlUtils {
 	/**
-	 * Forbid creating objects.
-	 */
-	private XmlUtils() {
-		// Do nothing
-	}
-
-	/**
 	 * Verify the passed object is not null.
 	 * 
 	 * @param object

@@ -175,7 +175,7 @@ public class QfsmMachine {
 		XmlUtils.ensureNotNull(inputEvent, "inputText");
 
 		if (transitions == null)
-			throw new QfsmException("List of transtions is not initialized");
+			throw new QfsmException("List of transitions is not initialized");
 
 		for (QfsmTransition transition : transitions) {
 			if (startStateId == transition.getSourceStateId()
@@ -185,8 +185,8 @@ public class QfsmMachine {
 			}
 		}
 
-		throw new QfsmException("State does not exist: " + startStateId + ", "
-				+ inputEvent + ", " + destinationStateId);
+		throw new QfsmException("Transition does not exist: " + startStateId
+				+ ", " + inputEvent + ", " + destinationStateId);
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class QfsmMachine {
 			startState = getState(startStateId);
 
 		if (transitions == null)
-			throw new QfsmException("List of transtions is not initialized");
+			throw new QfsmException("List of transitions is not initialized");
 
 		for (QfsmTransition transition : transitions) {
 			transition.setSourceState(getState(transition.getSourceStateId()));

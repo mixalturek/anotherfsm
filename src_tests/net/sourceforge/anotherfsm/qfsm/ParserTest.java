@@ -3,14 +3,19 @@ package net.sourceforge.anotherfsm.qfsm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.io.FileNotFoundException;
+
 import net.sourceforge.anotherfsm.AnotherFsm;
 import net.sourceforge.anotherfsm.logger.NoLoggerJUnitFactory;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.xml.sax.SAXParseException;
 
-public class QfsmParserTest {
+public class ParserTest {
 	/** Delta for double comparison. */
 	private static final double DELTA = 1e-15;
 
@@ -344,6 +349,17 @@ public class QfsmParserTest {
 	}
 
 	@Test
+	public void testParseAsciiAuthorVersionModified() {
+		try {
+			// Author and version in the file were modified, the parser should
+			// only log a warning
+			Parser.parse(DATA_DIR + "ascii_author_version_modified.fsm");
+		} catch (QfsmException e) {
+			fail("Should not be executed: " + e);
+		}
+	}
+
+	@Test
 	public void testParseQfsm053() {
 		try {
 			QfsmProject project = Parser.parse(DATA_DIR + "qfsm_0_53.fsm");
@@ -353,5 +369,41 @@ public class QfsmParserTest {
 		} catch (QfsmException e) {
 			fail("Should not be executed: " + e);
 		}
+	}
+
+	@Test
+	public void testNonExistingFile() {
+		try {
+			Parser.parse(DATA_DIR + "qfsm_nonexisting_file.fsm");
+		} catch (QfsmException e) {
+			assertTrue(e.getMessage().contains("Parsing failed"));
+			assertEquals(FileNotFoundException.class, e.getCause().getClass());
+		}
+	}
+
+	@Test
+	public void testBrokenXml() {
+		try {
+			Parser.parse(DATA_DIR + "qfsm_broken_structure.fsm");
+		} catch (QfsmException e) {
+			assertTrue(e.getMessage().contains("Parsing failed"));
+			assertEquals(SAXParseException.class, e.getCause().getClass());
+		}
+	}
+
+	@Test
+	public void testMissingElement() {
+		try {
+			Parser.parse(DATA_DIR + "qfsm_missing_element.fsm");
+		} catch (QfsmException e) {
+			assertEquals(
+					"Expected one subelement: machine.outputnames, count 0",
+					e.getMessage());
+		}
+	}
+
+	@Test
+	public void testParser() {
+		new Parser();
 	}
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AnotherFsmCodeGenerator>
+	<!--
+	COMMENTED OUT
+	<Version>version</Version>
+	-->
+	
+	<OutputDirectory>output directory</OutputDirectory>
+	<BaseClass>base class</BaseClass>
+	<JavaPackage>java package</JavaPackage>
+	<TransitionDescriptionContainsCode>no</TransitionDescriptionContainsCode>
+
+	<StateMachineClass>
+		<FileSuffix>fsm suffix</FileSuffix>
+
+		<Imports>state machine imports</Imports>
+	</StateMachineClass>
+	
+	<ProcessorClass>
+		<TypePreprocessor>yes</TypePreprocessor>
+		<EqualsPreprocessor>yes</EqualsPreprocessor>
+		
+		<GlobalStateListener>yes</GlobalStateListener>
+		<GlobalTransitionListener>yes</GlobalTransitionListener>
+		
+		<StateListener>yes</StateListener>
+		<TransitionListener>yes</TransitionListener>
+
+		<FileSuffix>processor suffix</FileSuffix>
+		
+		<Imports>processor imports</Imports>
+	</ProcessorClass>
+
+	<FileHeader>file header</FileHeader>
+</AnotherFsmCodeGenerator>
