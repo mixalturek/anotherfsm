@@ -1,5 +1,6 @@
 package net.sourceforge.anotherfsm.qfsm;
 
+import static net.sourceforge.anotherfsm.UnitTestHelpers.assertDoubleEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -16,9 +17,6 @@ import org.junit.Test;
 import org.xml.sax.SAXParseException;
 
 public class ParserTest {
-	/** Delta for double comparison. */
-	private static final double DELTA = 1e-15;
-
 	/** Directory where data files are stored. */
 	private static final String DATA_DIR = "src_tests/net/sourceforge/anotherfsm/qfsm/";
 
@@ -65,10 +63,10 @@ public class ParserTest {
 
 			QfsmInitialTransition initialTransition = machine
 					.getInitialTransition();
-			assertEquals(63, initialTransition.getDrawPosX(), DELTA);
-			assertEquals(223, initialTransition.getDrawPosY(), DELTA);
-			assertEquals(123, initialTransition.getDrawEndPosX(), DELTA);
-			assertEquals(223, initialTransition.getDrawEndPosY(), DELTA);
+			assertDoubleEquals(63, initialTransition.getDrawPosX());
+			assertDoubleEquals(223, initialTransition.getDrawPosY());
+			assertDoubleEquals(123, initialTransition.getDrawEndPosX());
+			assertDoubleEquals(223, initialTransition.getDrawEndPosY());
 
 			assertEquals(3, machine.getStates().size());
 			assertSame(machine.getState(0), machine.getState("FIRST STATE"));
@@ -82,9 +80,9 @@ public class ParserTest {
 			assertEquals("FIRST STATE DESCRIPTION", state.getDescription());
 			assertEquals(false, state.isFinalState());
 			assertEquals("", state.getMooreOutputs());
-			assertEquals(223, state.getDrawPosY(), DELTA);
+			assertDoubleEquals(223, state.getDrawPosY());
 			assertEquals(0, state.getStateId());
-			assertEquals(163, state.getDrawPosX(), DELTA);
+			assertDoubleEquals(163, state.getDrawPosX());
 			assertEquals(1, state.getDrawLineWidth());
 
 			state = machine.getState(1);
@@ -94,9 +92,9 @@ public class ParserTest {
 			assertEquals("SECOND STATE DESCRIPTION", state.getDescription());
 			assertEquals(false, state.isFinalState());
 			assertEquals("", state.getMooreOutputs());
-			assertEquals(222, state.getDrawPosY(), DELTA);
+			assertDoubleEquals(222, state.getDrawPosY());
 			assertEquals(1, state.getStateId());
-			assertEquals(434, state.getDrawPosX(), DELTA);
+			assertDoubleEquals(434, state.getDrawPosX());
 			assertEquals(1, state.getDrawLineWidth());
 
 			state = machine.getState(2);
@@ -106,32 +104,32 @@ public class ParserTest {
 			assertEquals("FINAL STATE DESCRIPTION", state.getDescription());
 			assertEquals(true, state.isFinalState());
 			assertEquals("", state.getMooreOutputs());
-			assertEquals(74, state.getDrawPosY(), DELTA);
+			assertDoubleEquals(74, state.getDrawPosY());
 			assertEquals(2, state.getStateId());
-			assertEquals(306, state.getDrawPosX(), DELTA);
+			assertDoubleEquals(306, state.getDrawPosX());
 			assertEquals(1, state.getDrawLineWidth());
 
 			assertEquals(6, machine.getTransitions().size());
 
 			QfsmTransition transition = machine.getTransition(0,
 					"FIRST TO SECOND", 1);
-			assertEquals(266.6664851168897, transition.getDrawBezier1PosX(),
-					DELTA);
-			assertEquals(222.2841331762911, transition.getDrawBezier2PosY(),
-					DELTA);
-			assertEquals(222.5682663525822, transition.getDrawBezier1PosY(),
-					DELTA);
+			assertDoubleEquals(266.6664851168897,
+					transition.getDrawBezier1PosX());
+			assertDoubleEquals(222.2841331762911,
+					transition.getDrawBezier2PosY());
+			assertDoubleEquals(222.5682663525822,
+					transition.getDrawBezier1PosY());
 			assertEquals("FIRST TO SECOND DESCRIPTION",
 					transition.getDescription());
 			assertEquals(true, transition.isDrawStraight());
 			assertEquals(QfsmTransition.TransitionType.FREE_TEXT,
 					transition.getType());
-			assertEquals(222.8523995288733, transition.getDrawPosY(), DELTA);
-			assertEquals(394.0, transition.getDrawEndPosX(), DELTA);
-			assertEquals(202.9997276753345, transition.getDrawPosX(), DELTA);
-			assertEquals(222.0, transition.getDrawEndPosY(), DELTA);
-			assertEquals(330.3332425584449, transition.getDrawBezier2PosX(),
-					DELTA);
+			assertDoubleEquals(222.8523995288733, transition.getDrawPosY());
+			assertDoubleEquals(394.0, transition.getDrawEndPosX());
+			assertDoubleEquals(202.9997276753345, transition.getDrawPosX());
+			assertDoubleEquals(222.0, transition.getDrawEndPosY());
+			assertDoubleEquals(330.3332425584449,
+					transition.getDrawBezier2PosX());
 			assertEquals(0, transition.getSourceStateId());
 			assertEquals(1, transition.getDestinationStateId());
 			assertEquals("FIRST STATE", transition.getSourceState().getName());
@@ -144,23 +142,23 @@ public class ParserTest {
 			assertEquals("FIRST TO SECOND OUTPUT", transition.getOutputText());
 
 			transition = machine.getTransition(0, "FIRST TO FIRST", 0);
-			assertEquals(233.5977738820847, transition.getDrawBezier1PosX(),
-					DELTA);
-			assertEquals(322.5284192033147, transition.getDrawBezier2PosY(),
-					DELTA);
-			assertEquals(320.0358404039149, transition.getDrawBezier1PosY(),
-					DELTA);
+			assertDoubleEquals(233.5977738820847,
+					transition.getDrawBezier1PosX());
+			assertDoubleEquals(322.5284192033147,
+					transition.getDrawBezier2PosY());
+			assertDoubleEquals(320.0358404039149,
+					transition.getDrawBezier1PosY());
 			assertEquals("FIRST TO FIRST DESCRIPTION",
 					transition.getDescription());
 			assertEquals(true, transition.isDrawStraight());
 			assertEquals(QfsmTransition.TransitionType.FREE_TEXT,
 					transition.getType());
-			assertEquals(260.3338242481224, transition.getDrawPosY(), DELTA);
-			assertEquals(150.0020375070273, transition.getDrawEndPosX(), DELTA);
-			assertEquals(177.3591631723548, transition.getDrawPosX(), DELTA);
-			assertEquals(260.8292607782821, transition.getDrawEndPosY(), DELTA);
-			assertEquals(95.96199756191075, transition.getDrawBezier2PosX(),
-					DELTA);
+			assertDoubleEquals(260.3338242481224, transition.getDrawPosY());
+			assertDoubleEquals(150.0020375070273, transition.getDrawEndPosX());
+			assertDoubleEquals(177.3591631723548, transition.getDrawPosX());
+			assertDoubleEquals(260.8292607782821, transition.getDrawEndPosY());
+			assertDoubleEquals(95.96199756191075,
+					transition.getDrawBezier2PosX());
 			assertEquals(0, transition.getSourceStateId());
 			assertEquals(0, transition.getDestinationStateId());
 			assertEquals("FIRST STATE", transition.getSourceState().getName());
@@ -173,23 +171,23 @@ public class ParserTest {
 			assertEquals("FIRST TO FIRST OUTPUT", transition.getOutputText());
 
 			transition = machine.getTransition(1, "SECOND TO SECOND", 1);
-			assertEquals(503.3824573913882, transition.getDrawBezier1PosX(),
-					DELTA);
-			assertEquals(320.6848628340658, transition.getDrawBezier2PosY(),
-					DELTA);
-			assertEquals(319.908501195413, transition.getDrawBezier1PosY(),
-					DELTA);
+			assertDoubleEquals(503.3824573913882,
+					transition.getDrawBezier1PosX());
+			assertDoubleEquals(320.6848628340658,
+					transition.getDrawBezier2PosY());
+			assertDoubleEquals(319.908501195413,
+					transition.getDrawBezier1PosY());
 			assertEquals("SECOND TO SECOND DESCRIPTION",
 					transition.getDescription());
 			assertEquals(true, transition.isDrawStraight());
 			assertEquals(QfsmTransition.TransitionType.FREE_TEXT,
 					transition.getType());
-			assertEquals(259.5099504289482, transition.getDrawPosY(), DELTA);
-			assertEquals(420.5313979159949, transition.getDrawEndPosX(), DELTA);
-			assertEquals(447.8925742329437, transition.getDrawPosX(), DELTA);
-			assertEquals(259.6642636713202, transition.getDrawEndPosY(), DELTA);
-			assertEquals(365.7263019353601, transition.getDrawBezier2PosX(),
-					DELTA);
+			assertDoubleEquals(259.5099504289482, transition.getDrawPosY());
+			assertDoubleEquals(420.5313979159949, transition.getDrawEndPosX());
+			assertDoubleEquals(447.8925742329437, transition.getDrawPosX());
+			assertDoubleEquals(259.6642636713202, transition.getDrawEndPosY());
+			assertDoubleEquals(365.7263019353601,
+					transition.getDrawBezier2PosX());
 			assertEquals(1, transition.getSourceStateId());
 			assertEquals(1, transition.getDestinationStateId());
 			assertEquals("SECOND STATE", transition.getSourceState().getName());
@@ -202,23 +200,23 @@ public class ParserTest {
 			assertEquals("SECOND TO SECOND OUTPUT", transition.getOutputText());
 
 			transition = machine.getTransition(1, "SECOND TO FIRST", 0);
-			assertEquals(332.6684796661258, transition.getDrawBezier1PosX(),
-					DELTA);
-			assertEquals(243.5966546955807, transition.getDrawBezier2PosY(),
-					DELTA);
-			assertEquals(243.6134791740603, transition.getDrawBezier1PosY(),
-					DELTA);
+			assertDoubleEquals(332.6684796661258,
+					transition.getDrawBezier1PosX());
+			assertDoubleEquals(243.5966546955807,
+					transition.getDrawBezier2PosY());
+			assertDoubleEquals(243.6134791740603,
+					transition.getDrawBezier1PosY());
 			assertEquals("SECOND TO FIRST DESCRIPTION",
 					transition.getDescription());
 			assertEquals(true, transition.isDrawStraight());
 			assertEquals(QfsmTransition.TransitionType.FREE_TEXT,
 					transition.getType());
-			assertEquals(243.63030365254, transition.getDrawPosY(), DELTA);
-			assertEquals(197.2997170285018, transition.getDrawEndPosX(), DELTA);
-			assertEquals(400.3528609849379, transition.getDrawPosX(), DELTA);
-			assertEquals(243.5798302171011, transition.getDrawEndPosY(), DELTA);
-			assertEquals(264.9840983473138, transition.getDrawBezier2PosX(),
-					DELTA);
+			assertDoubleEquals(243.63030365254, transition.getDrawPosY());
+			assertDoubleEquals(197.2997170285018, transition.getDrawEndPosX());
+			assertDoubleEquals(400.3528609849379, transition.getDrawPosX());
+			assertDoubleEquals(243.5798302171011, transition.getDrawEndPosY());
+			assertDoubleEquals(264.9840983473138,
+					transition.getDrawBezier2PosX());
 			assertEquals(1, transition.getSourceStateId());
 			assertEquals(0, transition.getDestinationStateId());
 			assertEquals("SECOND STATE", transition.getSourceState().getName());
@@ -231,23 +229,23 @@ public class ParserTest {
 			assertEquals("SECOND TO FIRST OUTPUT", transition.getOutputText());
 
 			transition = machine.getTransition(1, "SECOND TO FINAL", 2);
-			assertEquals(384.3346330791148, transition.getDrawBezier1PosX(),
-					DELTA);
-			assertEquals(130.1759481374532, transition.getDrawBezier2PosY(),
-					DELTA);
-			assertEquals(160.8491877135374, transition.getDrawBezier1PosY(),
-					DELTA);
+			assertDoubleEquals(384.3346330791148,
+					transition.getDrawBezier1PosX());
+			assertDoubleEquals(130.1759481374532,
+					transition.getDrawBezier2PosY());
+			assertDoubleEquals(160.8491877135374,
+					transition.getDrawBezier1PosY());
 			assertEquals("SECOND TO FINAL DESCRIPTION",
 					transition.getDescription());
 			assertEquals(true, transition.isDrawStraight());
 			assertEquals(QfsmTransition.TransitionType.FREE_TEXT,
 					transition.getType());
-			assertEquals(191.5224272896216, transition.getDrawPosY(), DELTA);
-			assertEquals(336.8157728449876, transition.getDrawEndPosX(), DELTA);
-			assertEquals(408.0940631961784, transition.getDrawPosX(), DELTA);
-			assertEquals(99.50270856136903, transition.getDrawEndPosY(), DELTA);
-			assertEquals(360.5752029620512, transition.getDrawBezier2PosX(),
-					DELTA);
+			assertDoubleEquals(191.5224272896216, transition.getDrawPosY());
+			assertDoubleEquals(336.8157728449876, transition.getDrawEndPosX());
+			assertDoubleEquals(408.0940631961784, transition.getDrawPosX());
+			assertDoubleEquals(99.50270856136903, transition.getDrawEndPosY());
+			assertDoubleEquals(360.5752029620512,
+					transition.getDrawBezier2PosX());
 			assertEquals(1, transition.getSourceStateId());
 			assertEquals(2, transition.getDestinationStateId());
 			assertEquals("SECOND STATE", transition.getSourceState().getName());
@@ -260,23 +258,23 @@ public class ParserTest {
 			assertEquals("SECOND TO FINAL OUTPUT", transition.getOutputText());
 
 			transition = machine.getTransition(2, "FINAL TO FIRST", 0);
-			assertEquals(246.3141783096459, transition.getDrawBezier1PosX(),
-					DELTA);
-			assertEquals(161.4943922715183, transition.getDrawBezier2PosY(),
-					DELTA);
-			assertEquals(130.3590486376485, transition.getDrawBezier1PosY(),
-					DELTA);
+			assertDoubleEquals(246.3141783096459,
+					transition.getDrawBezier1PosX());
+			assertDoubleEquals(161.4943922715183,
+					transition.getDrawBezier2PosY());
+			assertDoubleEquals(130.3590486376485,
+					transition.getDrawBezier1PosY());
 			assertEquals("FINAL TO FIRST DESCRIPTION",
 					transition.getDescription());
 			assertEquals(true, transition.isDrawStraight());
 			assertEquals(QfsmTransition.TransitionType.FREE_TEXT,
 					transition.getType());
-			assertEquals(99.22370500377863, transition.getDrawPosY(), DELTA);
-			assertEquals(189.0316549382387, transition.getDrawEndPosX(), DELTA);
-			assertEquals(274.9554399953494, transition.getDrawPosX(), DELTA);
-			assertEquals(192.6297359053881, transition.getDrawEndPosY(), DELTA);
-			assertEquals(217.6729166239423, transition.getDrawBezier2PosX(),
-					DELTA);
+			assertDoubleEquals(99.22370500377863, transition.getDrawPosY());
+			assertDoubleEquals(189.0316549382387, transition.getDrawEndPosX());
+			assertDoubleEquals(274.9554399953494, transition.getDrawPosX());
+			assertDoubleEquals(192.6297359053881, transition.getDrawEndPosY());
+			assertDoubleEquals(217.6729166239423,
+					transition.getDrawBezier2PosX());
 			assertEquals(2, transition.getSourceStateId());
 			assertEquals(0, transition.getDestinationStateId());
 			assertEquals("FINAL STATE", transition.getSourceState().getName());

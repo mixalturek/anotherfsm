@@ -194,14 +194,14 @@ web                  - Build offline version of project's website.
 			</batchtest>
 		</junit>
 
-		<antcall target="tests-result"/>
-
 		<junitreport todir="${builddir}/tests/">
 			<fileset dir="${builddir}/tests/">
 				<include name="TEST-*.xml" />
 			</fileset>
 			<report format="frames" todir="${builddir}/tests_html/" />
 		</junitreport>
+
+		<antcall target="tests-result"/>
 	</target>
 
 	<target name="tests-result" if="test.failed">

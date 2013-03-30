@@ -18,6 +18,7 @@
 
 package net.sourceforge.anotherfsm;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
@@ -26,6 +27,9 @@ import static org.junit.Assert.fail;
  * @author Michal Turek
  */
 public class UnitTestHelpers {
+	/** Delta for double comparison. */
+	private static final double DELTA = 1e-15;
+
 	/** Expected delay for communication with a thread, in milliseconds. */
 	private static final long THREAD_COMMUNICATION_DELAY = 30;
 
@@ -65,5 +69,17 @@ public class UnitTestHelpers {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Assert equals for double value.
+	 * 
+	 * @param expected
+	 *            the expected value
+	 * @param actual
+	 *            the actual value
+	 */
+	public static void assertDoubleEquals(double expected, double actual) {
+		assertEquals(expected, actual, DELTA);
 	}
 }
