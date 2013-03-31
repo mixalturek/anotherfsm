@@ -43,6 +43,9 @@ public class CodeGenerator {
 	private static final FsmLogger logger = AnotherFsm
 			.getLogger(CodeGenerator.class);
 
+	/** Helper flag for unit tests to disable System.exit() calls. */
+	static boolean systemExitCallAllowed = true;
+
 	/** Suffix of generated state machine class name. */
 	private static final String FSM_CLASS_SUFFIX = "Fsm";
 
@@ -525,7 +528,6 @@ public class CodeGenerator {
 	 * @see CodeGeneratorParameters
 	 */
 	public static void main(String[] args) {
-
 		CodeGeneratorParameters parameters = null;
 
 		try {
@@ -533,12 +535,20 @@ public class CodeGenerator {
 		} catch (QfsmException e) {
 			CodeGeneratorParameters.showUsage();
 			logger.error("Parameters parsing failed", e);
-			System.exit(1);
+
+			if (systemExitCallAllowed)
+				System.exit(1);
+			else
+				return;
 		}
 
 		if (parameters.isUsage()) {
 			CodeGeneratorParameters.showUsage();
-			System.exit(0);
+
+			if (systemExitCallAllowed)
+				System.exit(0);
+			else
+				return;
 		}
 
 		try {
@@ -546,7 +556,11 @@ public class CodeGenerator {
 				String template = loadTemplate("TemplateConfiguration.txt");
 				writeFile(new File(parameters.getConfigTemplate()), template,
 						parameters.isForce());
-				System.exit(0);
+
+				if (systemExitCallAllowed)
+					System.exit(0);
+				else
+					return;
 			}
 
 			CodeGenerator generator = new CodeGenerator(parameters);
@@ -554,7 +568,11 @@ public class CodeGenerator {
 			generator.generateProcessor();
 		} catch (QfsmException e) {
 			logger.error("Unexpected error", e);
-			System.exit(1);
+
+			if (systemExitCallAllowed)
+				System.exit(1);
+			else
+				return;
 		}
 	}
 }
