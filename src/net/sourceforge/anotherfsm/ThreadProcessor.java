@@ -20,7 +20,6 @@ package net.sourceforge.anotherfsm;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Processor of events based on a thread with an input queue.
@@ -36,9 +35,6 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 
 	/** The internal processor that processes the input events. */
 	private final Processor processor;
-
-	/** Request to stop the thread occurred. */
-	private final AtomicBoolean stopRequested = new AtomicBoolean(false);
 
 	/**
 	 * Create the object.
@@ -94,13 +90,16 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 
 	@Override
 	public void close() {
-		stopRequested.set(true);
-		thread.interrupt();
-
 		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			logger.warn("Waiting for the thread stop interrupted: " + e);
+			process(new ShutdownEvent());
+
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				logger.warn("Waiting for the thread stop interrupted: " + e);
+			}
+		} catch (FsmException e) {
+			logger.error("Closing of thread processor failed", e);
 		}
 
 		processor.close();
@@ -123,9 +122,13 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 		logger.info("Thread started");
 
 		try {
-			while (!stopRequested.get()) {
+			while (true) {
 				try {
 					Event event = queue.take();
+
+					if (event instanceof ShutdownEvent)
+						break;
+
 					processor.process(event);
 				} catch (InterruptedException e) {
 					logger.warn("Waiting for the event interrupted: " + e);
@@ -140,5 +143,14 @@ public class ThreadProcessor extends ProcessorAdapter implements Runnable {
 					"Unexpected exception while running thread", e);
 			throw e;
 		}
+	}
+
+	/**
+	 * Helper event to stop the internal thread on close.
+	 * 
+	 * @author Michal Turek
+	 */
+	private static class ShutdownEvent implements Event {
+		// Empty
 	}
 }
