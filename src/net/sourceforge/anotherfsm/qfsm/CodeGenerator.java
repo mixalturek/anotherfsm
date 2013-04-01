@@ -44,7 +44,7 @@ public class CodeGenerator {
 			.getLogger(CodeGenerator.class);
 
 	/** Helper flag for unit tests to disable System.exit() calls. */
-	static boolean systemExitCallAllowed = true;
+	private static boolean systemExitCallAllowed = true;
 
 	/** Suffix of generated state machine class name. */
 	private static final String FSM_CLASS_SUFFIX = "Fsm";
@@ -517,6 +517,16 @@ public class CodeGenerator {
 		}
 
 		return builder.toString();
+	}
+
+	/**
+	 * Enable/disable System.exit() calls.
+	 * 
+	 * @param systemExitCallAllowed
+	 *            enable flag
+	 */
+	static void setSystemExitCallAllowed(boolean systemExitCallAllowed) {
+		CodeGenerator.systemExitCallAllowed = systemExitCallAllowed;
 	}
 
 	/**

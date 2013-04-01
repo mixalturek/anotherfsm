@@ -21,8 +21,9 @@ public class QfsmExceptionTest {
 	@Test
 	public void testQfsmExceptionThrowable() {
 		QfsmException exception = new QfsmException(new NullPointerException());
-		assertEquals(new NullPointerException().getClass(), exception
-				.getCause().getClass());
+
+		NullPointerException npe = new NullPointerException();
+		assertEquals(npe.getClass(), exception.getCause().getClass());
 	}
 
 	@Test
@@ -30,7 +31,8 @@ public class QfsmExceptionTest {
 		QfsmException exception = new QfsmException("test",
 				new NullPointerException());
 		assertEquals("test", exception.getMessage());
-		assertEquals(new NullPointerException().getClass(), exception
-				.getCause().getClass());
+
+		NullPointerException npe = new NullPointerException();
+		assertEquals(npe.getClass(), exception.getCause().getClass());
 	}
 }

@@ -14,11 +14,6 @@ public class HelpersTest {
 	}
 
 	@Test
-	public void testHelpers() {
-		new Helpers();
-	}
-
-	@Test
 	public void testEnsureNotNull() {
 		try {
 			Helpers.ensureNotNull(new Object(), "object");

@@ -14,7 +14,7 @@ import org.junit.Test;
 public class CodeGeneratorTest {
 	@Test
 	public void testMainNoArg() {
-		CodeGenerator.systemExitCallAllowed = false;
+		CodeGenerator.setSystemExitCallAllowed(false);
 
 		String[] args = {};
 		CodeGenerator.main(args);
@@ -22,7 +22,7 @@ public class CodeGeneratorTest {
 
 	@Test
 	public void testMainHelp() {
-		CodeGenerator.systemExitCallAllowed = false;
+		CodeGenerator.setSystemExitCallAllowed(false);
 
 		String[] args = { "--help" };
 		CodeGenerator.main(args);
@@ -30,7 +30,7 @@ public class CodeGeneratorTest {
 
 	@Test
 	public void testMainTemplate() {
-		CodeGenerator.systemExitCallAllowed = false;
+		CodeGenerator.setSystemExitCallAllowed(false);
 
 		File outputFile = null;
 
@@ -90,7 +90,7 @@ public class CodeGeneratorTest {
 	private void generateCode(String name, String inputDirectory,
 			String outputDirectory, String fileSuffix, long expectedSizeFsm,
 			long expectedSizeProcessor) {
-		CodeGenerator.systemExitCallAllowed = false;
+		CodeGenerator.setSystemExitCallAllowed(false);
 
 		File fsmFileGen = new File(outputDirectory + "/" + name + "Fsm.java"
 				+ fileSuffix);

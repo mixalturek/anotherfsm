@@ -21,8 +21,9 @@ public class FsmExceptionTest {
 	@Test
 	public void testFsmExceptionThrowable() {
 		FsmException exception = new FsmException(new NullPointerException());
-		assertEquals(new NullPointerException().getClass(), exception
-				.getCause().getClass());
+
+		NullPointerException npe = new NullPointerException();
+		assertEquals(npe.getClass(), exception.getCause().getClass());
 	}
 
 	@Test
@@ -30,7 +31,8 @@ public class FsmExceptionTest {
 		FsmException exception = new FsmException("test",
 				new NullPointerException());
 		assertEquals("test", exception.getMessage());
-		assertEquals(new NullPointerException().getClass(), exception
-				.getCause().getClass());
+
+		NullPointerException npe = new NullPointerException();
+		assertEquals(npe.getClass(), exception.getCause().getClass());
 	}
 }

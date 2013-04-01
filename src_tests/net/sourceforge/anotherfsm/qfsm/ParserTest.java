@@ -399,9 +399,4 @@ public class ParserTest {
 					e.getMessage());
 		}
 	}
-
-	@Test
-	public void testParser() {
-		new Parser();
-	}
 }

@@ -10,11 +10,6 @@ import org.junit.Test;
 
 public class XmlUtilsTest {
 	@Test
-	public void testXmlUtils() {
-		new XmlUtils();
-	}
-
-	@Test
 	public void testEnsureNotNull() {
 		try {
 			XmlUtils.ensureNotNull(new Object(), "object");
