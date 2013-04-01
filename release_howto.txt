@@ -1,7 +1,7 @@
 - Solve compiler warnings, TODO and FIXME.
 - FindBugs.
 - Javadoc.
-- Web news.
+- Web news, change log.
 - Web.
 - Update versions in build.xml and AnotherFsm.java.
 - Git commit, push, tag.

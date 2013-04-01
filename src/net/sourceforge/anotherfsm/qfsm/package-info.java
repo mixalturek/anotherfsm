@@ -17,7 +17,8 @@
  */
 
 /**
- * Parser of <a href="http://qfsm.sourceforge.net/">Qfsm</a> file format.
+ * Parser of <a href="http://qfsm.sourceforge.net/">Qfsm</a> file format, Java
+ * code generator.
  *
  * @author Michal Turek
  * 
