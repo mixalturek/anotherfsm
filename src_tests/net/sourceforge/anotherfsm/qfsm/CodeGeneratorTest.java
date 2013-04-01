@@ -64,6 +64,13 @@ public class CodeGeneratorTest {
 				".", "", 4000, 3000);
 	}
 
+	@Test
+	public void testMainTimeoutConnectionJUnit() {
+		generateCode("TimeoutConnectionJUnit",
+				"src_tests/net/sourceforge/anotherfsm/qfsm/", ".", "", 5000,
+				3000);
+	}
+
 	/**
 	 * Helper method to generate Java code.
 	 * 

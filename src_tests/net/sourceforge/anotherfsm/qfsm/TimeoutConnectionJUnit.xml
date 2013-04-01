@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AnotherFsmCodeGenerator>
+	<!-- The version of configuration file. -->
+	<Version>0.1.0</Version>
+
+	<!-- The output directory relative to the active one. -->
+	<OutputDirectory>.</OutputDirectory>
+
+	<!-- The state machine base class. -->
+	<BaseClass>TimeoutStateMachine</BaseClass>
+
+	<!-- Java package of the generated files. -->
+	<JavaPackage>net.sourceforge.anotherfsm.examples.timeouts</JavaPackage>
+
+	<!-- Description of transitions contains Java code. -->
+	<TransitionDescriptionContainsCode>no</TransitionDescriptionContainsCode>
+
+	<!-- Configuration of the generated state machine class. -->
+	<StateMachineClass>
+		<!-- The suffix of the file name. -->
+		<FileSuffix></FileSuffix>
+		
+		<!-- Java imports to make the file compilable. -->
+		<Imports>
+import net.sourceforge.anotherfsm.*;
+		</Imports>
+	</StateMachineClass>
+
+	<!-- Configuration of the generated processor class. -->
+	<ProcessorClass>
+		<!-- Generate type preprocessor. -->
+		<TypePreprocessor>yes</TypePreprocessor>
+
+		<!-- Generate equals preprocessor. -->
+		<EqualsPreprocessor>yes</EqualsPreprocessor>
+
+		<!-- Generate global state listener. -->
+		<GlobalStateListener>yes</GlobalStateListener>
+		
+		<!-- Generate global transition listener. -->
+		<GlobalTransitionListener>yes</GlobalTransitionListener>
+
+		<!-- Generate state listeners. -->
+		<StateListener>yes</StateListener>
+
+		<!-- Generate transition listeners. -->
+		<TransitionListener>no</TransitionListener>
+
+		<!-- The suffix of the file name. -->
+		<FileSuffix></FileSuffix>
+
+		<!-- Java imports to make the file compilable. -->
+		<Imports>
+import net.sourceforge.anotherfsm.*;
+		</Imports>
+	</ProcessorClass>
+
+	<!-- File header that will be put at the top of every generated file. -->
+	<!-- Update the content as you want. -->
+	<FileHeader>
+		<![CDATA[
+/*
+ *  Copyright 2013 Michal Turek, AnotherFSM
+ *
+ *      http://anotherfsm.sourceforge.net/
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+		]]>
+	</FileHeader>
+</AnotherFsmCodeGenerator>
