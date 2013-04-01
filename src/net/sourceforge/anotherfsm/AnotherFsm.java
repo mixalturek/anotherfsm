@@ -32,7 +32,7 @@ public class AnotherFsm {
 	 * The version of the library. The string has format
 	 * "major.minor.release-note".
 	 */
-	public static final String VERSION = "0.2.0"; // See build.xml
+	public static final String VERSION = "0.3.0-dev"; // See build.xml
 
 	/** The factory of loggers. */
 	private static FsmLoggerFactory loggerFactory = new StdStreamLoggerFactory();
