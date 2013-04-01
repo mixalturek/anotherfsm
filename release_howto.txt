@@ -1,10 +1,11 @@
 - Solve compiler warnings, TODO and FIXME.
-- FindBugs.
-- Javadoc.
-- Web news, change log.
-- Web.
+- Execute FindBugs.
+- Update web news and change log.
+- Check web and Javadoc.
 - Update versions in build.xml and AnotherFsm.java.
 - Git commit, push, tag.
-- Update versions in build.xml and AnotherFsm.java.
+
+- Build and deploy dist files.
 - Deploy web.
-- Deploy dist files.
+
+- Update versions in build.xml and AnotherFsm.java.
