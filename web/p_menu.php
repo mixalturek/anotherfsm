@@ -3,7 +3,7 @@
 <div class="label">AnotherFSM</div>
 <ul>
 <li><?php MenuItem('index', 'About');?></li>
-<li><?php MenuItem('news', 'News');?></li>
+<li><?php MenuItem('changelog', 'ChangeLog');?></li>
 <li><?php MenuItem('plans', 'Plans');?></li>
 <li><?php MenuItem('license', 'License');?></li>
 <li><?php Blank('doc/index.html', 'Javadoc');?></li>

@@ -17,24 +17,15 @@
  *  limitations under the License.
  */
 
-define('PAGE_TITLE', 'News');
+define('PAGE_TITLE', 'ChangeLog');
 include_once 'p_begin.php';
 ?>
 
-<h2>Tue Jan 22 15:32:21 CET 2013</h2>
-<ul>
-<li>First 0.1.0 release, <?php Blank('http://sourceforge.net/projects/anotherfsm/files/', 'download');?>.</li>
-</ul>
-
-<h2>Fri Dec 07 22:14:49 CET 2012</h2>
-<ul>
-<li>Serious work on implementation started.</li>
-</ul>
-
-<h2>Sat Apr 07 18:47:36 CET 2012</h2>
-<ul>
-<li>The project registered at <?php Blank('http://www.sourceforge.net/', 'SourceForge.net'); ?>, no updates for a long time.</li>
-</ul>
+<pre>
+<?php
+readfile('../ChangeLog');
+?>
+</pre>
 
 <?php
 include_once 'p_end.php';

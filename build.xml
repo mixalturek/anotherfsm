@@ -311,6 +311,7 @@ web                  - Build offline version of project's website.
 			<fileset file="${builddir}/${jarname}"/>
 			<fileset file="LICENSE"/>
 			<fileset file="NOTICE"/>
+			<fileset file="ChangeLog"/>
 			<fileset file="build.xml"/>
 		</copy>
 

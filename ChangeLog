@@ -1,0 +1,26 @@
+Change log for AnotherFSM project
+=================================
+
+Version 0.2.0 (1 April 2013)
+----------------------------
+
+* Qfsm support - Parser of Qfsm project files, Java code generator.
+
+* Preprocessors - Usage in state machines refactored, not backward compatible.
+* Processor.start(), Processor.close() methods added.
+
+* ThreadProcessor - Processor with internal thread and input queue.
+* ProcesorGroup - Group of processors to work parallel.
+* BasicLogger - Simple redirect of the messages to standard output stream.
+
+* Minor changes, bug fixes, optimizations.
+* Two new examples.
+* A lot of unit tests added.
+
+* FindBugs, Cobertura and SLOCCount used during development.
+
+
+Version 0.1.0 (22 January 2013)
+-------------------------------
+
+* Initial release. Changes will be logged from now on.

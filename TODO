@@ -9,7 +9,6 @@
 
 - Tests
 	- Verify "Do nothing" exceptions in unit tests.
-	- Coverage.
 
 - Future
 	- NonDeterministicStateMachine.
