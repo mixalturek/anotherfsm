@@ -1,6 +1,7 @@
 - General
 
 - Code
+	XML parsing - normalize() is called incorrectly
 
 - Web
 	- Examples
