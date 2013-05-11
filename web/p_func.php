@@ -88,6 +88,13 @@ function MenuItem($addr, $text)
 		? "<span class=\"active\">$text</span>" : Web($addr, $text);
 }
 
+// Read file and escape html special characters
+function safeReadFile($path)
+{
+	echo htmlspecialchars(file_get_contents($path));
+}
+
+
 // Highligh examples, http://qbnz.com/highlighter/geshi-doc.html
 include_once '/usr/share/php-geshi/geshi.php';
 
@@ -95,37 +102,37 @@ include_once '/usr/share/php-geshi/geshi.php';
 function readFileJava($filename)
 {
 	$fileContent = file_get_contents("../$filename");
-	
+
 	// Replace tabs using 4 spaces (the same tab width as defined in Eclipse)
 	$fileContent = str_replace('	', '    ', $fileContent);
 
 	$geshi = new GeSHi($fileContent, 'java');
-	
+
 	// Enable CSS
 	$geshi->enable_classes();
-	
+
 	// Header text
 	$geshi->set_header_content($filename);
-	
+
 	// Anotations
 	$geshi->add_keyword_group('Anotation', '', true, array('@Override'));
-	
+
 	// AnotherFSM main classes
 	$geshi->add_keyword_group('AnotherFsm', '', true, genKeywords('../src/net/sourceforge/anotherfsm/'));
 	$geshi->set_url_for_keyword_group('AnotherFsm', 'doc/net/sourceforge/anotherfsm/{FNAME}.html');
-	
+
 	$geshi->add_keyword_group('AnotherFsm_logger', '', true, genKeywords('../src/net/sourceforge/anotherfsm/logger/'));
 	$geshi->set_url_for_keyword_group('AnotherFsm_logger', 'doc/net/sourceforge/anotherfsm/logger/{FNAME}.html');
-	
+
 	// Disable unwanted highlighting (smaller HTML)
 	$geshi->set_keyword_group_highlighting(3, false);
 	$geshi->set_methods_highlighting(false);
 	$geshi->set_symbols_highlighting(false);
 	$geshi->set_escape_characters_highlighting(false);
-	
+
 	// Dump CSS
 	// echo $geshi->get_stylesheet();
-	
+
 	echo $geshi->parse_code();
 }
 

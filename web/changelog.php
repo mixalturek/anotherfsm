@@ -23,7 +23,7 @@ include_once 'p_begin.php';
 
 <pre>
 <?php
-readfile('../ChangeLog');
+safeReadFile('../ChangeLog');
 ?>
 </pre>
 

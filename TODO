@@ -15,4 +15,3 @@
 	- NonDeterministicStateMachine.
 	- FsmEditor.
 	- Analyzer and visualization of FSM transitions logs.
-	- AsciiSchemaEditor.
