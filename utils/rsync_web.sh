@@ -25,5 +25,4 @@
 # sshfs mixalturek@web.sourceforge.net:/home/project-web/anotherfsm mnt
 # fusermount -u mnt
 
-ant clean web
 rsync -aP -e ssh build/web/ mixalturek@web.sourceforge.net:/home/project-web/anotherfsm/htdocs/

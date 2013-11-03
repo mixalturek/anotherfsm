@@ -89,6 +89,7 @@ all                  - Process full build.
 Extra targets:
 
 web                  - Build offline version of project's website.
+deployweb            - Deploy offline version of project's website to sourceforge.net.
 		</echo>
 	</target>
 
@@ -303,6 +304,13 @@ web                  - Build offline version of project's website.
 		<exec executable="utils/offline_web.sh"/>
 	</target>
 
+
+	<!-- Deploy offline version of project's website to sourceforge.net. -->
+	<target name="deployweb" depends="clean,web">
+		<exec executable="utils/rsync_web.sh"/>
+	</target>
+
+
 	<!-- Copy files to the distribution directory. -->
 	<target name="dist" depends="jar,javadoc-api">
 		<delete dir="${builddir}/dist/" />
@@ -318,7 +326,7 @@ web                  - Build offline version of project's website.
 		<copy todir="${builddir}/dist/src/">
 			<fileset dir="src/"/>
 		</copy>
-	
+
 		<copy todir="${builddir}/dist/src_examples/">
 			<fileset dir="src_examples/"/>
 		</copy>
@@ -342,8 +350,8 @@ web                  - Build offline version of project's website.
 
 	<!-- Create an archive from the dist directory. -->
 	<target name="dist-zip" depends="jar,dist">
-		<move todir="${builddir}/${distname}"> 
-			<fileset dir="${builddir}/dist/"/> 
+		<move todir="${builddir}/${distname}">
+			<fileset dir="${builddir}/dist/"/>
 		</move>
 
 		<zip destfile="${builddir}/${distname}.zip"
@@ -351,8 +359,8 @@ web                  - Build offline version of project's website.
 			includes="${distname}/**/*"
 		/>
 
-		<move todir="${builddir}/dist/"> 
-			<fileset dir="${builddir}/${distname}"/> 
+		<move todir="${builddir}/dist/">
+			<fileset dir="${builddir}/${distname}"/>
 		</move>
 
 		<checksum file="${builddir}/${distname}.zip"/>
