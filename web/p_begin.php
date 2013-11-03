@@ -43,14 +43,13 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 <body>
 
 <div id="header">
+<a href="http://anotherfsm.sourceforge.net/">
 <img id="logo" src="img/website/anotherfsm_48x48.png" width="48" height="48" alt="logo" />
-<pre><a href="http://anotherfsm.sourceforge.net/">
-   +---+   +---+   +---+   +---+   +---+   +---+   +---+           +---+   +---+   +---+
--->| <span class="state">A</span> |-->| <span class="state">n</span> |-->| <span class="state">o</span> |-->| <span class="state">t</span> |-->| <span class="state">h</span> |-->| <span class="state">e</span> |-->| <span class="state">r</span> |---------->| <span class="state">F</span> |-->| <span class="state">S</span> |-->| <span class="state">M</span> |
-   +---+   +---+   +---+   +---+   +---+   +---+   +---+           +---+   +---+   +---+
-                                                                  State Machines for Java
-</a></pre>
+AnotherFSM<br />
+State Machines for Java
+</a>
 </div><!--div id="header"-->
+
 
 <?php include_once 'p_menu.php'; ?>
 

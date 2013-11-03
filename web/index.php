@@ -76,16 +76,6 @@ include_once 'p_begin.php';
 <p>I wanted to enjoy programming, you can enjoy it too...</p>
 
 
-<h2>Motivation for Czech and Slovak developers</h2>
-
-<p><em>I'm sorry, the followign text is only in the Czech language. It would be really difficult for me to translate it and keep the meaning untouched.</em></p>
-
-<p lang="cs">Přestalo svítit světlo. Našroubujeme novou o 10 W silnější žárovku a zkusíme rozsvítit, ale šuplík nejde otevřít a také vypadnou vchodové dveře. No jasně, abychom se dostali do šuplíku, v koupelně přece musí kapat voda!</p>
-
-<p lang="cs">Těžce znovupostavené dveře pro tuhle chvíli spolu s kusem stěny přelepíme do kříže izolepou, snad to na chvíli vydrží, pořádně se spraví až bude čas. Takové zdržení a zdražení by nikdo nepřipustil, museli bychom zároveň vyndat v předsíni tu červenou lodičku z botníku a to je od minulého pátku tabu. Od teď sice chodíme domů oknem, je to nepohodlné, ale bydlíme v přízemí a ta trochu nepohody za opravené dveře stojí.</p>
-
-<p lang="cs">Při každém čtyřicátém druhém příchodu domů bydlíme v tisícím sedmém patře. A také nechtějte vědět, co všechno by se stalo, kdyby při došlápnutí na parapet dokápla kapka vody do umyvadla - hlavně všechno správně načasovat. Pochybujete o svém duševním zdraví, či o duševním zdraví jiných jedinců? Naprogramujte si aspoň jednou za čas něco hezkého, z čeho můžete mít radost...</p>
-
 <?php
 include_once 'p_end.php';
 ?>
