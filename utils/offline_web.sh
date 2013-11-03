@@ -18,7 +18,9 @@
 #
 # One purpose script to generate offline website.
 
-SERVER_PATH=http://localhost/~woq/anotherfsm
+SERVER_PATH=http://localhost/~$USER/anotherfsm
+
+mkdir -p build/web
 
 for file in `ls -1 web/*.php | grep -v 'p_.*php'`
 do
