@@ -42,7 +42,7 @@ class TransitionMap {
 	 * Add a new transition.
 	 * 
 	 * @param transition
-	 *            the transtion
+	 *            the transition
 	 * @throws FsmException
 	 *             if something fails
 	 */

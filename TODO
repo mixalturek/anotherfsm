@@ -1,7 +1,8 @@
 - General
+	- Cobertura 2.0.3
 
 - Code
-	XML parsing - normalize() is called incorrectly
+	- XML parsing - normalize() is called incorrectly
 
 - Web
 	- Examples
